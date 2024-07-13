@@ -1,1 +1,5 @@
-alert("foobar");
+window.addEventListener('DOMContentLoaded', (event) => {
+
+    alert('foobar');
+
+});
