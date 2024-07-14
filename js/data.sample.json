@@ -1,0 +1,282 @@
+{
+  "Metadata": {
+    "ListServer": {
+      "Rebellion": {
+        "Status": "new",
+        "Success": true,
+        "Timestamp": "2024-07-14T08:43:24.0773618Z"
+      }
+    }
+  },
+  "SessionDefault": {
+    "Type": "Listen"
+  },
+  "DataCache": {
+    "Level": {
+      "GameType": {
+        "STRAT": {
+          "Name": "Strategy"
+        }
+      },
+      "GameMode": {
+        "MPI": {
+          "Name": "MPI"
+        },
+        "STRAT": {
+          "Name": "Strategy"
+        }
+      }
+    },
+    "Players": {
+      "IDs": {
+        "Steam": {
+          "76561197980034526": {
+            "AvatarUrl": "https://avatars.steamstatic.com/7809f47f32a8ed3809494e294c76e7ee5e12c734_full.jpg",
+            "Nickname": "GNUbie",
+            "ProfileUrl": "https://steamcommunity.com/id/GNUbie/"
+          },
+          "76561197982453395": {
+            "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+            "Nickname": "Chubby loo ching",
+            "ProfileUrl": "https://steamcommunity.com/profiles/76561197982453395/"
+          },
+          "76561199653748651": {
+            "AvatarUrl": "https://avatars.steamstatic.com/d11a4032178ddcad6c2951556bd6a8952fc2aaba_full.jpg",
+            "Nickname": "Sev",
+            "ProfileUrl": "https://steamcommunity.com/id/sevsunday/"
+          }
+        }
+      }
+    }
+  },
+  "Mods": {
+    "1362492891": {
+      "Name": "GreenHeart Assets Mod",
+      "ID": "1362492891",
+      "Image": "mods/1362492891/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1362492891"
+    },
+    "0": {
+      "Name": "Stock",
+      "ID": "0",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+    },
+    "1325933293": {
+      "Name": "Vet Strat Recycler Variant",
+      "ID": "1325933293",
+      "Image": "mods/1325933293/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+    },
+    "1329659846": {
+      "Name": "Aegeis VSR Map Pack",
+      "ID": "1329659846",
+      "Image": "mods/1329659846/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+    },
+    "2785557433": {
+      "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+      "ID": "2785557433",
+      "Image": "mods/2785557433/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+    },
+    "2785542655": {
+      "Name": "FE:Remastered: Hadean Asset Pack",
+      "ID": "2785542655",
+      "Image": "mods/2785542655/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+    },
+    "2814914461": {
+      "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+      "ID": "2814914461",
+      "Image": "mods/2814914461/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+    },
+    "2049956570": {
+      "Name": "FE:Remastered: ISDF Model Pack",
+      "ID": "2049956570",
+      "Image": "mods/2049956570/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+    },
+    "2049959749": {
+      "Name": "Scion Model Enhancement Pack",
+      "ID": "2049959749",
+      "Image": "mods/2049959749/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+    },
+    "2467249743": {
+      "Name": "Gravey's VSR Map Pack",
+      "ID": "2467249743",
+      "Image": "mods/2467249743/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+    }
+  },
+  "Sessions": [{
+    "Name": "ghandi was here",
+    "PlayerTypes": [{
+      "Types": ["Player"],
+      "Max": 4
+    }],
+    "PlayerCount": {
+      "Player": 2
+    },
+    "Level": {
+      "MapFile": "mpidustbzcc.bzn",
+      "ID": "1362492891:mpidustbzcc",
+      "GameType": {
+        "ID": "STRAT"
+      },
+      "GameMode": {
+        "ID": "MPI"
+      },
+      "Image": "http://gamelistassets.iondriver.com/bzcc/assets/31f0994f9ab1dafa0560f869b84a61ed360d5f59fc6f9cdfeb7fab9b9a796b2d.png",
+      "Name": "MPI: GH Instant DustStorm",
+      "Description": "Random FireWorks\r\nin the Night Sky.\r\n\r\n7 Pools\r\n\r\nBy GreenHeart\r\nConverted by Aegeis\r\n\r\n\r\n "
+    },
+    "Status": {
+      "IsLocked": false,
+      "HasPassword": true,
+      "State": "InGame"
+    },
+    "Players": [{
+      "Name": "GNUbie",
+      "Type": "Player",
+      "Stats": {
+        "Kills": 1,
+        "Deaths": 1
+      },
+      "Team": {
+        "SubTeam": {
+          "ID": "1"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 1
+        },
+        "BZRNet": {
+          "ID": "S76561197980034526"
+        },
+        "Steam": {
+          "Raw": "76561197980034526",
+          "ID": "76561197980034526"
+        }
+      }
+    }, {
+      "Name": "Chubby loo ching",
+      "Type": "Player",
+      "Stats": {
+        "Kills": 57,
+        "Deaths": 8,
+        "Score": 321
+      },
+      "Team": {
+        "SubTeam": {
+          "ID": "2"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 2
+        },
+        "BZRNet": {
+          "ID": "S76561197982453395"
+        },
+        "Steam": {
+          "Raw": "76561197982453395",
+          "ID": "76561197982453395"
+        }
+      }
+    }],
+    "Attributes": {
+      "TPS": 20,
+      "MaxPing": 750,
+      "ListServer": "Rebellion"
+    },
+    "Address": {
+      "NAT": "_vHSMI2@G_",
+      "NAT_TYPE": "SYMMETRIC"
+    },
+    "Game": {
+      "Mod": "1362492891",
+      "Version": "2.0.185",
+      "ModHash": "nrI7n"
+    },
+    "Time": {
+      "Seconds": 7380,
+      "Resolution": 60,
+      "Max": false,
+      "Context": "InGame"
+    }
+  }, {
+    "Name": "TestGame2",
+    "PlayerTypes": [{
+      "Types": ["Player"],
+      "Max": 10
+    }],
+    "PlayerCount": {
+      "Player": 1
+    },
+    "Level": {
+      "MapFile": "vsrmiredon.bzn",
+      "ID": "1325933293:vsrmiredon",
+      "GameType": {
+        "ID": "STRAT"
+      },
+      "GameMode": {
+        "ID": "STRAT"
+      },
+      "Image": "http://gamelistassets.iondriver.com/bzcc/assets/ea106341f3713809f24ebcbb04fb973ad52dac21499d86a1c94c2442feb8a6ba.png",
+      "Name": "VSR: Miredon",
+      "Description": "Miredon\r\n\r\n5 pools - Small map.\r\n"
+    },
+    "Status": {
+      "IsLocked": false,
+      "HasPassword": true,
+      "State": "PreGame"
+    },
+    "Players": [{
+      "Name": "TestPlayer2",
+      "Type": "Player",
+      "Team": {
+        "ID": "2",
+        "Leader": true,
+        "SubTeam": {
+          "ID": "6"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 6
+        },
+        "BZRNet": {
+          "ID": "S76561199653748651"
+        },
+        "Steam": {
+          "Raw": "76561199653748651",
+          "ID": "76561199653748651"
+        }
+      }
+    }],
+    "Attributes": {
+      "TPS": 20,
+      "MaxPing": 750,
+      "ListServer": "Rebellion"
+    },
+    "Address": {
+      "NAT": "wBYzSu2@@-",
+      "NAT_TYPE": "FULL CONE"
+    },
+    "Game": {
+      "Mod": "1325933293",
+      "Mods": ["1329659846", "2785557433", "2785542655", "2814914461", "2049956570", "2049959749", "2467249743"],
+      "Version": "2.0.185",
+      "ModHash": "Dx7b73"
+    },
+    "Time": {
+      "Seconds": 15300,
+      "Resolution": 60,
+      "Max": true,
+      "Context": "PreGame"
+    }
+  }]
+}

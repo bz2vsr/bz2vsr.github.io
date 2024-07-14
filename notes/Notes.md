@@ -1,15 +1,16 @@
 ## Notable properties from source data.
 
-### data.DataCache.Players.IDs.Steam[n]
+### data.DataCache.Players.IDs.Steam [list of objects]
 	
 	"StringID"                  = Steam ID, cross-reference this with .Players[n].IDs.Steam.ID 
 
 	."StringID".Nickname        = Steam Name
 
-### data.Session[n]
+### data.Sessions [array]
 
 	.Name                       = Game title in Multiplayer listing
 	
+	.Address.NAT				= Possible unique Game ID?
 	.Address.NAT_TYPE           = FULL_CONE | SYMMETRIC
 
 	.Level.GameMode.ID          = MPI|STRAT
@@ -27,6 +28,6 @@
 	.Time.Seconds               = # of seconds
 
 	.Players[N].Name            = In-Game Player Name
+	.Players[N].IDs.Steam.ID    = cross-reference with StringID from DataCache to get SteamName
 	.Players[N].Team.ID         = Team # (1|2)
-	.Players[N].Team.Leader     = true|false (only exists if leader)
-	.Players[N].IDs.Steam.ID    = cross-reference with StringID from DataCache
+	.Players[N].Team.Leader     = true|false (only exists if player is Commander)
