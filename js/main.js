@@ -1,26 +1,25 @@
 async function getLobbyData() {
     
-    let dataURL = "http://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
+    /* source data served over HTTP, so having to use HTTPS CORS proxy as a workaround */
+    let sourceURL = "http://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
+    const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL;
 
     try {
-        let rawData = await fetch(dataURL, { mode: 'no-cors' });
+        let fetchResponse = await fetch(proxyURL);
 
-        if( !rawData.ok ) {
-            console.log(`Error with data. Make sure ${dataURL} is accessible and returning valid data.`);
+
+        if( !fetchResponse.ok ) {
+            console.log(`Error with data. Make sure ${sourceURL} is accessible and returning valid data.`);
         }
 
-        let data = await rawData.json();
+        let data = await fetchResponse.json();
 
-        console.log(data);
+        console.log(data["Sessions"]);
 
     } catch {
-
-        console.log(`Catch: Make sure ${dataURL} is accessible and returning valid data.`);
-
+        console.log(`Catch: Make sure ${sourceURL} is accessible and returning valid data.`);
     }
 }
 window.addEventListener('DOMContentLoaded', (event) => {
-
     getLobbyData();
-
-})
+});
