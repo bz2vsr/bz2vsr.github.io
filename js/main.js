@@ -1,10 +1,11 @@
 async function getLobbyData() {
+
     // Requesting data directly gets blocked by CORS policy, so we use klugey CORS Proxy workaround
     const sourceURL = "http://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
     const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL;
 
     try {
-        document.querySelector('#lobbyList').innerHTML = "";
+
         let fetchResponse = await fetch(proxyURL);
         // let fetchResponse = await fetch('/js/data.sample.json');
 
@@ -14,14 +15,17 @@ async function getLobbyData() {
 
         let data = await fetchResponse.json();
 
+        // clear everything first
+        document.querySelector('#lobbyList').innerHTML = "";
+
         // all players currently online - list of objects
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
 
         for( const [sid, steam] of Object.entries(SteamPlayerList)) {
-            // console.log("---");
-            // console.log("\tSteam ID: " + sid);
-            // console.log("\tSteam Name: " + steam.Nickname);
-            // console.log("---");
+            console.log("---");
+            console.log("\tSteam ID: " + sid);
+            console.log("\tSteam Name: " + steam.Nickname);
+            console.log("---");
         };
 
         // all current games - array
@@ -41,14 +45,16 @@ async function getLobbyData() {
 
             let PlayerList = game.Players;
 
+            // used to fill empty slots in player list, since we always show 10
             let emptyObj = {};
             emptyObj.Name = "Empty";
 
-            let total=(10-PlayerList.length);
+            let total = (10-PlayerList.length);
             for(let i = 0; i < total; i++){
                 PlayerList.push(emptyObj);
             }
            
+            // the real beep boop shit
             let LobbyList = document.querySelector('#lobbyList');
             LobbyList.insertAdjacentHTML(
                 'beforeend',
@@ -121,9 +127,6 @@ async function getLobbyData() {
                 `
             )
         });
-
-
-
     } catch {
         console.log(`Catch Error: Make sure source and proxy URLs are accessible and returning valid data.`);
     }
