@@ -1,13 +1,13 @@
-Notable properties from source data.
+## Notable properties from source data.
 
-data.DataCache.Players.IDs.Steam[n]
+### data.DataCache.Players.IDs.Steam[n]
 	
 	"StringID"                  = Steam ID, cross-reference this with .Players[n].IDs.Steam.ID 
 
 	."StringID".Nickname        = Steam Name
 
-data.Session[n]
-	
+### data.Session[n]
+
 	.Name                       = Game title in Multiplayer listing
 	
 	.Address.NAT_TYPE           = FULL_CONE | SYMMETRIC
