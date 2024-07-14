@@ -4,7 +4,7 @@ async function getLobbyData() {
     const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL;
 
     try {
-        let fetchResponse = await fetch(proxyURL);
+        let fetchResponse = await fetch(sourceURL);
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
