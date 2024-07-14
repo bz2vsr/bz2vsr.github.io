@@ -3,7 +3,7 @@ async function getLobbyData() {
     let dataURL = "http://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
 
     try {
-        let rawData = await fetch(dataURL);
+        let rawData = await fetch(dataURL, { mode: 'no-cors' });
 
         if( !rawData.ok ) {
             console.log(`Error with data. Make sure ${dataURL} is accessible and returning valid data.`);
