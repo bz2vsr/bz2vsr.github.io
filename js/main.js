@@ -95,7 +95,7 @@ async function getLobbyData() {
                                     }
                                     else if( PlayerList[player].Team.Leader === true ) {
                                         return `<div class="col-6 player-slot d-flex justify-content-between align-items-center">
-                                            <div class="d-block p-2">
+                                            <div class="d-block p-2 fw-bold text-light">
                                                 ${PlayerList[player].Name}
                                             </div>
                                             <span class="badge text-bg-secondary">CMD</span>
