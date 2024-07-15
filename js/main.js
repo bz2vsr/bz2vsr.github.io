@@ -67,9 +67,9 @@ async function getLobbyData() {
             console.log(gameName+" "+gameMod);
 
             // only show vsr games
-            if( gameMod !== "1325933293") {
-                return;
-            }
+            // if( gameMod !== "1325933293") {
+            //     return;
+            // }
 
             let PlayerList = game.Players;
 
