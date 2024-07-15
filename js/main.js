@@ -1,6 +1,12 @@
 // used to cancel auto-updates
 let interval_id = null;
 
+const vsrModID = "1325933293";
+
+if( localStorage.getItem("ShowVSROnly") === "false" ) {
+    document.querySelector("#VSRToggle").checked = false;
+}
+
 // simple string truncation
 const truncate = (str, len, end = "...") => {
     return str.length <= len ? str : str.substring(0, len) + end
@@ -36,16 +42,20 @@ async function getLobbyData() {
 
         let data = await fetchResponse.json();
 
+        if( data.DataCache.Players === undefined ) {
+            document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No players online.</p>';
+            return;
+        }
+
         // clear everything first
         document.querySelector('#lobbyList').innerHTML = "";
 
         // all players currently online - list of objects
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
 
+        console.log('Steam Players:')
         for( const [sid, steam] of Object.entries(SteamPlayerList)) {
-            // console.log("Steam ID: " + sid);
-            // console.log("Steam Name: " + steam.Nickname);
-            // console.log("-");
+            console.log(`\t${steam.Nickname} (ID: ${sid})`)
         };
 
         // all current games - array
@@ -64,12 +74,14 @@ async function getLobbyData() {
             let gameState       = clean(game.Status.State);
             let mapName         = game.Level.Name;
             let gameMod         = game.Game.Mod;
-            console.log(gameName+" "+gameMod);
 
-            // only show vsr games
-            // if( gameMod !== "1325933293") {
-            //     return;
-            // }
+            // check if VSR toggle is on
+            if( localStorage.getItem("ShowVSROnly") === "true" ) {
+                // skip the current iteration if it isn't VSR
+                if( gameMod !== vsrModID) {
+                    return;
+                }
+            }
 
             let PlayerList = game.Players;
 
@@ -202,6 +214,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         else {
             clearInterval(interval_id);
+        }
+    });
+});
+
+window.addEventListener('DOMContentLoaded', (event) => {
+
+    // only show VSR mod games (persistent with localstorage)
+    let VSRToggle = document.querySelector("#VSRToggle");
+
+    VSRToggle.addEventListener('change', function () {
+        if( this.checked ) {
+            localStorage.setItem("ShowVSROnly", "true");
+        }
+        else {
+            localStorage.setItem("ShowVSROnly", "false");
         }
     });
 });
