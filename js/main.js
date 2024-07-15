@@ -27,6 +27,7 @@ async function getLobbyData() {
     try {
 
         let fetchResponse = await fetch(proxyURL);
+        // let fetchResponse = await fetch('/js/data.sample.json');
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);

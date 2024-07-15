@@ -140,7 +140,7 @@
   },
   "Sessions": [
     {
-      "Name": "qxg aopchtr;;a3 tas gfg '' ` s,g",
+      "Name": "Let's Play!",
       "Message": "qxg aopchtr;;a3 tas gfg '' ` s,gqxg aopchtr;;a3 tas gfg '' ` s,gqxg aopchtr;;a3 tas gfg '' ` s,gqxg aopchtr;;a3 tas gfg '' ` s,gq",
       "PlayerTypes": [
         {
@@ -176,7 +176,7 @@
       },
       "Players": [
         {
-          "Name": "asdasdsaddddasdddddddddddddddddd",
+          "Name": "Sentinal Smash",
           "Type": "Player",
           "Team": {
             "ID": "1",
@@ -364,7 +364,7 @@
       },
       "Players": [
         {
-          "Name": "CJ(RUSTBUCKET)",
+          "Name": "RustBucket",
           "Type": "Player",
           "Team": {
             "SubTeam": {
@@ -407,7 +407,7 @@
       }
     },
     {
-      "Name": "TestGame1",
+      "Name": "Sample Game Name",
       "PlayerTypes": [
         {
           "Types": [
@@ -439,7 +439,7 @@
       },
       "Players": [
         {
-          "Name": "Sev",
+          "Name": "Player One",
           "Type": "Player",
           "Team": {
             "ID": "1",
