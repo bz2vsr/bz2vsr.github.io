@@ -11,6 +11,14 @@
     border-bottom: none;
 }
 
-.player-slot-empty {
-    color: rgba(255, 255, 255, 0.15);
+.player-slot-open {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+#LiveUpdateButton {
+    margin-top: 6px;
+}
+
+.navbar-brand {
+    /* letter-spacing: 1px; */
 }
