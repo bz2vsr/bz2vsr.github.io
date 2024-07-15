@@ -156,9 +156,9 @@ async function getLobbyData() {
                         </div>
                         <!-- Card Footer -->
                         <div class="card-footer d-flex justify-content-between align-items-center small">
-                            <strong id="mapName">
-                                ${truncate(mapName, 28)}
-                            </strong>
+                            <span id="gameName" class="font-monospace text-secondary">
+                                ${truncate(gameName, 28)}
+                            </span>
                             <span id="NATType" class="btn btn-sm btn-warning btn-vsr fw-bold">
                                 ${(() => {
                                     if( netType === "FULL CONE") {
