@@ -120,7 +120,7 @@ async function getLobbyData() {
                                     if( PlayerList[player].Name === "Open") {
                                         return `<div class="col-6 player-slot player-slot-open">
                                             <div class="d-block p-2">
-                                                ${truncate(clean(PlayerList[player].Name), 16)}
+                                                ${truncate(clean(PlayerList[player].Name), 24)}
                                             </div>
                                         </div>
                                         `
@@ -129,7 +129,7 @@ async function getLobbyData() {
                                     else if( PlayerList[player].Name === "Empty") {
                                         return `<div class="col-6 player-slot text-secondary" style="--bs-text-opacity: 0">
                                             <div class="d-block p-2">
-                                                ${truncate(clean(PlayerList[player].Name), 16)}
+                                                ${truncate(clean(PlayerList[player].Name), 24)}
                                             </div>
                                         </div>
                                         `
@@ -138,7 +138,7 @@ async function getLobbyData() {
                                     else if( (PlayerList[player].Team !== undefined) && PlayerList[player].Team.Leader === true ) {
                                         return `<div class="col-6 player-slot d-flex justify-content-between align-items-center bg-primary bg-opacity-25">
                                             <div class="d-block p-2 fw-bold text-light">
-                                                ${truncate(clean(PlayerList[player].Name), 16)}
+                                                ${truncate(clean(PlayerList[player].Name), 24)}
                                             </div>
                                             <span class="badge text-bg-secondary">CMD</span>
                                         </div>
@@ -148,7 +148,7 @@ async function getLobbyData() {
                                     else {
                                         return `<div class="col-6 player-slot bg-primary bg-opacity-25">
                                             <div class="d-block p-2 fw-bold text-light">
-                                                ${truncate(clean(PlayerList[player].Name), 16)}
+                                                ${truncate(clean(PlayerList[player].Name), 24)}
                                             </div>
                                         </div>
                                         `
