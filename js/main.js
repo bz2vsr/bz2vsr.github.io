@@ -231,4 +231,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             localStorage.setItem("ShowVSROnly", "false");
         }
     });
+
+    getLobbyData();
 });
