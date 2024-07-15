@@ -1,3 +1,4 @@
+// used to cancel auto-updates
 let interval_id = null;
 
 // simple string truncation
@@ -180,6 +181,7 @@ async function getLobbyData() {
         console.log(`Catch Error: ${err}`);
     }
 }
+
 window.addEventListener('DOMContentLoaded', (event) => {
 
     getLobbyData();
@@ -194,10 +196,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
         else {
             clearInterval(interval_id);
         }
-        // LiveUpdateToggle.innerHTML = 'Auto Update ON'
-        // LiveUpdateToggle.classList.add('btn-primary');
-        // LiveUpdateToggle.classList.remove('btn-secondary');
-        // LiveUpdateToggle.disabled = true;
-        // LiveUpdateToggle.title = 'Refresh page to turn off auto updates.';
     });
 });
