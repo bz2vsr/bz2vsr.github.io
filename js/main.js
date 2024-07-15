@@ -216,9 +216,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             clearInterval(interval_id);
         }
     });
-});
-
-window.addEventListener('DOMContentLoaded', (event) => {
 
     // only show VSR mod games (persistent with localstorage)
     let VSRToggle = document.querySelector("#VSRToggle");
@@ -230,7 +227,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         else {
             localStorage.setItem("ShowVSROnly", "false");
         }
+        getLobbyData();
     });
-
-    getLobbyData();
 });
