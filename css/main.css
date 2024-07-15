@@ -11,10 +11,14 @@
     border-bottom: none;
 }
 
-.player-slot-open {
+.player-slot-open .border {
     color: rgba(255, 255, 255, 0.2);
+    border-style: dashed !important;
 }
 
+.bg-purple {
+    background-color: #6f42c1;
+}
 #LiveUpdateButton {
     margin-top: 6px;
 }

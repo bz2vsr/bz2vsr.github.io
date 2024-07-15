@@ -118,12 +118,12 @@ async function getLobbyData() {
                                 <strong>Lobby ${currentLobbyID}</strong>
                             </span>
                             <span class="font-monospace">
-                                <span class="btn btn-sm btn-primary">
+                                <span class="btn btn-sm bg-purple">
                                     <span id="playerCount">${playerCount}</span>/<span id="playerMax">${playerCountMax}</span>
                                 </span>
                                     ${(() => {
                                         if( gameState === "PreGame") {
-                                            return `<span id="gameState" class="btn btn-sm btn-secondary btn-vsr">In-Lobby</span>`
+                                            return `<span id="gameState" class="btn btn-sm bg-secondary btn-vsr">In-Lobby</span>`
                                         }
                                         else if ( gameState === "InGame") {
                                             return `<span id="gameState" class="btn btn-sm btn-success btn-vsr">In-Game</span>`
@@ -137,8 +137,8 @@ async function getLobbyData() {
                                 ${Object.keys(PlayerList).map(function (player) {
                                     // Open Spot
                                     if( PlayerList[player].Name === "Open") {
-                                        return `<div class="col-6 player-slot player-slot-open">
-                                            <div class="d-block p-2">
+                                        return `<div class="col-6 player-slot player-slot-open p-2 font-monospace">
+                                            <div class="d-block p-2 rounded border text-secondary ps-3 text-bg-secondary bg-opacity-10">
                                                 ${truncate(clean(PlayerList[player].Name), 24)}
                                             </div>
                                         </div>
@@ -146,8 +146,8 @@ async function getLobbyData() {
                                     }
                                     // Empty Player Slot
                                     else if( PlayerList[player].Name === "Empty") {
-                                        return `<div class="col-6 player-slot text-secondary" style="--bs-text-opacity: 0">
-                                            <div class="d-block p-2">
+                                        return `<div class="col-6 player-slot p-2">
+                                            <div class="d-block p-2 border border-secondary rounded text-secondary ps-3" style="--bs-text-opacity:0; --bs-border-opacity:0;">
                                                 ${truncate(clean(PlayerList[player].Name), 24)}
                                             </div>
                                         </div>
@@ -155,19 +155,31 @@ async function getLobbyData() {
                                     }
                                     // List Player as Commander
                                     else if( (PlayerList[player].Team !== undefined) && PlayerList[player].Team.Leader === true ) {
-                                        return `<div class="col-6 player-slot d-flex justify-content-between align-items-center bg-primary bg-opacity-25">
-                                            <div class="d-block p-2 fw-bold text-light">
-                                                ${truncate(clean(PlayerList[player].Name), 24)}
+                                        return `<div class="col-6 player-slot p-2">
+                                            <div class="d-block p-2 fw-bold bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 d-flex justify-content-between align-items-center" style="--bs-border-opacity: .25;">
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
+                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                    </svg>
+                                                    <span>
+                                                        ${truncate(clean(PlayerList[player].Name), 24)}
+                                                    </span>
+                                                </span>
+                                                <span class="badge bg-secondary bg-opacity-50">CMD</span>
                                             </div>
-                                            <span class="badge text-bg-secondary">CMD</span>
                                         </div>
                                         `
                                     }
                                     // Normal Player Listing
                                     else {
-                                        return `<div class="col-6 player-slot bg-primary bg-opacity-25">
-                                            <div class="d-block p-2 fw-bold text-light">
-                                                ${truncate(clean(PlayerList[player].Name), 24)}
+                                        return `<div class="col-6 player-slot p-2">
+                                            <div class="d-block p-2 fw-bold bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 d-flex justify-content-between align-items-center" style="--bs-border-opacity: .25;">
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
+                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                    </svg>
+                                                    <span>${truncate(clean(PlayerList[player].Name), 24)}</span>
+                                                </span>
                                             </div>
                                         </div>
                                         `
@@ -180,7 +192,7 @@ async function getLobbyData() {
                             <span id="gameName" class="font-monospace text-secondary">
                                 ${truncate(gameName, 28)}
                             </span>
-                            <span id="NATType" class="btn btn-sm btn-warning btn-vsr fw-bold">
+                            <span id="NATType" class="btn btn-sm btn-outline-secondary btn-vsr">
                                 ${(() => {
                                     if( netType === "FULL CONE") {
                                         return `Full Cone`
@@ -201,6 +213,7 @@ async function getLobbyData() {
     }
 }
 
+// Main Content
 window.addEventListener('DOMContentLoaded', (event) => {
 
     getLobbyData();
@@ -229,4 +242,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
         getLobbyData();
     });
+
 });

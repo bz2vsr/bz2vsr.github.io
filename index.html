@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="dark" class="h-100">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +14,7 @@
             content="Track the online lobbies in Battlezone II: Combat Commander Multiplayer. " />
         <meta property="og:title" content="Battlezone II: Lobby Watch" />
     </head>
-    <body>
+    <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand navbar-dark bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand">
@@ -39,10 +39,15 @@
                 </div>
             </div>
         </nav>
-        <main class="container-fluid p-3">
+        <main class="container-fluid p-3 flex-shrink-0">
             <div id="lobbyList" class="row">
             </div>
         </main>
+        <footer class="d-flex justify-content-center mt-auto">
+            <span class="justify-content-end d-flex text-secondary">
+                <span class="py-2 small font-monospace">bz2vsr.com</span>
+            </span>
+        </footer>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/main.js"></script>
     </body>
