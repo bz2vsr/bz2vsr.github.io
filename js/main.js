@@ -189,7 +189,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
-            interval_id = setInterval(getLobbyData, 5000);
+            interval_id = setInterval(getLobbyData, 15000);
         }
         else {
             clearInterval(interval_id);
