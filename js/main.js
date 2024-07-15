@@ -112,7 +112,7 @@ async function getLobbyData() {
                         </div>
                         <!-- Card Body -->
                         <div class="container">
-                            <div class="row player-list font-monospace">
+                            <div class="row player-list">
                                 ${Object.keys(PlayerList).map(function (player) {
                                     // Open Spot
                                     if( PlayerList[player].Name === "Open") {
