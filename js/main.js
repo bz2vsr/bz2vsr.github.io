@@ -63,6 +63,13 @@ async function getLobbyData() {
             let playerCountMax  = game.PlayerTypes[0].Max;
             let gameState       = clean(game.Status.State);
             let mapName         = game.Level.Name;
+            let gameMod         = game.Game.Mod;
+            console.log(gameName+" "+gameMod);
+
+            // only show vsr games
+            if( gameMod !== "1325933293") {
+                return;
+            }
 
             let PlayerList = game.Players;
 
