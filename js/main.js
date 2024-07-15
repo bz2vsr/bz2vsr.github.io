@@ -123,7 +123,7 @@ async function getLobbyData() {
                                 </span>
                                     ${(() => {
                                         if( gameState === "PreGame") {
-                                            return `<span id="gameState" class="btn btn-sm btn-secondary btn-vsr">Lobby</span>`
+                                            return `<span id="gameState" class="btn btn-sm btn-secondary btn-vsr">In-Lobby</span>`
                                         }
                                         else if ( gameState === "InGame") {
                                             return `<span id="gameState" class="btn btn-sm btn-success btn-vsr">In-Game</span>`
