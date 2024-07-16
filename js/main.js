@@ -26,6 +26,8 @@ function clean(str) {
 
 async function getLobbyData() {
     console.log('Fetching data.');
+    let vsrGameCount = 0;
+    let otherGameCount = 0;
 
     // Requesting data directly gets blocked by CORS policy, so we use klugey CORS Proxy workaround
     const sourceURL = "http://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
@@ -53,9 +55,9 @@ async function getLobbyData() {
         // all players currently online - list of objects
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
 
-        console.log('Steam Players:')
+        // console.log('Steam Players:')
         for( const [sid, steam] of Object.entries(SteamPlayerList)) {
-            console.log(`\t${steam.Nickname} (ID: ${sid})`)
+            // console.log(`\t${steam.Nickname} (ID: ${sid})`)
         };
 
         // all current games - array
@@ -75,12 +77,20 @@ async function getLobbyData() {
             let mapName         = game.Level.Name;
             let gameMod         = game.Game.Mod;
 
-            // check if VSR toggle is on
+            // count vsr and non-vsr games
+            if( gameMod === vsrModID ) {
+                vsrGameCount = vsrGameCount + 1;
+            }
+            else if( gameMod !== vsrModID) {
+                otherGameCount = otherGameCount + 1;
+            }
+
+            // if vsr-only is toggled, skip non-vsr games
             if( localStorage.getItem("ShowVSROnly") === "true" ) {
-                // skip the current iteration if it isn't VSR
                 if( gameMod !== vsrModID) {
                     return;
                 }
+
             }
 
             let PlayerList = game.Players;
@@ -110,7 +120,7 @@ async function getLobbyData() {
             LobbyList.insertAdjacentHTML(
                 'beforeend',
                 `
-                <div class="col-12 col-sm-6 col-xxl-4 mb-3 uid-${uniqueGameID}">
+                <div class="col-12 col-sm-6 col-xxl-4 mb-3">
                     <div class="card">
                         <!-- Card Header -->
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -200,6 +210,9 @@ async function getLobbyData() {
                                     else if( netType === "SYMMETRIC") {
                                         return `Symmetric`
                                     }
+                                    else {
+                                        return `N/A`
+                                    }
                                 })()}
                             </span>
                         </div>
@@ -208,6 +221,14 @@ async function getLobbyData() {
                 `
             )
         });
+
+        // show alternative content if vsr is toggled and no vsr games found
+        if( localStorage.getItem("ShowVSROnly") === "true" ) {
+            if( vsrGameCount == 0 && otherGameCount !== 0) {
+                document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No VSR games found.</p>';
+            }
+        }
+
     } catch(err) {
         console.log(`Catch Error: ${err}`);
     }
