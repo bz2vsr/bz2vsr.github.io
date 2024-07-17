@@ -252,7 +252,7 @@ async function getLobbyData() {
             trigger: "hover"
         }));
 
-        // show alternative content if vsr is toggled and no vsr games found
+        // show alternative content if: (1) vsr is toggled and (2) non-vsr games exist, but (3) no vsr games exist
         if( localStorage.getItem("ShowVSROnly") === "true" ) {
             if( vsrGameCount == 0 && otherGameCount !== 0) {
                 document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No VSR games found.</p>';
