@@ -3,6 +3,23 @@ let interval_id = null;
 
 const vsrModID = "1325933293";
 
+function getSteamMatch(SteamPlayerList, Player) {
+
+    // if(SteamPlayerList == undefined || Player == undefined )
+    for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
+    {
+        console.log(`${Steam.Nickname} ${SteamID}`);
+        if( (Player.IDs.Steam.ID).toString() === SteamID.toString() ) {
+            return `Name: ${Steam.Nickname} 
+                <hr>
+                ID: ${SteamID}
+            `;
+        }
+    }
+
+    return "No data found.";
+}
+
 if( localStorage.getItem("ShowVSROnly") === "false" ) {
     document.querySelector("#VSRToggle").checked = false;
 }
@@ -14,6 +31,10 @@ const truncate = (str, len, end = "...") => {
 
 // clean input strings; not a full-proof solution, but feukers will be feukers
 function clean(str) { 
+    if( str === undefined ) {
+        return "Undefined";
+    }
+
     const stripThatShit = str.replace(/<[^>]*>/g, '');
     const cleanThatShit = stripThatShit.replace(/\s+/g, ' ').trim();
 
@@ -56,9 +77,9 @@ async function getLobbyData() {
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
 
         // console.log('Steam Players:')
-        for( const [sid, steam] of Object.entries(SteamPlayerList)) {
-            // console.log(`\t${steam.Nickname} (ID: ${sid})`)
-        };
+        // for( const [sid, steam] of Object.entries(SteamPlayerList)) {
+        //     console.log(`\t${steam.Nickname} (ID: ${sid})`)
+        // };
 
         // all current games - array
         let GameList = data.Sessions;
@@ -120,7 +141,7 @@ async function getLobbyData() {
             LobbyList.insertAdjacentHTML(
                 'beforeend',
                 `
-                <div class="col-12 col-sm-6 col-xxl-4 mb-3">
+                <div class="col-12 col-xs-12 col-sm-9 col-lg-6 col-xxl-4 mb-3">
                     <div class="card">
                         <!-- Card Header -->
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -131,14 +152,14 @@ async function getLobbyData() {
                                 <span class="btn btn-sm bg-purple">
                                     <span id="playerCount">${playerCount}</span>/<span id="playerMax">${playerCountMax}</span>
                                 </span>
-                                    ${(() => {
-                                        if( gameState === "PreGame") {
-                                            return `<span id="gameState" class="btn btn-sm bg-secondary btn-vsr">In-Lobby</span>`
-                                        }
-                                        else if ( gameState === "InGame") {
-                                            return `<span id="gameState" class="btn btn-sm btn-success btn-vsr">In-Game</span>`
-                                        }
-                                    })()}
+                                ${(() => {
+                                    if( gameState === "PreGame") {
+                                        return `<span id="gameState" class="btn btn-sm bg-secondary btn-vsr">In-Lobby</span>`
+                                    }
+                                    else if ( gameState === "InGame") {
+                                        return `<span id="gameState" class="btn btn-sm btn-success btn-vsr">In-Game</span>`
+                                    }
+                                })()}
                             </span>
                         </div>
                         <!-- Card Body -->
@@ -149,7 +170,14 @@ async function getLobbyData() {
                                     if( PlayerList[player].Name === "Open") {
                                         return `<div class="col-6 player-slot player-slot-open p-2 font-monospace">
                                             <div class="d-block p-2 rounded border text-secondary ps-3 text-bg-secondary bg-opacity-10">
-                                                ${truncate(clean(PlayerList[player].Name), 24)}
+                                                <span class="text-nowrap overflow-hidden">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
+                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                    </svg>
+                                                    <span>
+                                                        ${truncate(clean(PlayerList[player].Name), 24)}
+                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                         `
@@ -163,34 +191,30 @@ async function getLobbyData() {
                                         </div>
                                         `
                                     }
-                                    // List Player as Commander
-                                    else if( (PlayerList[player].Team !== undefined) && PlayerList[player].Team.Leader === true ) {
+                                    // List Players, include popover with Steam data, show "CMD" label if commander
+                                    else if( (PlayerList[player].Team !== undefined) ) {
                                         return `<div class="col-6 player-slot p-2">
-                                            <div class="d-block p-2 fw-bold bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 d-flex justify-content-between align-items-center" style="--bs-border-opacity: .25;">
-                                                <span class="text-nowrap overflow-hidden">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
-                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                                    </svg>
-                                                    <span>
-                                                        ${truncate(clean(PlayerList[player].Name), 24)}
+                                            <span tabindex="0" data-bs-toggle="popover" class="vsr-cursor-help font-monospace" data-bs-title="Steam Data" 
+                                                data-bs-content="
+                                                    ${getSteamMatch(SteamPlayerList, PlayerList[player])}
+                                                ">
+                                                <div class="d-block p-2 fw-bold bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 d-flex justify-content-between align-items-center" style="--bs-border-opacity: .25;">
+                                                    <span class="text-nowrap overflow-hidden">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1 d-none d-lg-inline" viewBox="0 0 16 16">
+                                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                        </svg>
+                                                        <span>
+                                                            ${truncate(clean(PlayerList[player].Name), 24)}
+                                                        </span>
                                                     </span>
-                                                </span>
-                                                <span class="badge bg-secondary bg-opacity-50">CMD</span>
-                                            </div>
-                                        </div>
-                                        `
-                                    }
-                                    // Normal Player Listing
-                                    else {
-                                        return `<div class="col-6 player-slot p-2">
-                                            <div class="d-block p-2 fw-bold bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 d-flex justify-content-between align-items-center" style="--bs-border-opacity: .25;">
-                                                <span class="text-nowrap overflow-hidden">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
-                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                                    </svg>
-                                                    <span>${truncate(clean(PlayerList[player].Name), 24)}</span>
-                                                </span>
-                                            </div>
+                                                    ${(() => {
+                                                        if( PlayerList[player].Team.Leader === true) {
+                                                            return `<span class="badge bg-secondary bg-opacity-50">CMD</span>`;
+                                                        }
+                                                        else return "";
+                                                    })()}
+                                                </div>
+                                            </span>
                                         </div>
                                         `
                                     }
@@ -221,6 +245,13 @@ async function getLobbyData() {
                 `
             )
         });
+
+        // initialize any popovers
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {
+            html: true,
+            trigger: "hover"
+        }));
 
         // show alternative content if vsr is toggled and no vsr games found
         if( localStorage.getItem("ShowVSROnly") === "true" ) {

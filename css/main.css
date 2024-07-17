@@ -22,3 +22,7 @@
 #LiveUpdateButton {
     margin-top: 6px;
 }
+
+.vsr-cursor-help {
+    cursor: help;
+}
