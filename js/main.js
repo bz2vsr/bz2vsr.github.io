@@ -107,7 +107,7 @@ async function getLobbyData() {
             }
 
             // if vsr-only is toggled, skip non-vsr games
-            if( localStorage.getItem("ShowVSROnly") === "true" ) {
+            if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
                 if( gameMod !== vsrModID) {
                     return;
                 }
