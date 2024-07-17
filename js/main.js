@@ -272,6 +272,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // allow user to turn on auto-refresh (not persistent)
     let LiveUpdateToggle = document.querySelector("#LiveUpdateToggle");
 
+    if( localStorage.getItem("AlwaysLiveUpdates") === "true" ) {
+        interval_id = setInterval(getLobbyData, 15000);
+        LiveUpdateToggle.checked = true;
+    }
+
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
             interval_id = setInterval(getLobbyData, 15000);
