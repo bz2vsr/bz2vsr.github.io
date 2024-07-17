@@ -8,7 +8,6 @@ function getSteamMatch(SteamPlayerList, Player) {
     // if(SteamPlayerList == undefined || Player == undefined )
     for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
     {
-        console.log(`${Steam.Nickname} ${SteamID}`);
         if( (Player.IDs.Steam.ID).toString() === SteamID.toString() ) {
             return `Name: ${Steam.Nickname} 
                 <hr>
