@@ -241,7 +241,7 @@ async function getLobbyData() {
                                                 if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) {
                                                     return `<div class="col-6 player-slot p-2">
                                                     <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light">
-                                                        <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3" style="--bs-border-opacity: .25;">
+                                                        <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
                                                             <div class="row">
                                                                 <div class="col-3 d-none d-lg-inline">
                                                                     <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
