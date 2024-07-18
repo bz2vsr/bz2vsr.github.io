@@ -242,7 +242,7 @@ async function getLobbyData() {
                                                         <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3" style="--bs-border-opacity: .25;">
                                                             <div class="row">
                                                                 <div class="col-3">
-                                                                    <img src="${Steam.AvatarUrl}" class="img-fluid img-thumbnail rounded"/>
+                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='../img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                 </div>
                                                                 <div class="col-9">
                                                                     <span class="text-nowrap overflow-hidden small font-monospace">
