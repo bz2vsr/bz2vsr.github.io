@@ -102,7 +102,7 @@ async function getLobbyData() {
             let mapImage        = game.Level.Image;
             let mapFile         = game.Level.MapFile;
             let gameMod         = game.Game.Mod;
-            let gameMessage     = clean(game.Message);
+            let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
 
             // count vsr and non-vsr games
             if( gameMod === vsrModID ) {
@@ -243,7 +243,7 @@ async function getLobbyData() {
                                                         <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3" style="--bs-border-opacity: .25;">
                                                             <div class="row">
                                                                 <div class="col-3 d-none d-lg-inline">
-                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='../img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                 </div>
                                                                 <div class="col-9 text-nowrap overflow-hidden">
                                                                     <span class="small font-monospace">
