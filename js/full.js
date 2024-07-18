@@ -102,6 +102,7 @@ async function getLobbyData() {
             let mapImage        = game.Level.Image;
             let mapFile         = game.Level.MapFile;
             let gameMod         = game.Game.Mod;
+            let gameTime        = (game.Time.Seconds/60);
             let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
 
             // count vsr and non-vsr games
@@ -182,16 +183,16 @@ async function getLobbyData() {
                                             <span>${mapName}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
-                                            <strong class="text-muted">File</strong>
-                                            <span>${mapFile}</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Mode</strong>
                                             <span>${gameMode}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
+                                            <strong class="text-muted">Time</strong>
+                                            <span">${gameTime} mins</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Name</strong>
-                                            <span>${truncate(gameName, 32)}</span>
+                                            <span class="text-secondary">${truncate(gameName, 32)}</span>
                                         </li>
                                         <li class="list-group-item border-dotted">
                                             <div class="row">
