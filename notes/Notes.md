@@ -33,4 +33,12 @@
 
 ### Game
 
+	.Level.MapFile = "vsreuropa.bzn"
+	.Level.Image = "link to map image"
+	.Level.Name = "VSR: Europa"
+	.Level.Description = "exit feukers"
+
+	.Status.IsLocked = true|false
+	.Status.HasPassword = true|false
+	
 ### Player

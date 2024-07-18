@@ -172,7 +172,7 @@ async function getLobbyData() {
                         <div class="container">
                             <div class="row border-bottom">
                                 <div class="col-3 p-2 border-0 border-end border-dotted text-center">
-                                    <img src="${mapImage}" class="img-thumbnail rounded"/>
+                                    <img src="${mapImage}" style="filter:brightness(1.5)"class="img-thumbnail rounded"/>
                                 </div>
                                 <div class="col-9 p-0 small">
                                     <ul class="list-group list-group-flush font-monospace text-secondary">
