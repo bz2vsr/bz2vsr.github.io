@@ -251,7 +251,7 @@ async function getLobbyData() {
                                                                         Steam: ${truncate(clean(Steam.Nickname), 24)}<br>
                                                                         ${(() => {
                                                                             if( PlayerList[player].Team.Leader === true) {
-                                                                                return `<strong class="badge text-bg-light bg-opacity-75">Commander</strong>`;
+                                                                                return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
                                                                             }
                                                                             else return "";
                                                                         })()}
