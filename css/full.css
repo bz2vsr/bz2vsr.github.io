@@ -16,9 +16,11 @@
     border-style: dashed !important;
 }
 
-.player-slot a:hover div {
+.player-slot a:hover div,
+.player-slot a:hover .badge {
     --bs-bg-opacity: 1 !important;
 }
+
 
 .bg-purple {
     background-color: #6f42c1;

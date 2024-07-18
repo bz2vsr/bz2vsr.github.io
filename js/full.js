@@ -121,6 +121,7 @@ async function getLobbyData() {
             }
 
             let PlayerList = game.Players;
+            let gameHost = game.Players[0].Name;
 
             // used to fill empty slots in player list, since we always show 10
             let emptyObj = {};
@@ -195,7 +196,7 @@ async function getLobbyData() {
                                         <li class="list-group-item border-dotted">
                                             <div class="row">
                                                 <div class="col-3">
-                                                    <strong class="text-muted">Message</strong>
+                                                    <strong class="text-muted">Msg</strong>
                                                 </div>
                                                 <div class="col-9 text-end">
                                                     <span class="text-secondary">${truncate(gameMessage, 100)}</span>
@@ -250,7 +251,13 @@ async function getLobbyData() {
                                                                         Steam: ${truncate(clean(Steam.Nickname), 24)}<br>
                                                                         ${(() => {
                                                                             if( PlayerList[player].Team.Leader === true) {
-                                                                                return `<strong class="badge text-bg-light">Commander</strong>`;
+                                                                                return `<strong class="badge text-bg-light bg-opacity-75">Commander</strong>`;
+                                                                            }
+                                                                            else return "";
+                                                                        })()}
+                                                                        ${(() => {
+                                                                            if( PlayerList[player].Name === gameHost ) {
+                                                                                return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
                                                                             }
                                                                             else return "";
                                                                         })()}
