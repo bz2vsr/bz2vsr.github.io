@@ -242,13 +242,13 @@ async function getLobbyData() {
                                                     <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light">
                                                         <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3" style="--bs-border-opacity: .25;">
                                                             <div class="row">
-                                                                <div class="col-3 d-none d-lg-inline"">
+                                                                <div class="col-3 d-none d-lg-inline">
                                                                     <img src="${Steam.AvatarUrl}" onError="this.src='../img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                 </div>
                                                                 <div class="col-9 text-nowrap overflow-hidden">
                                                                     <span class="small font-monospace">
-                                                                        Nick: ${truncate(clean(PlayerList[player].Name), 24)}<br>
-                                                                        Steam: ${truncate(clean(Steam.Nickname), 24)}<br>
+                                                                        N<span class="d-none d-lg-inline">ick</span>: ${truncate(clean(PlayerList[player].Name), 24)}<br>
+                                                                        S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
                                                                         ${(() => {
                                                                             if( PlayerList[player].Team.Leader === true) {
                                                                                 return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
