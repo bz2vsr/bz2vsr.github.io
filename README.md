@@ -1,8 +1,10 @@
 # Battlezone II Lobby Watch
 
-Simple website to pull real-time multi-player lobby data from Battlezone II.
+Simple website to pull multi-player lobby data from Battlezone II.
 
 Relies on data from: http://multiplayersessionlist.iondriver.com/
+
+Styled using Bootstrap v5.3: https://getbootstrap.com/docs/5.3/
 
 Uses a proxy to get around the CORS policy issue: 
 

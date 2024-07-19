@@ -1,27 +1,16 @@
+/*-------------------------------------------------*/
+/*------------------ GLOBAL VARS ------------------*/
+/*-------------------------------------------------*/
+
 // used to cancel auto-updates
 let interval_id = null;
 
+// unique ID used to identify Vet Strat Recycler mod
 const vsrModID = "1325933293";
 
-function getSteamMatch(SteamPlayerList, Player) {
-
-    // if(SteamPlayerList == undefined || Player == undefined )
-    for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
-    {
-        if( (Player.IDs.Steam.ID).toString() === SteamID.toString() ) {
-            return `Name: ${Steam.Nickname} 
-                <hr>
-                ID: ${SteamID}
-            `;
-        }
-    }
-
-    return "No data found.";
-}
-
-if( localStorage.getItem("ShowVSROnly") === "false" ) {
-    document.querySelector("#VSRToggle").checked = false;
-}
+/*-------------------------------------------------*/
+/*------------------- FUNCTIONS -------------------*/
+/*-------------------------------------------------*/
 
 // simple string truncation
 const truncate = (str, len, end = "...") => {
@@ -44,8 +33,12 @@ function clean(str) {
     return cleanThatShit;
 }
 
+// main function to data and produce content based on that data
 async function getLobbyData() {
+    
     console.log('Fetching data.');
+
+    // sed to count VSR and Non-VSR games as we loop
     let vsrGameCount = 0;
     let otherGameCount = 0;
 
@@ -56,7 +49,6 @@ async function getLobbyData() {
     try {
 
         let fetchResponse = await fetch(proxyURL);
-        // let fetchResponse = await fetch('/js/data.sample.json');
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
@@ -64,48 +56,44 @@ async function getLobbyData() {
 
         let data = await fetchResponse.json();
 
-        if( data.DataCache.Players === undefined ) {
+        // steam players must be present if games exist, therefore this object being undefined means no players
+        if( data.DataCache.Players === undefined ) 
+        {
             document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No players online.</p>';
             return;
         }
 
-        // clear everything first
+        // clear clears the spinner on first-load, otherwise clears all the lobby cards when live updates are active
         document.querySelector('#lobbyList').innerHTML = "";
 
-        // all players currently online - list of objects
+        // iget all steam accounts currently online
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
 
-        // console.log('Steam Players:')
-        // for( const [sid, steam] of Object.entries(SteamPlayerList)) {
-        //     console.log(`\t${steam.Nickname} (ID: ${sid})`)
-        // };
-
-        // all current games - array
+        // all current games
         let GameList = data.Sessions;
 
-        // iterate through each game
+        // iterate through game list, building a lobby card for each 
         GameList.forEach((game, index) => {
 
-            // for each game, get all relevant data to build lobby card
+            // for each game, get all relevant data we need to fill in the lobby card components
             let currentLobbyID  = (index + 1);
             let gameName        = clean(game.Name);
             let gameMode        = game.Level.GameMode.ID;
-            // let uniqueGameID    = clean(game.Address.NAT);
-            let hasPassword     = game.Status.HasPassword;
-            let isLocked        = game.Status.IsLocked;
-            let gameDescription = game.Level.Description;
-            let netType         = clean(game.Address.NAT_TYPE);
-            let playerCount     = game.PlayerCount.Player;
-            let playerCountMax  = game.PlayerTypes[0].Max;
-            let gameState       = clean(game.Status.State);
-            let mapName         = game.Level.Name;
-            let mapImage        = game.Level.Image;
-            let mapFile         = game.Level.MapFile;
             let gameMod         = game.Game.Mod;
             let gameTime        = (game.Time.Seconds/60);
             let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
+            let gameState       = clean(game.Status.State);
+            let hasPassword     = game.Status.HasPassword;
+            let isLocked        = game.Status.IsLocked;
+            let netType         = clean(game.Address.NAT_TYPE);
+            let playerCount     = game.PlayerCount.Player;
+            let playerCountMax  = game.PlayerTypes[0].Max;
+            let mapName         = game.Level.Name;
+            let mapImage        = game.Level.Image;
+            // let gameDescription = game.Level.Description;
+            // let mapFile         = game.Level.MapFile;
 
-            // count vsr and non-vsr games
+            // increment our game mod counts based on mod ID
             if( gameMod === vsrModID ) {
                 vsrGameCount = vsrGameCount + 1;
             }
@@ -113,31 +101,34 @@ async function getLobbyData() {
                 otherGameCount = otherGameCount + 1;
             }
 
-            // if vsr-only is toggled, skip non-vsr games
+            // if vsr-only is toggled, this exits the current iteration if isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
                 if( gameMod !== vsrModID) {
                     return;
                 }
-
             }
 
             let PlayerList = game.Players;
+
+            // host should always be first player in the list
             let gameHost = game.Players[0].Name;
 
-            // used to fill empty slots in player list, since we always show 10
+            // since every card has 10 slots, we want to identify open spots (based on playerMax),
+            // and fill anything beyond that with empty content. this ensures we always end up with 
+            // an array of size 10
             let emptyObj = {};
             emptyObj.Name = "Empty";
 
             let vacantObj = {};
             vacantObj.Name = "Open";
 
-            // add open spots based on player max
+            // current # of players minus the player max gives the amount of open spots
             let total = (playerCountMax - PlayerList.length);
             for(let i = 0; i < total; i++){
                 PlayerList.push(vacantObj);
             }
 
-            // fill the rest with empty slots
+            // mark the rest of the slots as simply empty
             total = (10 - PlayerList.length);
             for(let i = 0; i < total; i++){
                 PlayerList.push(emptyObj);
@@ -145,7 +136,8 @@ async function getLobbyData() {
            
             let LobbyList = document.querySelector('#lobbyList');
 
-            // build the lobby cards
+            // we now have all the necessary data to produce a lobby card for the current game;
+            // we use a rather large template literal string to embed data where we need it
             LobbyList.insertAdjacentHTML(
                 'beforeend',
                 `
@@ -161,6 +153,7 @@ async function getLobbyData() {
                                     <span id="playerCount">${playerCount}</span>/<span id="playerMax">${playerCountMax}</span>
                                 </span>
                                 ${(() => {
+                                    // immediately-invoked function expressions allow us to return content based on target value
                                     if( gameState === "PreGame") {
                                         return `<span id="gameState" class="btn btn-sm bg-secondary btn-vsr">In-Lobby</span>`
                                     }
@@ -209,7 +202,8 @@ async function getLobbyData() {
                             </div>
                             <div class="row player-list">
                                 ${Object.keys(PlayerList).map(function (player) {
-                                    // Open Spot
+                                    // we are now iterating through the 10-element array we built earlier
+                                    // Open Slot
                                     if( PlayerList[player].Name === "Open") {
                                         return `<div class="col-6 player-slot player-slot-open p-2 font-monospace">
                                             <div class="d-block p-2 rounded border text-secondary ps-3 text-bg-secondary bg-opacity-10 d-flex align-items-center h-100">
@@ -225,7 +219,7 @@ async function getLobbyData() {
                                         </div>
                                         `
                                     }
-                                    // Empty Player Slot
+                                    // Empty Slot
                                     else if( PlayerList[player].Name === "Empty") {
                                         return `<div class="col-6 player-slot p-2">
                                             <div class="d-block p-2 border border-secondary rounded text-secondary ps-3" style="--bs-text-opacity:0; --bs-border-opacity:0;">
@@ -234,43 +228,44 @@ async function getLobbyData() {
                                         </div>
                                         `
                                     }
-                                    // List Players, include popover with Steam data, show "CMD" label if commander
+                                    // List Player - iterates through the Steam account list to get this player's steam data
                                     else if( (PlayerList[player].Team !== undefined) ) {
-                                            for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
+                                        for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
+                                        {
+                                            if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
                                             {
-                                                if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) {
-                                                    return `<div class="col-6 player-slot p-2">
-                                                    <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light">
-                                                        <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
-                                                            <div class="row">
-                                                                <div class="col-3 d-none d-lg-inline">
-                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
-                                                                </div>
-                                                                <div class="col-9 text-nowrap overflow-hidden">
-                                                                    <span class="small font-monospace">
-                                                                        N<span class="d-none d-lg-inline">ick</span>: ${truncate(clean(PlayerList[player].Name), 24)}<br>
-                                                                        S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
-                                                                        ${(() => {
-                                                                            if( PlayerList[player].Team.Leader === true) {
-                                                                                return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
-                                                                            }
-                                                                            else return "";
-                                                                        })()}
-                                                                        ${(() => {
-                                                                            if( PlayerList[player].Name === gameHost ) {
-                                                                                return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
-                                                                            }
-                                                                            else return "";
-                                                                        })()}
-                                                                    </span>
-                                                                </div>
+                                                return `<div class="col-6 player-slot p-2">
+                                                <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light">
+                                                    <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
+                                                        <div class="row">
+                                                            <div class="col-3 d-none d-lg-inline">
+                                                                <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                            </div>
+                                                            <div class="col-9 text-nowrap overflow-hidden">
+                                                                <span class="small font-monospace">
+                                                                    N<span class="d-none d-lg-inline">ick</span>: ${truncate(clean(PlayerList[player].Name), 24)}<br>
+                                                                    S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
+                                                                    ${(() => {
+                                                                        if( PlayerList[player].Team.Leader === true) {
+                                                                            return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
+                                                                        }
+                                                                        else return "";
+                                                                    })()}
+                                                                    ${(() => {
+                                                                        if( PlayerList[player].Name === gameHost ) {
+                                                                            return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
+                                                                        }
+                                                                        else return "";
+                                                                    })()}
+                                                                </span>
                                                             </div>
                                                         </div>
-                                                    </a>
                                                     </div>
-                                                    `
-                                                }
+                                                </a>
+                                                </div>
+                                                `
                                             }
+                                        }
                                     }
                                 }).join("")}
                             </div>
@@ -278,6 +273,7 @@ async function getLobbyData() {
                         <!-- Card Footer -->
                         <div class="card-footer d-flex justify-content-end align-items-center small">
                             ${(() => {
+                                // IIFEs need a return value, otherwise it returns undefined, thus the else statement
                                 if( isLocked === true) {
                                     return `<span class="btn btn-sm btn-outline-warning me-2">Locked</span>`
                                 }
@@ -295,6 +291,7 @@ async function getLobbyData() {
                             })()}
                             <span id="NATType" class="btn btn-sm btn-outline-secondary btn-vsr">
                                 ${(() => {
+                                    // there are more values than just these two, but they are the most common
                                     if( netType === "FULL CONE") {
                                         return `Full Cone`
                                     }
@@ -311,16 +308,21 @@ async function getLobbyData() {
                 </div>
                 `
             )
+            /* [END OF] Lobby Card template literal */
         });
+        /* [END OF] Game Loop (GameList.foreach()) */
 
-        // initialize any popovers
+        // initialize any popovers we may have created above (none being created in the current form of this product)
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {
             html: true,
             trigger: "hover"
         }));
 
-        // show alternative content if: (1) vsr is toggled and (2) non-vsr games exist, but (3) no vsr games exist
+        // this shows a message if all of the following is true:
+        //   1. "VSR Only" is toggled on 
+        //   2. No VSR games exist
+        //   3. Other non-VSR games exist
         if( localStorage.getItem("ShowVSROnly") === "true" ) {
             if( vsrGameCount == 0 && otherGameCount !== 0) {
                 document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No VSR games found.</p>';
@@ -332,19 +334,22 @@ async function getLobbyData() {
     }
 }
 
-// Main Content
+/*-------------------------------------------------*/
+/*------------------ MAIN CONTENT -----------------*/
+/*-------------------------------------------------*/
+
 window.addEventListener('DOMContentLoaded', (event) => {
 
+    // toggle the "VSR Only" switch based on localStorage value
+    if( localStorage.getItem("ShowVSROnly") === "false" ) {
+        document.querySelector("#VSRToggle").checked = false;
+    }
+
+    // run the main function to show data
     getLobbyData();
 
     // allow user to turn on auto-refresh (not persistent)
     let LiveUpdateToggle = document.querySelector("#LiveUpdateToggle");
-
-    if( localStorage.getItem("AlwaysLiveUpdates") === "true" ) {
-        interval_id = setInterval(getLobbyData, 15000);
-        LiveUpdateToggle.checked = true;
-    }
-
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
             interval_id = setInterval(getLobbyData, 15000);
@@ -354,9 +359,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    // provide a secret way to make "Live Updates" settings persistent 
+    if( localStorage.getItem("AlwaysLiveUpdates") === "true" ) {
+        interval_id = setInterval(getLobbyData, 15000);
+        LiveUpdateToggle.checked = true;
+    }
+
     // only show VSR mod games (persistent with localstorage)
     let VSRToggle = document.querySelector("#VSRToggle");
-
     VSRToggle.addEventListener('change', function () {
         if( this.checked ) {
             localStorage.setItem("ShowVSROnly", "true");
