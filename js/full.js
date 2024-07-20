@@ -33,12 +33,12 @@ function clean(str) {
     return cleanThatShit;
 }
 
-// main function to data and produce content based on that data
+// main function to get data and produce content based on that data
 async function getLobbyData() {
     
     console.log('Fetching data.');
 
-    // sed to count VSR and Non-VSR games as we loop
+    // used to count VSR and Non-VSR games as we loop
     let vsrGameCount = 0;
     let otherGameCount = 0;
 
@@ -63,10 +63,10 @@ async function getLobbyData() {
             return;
         }
 
-        // clear clears the spinner on first-load, otherwise clears all the lobby cards when live updates are active
+        // clears the spinner on first-load, otherwise clears all the lobby cards when live updates are active
         document.querySelector('#lobbyList').innerHTML = "";
 
-        // iget all steam accounts currently online
+        // get all steam accounts
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
 
         // all current games
@@ -75,7 +75,7 @@ async function getLobbyData() {
         // iterate through game list, building a lobby card for each 
         GameList.forEach((game, index) => {
 
-            // for each game, get all relevant data we need to fill in the lobby card components
+            // for each game, get all relevant data 
             let currentLobbyID  = (index + 1);
             let gameName        = clean(game.Name);
             let gameMode        = game.Level.GameMode.ID;
@@ -93,7 +93,7 @@ async function getLobbyData() {
             // let gameDescription = game.Level.Description;
             // let mapFile         = game.Level.MapFile;
 
-            // increment our game mod counts based on mod ID
+            // increment our game mod counts
             if( gameMod === vsrModID ) {
                 vsrGameCount = vsrGameCount + 1;
             }
@@ -101,7 +101,7 @@ async function getLobbyData() {
                 otherGameCount = otherGameCount + 1;
             }
 
-            // if vsr-only is toggled, this exits the current iteration if isn't VSR
+            // if vsr-only is toggled, this exits the current iteration if it isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
                 if( gameMod !== vsrModID) {
                     return;
@@ -114,7 +114,7 @@ async function getLobbyData() {
             let gameHost = game.Players[0].Name;
 
             // since every card has 10 slots, we want to identify open spots (based on playerMax),
-            // and fill anything beyond that with empty content. this ensures we always end up with 
+            // and fill anything beyond that with empty slots. this ensures we always end up with 
             // an array of size 10
             let emptyObj = {};
             emptyObj.Name = "Empty";
@@ -360,6 +360,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // provide a secret way to make "Live Updates" settings persistent 
+    // this has to be manually set by user in the browser console
     if( localStorage.getItem("AlwaysLiveUpdates") === "true" ) {
         interval_id = setInterval(getLobbyData, 15000);
         LiveUpdateToggle.checked = true;
