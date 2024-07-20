@@ -72,10 +72,10 @@ async function getLobbyData() {
         // all current games
         let GameList = data.Sessions;
 
-        // iterate through game list, building a lobby card for each 
+        // build a lobby card for each game
         GameList.forEach((game, index) => {
 
-            // for each game, get all relevant data 
+            // get all relevant data 
             let currentLobbyID  = (index + 1);
             let gameName        = clean(game.Name);
             let gameMode        = game.Level.GameMode.ID;
@@ -122,7 +122,7 @@ async function getLobbyData() {
             let vacantObj = {};
             vacantObj.Name = "Open";
 
-            // current # of players minus the player max gives the amount of open spots
+            // current # of players minus the player max gives the amount of open spots to add
             let total = (playerCountMax - PlayerList.length);
             for(let i = 0; i < total; i++){
                 PlayerList.push(vacantObj);
