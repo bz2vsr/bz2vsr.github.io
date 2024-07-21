@@ -1,4 +1,4 @@
-.player-slot {
+/* .player-slot {
     border-bottom: 1px dotted rgba(255, 255, 255, 0.15);
 }
 
@@ -9,12 +9,11 @@
 .player-slot:nth-child(9),
 .player-slot:nth-child(10) {
     border-bottom: none;
-}
-
+} */
 .player-slot-open .border {
     color: rgba(255, 255, 255, 0.2);
     border-style: dashed !important;
-}
+} 
 
 .player-slot a:hover div,
 .player-slot a:hover .badge {

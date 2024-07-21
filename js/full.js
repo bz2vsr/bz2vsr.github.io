@@ -142,7 +142,7 @@ async function getLobbyData() {
                 'beforeend',
                 `
                 <div class="col-12 col-xs-12 col-xl-6 mb-3">
-                    <div class="card">
+                    <div class="card h-100">
                         <!-- Card Header -->
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span id="gameTitle">
@@ -164,10 +164,10 @@ async function getLobbyData() {
                             </span>
                         </div>
                         <!-- Card Body -->
-                        <div class="container">
+                        <div class="container h-100 pb-1">
                             <div class="row border-bottom">
                                 <div class="col-3 p-2 border-0 border-end border-dotted text-center">
-                                    <img src="${mapImage}" style="filter:brightness(1.5)"class="img-thumbnail rounded"/>
+                                    <img width="250" length="250" src="${mapImage}" style="filter:brightness(1.5)"class="img-thumbnail rounded"/>
                                 </div>
                                 <div class="col-9 p-0 small">
                                     <ul class="list-group list-group-flush font-monospace text-secondary">
