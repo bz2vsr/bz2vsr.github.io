@@ -8,6 +8,9 @@ let interval_id = null;
 // unique ID used to identify Vet Strat Recycler mod
 const vsrModID = "1325933293";
 
+// base Steam Browser protocol URL for directly joining games
+const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
+
 /*-------------------------------------------------*/
 /*------------------- FUNCTIONS -------------------*/
 /*-------------------------------------------------*/
@@ -15,6 +18,28 @@ const vsrModID = "1325933293";
 // simple string truncation
 const truncate = (str, len, end = "...") => {
     return str.length <= len ? str : str.substring(0, len) + end
+}
+
+// convert single char into hexidecimal with 2 digit padding
+function charToHex(char)
+{
+    var hex = char.toString(16);
+    if ((hex.length % 2) > 0) {
+        hex = "0" + hex;
+    }
+    return hex;
+}
+
+// convert ASCII string into hexidecimal
+function stringToHex(str)
+{
+    var hexString = "";
+
+    for ( var i = 0; i < str.length; i++ ) {
+        hexString = hexString + charToHex(str.charCodeAt(i));
+    }
+
+    return hexString;
 }
 
 // clean input strings; not a full-proof solution, but feukers will be feukers
@@ -90,8 +115,43 @@ async function getLobbyData() {
             let playerCountMax  = game.PlayerTypes[0].Max;
             let mapName         = game.Level.Name;
             let mapImage        = game.Level.Image;
-            // let gameDescription = game.Level.Description;
-            // let mapFile         = game.Level.MapFile;
+
+            // attempt to grab direct join URL
+            let hasJoinURL = false; 
+            let directJoinURL = "#";
+            let modList;
+            
+            // we need at least one valid game mod to create a join URL
+            // for now, we only build join urls for VSR games
+            // we also ignore games with passwords
+            if( gameMod !== undefined && gameMod === vsrModID && !hasPassword ) 
+            { 
+                hasJoinURL = true;
+
+                if( game.Game.Mods !== undefined )
+                {
+                    modList = `${gameMod};${(game.Game.Mods).join(";")}` ;
+                }
+                else {
+                    modList = gameMod;
+                }
+
+                let steamProtocolArgs = [
+                    "N",
+                    game.Name.length.toString(),
+                    clean(game.Name),
+                    modList.length,
+                    modList,
+                    game.Address.NAT,
+                    "0"
+                ];
+
+                let plainTextArgs = (steamProtocolArgs.join(",")) + ",";
+                let encodedArgs = stringToHex(plainTextArgs);
+
+                directJoinURL = baseSteamProtocol + encodedArgs;
+            }
+
 
             // increment our game mod counts
             if( gameMod === vsrModID ) {
@@ -149,17 +209,30 @@ async function getLobbyData() {
                                 <strong>Lobby ${currentLobbyID}</strong>
                             </span>
                             <span class="font-monospace">
-                                <span class="btn btn-sm bg-purple">
+                                <span class="btn btn-sm bg-dark btn-dead border">
                                     <span id="playerCount">${playerCount}</span>/<span id="playerMax">${playerCountMax}</span>
                                 </span>
                                 ${(() => {
                                     // immediately-invoked function expressions allow us to return content based on target value
                                     if( gameState === "PreGame") {
-                                        return `<span id="gameState" class="btn btn-sm bg-secondary btn-vsr">In-Lobby</span>`
+                                        return `<span id="gameState" class="btn btn-sm bg-secondary btn-vsr btn-dead">In-Lobby</span>`
                                     }
                                     else if ( gameState === "InGame") {
-                                        return `<span id="gameState" class="btn btn-sm btn-success btn-vsr">In-Game</span>`
+                                        return `<span id="gameState" class="btn btn-sm btn-success btn-vsr btn-dead">In-Game</span>`
                                     }
+                                })()}
+                                ${(() => {
+                                    if( hasJoinURL ) {
+                                        return `
+                                        <a href="${directJoinURL}" class="btn btn-sm btn-purple">
+                                            Join
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1" viewBox="0 0 16 16">
+                                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                                            </svg>
+                                        </a> 
+                                        `
+                                    }
+                                    else { return `` }
                                 })()}
                             </span>
                         </div>

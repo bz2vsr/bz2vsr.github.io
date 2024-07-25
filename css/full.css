@@ -20,8 +20,12 @@
     --bs-bg-opacity: 1 !important;
 }
 
-.bg-purple {
+.btn-purple {
     background-color: #6f42c1;
+}
+
+.btn-purple:hover {
+    background-color: rgb(89, 53, 154);
 }
 
 #LiveUpdateButton {
@@ -34,4 +38,8 @@
 
 .border-dotted {
     border-style: dotted !important;
+}
+
+.btn-dead {
+    pointer-events: none;
 }
