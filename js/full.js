@@ -67,13 +67,11 @@ async function getLobbyData() {
     let vsrGameCount = 0;
     let otherGameCount = 0;
 
-    // Requesting data directly gets blocked by CORS policy, so we use klugey CORS Proxy workaround
-    const sourceURL = "http://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
-    const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL;
+    const sourceURL = "https://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
 
     try {
 
-        let fetchResponse = await fetch(proxyURL);
+        let fetchResponse = await fetch(sourceURL);
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
@@ -122,9 +120,8 @@ async function getLobbyData() {
             let modList;
             
             // we need at least one valid game mod to create a join URL
-            // for now, we only build join urls for VSR games
-            // we also ignore games with passwords
-            if( gameMod !== undefined && gameMod === vsrModID && !hasPassword ) 
+            // we also ignore locked and password-protected games
+            if( gameMod !== undefined && !hasPassword && !isLocked ) 
             { 
                 hasJoinURL = true;
 
