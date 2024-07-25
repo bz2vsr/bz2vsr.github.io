@@ -344,7 +344,7 @@ async function getLobbyData() {
                             ${(() => {
                                 // IIFEs need a return value, otherwise it returns undefined, thus the else statement
                                 if( isLocked === true) {
-                                    return `<span class="btn btn-sm btn-outline-warning me-2">Locked</span>`
+                                    return `<span class="btn btn-sm btn-outline-warning btn-dead me-2">Locked</span>`
                                 }
                                 else {
                                     return ``
@@ -352,13 +352,13 @@ async function getLobbyData() {
                             })()}
                             ${(() => {
                                 if( hasPassword === true) {
-                                    return `<span class="btn btn-sm btn-outline-danger me-2">Password</span>`
+                                    return `<span class="btn btn-sm btn-outline-danger btn-dead me-2">Password</span>`
                                 }
                                 else {
                                     return ``
                                 }
                             })()}
-                            <span id="NATType" class="btn btn-sm btn-outline-secondary btn-vsr">
+                            <span id="NATType" class="btn btn-sm btn-outline-secondary btn-vsr btn-dead">
                                 ${(() => {
                                     // there are more values than just these two, but they are the most common
                                     if( netType === "FULL CONE") {
