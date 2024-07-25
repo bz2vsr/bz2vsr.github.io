@@ -69,11 +69,11 @@ async function getLobbyData() {
 
     // Requesting data directly gets blocked by CORS policy, so we use klugey CORS Proxy workaround
     const sourceURL = "http://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
-    const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL;
+    // const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL;
 
     try {
 
-        let fetchResponse = await fetch(proxyURL);
+        let fetchResponse = await fetch(sourceURL);
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
@@ -424,7 +424,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let LiveUpdateToggle = document.querySelector("#LiveUpdateToggle");
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
-            interval_id = setInterval(getLobbyData, 15000);
+            interval_id = setInterval(getLobbyData, 5000);
         }
         else {
             clearInterval(interval_id);
