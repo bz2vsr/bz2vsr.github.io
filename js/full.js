@@ -152,7 +152,6 @@ async function getLobbyData() {
                 directJoinURL = baseSteamProtocol + encodedArgs;
             }
 
-
             // increment our game mod counts
             if( gameMod === vsrModID ) {
                 vsrGameCount = vsrGameCount + 1;
