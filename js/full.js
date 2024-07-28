@@ -11,6 +11,9 @@ const vsrModID = "1325933293";
 // base Steam Browser protocol URL for directly joining games
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
+// used to prepend cors proxy url in ajax request url (for dev environement only)
+const useCORSProxy = false;
+
 /*-------------------------------------------------*/
 /*------------------- FUNCTIONS -------------------*/
 /*-------------------------------------------------*/
@@ -58,6 +61,23 @@ function clean(str) {
     return cleanThatShit;
 }
 
+function hostGame() {
+
+    gameName = clean(document.querySelector('#inputGameName').value);
+
+    // hacky way to close modal bc i lack sufficient brain cells
+    document.querySelector("#modalCloseButton").click();
+
+    // this shouldn't ever be empty tbh
+    if( gameName === "" ) {
+        gameName = "Game";
+    }
+
+    hostLaunchURL = `steam://rungame/624970/76561198955218468/-hostname%20"${gameName}"%20-nomovies`;
+    window.location.replace(hostLaunchURL);
+    return false;
+}
+
 // main function to get data and produce content based on that data
 async function getLobbyData() {
     
@@ -67,7 +87,9 @@ async function getLobbyData() {
     let vsrGameCount = 0;
     let otherGameCount = 0;
 
-    const sourceURL = "https://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
+    let sourceURL = "https://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
+
+    if(useCORSProxy) { sourceURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL; }
 
     try {
 
@@ -447,4 +469,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
         getLobbyData();
     });
 
+    // let ctrl + shift + X be shortcut to open host modal
+    document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey && event.shiftKey && event.key === 'X') {
+            document.querySelector("#hostButton").click();
+        }
+    });
+
+    // when host modal opens, allow user to immediately start typing without having to click on the input for focus
+    document.querySelector("#hostModal").addEventListener("show.bs.modal", function(event)
+    {
+        document.querySelector("#inputGameName").value = "";
+
+        document.addEventListener('keydown', function(event)
+        {
+            document.querySelector("#inputGameName").focus();
+        });
+    });
 });
