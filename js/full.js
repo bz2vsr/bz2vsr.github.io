@@ -12,7 +12,7 @@ const vsrModID = "1325933293";
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 /*-------------------------------------------------*/
 /*------------------- FUNCTIONS -------------------*/
