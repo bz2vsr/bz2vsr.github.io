@@ -74,6 +74,7 @@ function hostGame() {
     }
 
     hostLaunchURL = `steam://rungame/624970/76561198955218468/-hostname%20"${gameName}"%20-nomovies`;
+    console.log("Attempting to launch Steam Protocol URI: " + hostLaunchURL);
     window.location.replace(hostLaunchURL);
     return false;
 }
