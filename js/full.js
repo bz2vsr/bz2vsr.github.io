@@ -63,7 +63,7 @@ function clean(str) {
 
 function hostGame() {
 
-    gameName = clean(document.querySelector('#inputGameName').value);
+    gameName = document.querySelector('#inputGameName').value;
 
     // hacky way to close modal bc i lack sufficient brain cells
     document.querySelector("#modalCloseButton").click();
