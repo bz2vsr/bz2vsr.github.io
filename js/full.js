@@ -437,28 +437,34 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector("#VSRToggle").checked = false;
     }
 
-    // run the main function to show data
-    getLobbyData();
+    // toggle the "Live Updates" switch based on localStorage value
+    if( localStorage.getItem("LiveUpdatesOn") === "false" ) {
+        document.querySelector("#LiveUpdateToggle").checked = false;
+    }
 
-    // allow user to turn on auto-refresh (not persistent)
+    // run main data grab on interval if necessary, otherwise run once
+    if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
+        getLobbyData();
+        interval_id = setInterval(getLobbyData, 15000);
+    }
+    else {
+        getLobbyData();
+    }
+
+    // allow user to toggle auto-refresh 
     let LiveUpdateToggle = document.querySelector("#LiveUpdateToggle");
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
+            localStorage.setItem("LiveUpdatesOn", "true");
             interval_id = setInterval(getLobbyData, 15000);
         }
         else {
+            localStorage.setItem("LiveUpdatesOn", "false");
             clearInterval(interval_id);
         }
     });
 
-    // provide a secret way to make "Live Updates" settings persistent 
-    // this has to be manually set by user in the browser console
-    if( localStorage.getItem("AlwaysLiveUpdates") === "true" ) {
-        interval_id = setInterval(getLobbyData, 15000);
-        LiveUpdateToggle.checked = true;
-    }
-
-    // only show VSR mod games (persistent with localstorage)
+    // allow user to toggle VSR mod games only
     let VSRToggle = document.querySelector("#VSRToggle");
     VSRToggle.addEventListener('change', function () {
         if( this.checked ) {
