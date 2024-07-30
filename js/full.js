@@ -14,6 +14,13 @@ const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 const useCORSProxy = false;
 
+const joinString = new URLSearchParams(window.location.search).get('join');
+console.log(joinString)
+
+if( joinString !== undefined && joinString !== null ) {
+    window.location.replace(baseSteamProtocol + joinString);
+}
+
 /*-------------------------------------------------*/
 /*------------------- FUNCTIONS -------------------*/
 /*-------------------------------------------------*/
@@ -144,6 +151,7 @@ async function getLobbyData() {
             let hasJoinURL = false; 
             let directJoinURL = "#";
             let modList;
+            let encodedArgs;
             
             // we need at least one valid game mod to create a join URL
             // we also ignore locked and password-protected games
@@ -170,7 +178,7 @@ async function getLobbyData() {
                 ];
 
                 let plainTextArgs = (steamProtocolArgs.join(",")) + ",";
-                let encodedArgs = stringToHex(plainTextArgs);
+                encodedArgs = stringToHex(plainTextArgs);
 
                 directJoinURL = baseSteamProtocol + encodedArgs;
             }
@@ -243,10 +251,11 @@ async function getLobbyData() {
                                         return `<span id="gameState" class="btn btn-sm btn-success btn-vsr btn-dead">In-Game</span>`
                                     }
                                 })()}
+                                <div class="btn-group">
                                 ${(() => {
                                     if( hasJoinURL ) {
                                         return `
-                                        <a href="${directJoinURL}" class="btn btn-sm btn-purple">
+                                        <a href="${directJoinURL}" class="btn btn-sm btn-purple me-1" title="Join the game directly with Steam.">
                                             Join
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1" viewBox="0 0 16 16">
                                             <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
@@ -256,6 +265,14 @@ async function getLobbyData() {
                                     }
                                     else { return `` }
                                 })()}
+                                <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple btn-join-copy" title="Get a shareable link for Discord.">
+                                    <textarea class="visually-hidden">${window.location.href + "?join=" + encodedArgs}</textarea>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                    </svg>
+                                </button>
+                                </div>
                             </span>
                         </div>
                         <!-- Card Body -->
@@ -421,6 +438,34 @@ async function getLobbyData() {
             }
         }
 
+        let joinBtns = document.querySelectorAll('.btn-join-copy');
+        if( joinBtns !== null )
+        {
+            joinBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+
+                    // joinStr = btn.attributes.getNamedItem("data-join-string").value;
+                    joinStr = btn.querySelector('textarea');
+                    console.log(joinStr);
+
+                    joinStr.focus();
+                    joinStr.select();
+
+                    document.execCommand("copy");
+
+                    btn.classList.remove('btn-purple');
+                    btn.classList.add('btn-primary');
+                    btn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                        </svg>
+                        `;
+                    
+                });
+
+            });
+        }
+
     } catch(err) {
         console.log(`Catch Error: ${err}`);
     }
@@ -484,13 +529,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // when host modal opens, allow user to immediately start typing without having to click on the input for focus
-    document.querySelector("#hostModal").addEventListener("show.bs.modal", function(event)
-    {
-        document.querySelector("#inputGameName").value = "";
+    // document.querySelector("#hostModal").addEventListener("show.bs.modal", function(event)
+    // {
+    //     document.querySelector("#inputGameName").value = "";
 
-        document.addEventListener('keydown', function(event)
-        {
-            document.querySelector("#inputGameName").focus();
-        });
-    });
+    //     document.addEventListener('keydown', function(event)
+    //     {
+    //         document.querySelector("#inputGameName").focus();
+    //     });
+    // });
 });

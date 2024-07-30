@@ -64,24 +64,19 @@
                     </div>
                     <div class="modal-body bg-opacity-0 border-0">
                         <p class="text-muted font-monospace small alert alert-secondary">
-                            This will host a game as you, with the given name. 
-                            It will not work if Battlezone is already open.<br><br>
-                            <span class="text-warning">Breaks with some special characters, so stick to alphanumerical only.</span>
+                            This will host a game called "bz2vsr" as you.
+                            It will not work if Battlezone is already open.
                         </p>
-                        <form id="formHostGame" action="#" onsubmit="hostGame()">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Game Name</span>
-                                <input id="inputGameName" type="text" class="form-control font-monospace focus-ring" autofocus required>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-success">
-                                    Host
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1" viewBox="0 0 16 16">
-                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
+                        <div class="d-flex justify-content-end">
+                            <a href='steam://rungame/624970/76561198955218468/-hostname%20"bz2vsr"%20-nomovies' 
+                                onclick='document.querySelector("#modalCloseButton").click();'
+                                class="btn btn-success">
+                                Host
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1" viewBox="0 0 16 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

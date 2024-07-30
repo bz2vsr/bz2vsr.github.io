@@ -24,6 +24,7 @@
     background-color: #6f42c1;
 }
 
+.btn-purple-subtle,
 .btn-purple:hover {
     background-color: rgb(89, 53, 154);
 }
