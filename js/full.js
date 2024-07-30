@@ -117,6 +117,7 @@ async function getLobbyData() {
 
         // all current games
         let GameList = data.Sessions;
+        let Mods = data.Mods;
 
         // build a lobby card for each game
         GameList.forEach((game, index) => {
@@ -126,6 +127,7 @@ async function getLobbyData() {
             let gameName        = clean(game.Name);
             let gameMode        = game.Level.GameMode.ID;
             let gameMod         = game.Game.Mod;
+            let gameModName     = (gameMod !== undefined ? Mods[gameMod].Name : "Stock");
             let gameTime        = (game.Time.Seconds/60);
             let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
             let gameState       = clean(game.Status.State);
@@ -136,6 +138,7 @@ async function getLobbyData() {
             let playerCountMax  = game.PlayerTypes[0].Max;
             let mapName         = game.Level.Name;
             let mapImage        = game.Level.Image;
+
 
             // attempt to grab direct join URL
             let hasJoinURL = false; 
@@ -331,7 +334,7 @@ async function getLobbyData() {
                                                     <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
                                                         <div class="row">
                                                             <div class="col-3 d-none d-lg-inline">
-                                                                <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                             </div>
                                                             <div class="col-9 text-nowrap overflow-hidden">
                                                                 <span class="small font-monospace">
@@ -363,38 +366,35 @@ async function getLobbyData() {
                             </div>
                         </div>
                         <!-- Card Footer -->
-                        <div class="card-footer d-flex justify-content-end align-items-center small">
-                            ${(() => {
-                                // IIFEs need a return value, otherwise it returns undefined, thus the else statement
-                                if( isLocked === true) {
-                                    return `<span class="btn btn-sm btn-outline-warning btn-dead me-2">Locked</span>`
-                                }
-                                else {
-                                    return ``
-                                }
-                            })()}
-                            ${(() => {
-                                if( hasPassword === true) {
-                                    return `<span class="btn btn-sm btn-outline-danger btn-dead me-2">Password</span>`
-                                }
-                                else {
-                                    return ``
-                                }
-                            })()}
-                            <span id="NATType" class="btn btn-sm btn-outline-secondary btn-vsr btn-dead">
+                        <div class="card-footer d-flex justify-content-between align-items-center small">
+                            <span class="btn btn-sm text-secondary border border-secondary btn-dead ps-0 font-monospace" style="--bs-border-opacity: 0;">${gameModName}</span>
+                            <div class="d-flex justify-content-end align-items-center">
                                 ${(() => {
-                                    // there are more values than just these two, but they are the most common
-                                    if( netType === "FULL CONE") {
-                                        return `Full Cone`
+                                    // IIFEs need a return value, otherwise it returns undefined, thus the else statement
+                                    if( isLocked === true) {
+                                        return `<span class="btn btn-sm btn-outline-warning btn-dead ms-2">Locked</span>`
                                     }
-                                    else if( netType === "SYMMETRIC") {
-                                        return `Symmetric`
-                                    }
-                                    else {
-                                        return `N/A`
-                                    }
+                                    else return ``
                                 })()}
-                            </span>
+                                ${(() => {
+                                    if( hasPassword === true) {
+                                        return `<span class="btn btn-sm btn-outline-danger btn-dead ms-2">Password</span>`
+                                    }
+                                    else return ``
+                                })()}
+                                <span id="NATType" class="btn btn-sm btn-outline-secondary btn-vsr btn-dead ms-2">
+                                    ${(() => {
+                                        // there are more values than just these two, but they are the most common
+                                        if( netType === "FULL CONE") {
+                                            return `Full Cone`
+                                        }
+                                        else if( netType === "SYMMETRIC") {
+                                            return `Symmetric`
+                                        }
+                                        else return `N/A`
+                                    })()}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -445,7 +445,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // run main data grab on interval if necessary, otherwise run once
     if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
         getLobbyData();
-        interval_id = setInterval(getLobbyData, 15000);
+        interval_id = setInterval(getLobbyData, 10000);
     }
     else {
         getLobbyData();
@@ -456,7 +456,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
             localStorage.setItem("LiveUpdatesOn", "true");
-            interval_id = setInterval(getLobbyData, 15000);
+            interval_id = setInterval(getLobbyData, 10000);
         }
         else {
             localStorage.setItem("LiveUpdatesOn", "false");
