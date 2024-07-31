@@ -14,8 +14,12 @@ const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 const useCORSProxy = false;
 
+/*-------------------------------------------------*/
+/*------------------- REDIRECTS -------------------*/
+/*-------------------------------------------------*/
+
+// if URL has a join string, process that immediately
 const joinString = new URLSearchParams(window.location.search).get('join');
-console.log(joinString)
 
 if( joinString !== undefined && joinString !== null ) {
     window.location.replace(baseSteamProtocol + joinString);
@@ -66,24 +70,6 @@ function clean(str) {
     }
 
     return cleanThatShit;
-}
-
-function hostGame() {
-
-    gameName = document.querySelector('#inputGameName').value;
-
-    // hacky way to close modal bc i lack sufficient brain cells
-    document.querySelector("#modalCloseButton").click();
-
-    // this shouldn't ever be empty tbh
-    if( gameName === "" ) {
-        gameName = "Game";
-    }
-
-    hostLaunchURL = `steam://rungame/624970/76561198955218468/-hostname%20"${gameName}"%20-nomovies`;
-    console.log("Attempting to launch Steam Protocol URI: " + hostLaunchURL);
-    window.location.replace(hostLaunchURL);
-    return false;
 }
 
 // main function to get data and produce content based on that data
@@ -421,13 +407,6 @@ async function getLobbyData() {
         });
         /* [END OF] Game Loop (GameList.foreach()) */
 
-        // initialize any popovers we may have created above (none being created in the current form of this product)
-        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl, {
-            html: true,
-            trigger: "hover"
-        }));
-
         // this shows a message if all of the following is true:
         //   1. "VSR Only" is toggled on 
         //   2. No VSR games exist
@@ -438,34 +417,31 @@ async function getLobbyData() {
             }
         }
 
+        // let each copy button generate a unique and shareable join URL for the associated lobby/game
         let joinBtns = document.querySelectorAll('.btn-join-copy');
         if( joinBtns !== null )
         {
             joinBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
 
-                    // joinStr = btn.attributes.getNamedItem("data-join-string").value;
                     joinStr = btn.querySelector('textarea');
-                    console.log(joinStr);
-
                     joinStr.focus();
                     joinStr.select();
 
+                    // officially deprecated, but...still works :P
                     document.execCommand("copy");
 
                     btn.classList.remove('btn-purple');
                     btn.classList.add('btn-primary');
+                    // change clipboard icon to a checkmark
                     btn.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                         <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
                         </svg>
-                        `;
-                    
+                    `;
                 });
-
             });
         }
-
     } catch(err) {
         console.log(`Catch Error: ${err}`);
     }
@@ -528,14 +504,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    // when host modal opens, allow user to immediately start typing without having to click on the input for focus
-    // document.querySelector("#hostModal").addEventListener("show.bs.modal", function(event)
-    // {
-    //     document.querySelector("#inputGameName").value = "";
-
-    //     document.addEventListener('keydown', function(event)
-    //     {
-    //         document.querySelector("#inputGameName").focus();
-    //     });
-    // });
 });
