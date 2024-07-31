@@ -12,7 +12,7 @@ const vsrModID = "1325933293";
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 /*-------------------------------------------------*/
 /*------------------- REDIRECTS -------------------*/
@@ -327,7 +327,7 @@ async function getLobbyData() {
                                         `
                                     }
                                     // List Player - iterates through the Steam account list to get this player's steam data
-                                    else if( (PlayerList[player].Team !== undefined) ) {
+                                    else {
                                         for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
                                         {
                                             if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
@@ -344,10 +344,12 @@ async function getLobbyData() {
                                                                     N<span class="d-none d-lg-inline">ick</span>: ${truncate(clean(PlayerList[player].Name), 24)}<br>
                                                                     S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
                                                                     ${(() => {
-                                                                        if( PlayerList[player].Team.Leader === true) {
-                                                                            return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
+                                                                        if( PlayerList[player].Team !== undefined ) {
+                                                                            if( PlayerList[player].Team.Leader === true) {
+                                                                                return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
+                                                                            }
+                                                                            else return "";
                                                                         }
-                                                                        else return "";
                                                                     })()}
                                                                     ${(() => {
                                                                         if( PlayerList[player].Name === gameHost ) {
