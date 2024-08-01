@@ -108,8 +108,10 @@ async function getLobbyData() {
         // get all steam accounts
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
 
-        // all current games
+        // all current games, sorted by game name
         let GameList = data.Sessions;
+        GameList.sort((a, b) => (b.Name > a.Name) ? 1 : -1);
+
         let Mods = data.Mods;
 
         // build a lobby card for each game
@@ -145,8 +147,7 @@ async function getLobbyData() {
             { 
                 hasJoinURL = true;
 
-                if( game.Game.Mods !== undefined )
-                {
+                if( game.Game.Mods !== undefined ) {
                     modList = `${gameMod};${(game.Game.Mods).join(";")}` ;
                 }
                 else {
@@ -504,6 +505,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if (event.ctrlKey && event.shiftKey && event.key === 'X') {
             document.querySelector("#hostButton").click();
         }
+    });
+
+    // when host modal opens, allow user to immediately start typing without having to click on the input for focus
+    document.querySelector("#hostModal").addEventListener("shown.bs.modal", function(event)
+    {
+        document.querySelector("#modalHostButton").focus({focusVisible:true});
     });
 
 });
