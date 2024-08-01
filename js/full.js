@@ -12,7 +12,7 @@ const vsrModID = "1325933293";
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 /*-------------------------------------------------*/
 /*------------------- REDIRECTS -------------------*/
@@ -241,21 +241,23 @@ async function getLobbyData() {
                                 ${(() => {
                                     if( hasJoinURL ) {
                                         return `
-                                        <div class="btn-group">
-                                            <a href="${directJoinURL}" class="btn btn-sm btn-purple me-1" title="Join the game directly with Steam.">
-                                                Join
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1" viewBox="0 0 16 16">
-                                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
-                                                </svg>
-                                            </a> 
-                                            <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple btn-join-copy" title="Get a shareable link for Discord.">
-                                                <textarea class="visually-hidden">${window.location.href + "?join=" + encodedArgs}</textarea>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
-                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
-                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
-                                                </svg>
-                                            </button>
-                                        </div>
+                                        <span class="d-none d-lg-inline">
+                                            <div class="btn-group">
+                                                <a href="${directJoinURL}" class="btn btn-sm btn-purple me-1" title="Join the game directly with Steam.">
+                                                    Join
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1" viewBox="0 0 16 16">
+                                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                                                    </svg>
+                                                </a> 
+                                                <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple btn-join-copy" title="Get a shareable link for Discord.">
+                                                    <textarea class="visually-hidden">${window.location.href + "?join=" + encodedArgs}</textarea>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </span>
                                         `
                                     }
                                     else { return `` }
@@ -334,17 +336,7 @@ async function getLobbyData() {
                                             if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
                                             {
                                                 return `<div class="col-6 player-slot p-2">
-                                                <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light position-relative font-monospace">
-                                                    ${(() => {
-                                                        if( PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined ) {
-                                                            if( parseInt(PlayerList[player].Team.SubTeam.ID) < 6) {
-                                                                return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1">1</strong>`;
-                                                            }
-                                                            else {
-                                                                return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1">2</strong>`;
-                                                            }
-                                                        }
-                                                    })()}
+                                                <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light font-monospace">
                                                     <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
                                                         <div class="row">
                                                             <div class="col-3 d-none d-lg-inline">
