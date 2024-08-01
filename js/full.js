@@ -110,7 +110,7 @@ async function getLobbyData() {
 
         // all current games, sorted by game name
         let GameList = data.Sessions;
-        GameList.sort((a, b) => (b.Name > a.Name) ? 1 : -1);
+        GameList.sort((a, b) => (b.Name < a.Name) ? 1 : -1);
 
         let Mods = data.Mods;
 
