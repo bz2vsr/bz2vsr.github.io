@@ -48,3 +48,10 @@
 .border-hidden-border {
     border-color: rgba(255, 255, 255, 0) !important;
 }
+
+.btn-glow {
+  box-shadow:
+    0 0 10px #fff,            /* outer white */
+    -5px 0 10px #f0f,        /* outer left magenta */
+    5px 0 10px #0ff;         /* outer right cyan */
+}

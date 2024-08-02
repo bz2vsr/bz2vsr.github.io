@@ -110,17 +110,17 @@ async function getLobbyData() {
 
         // all current games, sorted by game name
         let GameList = data.Sessions;
-        GameList.sort((a, b) => (b.Name < a.Name) ? 1 : -1);
+        GameList.sort((a, b) => (b.Name > a.Name) ? 1 : -1);
 
-        // always move "bz2vsr" game to front of the list
-        // for(let i = 0; i < GameList.length; i++ ) {
-        //     let gName = GameList[i].Name;
-        //     if(GameList[i].Name === "bz2vsr") {
-        //         let g = GameList[i];
-        //         GameList.splice(i, 1);
-        //         GameList.splice(0, 0, g);
-        //     }
-        // }
+        // always move "bz2vsr" games to front of the list
+        for(let i = 0; i < GameList.length; i++ ) {
+            let gName = GameList[i].Name;
+            if(GameList[i].Name === "bz2vsr") {
+                let g = GameList[i];
+                GameList.splice(i, 1);
+                GameList.splice(0, 0, g);
+            }
+        }
 
         let Mods = data.Mods;
 
