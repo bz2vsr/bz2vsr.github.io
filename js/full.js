@@ -112,6 +112,16 @@ async function getLobbyData() {
         let GameList = data.Sessions;
         GameList.sort((a, b) => (b.Name < a.Name) ? 1 : -1);
 
+        // always move "bz2vsr" game to front of the list
+        // for(let i = 0; i < GameList.length; i++ ) {
+        //     let gName = GameList[i].Name;
+        //     if(GameList[i].Name === "bz2vsr") {
+        //         let g = GameList[i];
+        //         GameList.splice(i, 1);
+        //         GameList.splice(0, 0, g);
+        //     }
+        // }
+
         let Mods = data.Mods;
 
         // build a lobby card for each game
@@ -223,7 +233,7 @@ async function getLobbyData() {
                         <!-- Card Header -->
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span id="gameTitle">
-                                <strong>Lobby ${currentLobbyID}</strong>
+                                <strong>Game ${currentLobbyID}</strong>
                             </span>
                             <span class="font-monospace">
                                 <span class="btn btn-sm bg-dark btn-dead border">
