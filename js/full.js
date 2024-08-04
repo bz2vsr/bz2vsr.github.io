@@ -115,7 +115,7 @@ async function getLobbyData() {
         // always move "bz2vsr" games to front of the list
         for(let i = 0; i < GameList.length; i++ ) {
             let gName = GameList[i].Name;
-            if(GameList[i].Name === "bz2vsr") {
+            if(GameList[i].Name === "bz2vsr" || GameList[i].Name.toLowerCase() === "vsr" ) {
                 let g = GameList[i];
                 GameList.splice(i, 1);
                 GameList.splice(0, 0, g);
