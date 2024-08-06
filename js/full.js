@@ -23,6 +23,7 @@ const joinString = new URLSearchParams(window.location.search).get('join');
 
 if( joinString !== undefined && joinString !== null ) {
     window.location.replace(baseSteamProtocol + joinString);
+    window.location.href = "/";
 }
 
 /*-------------------------------------------------*/
