@@ -111,7 +111,7 @@ async function getLobbyData() {
 
         // all current games, sorted by game name
         let GameList = data.Sessions;
-        GameList.sort((a, b) => (b.Name > a.Name) ? 1 : -1);
+        GameList.sort((a, b) => (b.Name < a.Name) ? 1 : -1);
 
         // always move "bz2vsr" games to front of the list
         for(let i = 0; i < GameList.length; i++ ) {
