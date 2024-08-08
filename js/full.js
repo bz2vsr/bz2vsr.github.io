@@ -185,7 +185,7 @@ async function getLobbyData() {
                     headers: {
                         accept: 'application/json',
                         'content-type': 'application/json',
-                        Authorization: 'sk_9VwsPPWbz9shflCY'
+                        Authorization: 'sk_7BCBrO9UB4kbuQRQ'
                     },
                     body: JSON.stringify({
                         originalURL: directJoinURL,
