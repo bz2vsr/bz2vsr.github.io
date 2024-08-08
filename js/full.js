@@ -12,7 +12,7 @@ const vsrModID = "1325933293";
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 /*-------------------------------------------------*/
 /*------------------- REDIRECTS -------------------*/
@@ -179,6 +179,25 @@ async function getLobbyData() {
                 encodedArgs = stringToHex(plainTextArgs);
 
                 directJoinURL = baseSteamProtocol + encodedArgs;
+
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        accept: 'application/json',
+                        'content-type': 'application/json',
+                        Authorization: 'sk_9VwsPPWbz9shflCY'
+                    },
+                    body: JSON.stringify({
+                        originalURL: directJoinURL,
+                        domain: 'go.bz2vsr.com'
+                    })
+                };
+
+                fetch('https://api.short.io/links', options)
+                    .then(response => response.json())
+                    .then(response => console.log(response))
+                    .catch(err => console.error(err));
+
             }
 
             // increment our game mod counts
