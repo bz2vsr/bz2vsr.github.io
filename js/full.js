@@ -180,6 +180,10 @@ async function getLobbyData() {
 
                 directJoinURL = baseSteamProtocol + encodedArgs;
 
+                // use short.io API to generate short URL based on game's NAT ID
+                // this ensure short.io only generates one join URL per game
+                // since this is async, I put player counts in the options object
+                // to preserve their original values
                 const options = {
                     method: 'POST',
                     headers: {
@@ -190,13 +194,15 @@ async function getLobbyData() {
                     body: JSON.stringify({ 
                         domain: 'join.bz2vsr.com', 
                         originalURL: 'https://bz2vsr.com/?join=' + encodedArgs, 
-                        path: game.Address.NAT })
+                        path: game.Address.NAT }),
+                    playerCount: playerCount,
+                    playerCountMax: playerCountMax
                 };
 
                 fetch('https://api.short.io/links/public', options)
                     .then(response => response.json())
                     .then(response => { 
-                        document.querySelector('#shareJoinURL').innerHTML = response.shortURL;
+                        document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @BZ2Player`;
                     })
                     .catch(err => console.error(err));
 
@@ -282,7 +288,7 @@ async function getLobbyData() {
                                                     </svg>
                                                 </a> 
                                                 <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple btn-join-copy" title="Get a shareable link for Discord.">
-                                                    <textarea id="shareJoinURL" class="visually-hidden"></textarea>
+                                                    <textarea class="visually-hidden"></textarea>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
                                                         <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
                                                         <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
@@ -368,7 +374,7 @@ async function getLobbyData() {
                                             if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
                                             {
                                                 return `<div class="col-6 player-slot p-2">
-                                                <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light font-monospace">
+                                                <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light font-monospace position-relative">
                                                     <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
                                                         <div class="row">
                                                             <div class="col-3 d-none d-lg-inline">
@@ -385,12 +391,24 @@ async function getLobbyData() {
                                                                             }
                                                                             else return "";
                                                                         }
+                                                                        // I believe this returns undefined if user is hidden, but still need to test
+                                                                        else return `<strong class="badge text-bg-danger bg-opacity-75">Hidden</strong>`;
                                                                     })()}
                                                                     ${(() => {
                                                                         if( PlayerList[player].Name === gameHost ) {
                                                                             return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
                                                                         }
                                                                         else return "";
+                                                                    })()}
+                                                                    ${(() => {
+                                                                        if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) {
+                                                                            if (parseInt(PlayerList[player].Team.SubTeam.ID) < 6) {
+                                                                                return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">1</strong>`;
+                                                                            }
+                                                                            else {
+                                                                                return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">2</strong>`;
+                                                                            }
+                                                                        }
                                                                     })()}
                                                                 </span>
                                                             </div>
@@ -515,7 +533,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // run main data grab on interval if necessary, otherwise run once
     if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
         getLobbyData();
-        interval_id = setInterval(getLobbyData, 10000);
+        interval_id = setInterval(getLobbyData, 5000);
     }
     else {
         getLobbyData();
@@ -526,7 +544,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
             localStorage.setItem("LiveUpdatesOn", "true");
-            interval_id = setInterval(getLobbyData, 10000);
+            interval_id = setInterval(getLobbyData, 5000);
         }
         else {
             localStorage.setItem("LiveUpdatesOn", "false");
