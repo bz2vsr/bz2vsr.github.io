@@ -113,10 +113,10 @@ async function getLobbyData() {
         let GameList = data.Sessions;
         GameList.sort((a, b) => (b.Name < a.Name) ? 1 : -1);
 
-        // always move "bz2vsr" games to front of the list
+        // always move VSR games to front of the list
         for(let i = 0; i < GameList.length; i++ ) {
             let gName = GameList[i].Name;
-            if(GameList[i].Name === "bz2vsr" || GameList[i].Name.toLowerCase() === "vsr" ) {
+            if((GameList[i].Name.toLowerCase()).includes('vsr') || GameList[i].Game.Mod === vsrModID ) {
                 let g = GameList[i];
                 GameList.splice(i, 1);
                 GameList.splice(0, 0, g);
@@ -133,7 +133,6 @@ async function getLobbyData() {
             let gameName        = clean(game.Name);
             let gameMode        = game.Level.GameMode.ID;
             let gameMod         = game.Game.Mod;
-            // let gameModName     = (gameMod !== undefined ? Mods[gameMod].Name : "Stock");
             let gameModName     = (gameMod !== undefined ? (Mods[gameMod] !== undefined ? Mods[gameMod].Name : "Unknown Mod") : "Stock");
             let gameTime        = (game.Time.Seconds/60);
             let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
