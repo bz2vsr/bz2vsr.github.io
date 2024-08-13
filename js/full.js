@@ -133,7 +133,8 @@ async function getLobbyData() {
             let gameName        = clean(game.Name);
             let gameMode        = game.Level.GameMode.ID;
             let gameMod         = game.Game.Mod;
-            let gameModName     = (gameMod !== undefined ? Mods[gameMod].Name : "Stock");
+            // let gameModName     = (gameMod !== undefined ? Mods[gameMod].Name : "Stock");
+            let gameModName     = (gameMod !== undefined ? (Mods[gameMod] !== undefined ? Mods[gameMod].Name : "Unknown Mod") : "Stock");
             let gameTime        = (game.Time.Seconds/60);
             let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
             let gameState       = clean(game.Status.State);
@@ -306,7 +307,7 @@ async function getLobbyData() {
                         <div class="container h-100 pb-1">
                             <div class="row border-bottom">
                                 <div class="col-3 p-2 border-0 border-end border-dotted text-center">
-                                    <img width="250" length="250" src="${mapImage}" style="filter:brightness(1.5)"class="img-thumbnail rounded"/>
+                                    <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" style="filter:brightness(1.5)"class="img-thumbnail rounded"/>
                                 </div>
                                 <div class="col-9 p-0 small">
                                     <ul class="list-group list-group-flush font-monospace text-secondary">
@@ -510,7 +511,7 @@ async function getLobbyData() {
             });
         }
     } catch(err) {
-        console.log(`Catch Error: ${err}`);
+        console.log(`${err.stack}: Catch Error: ${err}`);
     }
 }
 
