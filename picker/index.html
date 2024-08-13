@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <title>VSR Random Map Selector</title>
+  <head>
+    <script>
+    const fullList = [
+      "Chill", "Hilo", "Quarry (2)", "Mars", "The Rock",
+      "Death Island", "No Mans Land",
+      "Amino", "Ancient Hills", "Barren", "Hilo Blues", "Bowl", "Dedux", "Garden", "Giza", "Haven", "Hi-Mid-Lo", "Mayhem", "Mesa", "Phoenix", "Pit Bull", "Quagmire", "Red Slop", "Reflex", "Rendon", "Ridges", "Strategy Arena", "Tempest", "Terron", "Trench",
+      "Titan",
+      "Domain", "Selena", "Toxicity",
+      "Curiosity", "Magma",
+      "Trail",
+      "Cliff",
+      "Beyond", "Hound",
+      "Bolt", "Iraq", "Overlook", "Sinister", "Vortex", "Winter Valley", "Wipeout",
+      "DC", "Six Way",
+      "Revolution",
+      "Aztec", "Echelon", "Europa", "Ice Age", "Insula", "Jade Green", "Lunar", "Mojave", "Prodigy", "Ravine", "Remnant", "Sahara", "Uxbridge",
+      "Ancient Outposts", "Concrete Jungle", "Excavation", "Power Struggle", "Mort Wasteland",
+      "Badlands", "Equinox", "Egypt",
+      "Royal Stadium",
+      "310", "Abuse", "Aussault", "Consciousness", "Dream", "Ebola", "Fire Island", "Forgotten", "Fort 12C", "Island of V8", "Know Thyself", "Lunix", "Mexican Mission", "Nigeria", "Ogg Vorbis", "Oldboy", "Pitfall", "Ragnarok", "Rapemas", "Rectal", "Satart", "Scammed", "Stack", "Swamp Gas", "The War", "Throbbing Gristle", "Trapped", "Vegan",
+      "Crater", "Mountain Pass", "Plaza", "Supply Lanes", "Terrace",
+      "Moonshroud",
+      "Cauldron", "Outposts", "Cracked", "Flooded", "Hubris", "Impact", "Oasis", "Rift", "Transfer",
+      "Dusk", "Heated", "Ice Cold", "Mountain Top", "Murky", "Stone Circle",
+      "Casius", "Finland Daylight", "Middle Wars", "Miredon", "Plus", "Scion/Snow Central", "Twin Peaks", "Two Hills"
+    ];
+    const popularMaps = [
+      "Ancient Hills", "Egypt", "Fort 12C", "Garden", "Haven", "Insula", "Jade Green", "Lunar", "Mojave", "Mort's Wasteland", "Oasis", "Overlook", "Quagmire", "Quarry", "Red Slope", "Reflex", "Remnant", "Sahara", "Strategy Arena", "Terron", "Throbbing Gristle", "Trench"
+    ];
+    const zstList = [
+      "Chill", "Hilo", "Quarry (2)", "Mars", "The Rock",
+      "Death Island", "No Mans Land",
+      "Amino", "Ancient Hills", "Barren", "Hilo Blues", "Bowl", "Dedux", "Garden", "Giza", "Haven", "Hi-Mid-Lo", "Mayhem", "Mesa", "Phoenix", "Pit Bull", "Quagmire", "Red Slop", "Reflex", "Rendon", "Ridges", "Strategy Arena", "Tempest", "Terron", "Trench",
+      "Trail",
+      "Cliff",
+      "Iraq", "Sinister", "Vortex", "Winter Valley", "Wipeout",
+      "DC", "Six Way",
+      "Revolution",
+      "Aztec", "Echelon", "Europa", "Ice Age", "Insula", "Jade Green", "Lunar", "Mojave", "Prodigy", "Ravine", "Remnant", "Sahara", "Uxbridge",
+      "Badlands", "Equinox", "Egypt",
+      "Royal Stadium",
+      "Crater", "Mountain Pass", "Plaza", "Supply Lanes", "Terrace",
+      "Moonshroud",
+      "Dusk", "Heated", "Ice Cold", "Mountain Top", "Stone Circle",
+      "Casius", "Finland Daylight", "Middle Wars", "Miredon", "Plus", "Scion/Snow Central", "Two Hills"
+    ];
+    const newList = [
+      "Titan",
+      "Domain", "Selena", "Toxicity",
+      "Curiosity", "Magma",
+      "Beyond", "Hound",
+      "Bolt", "Overlook",
+      "Ancient Outposts", "Concrete Jungle", "Excavation", "Power Struggle", "Mort Wasteland",
+      "310", "Abuse", "Aussault", "Consciousness", "Dream", "Ebola", "Fire Island", "Forgotten", "Fort 12C", "Island of V8", "Know Thyself", "Lunix", "Mexican Mission", "Nigeria", "Ogg Vorbis", "Oldboy", "Pitfall", "Ragnarok", "Rapemas", "Rectal", "Satart", "Scammed", "Stack", "Swamp Gas", "The War", "Throbbing Gristle", "Trapped", "Vegan",
+      "Cauldron", "Outposts", "Cracked", "Flooded", "Hubris", "Impact", "Oasis", "Rift", "Transfer",
+      "Murky",
+      "Twin Peaks"
+    ];
+    const lowList = [
+      "Chill", "Hilo", "Mars", "The Rock",
+      "Death Island", "No Mans Land",
+      "Amino", "Dedux", "Hi-Mid-Lo", "Mayhem", "Phoenix", "Pit Bull",
+      "Domain", "Selena",
+      "Curiosity", "Magma",
+      "Trail",
+      "Cliff",
+      "Beyond", "Hound",
+      "Bolt", "Iraq", "Wipeout",
+      "DC",
+      "Ravine", "Uxbridge",
+      "Concrete Jungle", "Power Struggle",
+      "Badlands", "Equinox",
+      "Fire Island", "Nigeria", "Ogg Vorbis", "Ragnarok", "Rapemas", "Trapped",
+      "Crater", "Mountain Pass", "Plaza", "Supply Lanes", "Terrace",
+      "Cauldron", "Outposts", "Flooded", "Hubris", "Impact", "Rift",
+      "Dusk", "Heated", "Ice Cold", "Murky",
+      "Casius", "Finland Daylight", "Middle Wars", "Miredon", "Plus", "Scion/Snow Central", "Twin Peaks", "Two Hills"
+    ];
+    function RandomFull() {
+      const randomIndex = Math.floor(Math.random() * fullList.length);
+      document.getElementById("full").innerHTML = fullList[randomIndex];
+    };
+    function RandomPopular() {
+      const randomIndex = Math.floor(Math.random() * popularMaps.length);
+      document.getElementById("popular").innerHTML = popularMaps[randomIndex];
+    };
+    function RandomZst() {
+      const randomIndex = Math.floor(Math.random() * zstList.length);
+      document.getElementById("zst").innerHTML = zstList[randomIndex];
+    };
+    function RandomNew() {
+      const randomIndex = Math.floor(Math.random() * newList.length);
+      document.getElementById("new").innerHTML = newList[randomIndex];
+    };
+    function RandomLow() {
+      const randomIndex = Math.floor(Math.random() * lowList.length);
+      document.getElementById("low").innerHTML = lowList[randomIndex];
+    };
+    </script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  </head>
+  <body bgcolor="#1a1a1a">
+    <font color = "#FFFFFF"><h1>VSR Random Strat Map Selector</h1></font>
+    
+    <font color="#ff4040">
+      <h2>All Maps</h2>
+      <p id="full">... ...</p>
+      <button type="button" onclick="RandomFull()">Get Map (Any)</button>
+    </font>
+    
+    <font color="#ff8000">
+      <h2>Popular Maps</h2>
+      <p id="popular">... ...</p>
+      <button type="button" onclick="RandomPopular()">Get Map (Popular)</button>
+    </font>
+    
+    <font color="#80ff00">
+      <h2>Less Played Maps</h2>
+      <p id="low">... ...</p>
+      <button type="button" onclick="RandomLow()">Get Map (Less Played)</button>
+      <p>**Subjectively less played** as of May 2023</p>
+    </font>
+    
+    <font color="#00ffff">
+      <h2>New (Post-1.2) Maps Only</h2>
+      <p id="new">... ...</p>
+      <button type="button" onclick="RandomNew()">Get Map (New)</button>
+    </font>
+    
+    <font color="#8080ff">
+      <h2>ZST Maps Only</h2>
+      <p id="zst">... ...</p>
+      <button type="button" onclick="RandomZst()">Get Map (ZST)</button>
+    </font>
+  </body>
+</html>

@@ -113,6 +113,9 @@ async function getLobbyData() {
         let GameList = data.Sessions;
         GameList.sort((a, b) => (b.Name < a.Name) ? 1 : -1);
 
+        // #TODO: most definitive way to get true VSR games up front is to use an active player list, since non-community players still often play VSR MPIs
+        // therefore consider adding a hasActivePlayers(GameList[i]) function that returns true or false
+
         // always move VSR games to front of the list
         for(let i = 0; i < GameList.length; i++ ) {
             let gName = GameList[i].Name;
@@ -144,6 +147,18 @@ async function getLobbyData() {
             let playerCountMax  = game.PlayerTypes[0].Max;
             let mapName         = game.Level.Name;
             let mapImage        = game.Level.Image;
+
+            // skip listing unknown mods
+            // if( gameModName === "Unknown Mod") {
+            //     return;
+            // }
+
+            // if vsr-only is toggled, this exits the current iteration if it isn't VSR
+            if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
+                if( gameMod !== vsrModID) {
+                    return;
+                }
+            }
 
 
             // attempt to grab direct join URL
@@ -214,13 +229,6 @@ async function getLobbyData() {
             }
             else if( gameMod !== vsrModID) {
                 otherGameCount = otherGameCount + 1;
-            }
-
-            // if vsr-only is toggled, this exits the current iteration if it isn't VSR
-            if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
-                if( gameMod !== vsrModID) {
-                    return;
-                }
             }
 
             let PlayerList = game.Players;
