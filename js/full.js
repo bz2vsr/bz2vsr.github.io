@@ -99,7 +99,7 @@ async function getLobbyData() {
         // steam players must be present if games exist, therefore this object being undefined means no players
         if( data.DataCache.Players === undefined ) 
         {
-            document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No players online.</p>';
+            document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No players online.<br><br>Expecting to see games here and suspect an error?<br><br>Please send a snapshot of the <a href="http://battlezone99mp.webdev.rebellion.co.uk/lobbyServer" target="_blank">raw data</a> to Sev on Discord for troubleshooting, including the time and timezone.';
             return;
         }
 
@@ -146,6 +146,7 @@ async function getLobbyData() {
             let playerCount     = game.PlayerCount.Player;
             let playerCountMax  = game.PlayerTypes[0].Max;
             let mapName         = game.Level.Name;
+            let mapFileName     = game.Level.MapFile;
             let mapImage        = game.Level.Image;
 
             // skip listing unknown mods
@@ -159,7 +160,6 @@ async function getLobbyData() {
                     return;
                 }
             }
-
 
             // attempt to grab direct join URL
             let hasJoinURL = false; 
@@ -320,7 +320,7 @@ async function getLobbyData() {
                                     <ul class="list-group list-group-flush font-monospace text-secondary">
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Map</strong>
-                                            <span>${mapName}</span>
+                                            <span>${mapName} (${mapFileName})</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Mode</strong>
@@ -414,7 +414,7 @@ async function getLobbyData() {
                                                                                 return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">1</strong>`;
                                                                             }
                                                                             else {
-                                                                                return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">2</strong>`;
+                                                                                return ``;
                                                                             }
                                                                         }
                                                                     })()}
@@ -583,6 +583,64 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.querySelector("#hostModal").addEventListener("shown.bs.modal", function(event)
     {
         document.querySelector("#modalHostButton").focus({focusVisible:true});
+    });
+
+    document.querySelector("#pickerModal").addEventListener("show.bs.modal", function(event)
+    {
+        let index = Math.floor(Math.random() * MapListFull.length);
+        let map = MapListFull[index];
+
+        let url = `https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${map}`
+
+        if(useCORSProxy) { url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(response => { 
+                document.querySelector("#pickerModal .spinner").remove();
+                document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
+                document.querySelector("#pickerMapTitle").innerHTML = response.title;
+                document.querySelector("#pickerMapImage").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
+                document.querySelector("#pickerMapDescription").innerText = response.description;
+            })
+            .catch(err => console.error(err));
+
+    });
+
+    document.querySelector("#pickerButton").addEventListener("click", function(event)
+    {
+        document.querySelector("#pickerButton").innerHTML = `
+        <div class="d-flex justify-content-center spinner">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        `;
+
+        let index = Math.floor(Math.random() * MapListFull.length);
+        let map = MapListFull[index];
+
+        let url = `https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${map}`
+
+        if(useCORSProxy) { url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(response => { 
+                document.querySelector("#pickerMapTitle").innerHTML = response.title;
+                document.querySelector("#pickerMapImage").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
+                document.querySelector("#pickerMapDescription").innerText = response.description;
+                document.querySelector("#pickerButton").innerHTML = `
+                Shuffle
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shuffle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.6 9.6 0 0 0 7.556 8a9.6 9.6 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.6 10.6 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.6 9.6 0 0 0 6.444 8a9.6 9.6 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5"/>
+                <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192m0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"/>
+                </svg>
+                `;
+            })
+            .catch(err => console.error(err));
+
+
     });
 
 });
