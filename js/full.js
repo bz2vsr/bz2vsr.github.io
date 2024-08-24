@@ -592,7 +592,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         let url = `https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${map}`
 
-        if(useCORSProxy) { url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); }
+        // if(useCORSProxy) { url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); }
+        url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); 
 
         fetch(url)
             .then(response => response.json())
