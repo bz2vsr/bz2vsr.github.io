@@ -444,7 +444,7 @@ async function getLobbyData() {
                                                             <div class="col-9 text-nowrap overflow-hidden">
                                                                 <span class="font-monospace">
                                                                     <div class="mb-1">
-                                                                        N<span class="d-none d-lg-inline">ick</span>: &nbsp;${truncate(clean(PlayerList[player].Name), 24)}<br>
+                                                                        N<span class="d-none d-lg-inline">ick</span>: ${truncate(clean(PlayerList[player].Name), 24)}<br>
                                                                         S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
                                                                     </div>
                                                                     ${(() => {
