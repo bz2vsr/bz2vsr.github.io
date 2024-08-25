@@ -141,8 +141,6 @@
 		"vsrwales",
 		"vsrwout",
 		"wintervalley",
-		"vsrmeltdown",
-		"vsrstranded",
 		"vsrphazon",
 		"vsrrift2",
 		"vsrtrinity"

@@ -12,7 +12,7 @@ const vsrModID = "1325933293";
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
-const useCORSProxy = true;
+const useCORSProxy = false;
 
 /*-------------------------------------------------*/
 /*------------------- REDIRECTS -------------------*/
@@ -367,13 +367,13 @@ async function getLobbyData() {
                         <div class="container h-100 pb-1">
                             <div class="row border-bottom">
                                 <div class="col-3 p-2 border-0 border-end border-dotted text-center">
-                                    <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" style="filter:brightness(1.5)"class="img-thumbnail rounded"/>
+                                    <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" style="filter:brightness(1.5)" class="img-thumbnail rounded"/>
                                 </div>
                                 <div class="col-9 p-0 small">
                                     <ul class="list-group list-group-flush font-monospace text-secondary">
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Map</strong>
-                                            <span>${mapName} (${mapFileName})</span>
+                                            <span title="${mapFileName}">${mapName}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Mode</strong>
@@ -442,9 +442,11 @@ async function getLobbyData() {
                                                                 <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                             </div>
                                                             <div class="col-9 text-nowrap overflow-hidden">
-                                                                <span class="small font-monospace">
-                                                                    N<span class="d-none d-lg-inline">ick</span>: ${truncate(clean(PlayerList[player].Name), 24)}<br>
-                                                                    S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
+                                                                <span class="font-monospace">
+                                                                    <div class="mb-1">
+                                                                        N<span class="d-none d-lg-inline">ick</span>: &nbsp;${truncate(clean(PlayerList[player].Name), 24)}<br>
+                                                                        S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
+                                                                    </div>
                                                                     ${(() => {
                                                                         if( PlayerList[player].Team !== undefined ) {
                                                                             if( PlayerList[player].Team.Leader === true) {
@@ -469,6 +471,14 @@ async function getLobbyData() {
                                                                             else {
                                                                                 return ``;
                                                                             }
+                                                                        }
+                                                                    })()}
+                                                                    ${(() => {
+                                                                        if (PlayerList[player].Stats !== undefined) {
+                                                                            return `<span class="badge text-bg-light">${PlayerList[player].Stats.Kills} <span class="opacity-25">|</span> ${PlayerList[player].Stats.Deaths} <span class="opacity-25">|</span> ${PlayerList[player].Stats.Score}</span>`;
+                                                                        }
+                                                                        else {
+                                                                            return ``;
                                                                         }
                                                                     })()}
                                                                 </span>

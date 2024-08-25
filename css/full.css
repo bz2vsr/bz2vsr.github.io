@@ -1,15 +1,3 @@
-/* .player-slot {
-    border-bottom: 1px dotted rgba(255, 255, 255, 0.15);
-}
-
-.player-slot:nth-child(odd) {
-    border-right: 1px dotted rgba(255, 255, 255, 0.15);
-}
-
-.player-slot:nth-child(9),
-.player-slot:nth-child(10) {
-    border-bottom: none;
-} */
 .player-slot-open .border {
     color: rgba(255, 255, 255, 0.2);
     border-style: dashed !important;
@@ -54,4 +42,46 @@
     0 0 10px #fff,            /* outer white */
     -5px 0 10px #f0f,        /* outer left magenta */
     5px 0 10px #0ff;         /* outer right cyan */
+}
+
+/* MAP BROWSER CSS */
+.map-item:hover {
+    cursor: pointer;
+}
+
+.map-item:hover > .map-item-title {
+    color: white;
+    background-color: rgb(13, 110, 253) !important;
+}
+.map-item:hover .map-image {
+    cursor: pointer;
+    filter:brightness(1.5) !important;
+}
+
+#MapList, #MapViewer {
+    height: 92vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#MapList::-webkit-scrollbar,
+#MapViewer::-webkit-scrollbar {
+    width: 12px;
+}
+
+#MapViewer::-webkit-scrollbar-track,
+#MapList::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 8px;
+}
+
+#MapViewer::-webkit-scrollbar-thumb,
+#MapList::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 8px;
+}
+
+#MapViewer::-webkit-scrollbar-thumb:hover,
+#MapList::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
 }
