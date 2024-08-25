@@ -12,7 +12,7 @@ const vsrModID = "1325933293";
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 /*-------------------------------------------------*/
 /*------------------- REDIRECTS -------------------*/
@@ -73,6 +73,59 @@ function clean(str) {
     return cleanThatShit;
 }
 
+async function getRandomMaps(){
+    // get three random unique indexes in our map list array
+    let indexes = [];
+    for(let i = 0; i < 3; i++) {
+        let randomIndex = Math.floor(Math.random() * MapListFull.length);
+        if(!indexes.includes(randomIndex)) {
+            indexes.push(randomIndex);
+        }
+    }
+
+    // build URLs based on selected maps
+    proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=';
+    let url_0 = proxyURL + encodeURIComponent(`https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${MapListFull[indexes[0]]}`);
+    let url_1 = proxyURL + encodeURIComponent(`https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${MapListFull[indexes[1]]}`)
+    let url_2 = proxyURL + encodeURIComponent(`https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${MapListFull[indexes[2]]}`)
+
+    // there's gotta be a better way to do this...but im lazy :)
+    fetch(url_0)
+        .then(response => response.json())
+        .then(response => { 
+            if(document.querySelector("#pickerModal .spinner") !== null) {
+                document.querySelector("#pickerModal .spinner").remove();
+            }
+            document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
+            document.querySelector("#pickerMapTitle-0").innerHTML = response.title;
+            document.querySelector("#pickerMapImage-0").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
+        })
+        .catch(err => console.error(err));
+
+    fetch(url_1)
+        .then(response => response.json())
+        .then(response => { 
+            if(document.querySelector("#pickerModal .spinner") !== null) {
+                document.querySelector("#pickerModal .spinner").remove();
+            }
+            document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
+            document.querySelector("#pickerMapTitle-1").innerHTML = response.title;
+            document.querySelector("#pickerMapImage-1").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
+        })
+        .catch(err => console.error(err));
+
+    fetch(url_2)
+        .then(response => response.json())
+        .then(response => { 
+            if(document.querySelector("#pickerModal .spinner") !== null) {
+                document.querySelector("#pickerModal .spinner").remove();
+            }
+            document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
+            document.querySelector("#pickerMapTitle-2").innerHTML = response.title;
+            document.querySelector("#pickerMapImage-2").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
+        })
+        .catch(err => console.error(err));
+}
 // main function to get data and produce content based on that data
 async function getLobbyData() {
     
@@ -579,6 +632,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    // auto focus on enter button in host modal 
+    document.querySelector("#hostModal").addEventListener("shown.bs.modal", function(event)
+    {
+        document.querySelector("#modalHostButton").focus({focusVisible:true});
+    });
+
     // when host modal opens, allow user to immediately start typing without having to click on the input for focus
     document.querySelector("#hostModal").addEventListener("shown.bs.modal", function(event)
     {
@@ -587,62 +646,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     document.querySelector("#pickerModal").addEventListener("show.bs.modal", function(event)
     {
-        let index = Math.floor(Math.random() * MapListFull.length);
-        let map = MapListFull[index];
-
-        let url = `https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${map}`
-
-        // if(useCORSProxy) { url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); }
-        url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); 
-
-        fetch(url)
-            .then(response => response.json())
-            .then(response => { 
-                document.querySelector("#pickerModal .spinner").remove();
-                document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
-                document.querySelector("#pickerMapTitle").innerHTML = response.title;
-                document.querySelector("#pickerMapImage").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
-                document.querySelector("#pickerMapDescription").innerText = response.description;
-            })
-            .catch(err => console.error(err));
-
+        getRandomMaps();
     });
 
+    // load random map(s) when opening the map picker, pulls from /data/maps/map_lists.js)
     document.querySelector("#pickerButton").addEventListener("click", function(event)
     {
-        document.querySelector("#pickerButton").innerHTML = `
-        <div class="d-flex justify-content-center spinner">
-            <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-        `;
-
-        let index = Math.floor(Math.random() * MapListFull.length);
-        let map = MapListFull[index];
-
-        let url = `https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${map}`
-
-        // if(useCORSProxy) { url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url); }
-        url = 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(url);
-
-        fetch(url)
-            .then(response => response.json())
-            .then(response => { 
-                document.querySelector("#pickerMapTitle").innerHTML = response.title;
-                document.querySelector("#pickerMapImage").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
-                document.querySelector("#pickerMapDescription").innerText = response.description;
-                document.querySelector("#pickerButton").innerHTML = `
-                Shuffle
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shuffle" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.6 9.6 0 0 0 7.556 8a9.6 9.6 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.6 10.6 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.6 9.6 0 0 0 6.444 8a9.6 9.6 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5"/>
-                <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192m0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"/>
-                </svg>
-                `;
-            })
-            .catch(err => console.error(err));
-
-
+        getRandomMaps();
     });
 
 });
