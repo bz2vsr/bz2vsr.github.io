@@ -49,7 +49,7 @@
     cursor: pointer;
 }
 
-.map-item:hover > .map-item-title {
+.map-item:hover .map-item-title {
     color: white;
     background-color: rgb(13, 110, 253) !important;
 }
