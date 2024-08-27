@@ -58,7 +58,8 @@ function stringToHex(str)
 }
 
 // clean input strings; not a full-proof solution, but feukers will be feukers
-function clean(str) { 
+function clean(str) 
+{ 
     if( str === undefined ) {
         return "Undefined";
     }
@@ -73,7 +74,9 @@ function clean(str) {
     return cleanThatShit;
 }
 
-async function getRandomMaps(){
+// grabs 3 random maps when loading the Map Picker modal
+async function getRandomMaps() 
+{
     // get three random unique indexes in our map list array
     let indexes = [];
     for(let i = 0; i < 3; i++) {
@@ -126,7 +129,8 @@ async function getRandomMaps(){
         })
         .catch(err => console.error(err));
 }
-// main function to get data and produce content based on that data
+
+// main function to get game data and produce content based on that data
 async function getLobbyData() {
     
     console.log('Fetching data.');
@@ -248,6 +252,8 @@ async function getLobbyData() {
 
                 directJoinURL = baseSteamProtocol + encodedArgs;
 
+                shortIOPath = ((game.Address.NAT).replaceAll("@","A")).replaceAll("-","0");
+
                 // use short.io API to generate short URL based on game's NAT ID
                 // this ensure short.io only generates one join URL per game
                 // since this is async, I put player counts in the options object
@@ -262,7 +268,8 @@ async function getLobbyData() {
                     body: JSON.stringify({ 
                         domain: 'join.bz2vsr.com', 
                         originalURL: 'https://bz2vsr.com/?join=' + encodedArgs, 
-                        path: game.Address.NAT }),
+                        path: shortIOPath
+                    }),
                     playerCount: playerCount,
                     playerCountMax: playerCountMax
                 };
