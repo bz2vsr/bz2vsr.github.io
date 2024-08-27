@@ -1,6 +1,7 @@
 const vsrModID = "1325933293";
 const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=';
 const assetsURL = "https://gamelistassets.iondriver.com/bzcc/";
+
 const MapList  = document.querySelector("#MapList");
 const maps = document.querySelectorAll(".map-item");
 
@@ -24,14 +25,8 @@ const truncate = (str, len, end = "...") => {
     return str.length <= len ? str : str.substring(0, len) + end
 }
 
-// sleep function to now overload api
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 // this was only needed for original data grab
 function addMap(url, mapfile) {
-
     const request = new XMLHttpRequest();
     request.open("GET", url, false); 
     request.send(null);
@@ -54,13 +49,15 @@ function addMap(url, mapfile) {
 window.addEventListener('DOMContentLoaded', (event) => {
 
     let mapItems = document.querySelectorAll('.map-item');
+
     mapItems.forEach(el => el.addEventListener("click", event => {
+
         document.querySelector("#MapViewer").innerHTML = `
-        <div class="d-flex justify-content-center spinner mt-4">
-            <div class="spinner-border text-light" style="width:4rem;height:4rem;" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div class="d-flex justify-content-center spinner mt-4">
+                <div class="spinner-border text-light" style="width:4rem;height:4rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
-        </div>
         `;
 
         let mapfile = event.target.closest(".map-item").getAttribute("data-mapfile");
@@ -84,7 +81,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             .catch(err => console.error(err));
     }));
 
-    // original data grab
+    // loop to grab api data for ALL maps; staggers requests so it doesn't send all 100+ at once
+    // this was only used once to generate map data, and the resulting html was placed in 
+    // maps/index.html so we wouldn't need to request the data every time we load the page
     // MapListFull.forEach((map, index) => { 
     //     let url = proxyURL + encodeURIComponent(`https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${map}`);
     //     setTimeout(() => {
