@@ -156,7 +156,7 @@ async function getLobbyData() {
         // steam players must be present if games exist, therefore this object being undefined means no players
         if( data.DataCache.Players === undefined ) 
         {
-            document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No players online.<br><br>Expecting to see games here and suspect an error?<br><br>Please send a snapshot of the <a href="http://battlezone99mp.webdev.rebellion.co.uk/lobbyServer" target="_blank">raw data</a> to Sev on Discord for troubleshooting, including the time and timezone.';
+            document.querySelector("#lobbyList").innerHTML = '<p class="text-center font-monospace">No players online.<br><br>Expecting to see games here and/or suspect an error?<br><br>Please send a snapshot of the <a href="http://battlezone99mp.webdev.rebellion.co.uk/lobbyServer" target="_blank">raw data</a> to Sev on Discord for troubleshooting, including the time and timezone.';
             return;
         }
 
@@ -252,12 +252,15 @@ async function getLobbyData() {
 
                 directJoinURL = baseSteamProtocol + encodedArgs;
 
+
+                // we use short.io API to generate a short URL based on game's NAT ID,
+                // which ensures we only generate one join URL per game. also, since
+                // this is asynchronous, I put player counts in the options object
+                // to preserve the original values
+
+                // replace funky chars in NAT ID with something more URL friendly
                 shortIOPath = ((game.Address.NAT).replaceAll("@","A")).replaceAll("-","0");
 
-                // use short.io API to generate short URL based on game's NAT ID
-                // this ensure short.io only generates one join URL per game
-                // since this is async, I put player counts in the options object
-                // to preserve their original values
                 const options = {
                     method: 'POST',
                     headers: {
@@ -470,6 +473,7 @@ async function getLobbyData() {
                                                                         }
                                                                         else return "";
                                                                     })()}
+                                                                    <span class="d-inline d-sm-none"><br></span>
                                                                     ${(() => {
                                                                         if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) {
                                                                             if (parseInt(PlayerList[player].Team.SubTeam.ID) < 6) {
@@ -550,7 +554,7 @@ async function getLobbyData() {
             }
         }
 
-        // let each copy button generate a unique and shareable join URL for the associated lobby/game
+        // copy button for shareable short.io URL; the actual url is built in the game loop above
         let joinBtns = document.querySelectorAll('.btn-join-copy');
         if( joinBtns !== null )
         {
@@ -566,6 +570,7 @@ async function getLobbyData() {
 
                     btn.classList.remove('btn-purple');
                     btn.classList.add('btn-success');
+                    
                     // change clipboard icon to a checkmark
                     btn.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
