@@ -185,8 +185,7 @@ async function getLobbyData()
 
         let data = await fetchResponse.json();
 
-        // steam players must be present if games exist, therefore this object being undefined means no players
-        // NOTE: we currently ignore GOG players from data.DataCache.Players.IDs.GOG 
+        // players must be present if games exist, therefore relevant objects being empty undefined means no players
         if( JSON.stringify(data.DataCache) === '{}' || ( data.DataCache.Players.IDs.Steam === undefined && data.DataCache.Players.IDs.GOG === undefined ) ) {
             document.querySelector("#lobbyList").innerHTML = `
                 <p class="text-center ">No Steam or GOG players online.
