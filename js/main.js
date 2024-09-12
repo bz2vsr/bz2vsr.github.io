@@ -36,8 +36,7 @@ const ActivePlayerList = [
 // if URL has a join string, process that immediately
 const joinString = new URLSearchParams(window.location.search).get('join');
 
-if( joinString !== undefined && joinString !== null ) 
-{
+if( joinString !== undefined && joinString !== null ) {
     window.location.replace(baseSteamProtocol + joinString);
     window.location.href = "/";
 }
@@ -47,18 +46,15 @@ if( joinString !== undefined && joinString !== null )
 /*-------------------------------------------------*/
 
 // simple string truncation
-const truncate = (str, len, end = "...") => 
-{
+const truncate = (str, len, end = "...") => {
     return str.length <= len ? str : str.substring(0, len) + end
 }
 
 // convert single char into hexidecimal with 2 digit padding
-function charToHex(char)
-{
+function charToHex(char) {
     var hex = char.toString(16);
 
-    if ((hex.length % 2) > 0) 
-    {
+    if ((hex.length % 2) > 0) {
         hex = "0" + hex;
     }
 
@@ -70,8 +66,7 @@ function stringToHex(str)
 {
     var hexString = "";
 
-    for ( var i = 0; i < str.length; i++ ) 
-    {
+    for ( var i = 0; i < str.length; i++ ) {
         hexString = hexString + charToHex(str.charCodeAt(i));
     }
 
@@ -81,16 +76,14 @@ function stringToHex(str)
 // clean input strings; not a full-proof solution, but feukers will be feukers
 function clean(str) 
 { 
-    if( str === undefined ) 
-    {
+    if( str === undefined ) {
         return "Undefined";
     }
 
     const stripThatShit = str.replace(/<[^>]*>/g, '');
     const cleanThatShit = stripThatShit.replace(/\s+/g, ' ').trim();
 
-    if( cleanThatShit === "" ) 
-    {
+    if( cleanThatShit === "" ) {
         return "Invalid Input"
     }
 
@@ -103,8 +96,7 @@ async function getRandomMaps()
     // get three random unique indexes in our map list array
     let indexes = [];
 
-    for(let i = 0; i < 3; i++) 
-    {
+    for(let i = 0; i < 3; i++) {
         let randomIndex = Math.floor(Math.random() * MapListFull.length);
 
         if(!indexes.includes(randomIndex)) 
@@ -123,8 +115,7 @@ async function getRandomMaps()
     // grab Map #1
     fetch(url_0)
         .then(response => response.json())
-        .then(response => 
-        { 
+        .then(response => { 
             // only remove the main spinner if it still exists, as the first 
             // completed request of the three we do here will remove it
             if(document.querySelector("#pickerModal .spinner") !== null) 
@@ -141,8 +132,7 @@ async function getRandomMaps()
     // grab Map #2
     fetch(url_1)
         .then(response => response.json())
-        .then(response => 
-        { 
+        .then(response => { 
             if(document.querySelector("#pickerModal .spinner") !== null) 
             {
                 document.querySelector("#pickerModal .spinner").remove();
@@ -157,8 +147,7 @@ async function getRandomMaps()
     // grab Map #3
     fetch(url_2)
         .then(response => response.json())
-        .then(response => 
-        { 
+        .then(response => { 
             if(document.querySelector("#pickerModal .spinner") !== null) 
             {
                 document.querySelector("#pickerModal .spinner").remove();
@@ -182,8 +171,7 @@ async function getLobbyData()
 
     let sourceURL = "https://multiplayersessionlist.iondriver.com/api/1.0/sessions?game=bigboat:battlezone_combat_commander";
 
-    if (useCORSProxy) 
-    { 
+    if (useCORSProxy) { 
         sourceURL = 'https://api.codetabs.com/v1/proxy/?quest=' + sourceURL; 
     }
 
@@ -191,16 +179,14 @@ async function getLobbyData()
 
         let fetchResponse = await fetch(sourceURL);
 
-        if( !fetchResponse.ok ) 
-        {
+        if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
         }
 
         let data = await fetchResponse.json();
 
         // steam players must be present if games exist, therefore this object being undefined means no players
-        if( data.DataCache.Players === undefined ) 
-        {
+        if( data.DataCache.Players === undefined ) {
             document.querySelector("#lobbyList").innerHTML = '<p class="text-center ">No players online.<br><br>Expecting to see games here and/or suspect an error?<br><br>Please send a snapshot of the <a href="http://battlezone99mp.webdev.rebellion.co.uk/lobbyServer" target="_blank">raw data</a> to Sev on Discord for troubleshooting, including the time and timezone.';
             return;
         }
@@ -219,7 +205,6 @@ async function getLobbyData()
         for(let i = 0; i < GameList.length; i++ ) 
         {
             let gName = GameList[i].Name;
-
 
             if((GameList[i].Name.toLowerCase()).includes('vsr') || GameList[i].Game.Mod === vsrModID ) 
             {
@@ -272,8 +257,7 @@ async function getLobbyData()
             }
         }
 
-        if(hasActivePlayers) 
-        {
+        if(hasActivePlayers) {
             GameList.splice(VetStratGameIndex, 1);
             GameList.splice(0, 0, VetStratGame);
         }
@@ -369,8 +353,7 @@ async function getLobbyData()
 
                 fetch('https://api.short.io/links/public', options)
                     .then(response => response.json())
-                    .then(response => 
-                    { 
+                    .then(response => { 
                         document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @BZ2Player`;
                     })
                     .catch(err => console.error(err));
@@ -378,12 +361,10 @@ async function getLobbyData()
             }
 
             // increment our game mod counts
-            if( gameMod === vsrModID ) 
-            {
+            if( gameMod === vsrModID ) {
                 vsrGameCount = vsrGameCount + 1;
             }
-            else if( gameMod !== vsrModID) 
-            {
+            else if( gameMod !== vsrModID) {
                 otherGameCount = otherGameCount + 1;
             }
 
