@@ -12,7 +12,7 @@ const vsrModID = "1325933293";
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
-// !!! IGNORE this line in Git commits !!!
+// !!! IGNORE this line in Git commits (must be FALSE for production) !!!
 const useCORSProxy = false;
 
 // player list for better game identification - these are players most likely to be
