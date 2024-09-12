@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+
+body {
+  background: #02040c;
+  font-family: "SUSE", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.bg-vsr {
+  background: #070f2c !important;
+}
+
+.bg-vsr-subtle {
+  background: #010309 !important;
+}
+
+.player-slot-open .border {
+    color: rgba(255, 255, 255, 0.2);
+    border-style: dashed !important;
+} 
+
+.player-slot a:hover div,
+.player-slot a:hover .badge {
+    --bs-bg-opacity: .7 !important;
+}
+
+.btn-purple {
+    /* background-color: #6f42c1; */
+    background-color: #633aaf;
+}
+
+.btn-purple-subtle,
+.btn-purple:hover {
+    background-color: rgb(89, 53, 154);
+}
+
+#LiveUpdateButton {
+    margin-top: 6px;
+}
+
+.vsr-cursor-pointer {
+    cursor: pointer;
+}
+
+.border-dotted {
+    border-style: dotted !important;
+}
+
+.btn-dead {
+    pointer-events: none;
+}
+
+.border-hidden-border {
+    border-color: rgba(255, 255, 255, 0) !important;
+}
+
+/***********************************/
+/********** MAP BROWSER ************/
+/***********************************/
+
+.map-item:hover {
+    cursor: pointer;
+}
+
+.map-item:hover .map-item-title {
+    color: white;
+    background-color: rgb(13, 110, 253) !important;
+}
+.map-item:hover .map-image {
+    cursor: pointer;
+    filter:brightness(1.5) !important;
+}
+
+#MapList, #MapViewer {
+    height: 92vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#MapList::-webkit-scrollbar,
+#MapViewer::-webkit-scrollbar {
+    width: 12px;
+}
+
+#MapViewer::-webkit-scrollbar-track,
+#MapList::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 8px;
+}
+
+#MapViewer::-webkit-scrollbar-thumb,
+#MapList::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 8px;
+}
+
+#MapViewer::-webkit-scrollbar-thumb:hover,
+#MapList::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
+}
+
+/***********************************/
+/******** VSR BUTTON GLOW **********/
+/***********************************/
+
+:root {
+  --shiny-cta-bg: #000000;
+  --shiny-cta-bg-subtle: #1a1818;
+  --shiny-cta-fg: #ffffff;
+  --shiny-cta-highlight: blue;
+  --shiny-cta-highlight-subtle: #8484ff;
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gradient-angle-offset {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gradient-percent {
+  syntax: "<percentage>";
+  initial-value: 5%;
+  inherits: false;
+}
+
+@property --gradient-shine {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
+}
+
+.shiny-cta {
+  --animation: gradient-angle linear infinite;
+  --duration: 3s;
+  --shadow-size: 2px;
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline-offset: 4px;
+  border: 1px solid transparent;
+  color: var(--shiny-cta-fg);
+  background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg))
+      padding-box,
+    conic-gradient(
+        from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+        transparent,
+        var(--shiny-cta-highlight) var(--gradient-percent),
+        var(--gradient-shine) calc(var(--gradient-percent) * 2),
+        var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+        transparent calc(var(--gradient-percent) * 4)
+      )
+      border-box;
+  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+
+  &::before,
+  &::after,
+  span::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+  }
+
+  &:active {
+    translate: 0 1px;
+  }
+}
+
+/* Dots pattern */
+.shiny-cta::before {
+  --size: calc(100% - var(--shadow-size) * 3);
+  --position: 2px;
+  --space: calc(var(--position) * 2);
+  width: var(--size);
+  height: var(--size);
+  background: radial-gradient(
+      circle at var(--position) var(--position),
+      white calc(var(--position) / 4),
+      transparent 0
+    )
+    padding-box;
+  background-size: var(--space) var(--space);
+  background-repeat: space;
+  mask-image: conic-gradient(
+    from calc(var(--gradient-angle) + 45deg),
+    black,
+    transparent 10% 90%,
+    black
+  );
+  border-radius: inherit;
+  opacity: 0.4;
+  z-index: -1;
+}
+
+/* Inner shimmer */
+.shiny-cta::after {
+  --animation: shimmer linear infinite;
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(
+    -50deg,
+    transparent,
+    var(--shiny-cta-highlight),
+    transparent
+  );
+  mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+  opacity: 0.6;
+}
+
+.shiny-cta span {
+  z-index: 1;
+
+  &::before {
+    --size: calc(100% + 1rem);
+    width: var(--size);
+    height: var(--size);
+    box-shadow: inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);
+    opacity: 0;
+  }
+}
+
+/* Animate */
+.shiny-cta {
+  --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: var(--transition);
+  transition-property: --gradient-angle-offset, --gradient-percent,
+    --gradient-shine;
+
+  &,
+  &::before,
+  &::after {
+    animation: var(--animation) var(--duration),
+      var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+  }
+
+  span::before {
+    transition: opacity var(--transition);
+    animation: calc(var(--duration) * 1.5) breathe linear infinite;
+  }
+}
+
+.shiny-cta:is(:hover, :focus-visible) {
+  --gradient-percent: 20%;
+  --gradient-angle-offset: 95deg;
+  --gradient-shine: var(--shiny-cta-highlight-subtle);
+
+  &,
+  &::before,
+  &::after {
+    animation-play-state: running;
+  }
+
+  span::before {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes breathe {
+  from,
+  to {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+}
+
+/* html, body {
+  height: 100%;
+} */
+

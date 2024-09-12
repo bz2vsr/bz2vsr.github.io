@@ -69,11 +69,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 console.log(response.description);
                 document.querySelector("#MapViewer").innerHTML = 
                 `
-                    <div class="border rounded w-100 mb-2" >
+                    <div class="border rounded-0 rounded-top w-100">
                         <div class="bg-dark-subtle rounded-top text-center font-monospace py-2 px-3 d-flex justify-content-between align-items-center"><span>${(response.title).replace("VSR: ","").replace("ST: ","")}</span> <span class="text-secondary small">${mapfile}</span></div>
-                        <img class="rounded-bottom" width="100%" style="filter:brightness(1.25)" height="auto" src="${assetsURL + response.image}" onerror="this.src='/img/no_steam_pfp.jpg'">
+                        <img class="rounded-0" width="100%" style="filter:brightness(1.25)" height="auto" src="${assetsURL + response.image}" onerror="this.src='/img/no_steam_pfp.jpg'">
                     </div>
-                    <div class="alert alert-secondary py-3 px-4 font-monospace">
+                    <div class="alert alert-secondary py-3 px-4 font-monospace rounded-0 rounded-bottom border-top-0">
                         ${(response.description).replace(/\r?\n|\r/g, '<br>')}
                     </div>
                 `;
