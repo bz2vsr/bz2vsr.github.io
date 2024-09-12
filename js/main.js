@@ -177,8 +177,7 @@ async function getLobbyData()
 
     try {
 
-        // let fetchResponse = await fetch(sourceURL);
-        let fetchResponse = await fetch('/data/test/data-gog.sample.json');
+        let fetchResponse = await fetch(sourceURL);
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
@@ -423,7 +422,7 @@ async function getLobbyData()
                                 ${(() => {
                                     // immediately-invoked function expressions allow us to return content based on target value
                                     if( hasActivePlayers && index === 0) {
-                                        return `<span id="gameState" class="ms-2 shiny-cta btn btn-sm btn-dead px-3 rounded">BZ2 Vet Strats</span>`
+                                        return `<span id="gameState" class="ms-2 shiny-cta btn btn-sm btn-dead px-3 rounded">BZ2 Vet Strat</span>`
                                     }
                                     else {
                                         return ``
