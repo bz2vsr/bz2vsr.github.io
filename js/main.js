@@ -409,10 +409,6 @@ async function getLobbyData()
             let vacantObj = {};
             vacantObj.Name = "Open";
 
-            console.log(PlayerList);
-            console.log(PlayerList[1].Team.ID);
-            console.log(PlayerList[1].Team.SubTeam.ID);
-
             PlayerList = PlayerList.sort((a, b) => {
                 // nulls sort after anything else
                 if (a.Team === undefined) {
