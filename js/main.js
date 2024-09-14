@@ -793,7 +793,7 @@ async function getLobbyData()
         //   2. No VSR games exist
         //   3. Other non-VSR games exist
         if( localStorage.getItem("ShowVSROnly") === "true" ) {
-            if( vsrGameCount == 0 && otherGameCount !== 0) {
+            if( vsrGameCount == 0) {
                 document.querySelector("#lobbyList").innerHTML = '<p class="text-center ">No VSR games found.</p>';
             }
         }
