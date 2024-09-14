@@ -27,6 +27,8 @@ const ActivePlayerList = [
     'xohm',
     'herp mcderperson',
     'the best there is',
+    'happyotter',
+    'lamper',
 ];
 
 /*-------------------------------------------------*/
@@ -178,6 +180,9 @@ async function getLobbyData()
     try {
 
         let fetchResponse = await fetch(sourceURL);
+        // let fetchResponse = await fetch('/data/test/data-hidden-player.sample.json');
+        // let fetchResponse = await fetch('/data/test/data-7-players.sample.json');
+        // let fetchResponse = await fetch('/data/test/data-10-players.sample.json');
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
@@ -188,7 +193,7 @@ async function getLobbyData()
         // players must be present if games exist, therefore relevant objects being empty undefined means no players
         if( JSON.stringify(data.DataCache) === '{}' || ( data.DataCache.Players.IDs.Steam === undefined && data.DataCache.Players.IDs.GOG === undefined ) ) {
             document.querySelector("#lobbyList").innerHTML = `
-                <p class="text-center ">No Steam or GOG players online.
+                <p class="text-center ">No players online.
                 <br><br>
                 Expecting to see games here and/or suspect an error?
                 <br><br>
@@ -204,10 +209,20 @@ async function getLobbyData()
         let SteamPlayerList = data.DataCache.Players.IDs.Steam;
         let GogPlayerList = data.DataCache.Players.IDs.Gog;
 
-
         // all current games, sorted by game name
         let GameList = data.Sessions;
         GameList.sort((a, b) => (b.Name < a.Name) ? 1 : -1);
+
+        // show player and game counts in top navbar
+        let OnlinePlayers = 0;
+
+        if(SteamPlayerList) OnlinePlayers += Object.entries(SteamPlayerList).length;
+        if(GogPlayerList) OnlinePlayers += Object.entries(GogPlayerList).length;
+
+        document.querySelector("#NavPlayerCount").innerHTML = OnlinePlayers;
+        document.querySelector("#NavGameCount").innerHTML = GameList.length;
+        document.querySelector("#NavPlayerCountSm").innerHTML = OnlinePlayers;
+        document.querySelector("#NavGameCountSm").innerHTML = GameList.length;
 
         // first, move any VSR games to front of the list
         for(let i = 0; i < GameList.length; i++ ) 
@@ -252,6 +267,7 @@ async function getLobbyData()
                         {
                             if(ActivePlayerList.includes(SteamNick.toLowerCase())) 
                             {
+                                // console.log('Found Active Player: ' + SteamNick);
                                 hasActivePlayers = true;
                                 currentActivePlayerCount += 1;
                             }
@@ -393,16 +409,62 @@ async function getLobbyData()
             let vacantObj = {};
             vacantObj.Name = "Open";
 
-            // current # of players minus the player max gives the amount of open spots to add
-            let total = (playerCountMax - PlayerList.length);
-            for(let i = 0; i < total; i++){
-                PlayerList.push(vacantObj);
-            }
+            console.log(PlayerList);
+            console.log(PlayerList[1].Team.ID);
+            console.log(PlayerList[1].Team.SubTeam.ID);
 
-            // mark the rest of the slots as simply empty
-            total = (10 - PlayerList.length);
-            for(let i = 0; i < total; i++){
-                PlayerList.push(emptyObj);
+            PlayerList = PlayerList.sort((a, b) => {
+                // nulls sort after anything else
+                if (a.Team === undefined) {
+                    return 1;
+                }
+                if (b.Team === undefined) {
+                    return -1;
+                }
+
+                return parseInt(a.Team.SubTeam.ID) < parseInt(b.Team.SubTeam.ID) ? -1 : 1;
+            });
+
+            let isFull = (PlayerList.length === 10 ? true : false);
+
+            if(isFull && gameState === "InGame") {
+                let PlayerListFinal = [];
+
+                for(let i = 0; i < 10; i++) 
+                {
+                    PlayerListFinal.push(vacantObj);
+                }
+
+                for(let i = 0; i < PlayerList.length; i++) 
+                {
+                    let subIndex = parseInt(PlayerList[i].Team.SubTeam.ID);
+
+                    if(subIndex == 1 || subIndex == 10) {
+                        PlayerListFinal[i] = PlayerList[i] ;
+                    }
+                    else if(subIndex < 6) {
+                        PlayerListFinal[(i+i)] = PlayerList[i]; 
+                    }
+                    else {
+                        PlayerListFinal[i+(subIndex-10)] = PlayerList[i]
+                    }
+                }
+
+                console.log(PlayerListFinal);
+                PlayerList = PlayerListFinal;
+            }
+            else {
+                // current # of players minus the player max gives the amount of open spots to add
+                let total = (playerCountMax - PlayerList.length);
+                for(let i = 0; i < total; i++){
+                    PlayerList.push(vacantObj);
+                }
+
+                // mark the rest of the slots as simply empty
+                total = (10 - PlayerList.length);
+                for(let i = 0; i < total; i++){
+                    PlayerList.push(emptyObj);
+                }
             }
            
             let LobbyList = document.querySelector('#lobbyList');
@@ -417,14 +479,13 @@ async function getLobbyData()
                         <!-- Card Header -->
                         <div class="card-header d-flex justify-content-between align-items-center bg-dark-subtle shadow-lg">
                             <span id="gameTitle">
-                                <strong>Game ${currentLobbyID}</strong>
                                 ${(() => {
                                     // immediately-invoked function expressions allow us to return content based on target value
                                     if( hasActivePlayers && index === 0) {
-                                        return `<span id="gameState" class="ms-2 shiny-cta btn btn-sm btn-dead px-3 rounded">BZ2 Vet Strat</span>`
+                                        return `<span class="shiny-cta btn btn-sm btn-dead px-3 rounded">BZ2 Vet Strat</span>`
                                     }
                                     else {
-                                        return ``
+                                        return `<strong>Game ${currentLobbyID}</strong>`
                                     }
                                 })()}
                             </span>
@@ -504,6 +565,20 @@ async function getLobbyData()
                                 </div>
                             </div>
                             <div class="row player-list">
+                                ${(() => {
+                                    // immediately-invoked function expressions allow us to return content based on target value
+                                    if( hasActivePlayers && index === 0 && gameState === "InGame" ) {
+                                        return `
+                                        <div class="col-6">
+                                            <div class="text-bg-secondary bg-gradient text-center py-1 rounded mt-2">Team 1</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-bg-secondary bg-gradient text-center py-1 rounded mt-2">Team 2</div>
+                                        </div>
+                                        `
+                                    }
+                                    else return ``;
+                                })()}
                                 ${Object.keys(PlayerList).map(function (player) {
                                     // we are now iterating through the 10-element array we built earlier
                                     // Open Slot
@@ -531,7 +606,7 @@ async function getLobbyData()
                                         </div>
                                         `
                                     }
-                                    // List Player - iterates through the Steam account list to get this player's steam data
+                                    // List Player - iterates through the Steam and GOG accounts lists to get this player's steam data
                                     else {
                                         for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
                                         {
@@ -550,42 +625,48 @@ async function getLobbyData()
                                                                     <span class="">
                                                                         <div class="mb-1">
                                                                             ${truncate(clean(PlayerList[player].Name), 24)}<br>
-                                                                            S<span class="d-none d-lg-inline">team</span>: ${truncate(clean(Steam.Nickname), 24)}<br>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                            <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                            <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                            </svg> ${truncate(clean(Steam.Nickname), 24)}<br>
                                                                         </div>
                                                                         ${(() => {
-                                                                            if( PlayerList[player].Team !== undefined ) {
-                                                                                if( PlayerList[player].Team.Leader === true) {
+                                                                            if( PlayerList[player].Team !== undefined ) 
+                                                                            {
+                                                                                if( PlayerList[player].Team.Leader === true) 
+                                                                                {
                                                                                     return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
                                                                                 }
-                                                                                else return "";
+                                                                                else return ``;
                                                                             }
-                                                                            // I believe this returns undefined if user is hidden, but still need to test
                                                                             else return `<strong class="badge text-bg-danger bg-opacity-75">Hidden</strong>`;
                                                                         })()}
                                                                         ${(() => {
-                                                                            if( PlayerList[player].Name === gameHost ) {
+                                                                            if( PlayerList[player].Name === gameHost ) 
+                                                                            {
                                                                                 return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
                                                                             }
-                                                                            else return "";
+                                                                            else return ``;
                                                                         })()}
                                                                         <span class="d-inline d-sm-none"><br></span>
                                                                         ${(() => {
-                                                                            if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) {
-                                                                                if (parseInt(PlayerList[player].Team.SubTeam.ID) < 6) {
-                                                                                    return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">1</strong>`;
-                                                                                }
-                                                                                else {
-                                                                                    return ``;
-                                                                                }
-                                                                            }
+                                                                            return '';
+                                                                            // if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) 
+                                                                            // {
+                                                                            //     if (parseInt(PlayerList[player].Team.SubTeam.ID) < 11) 
+                                                                            //     {
+                                                                            //         return `<strong class="badge text-bg-dark bg-opacity-51 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">${PlayerList[player].Team.ID}.${PlayerList[player].Team.SubTeam.ID}</strong>`;
+                                                                            //     }
+                                                                            //     else return ``;
+                                                                            // }
+                                                                            // else return ``;
                                                                         })()}
                                                                         ${(() => {
-                                                                            if (PlayerList[player].Stats !== undefined) {
+                                                                            if (PlayerList[player].Stats !== undefined) 
+                                                                            {
                                                                                 return `<span class="badge text-bg-light">${(PlayerList[player].Stats.Kills !== undefined ? PlayerList[player].Stats.Kills : "0")} <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Deaths !== undefined ? PlayerList[player].Stats.Deaths : "0")}  <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Score !== undefined ? PlayerList[player].Stats.Score : "0")} </span>`;
                                                                             }
-                                                                            else {
-                                                                                return ``;
-                                                                            }
+                                                                            else return ``;
                                                                         })()}
                                                                     </span>
                                                                 </div>
@@ -615,39 +696,40 @@ async function getLobbyData()
                                                                                 G<span class="d-none d-lg-inline">OG</span>: ${truncate(clean(GOG.Username), 24)}<br>
                                                                             </div>
                                                                             ${(() => {
-                                                                                if( PlayerList[player].Team !== undefined ) {
-                                                                                    if( PlayerList[player].Team.Leader === true) {
+                                                                                if( PlayerList[player].Team !== undefined ) 
+                                                                                {
+                                                                                    if( PlayerList[player].Team.Leader === true) 
+                                                                                    {
                                                                                         return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
                                                                                     }
                                                                                     else return "";
                                                                                 }
-                                                                                // I believe this returns undefined if user is hidden, but still need to test
                                                                                 else return `<strong class="badge text-bg-danger bg-opacity-75">Hidden</strong>`;
                                                                             })()}
                                                                             ${(() => {
-                                                                                if( PlayerList[player].Name === gameHost ) {
+                                                                                if( PlayerList[player].Name === gameHost ) 
+                                                                                {
                                                                                     return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
                                                                                 }
-                                                                                else return "";
+                                                                                else return ``;
                                                                             })()}
                                                                             <span class="d-inline d-sm-none"><br></span>
                                                                             ${(() => {
-                                                                                if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) {
-                                                                                    if (parseInt(PlayerList[player].Team.SubTeam.ID) < 6) {
-                                                                                        return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">1</strong>`;
+                                                                                if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) 
+                                                                                {
+                                                                                    if (parseInt(PlayerList[player].Team.SubTeam.ID) < 11) {
+                                                                                        return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">${PlayerList[player].Team.SubTeam.ID})</strong>`;
                                                                                     }
-                                                                                    else {
-                                                                                        return ``;
-                                                                                    }
+                                                                                    else return ``;
                                                                                 }
+                                                                                else return ``;
                                                                             })()}
                                                                             ${(() => {
-                                                                                if (PlayerList[player].Stats !== undefined) {
+                                                                                if (PlayerList[player].Stats !== undefined) 
+                                                                                {
                                                                                     return `<span class="badge text-bg-light">${(PlayerList[player].Stats.Kills !== undefined ? PlayerList[player].Stats.Kills : "0")} <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Deaths !== undefined ? PlayerList[player].Stats.Deaths : "0")}  <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Score !== undefined ? PlayerList[player].Stats.Score : "0")} </span>`;
                                                                                 }
-                                                                                else {
-                                                                                    return ``;
-                                                                                }
+                                                                                else return ``;
                                                                             })()}
                                                                         </span>
                                                                     </div>
