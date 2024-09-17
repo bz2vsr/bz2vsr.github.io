@@ -296,7 +296,8 @@ async function getLobbyData()
             // get all relevant data 
             let currentLobbyID  = (index + 1);
             let gameName        = clean(game.Name);
-            let gameMode        = game.Level.GameMode.ID;
+            let gameMode        = (game.Level.GameMode === undefined ? "N/A" : game.Level.GameMode.ID)
+            // let gameMode        = game.Level.GameMode.ID;
             let gameVersion     = game.Game.Version;
             let gameMod         = game.Game.Mod;
             let gameModName     = (gameMod !== undefined ? (Mods[gameMod] !== undefined ? Mods[gameMod].Name : "Unknown Mod") : "Stock");
@@ -410,7 +411,7 @@ async function getLobbyData()
             vacantObj.Name = "Open";
 
             PlayerList = PlayerList.sort((a, b) => {
-                // nulls sort after anything else
+                // sort by SubTeam.ID, with nulls (hidden players) at the end
                 if (a.Team === undefined) {
                     return 1;
                 }
@@ -434,6 +435,7 @@ async function getLobbyData()
                 for(let i = 0; i < PlayerList.length; i++) 
                 {
                     let subIndex = parseInt(PlayerList[i].Team.SubTeam.ID);
+                    // console.log(PlayerList[i].Name + " in slot " + PlayerList[i].Team.SubTeam.ID);
 
                     if(subIndex == 1 || subIndex == 10) {
                         PlayerListFinal[i] = PlayerList[i] ;
@@ -920,5 +922,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
     {
         getRandomMaps();
     });
-
 });
