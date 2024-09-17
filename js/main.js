@@ -565,7 +565,7 @@ async function getLobbyData()
                             <div class="row player-list">
                                 ${(() => {
                                     // immediately-invoked function expressions allow us to return content based on target value
-                                    if( hasActivePlayers && index === 0 && gameState === "InGame" ) {
+                                    if( hasActivePlayers && index === 0 && gameState === "InGame" && isFull) {
                                         return `
                                         <div class="col-6 px-2">
                                             <div class="bg-secondary bg-gradient bg-opacity-50 text-center py-1 rounded mt-2">Team 1</div>
@@ -746,7 +746,7 @@ async function getLobbyData()
                         </div>
                         <!-- Card Footer -->
                         <div class="card-footer d-flex justify-content-between align-items-center bg-dark-subtle">
-                            <span class="text-secondary">${gameVersion}</span>
+                            <span class="text-secondary d-none d-lg-inline">${gameVersion}</span>
                             <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=${gameMod}" target="_blank" class="link-secondary link-underline-dark border border-secondary ps-0" style="--bs-border-opacity: 0;">
                                 ${gameModName}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
