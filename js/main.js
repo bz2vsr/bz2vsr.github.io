@@ -744,7 +744,7 @@ async function getLobbyData()
                         </div>
                         <!-- Card Footer -->
                         <div class="card-footer d-flex justify-content-between align-items-center bg-dark-subtle">
-                            <span class="text-secondary">${gameVersion}</span>
+                            <span class="text-secondary d-none d-lg-inline">${gameVersion}</span>
                             <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=${gameMod}" target="_blank" class="link-secondary link-underline-dark border border-secondary ps-0" style="--bs-border-opacity: 0;">
                                 ${gameModName}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
