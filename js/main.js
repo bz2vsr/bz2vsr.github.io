@@ -563,7 +563,7 @@ async function getLobbyData()
                             <div class="row player-list">
                                 ${(() => {
                                     // immediately-invoked function expressions allow us to return content based on target value
-                                    if( hasActivePlayers && index === 0 && gameState === "InGame" ) {
+                                    if( hasActivePlayers && index === 0 && gameState === "InGame" && isFull) {
                                         return `
                                         <div class="col-6 px-2">
                                             <div class="bg-secondary bg-gradient bg-opacity-50 text-center py-1 rounded mt-2">Team 1</div>
