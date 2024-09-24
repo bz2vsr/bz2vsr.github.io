@@ -198,7 +198,7 @@ async function getLobbyData()
                 <br><br>
                 Expecting to see games here and/or suspect an error?
                 <br><br>
-                Please <a href="https://tinyurl.com/discordbz2vsrb" target="_blank">message Sev</a> on Discord.
+                Please send a snapshot of the <a href="http://battlezone99mp.webdev.rebellion.co.uk/lobbyServer" target="_blank">raw data</a> to Sev on Discord for troubleshooting, including the time and timezone.
                 `;
             return;
         }
