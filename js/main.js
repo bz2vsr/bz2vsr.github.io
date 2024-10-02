@@ -528,7 +528,7 @@ async function getLobbyData()
                             </span>
                         </div>
                         <!-- Card Body -->
-                        <div class="container h-100 pb-1">
+                        <div class="container-fluid h-100 pb-1">
                             <div class="row border-bottom">
                                 <div class="col-3 p-1 border-0 border-end border-dotted text-center">
                                     <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" style="filter:brightness(1.5)" class="img-thumbnail"/>
