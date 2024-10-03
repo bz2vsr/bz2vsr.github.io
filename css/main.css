@@ -89,6 +89,7 @@ body {
 
 .dt-scroll-body::-webkit-scrollbar {
     width: 10px;
+    cursor: pointer;
 }
 
 .dt-scroll-body::-webkit-scrollbar-track {
@@ -99,6 +100,7 @@ body {
 .dt-scroll-body::-webkit-scrollbar-thumb {
     background: rgba(13, 110, 253, 0.8);
     border-radius: 2px;
+    cursor: pointer;
 }
 
 .dt-scroll-body::-webkit-scrollbar-thumb:hover {
