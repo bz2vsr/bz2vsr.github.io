@@ -34,7 +34,7 @@
 		"vsrechelon",
 		"vsregypt",
 		"vsreuropa",
-		"vsreuropan",
+		"vsreuronig",
 		"stvsrexcav",
 		"vsrequinox",
 		"vsregypt",
