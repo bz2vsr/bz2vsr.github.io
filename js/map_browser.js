@@ -225,7 +225,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             <span>
                                 ${map.Description}
                             </span>
-                            <span>tags: ${map.Tags}</span>
+                            <br>
+                            <span">${( map.Tags !== '' ? ('tags: ' + map.Tags) : '' )}</span>
                         </li>
                     </ul>
                 </div>
