@@ -415,6 +415,9 @@ async function getLobbyData()
             // host should always be first player in the list
             let gameHost = game.Players[0].Name;
 
+                document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${gameHost})`
+            }
+
             // since every card has 10 slots, we want to identify open spots (based on playerMax),
             // and fill anything beyond that with empty slots. this ensures we always end up with 
             // an array of size 10
