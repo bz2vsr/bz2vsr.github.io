@@ -13,7 +13,7 @@ const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 // player list for better game identification - these are players most likely to be
 // in a vsr community game; others who often join other lobbies are excluded to avoid
@@ -48,7 +48,6 @@ const hostString = new URLSearchParams(window.location.search).get('host');
 
 if( hostString !== undefined && hostString !== null ) {
     if(hostString === "true") {
-        alert("Hosting.");
         window.location.replace('steam://rungame/624970/76561198955218468/-hostname%20"bz2vsr"%20-nomovies');
         window.location.href = "/";
     }
