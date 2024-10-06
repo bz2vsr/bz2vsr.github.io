@@ -44,6 +44,20 @@ if( joinString !== undefined && joinString !== null ) {
     window.location.href = "/";
 }
 
+const hostString = new URLSearchParams(window.location.search).get('host'); 
+
+if( hostString !== undefined && hostString !== null ) {
+    if(hostString === "true") {
+        alert("Hosting.");
+        window.location.replace('steam://rungame/624970/76561198955218468/-hostname%20"bz2vsr"%20-nomovies');
+        window.location.href = "/";
+    }
+    else {
+        alert("Bad input. Use bz2vsr.com/?host=true if you are trying to host a game.")
+        window.location.href = "/";
+    }
+}
+
 /*-------------------------------------------------*/
 /*------------------- FUNCTIONS -------------------*/
 /*-------------------------------------------------*/
