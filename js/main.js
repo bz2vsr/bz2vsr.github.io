@@ -13,7 +13,7 @@ const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
-const useCORSProxy = true;
+const useCORSProxy = false;
 
 // player list for better game identification - these are players most likely to be
 // in a vsr community game; others who often join other lobbies are excluded to avoid
@@ -415,7 +415,8 @@ async function getLobbyData()
             // host should always be first player in the list
             let gameHost = game.Players[0].Name;
 
-                document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${gameHost})`
+            if(hasActivePlayers && index === 0) {
+                document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${gameHost})`;
             }
 
             // since every card has 10 slots, we want to identify open spots (based on playerMax),
