@@ -795,7 +795,7 @@ async function getLobbyData()
         //   1. "VSR Only" is toggled on 
         //   2. No VSR games exist
         //   3. Other non-VSR games exist
-        if( localStorage.getItem("ShowVSROnly") === "true" ) {
+        if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked === true) {
             if( vsrGameCount == 0) {
                 document.querySelector("#lobbyList").innerHTML = '<p class="text-center ">No VSR games found.</p>';
             }
