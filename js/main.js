@@ -419,6 +419,9 @@ async function getLobbyData()
             if(hasActivePlayers && index === 0) {
                 document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${gameHost})`;
             }
+            else if(!hasActivePlayers) {
+                document.title = `Battlezone II: Game Watch`;
+            }
 
             // since every card has 10 slots, we want to identify open spots (based on playerMax),
             // and fill anything beyond that with empty slots. this ensures we always end up with 
