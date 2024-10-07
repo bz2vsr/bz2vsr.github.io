@@ -133,8 +133,12 @@ async function getRandomMaps()
         document.querySelector("#pickerModal .spinner").remove();
     }
 
+    console.log("Target indexes:");
+    console.log(indexes);
+
     Maps.forEach(function(map, index) {
-        console.log(map.Pools);
+        console.log(map.Name);
+        console.log(map);
         document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
         document.querySelector(`#pickerMapTitle-${index}`).innerHTML = map.Name;
         document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
