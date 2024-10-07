@@ -376,7 +376,7 @@ async function getLobbyData()
                 // to preserve the original values
 
                 // replace funky chars in NAT ID with something more URL friendly
-                shortIOPath = ((game.Address.NAT).replaceAll("@","A")).replaceAll("-","0");
+                shortIOPath = ((game.Address.NAT).replaceAll("@","A")).replaceAll("-","0").replaceAll("_","L");
 
                 const options = {
                     method: 'POST',
