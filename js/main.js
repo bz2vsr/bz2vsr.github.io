@@ -140,7 +140,7 @@ async function getRandomMaps()
         document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
         document.querySelector(`#pickerMapPools-${index}`).textContent = map.Pools;
         document.querySelector(`#pickerMapSize-${index}`).textContent = map.Size;
-        document.querySelector(`#pickerMapLoose-${index}`).textContent = map.Loose;
+        document.querySelector(`#pickerMapLoose-${index}`).textContent = ( map.Loose == -2 ? "INF" : (map.Loose == -1 ? "NA" : map.Loose ));
 
     });
 }
