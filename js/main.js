@@ -114,7 +114,7 @@ async function getRandomMaps()
     let indexes = [];
 
     for(let i = 0; i < 3; i++) {
-        let randomIndex = Math.floor(Math.random() * MapListFull.length);
+        let randomIndex = Math.floor(Math.random() * VSRMapList.length);
 
         if(!indexes.includes(randomIndex)) 
         {
@@ -122,59 +122,27 @@ async function getRandomMaps()
         }
     }
 
-    // build URLs based on selected maps
-    proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=';
+    let Maps = [];
 
-    let url_0 = proxyURL + encodeURIComponent(`https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${MapListFull[indexes[0]]}`);
-    let url_1 = proxyURL + encodeURIComponent(`https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${MapListFull[indexes[1]]}`)
-    let url_2 = proxyURL + encodeURIComponent(`https://gamelistassets.iondriver.com/bzcc/getdata.php?mod=${vsrModID}&map=${MapListFull[indexes[2]]}`)
+    Maps.push(VSRMapList[indexes[0]]);
+    Maps.push(VSRMapList[indexes[1]]);
+    Maps.push(VSRMapList[indexes[2]]);
 
-    // grab Map #1
-    fetch(url_0)
-        .then(response => response.json())
-        .then(response => { 
-            // only remove the main spinner if it still exists, as the first 
-            // completed request of the three we do here will remove it
-            if(document.querySelector("#pickerModal .spinner") !== null) 
-            {
-                document.querySelector("#pickerModal .spinner").remove();
-            }
+    if(document.querySelector("#pickerModal .spinner") !== null) 
+    {
+        document.querySelector("#pickerModal .spinner").remove();
+    }
 
-            document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
-            document.querySelector("#pickerMapTitle-0").innerHTML = response.title;
-            document.querySelector("#pickerMapImage-0").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
-        })
-        .catch(err => console.error(err));
+    Maps.forEach(function(map, index) {
+        console.log(map.Pools);
+        document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
+        document.querySelector(`#pickerMapTitle-${index}`).innerHTML = map.Name;
+        document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
+        document.querySelector(`#pickerMapPools-${index}`).textContent = map.Pools;
+        document.querySelector(`#pickerMapSize-${index}`).textContent = map.Size;
+        document.querySelector(`#pickerMapLoose-${index}`).textContent = map.Loose;
 
-    // grab Map #2
-    fetch(url_1)
-        .then(response => response.json())
-        .then(response => { 
-            if(document.querySelector("#pickerModal .spinner") !== null) 
-            {
-                document.querySelector("#pickerModal .spinner").remove();
-            }
-
-            document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
-            document.querySelector("#pickerMapTitle-1").innerHTML = response.title;
-            document.querySelector("#pickerMapImage-1").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
-        })
-        .catch(err => console.error(err));
-
-    // grab Map #3
-    fetch(url_2)
-        .then(response => response.json())
-        .then(response => { 
-            if(document.querySelector("#pickerModal .spinner") !== null) 
-            {
-                document.querySelector("#pickerModal .spinner").remove();
-            }
-
-            document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
-            document.querySelector("#pickerMapTitle-2").innerHTML = response.title;
-            document.querySelector("#pickerMapImage-2").src = "https://gamelistassets.iondriver.com/bzcc/" + response.image;
-        })
-        .catch(err => console.error(err));
+    });
 }
 
 // main function to get game data and produce content based on that data
