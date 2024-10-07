@@ -417,7 +417,7 @@ async function getLobbyData()
             let gameHost = game.Players[0].Name;
 
             if(hasActivePlayers && index === 0) {
-                document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${gameHost})`;
+                document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${clean(gameHost)})`;
             }
             else if(!hasActivePlayers) {
                 document.title = `Battlezone II: Game Watch`;
