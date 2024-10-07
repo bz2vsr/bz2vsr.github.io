@@ -113,12 +113,15 @@ async function getRandomMaps()
     // get three random unique indexes in our map list array
     let indexes = [];
 
-    for(let i = 0; i < 3; i++) {
-        let randomIndex = Math.floor(Math.random() * VSRMapList.length);
+    // while loop ensures we always get 3 target indexes
+    while(!(indexes.length >= 3)) {
+        for(let i = 0; i < 3; i++) {
+            let randomIndex = Math.floor(Math.random() * VSRMapList.length);
 
-        if(!indexes.includes(randomIndex)) 
-        {
-            indexes.push(randomIndex);
+            if(!indexes.includes(randomIndex)) 
+            {
+                indexes.push(randomIndex);
+            }
         }
     }
 
@@ -137,8 +140,6 @@ async function getRandomMaps()
     console.log(indexes);
 
     Maps.forEach(function(map, index) {
-        console.log(map.Name);
-        console.log(map);
         document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
         document.querySelector(`#pickerMapTitle-${index}`).innerHTML = map.Name;
         document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
