@@ -127,7 +127,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let dt = new DataTable('#MapList', {
         paging: false,
         scrollCollapse: true,
-        scrollY: '75vh',
+        scrollY: '70vh',
         layout: {
             topStart: {
                 search: {
