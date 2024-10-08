@@ -140,14 +140,16 @@
                     </div>
                     <!-- <div class="modal-body bg-opacity-0 border-0" style="height:447px !important"> -->
                     <div class="modal-body bg-opacity-0 border-0">
-                        <div class="alert alert-warning">If you see NA values, it's because a lot of map data is still missing. If you know any missing values or can help gather more map data, please message Sev on Discord.</div>
+                        <div class="alert alert-warning small">
+                            Values of <tt>NA</tt> or <tt>-1</tt> denote missing data. If you know any of these values or can help gather more map data, please message Sev on Discord.
+                        </div>
                         <div class="d-flex justify-content-center spinner h-100 align-items-center">
                             <div class="spinner-border text-secondary my-3" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
                         <div class="row d-none picker-content">
-                            <div class="col-4 text-center">
+                            <div class="col-12 col-md-4 text-center">
                                 <h5 id="pickerMapTitle-0" class="mb-0 rounded-0 rounded-top border-bottom-0 alert alert-secondary fw-bold"></h5>
                                 <img width="100%" height="250" class="img-thumbnail rounded-0 rounded-bottom bg-dark-subtle" id="pickerMapImage-0" onError="this.src='/img/no_steam_pfp.jpg'"/>
                                 <div class="alert alert-secondary mt-2 small d-flex justify-content-between align-middle mb-1">
@@ -165,7 +167,7 @@
                                    </span>
                                 </div>
                             </div>
-                            <div class="col-4 text-center">
+                            <div class="col-12 col-md-4 text-center">
                                 <h5 id="pickerMapTitle-1" class="mb-0 rounded-0 rounded-top border-bottom-0 alert alert-secondary fw-bold"></h5>
                                 <img width="100%" height="250" class="img-thumbnail rounded-0 rounded-bottom bg-dark-subtle" id="pickerMapImage-1" onError="this.src='/img/no_steam_pfp.jpg'"/>
                                 <div class="alert alert-secondary mt-2 small d-flex justify-content-between align-middle mb-1">
@@ -183,7 +185,7 @@
                                    </span>
                                 </div>
                             </div>
-                            <div class="col-4 text-center">
+                            <div class="col-12 col-md-4 text-center">
                                 <h5 id="pickerMapTitle-2" class="mb-0 rounded-0 rounded-top border-bottom-0 alert alert-secondary fw-bold"></h5>
                                 <img width="100%" height="250" class="img-thumbnail rounded-0 rounded-bottom bg-dark-subtle" id="pickerMapImage-2" onError="this.src='/img/no_steam_pfp.jpg'"/>
                                 <div class="alert alert-secondary mt-2 small d-flex justify-content-between align-middle mb-1">
