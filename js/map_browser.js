@@ -38,16 +38,18 @@ function generate_new_map_object(url, mapfile) {
     if (request.status === 200) {
         map = JSON.parse(request.responseText);
 
-        // {
-        //     "Name" : "VSR: Red Slope",
-        //     "File" : "vsrslope"
-        //     "Pools" : 7,
-        //     "Size" : Small,
-        //     "Loose": 180,
-        //     "Creator: : "appel"
-        //     "Description" : "this is a map description",
-        //     "Tags" : "played,popular"
-        // } 
+        /*
+        {
+            "Name" : "VSR: Red Slope",
+            "File" : "vsrslope"
+            "Pools" : 7,
+            "Size" : Small,
+            "Loose": 180,
+            "Creator: : "appel"
+            "Description" : "this is a map description",
+            "Tags" : "played,popular"
+        } 
+        */
 
         // build a new map object
         let newMap = {};
@@ -189,8 +191,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 </div>
             </div>
         `;
-
-        // let mapfile = event.target.closest(".map-item").getAttribute("data-mapfile");
 
         let map = VSRMapList.find((e) => e.File == mapfile);
 
