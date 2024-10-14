@@ -208,6 +208,8 @@ async function getLobbyData()
         let VetStratGameIndex = 0;
         let VetStratGame = {};
 
+        console.log("###############################################\n\n");
+
         for(let i = 0; i < GameList.length; i++ ) 
         {
             let game = GameList[i];
@@ -224,12 +226,11 @@ async function getLobbyData()
                     {
                         let SteamNick = (SteamData.Nickname).toString();
 
-                        console.log((SteamNick + " " + PlayerSteamID).toString() + " " + SteamID.toString()) 
                         if((PlayerSteamID).toString() === SteamID.toString()) 
                         {
                             if(ActivePlayerList.includes(SteamNick.toLowerCase())) 
                             {
-                                console.log('Found Active Player: ' + SteamNick);
+                                console.log('Found: ' + SteamNick);
                                 hasActivePlayers = true;
                                 currentActivePlayerCount += 1;
                             }
@@ -238,14 +239,20 @@ async function getLobbyData()
                 }
             });
 
-            console.log("Game: " + game.Name + " Active Players: " + currentActivePlayerCount);
 
             if(currentActivePlayerCount > maxActivePlayerCount)
             {
-                console.log("New Vet Strat Game: " + game.Name + " with " + currentActivePlayerCount + " active players.");
+                console.log("New Vet Game \"" + game.Name + "\" with " + currentActivePlayerCount + " active players. (Max: " + maxActivePlayerCount + ")");
                 VetStratGameIndex = i;
                 VetStratGame = game;
+                maxActivePlayerCount = currentActivePlayerCount;
             }
+            else if(currentActivePlayerCount > 0) 
+            {
+                console.log("Game has active players (" + currentActivePlayerCount + "), but not more than max (" + maxActivePlayerCount + ")");
+            }
+
+            console.log("\n###############################################\n\n");
         }
 
         if(hasActivePlayers) {
@@ -253,7 +260,6 @@ async function getLobbyData()
             GameList.splice(0, 0, VetStratGame);
         }
 
-        console.log("-------------------");
 
         let Mods = data.Mods;
 
