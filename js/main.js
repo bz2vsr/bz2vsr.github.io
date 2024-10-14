@@ -229,7 +229,7 @@ async function getLobbyData()
                         {
                             if(ActivePlayerList.includes(SteamNick.toLowerCase())) 
                             {
-                                // console.log('Found Active Player: ' + SteamNick);
+                                console.log('Found Active Player: ' + SteamNick);
                                 hasActivePlayers = true;
                                 currentActivePlayerCount += 1;
                             }
@@ -238,8 +238,11 @@ async function getLobbyData()
                 }
             });
 
+            console.log("Game: " + game.Name + " Active Players: " + currentActivePlayerCount);
+
             if(currentActivePlayerCount > maxActivePlayerCount)
             {
+                console.log("New Vet Strat Game: " + game.Name + " with " + currentActivePlayerCount + " active players.");
                 VetStratGameIndex = i;
                 VetStratGame = game;
             }
@@ -249,6 +252,8 @@ async function getLobbyData()
             GameList.splice(VetStratGameIndex, 1);
             GameList.splice(0, 0, VetStratGame);
         }
+
+        console.log("-------------------");
 
         let Mods = data.Mods;
 
