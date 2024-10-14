@@ -30,7 +30,13 @@ const ActivePlayerList = [
     'happyotter',
     'lamper',
     'graves',
+    'econchump',
+    'm.s.',
+    'blue',
 ];
+
+// refresh rate in milliseconds, for live updates
+const REFRESH_RATE = 3000; 
 
 /*-------------------------------------------------*/
 /*------------------- REDIRECTS -------------------*/
@@ -39,23 +45,21 @@ const ActivePlayerList = [
 // if URL has a join string, process that immediately
 const joinString = new URLSearchParams(window.location.search).get('join');
 
-if( joinString !== undefined && joinString !== null ) {
+if (joinString) {
     window.location.replace(baseSteamProtocol + joinString);
     window.location.href = "/";
 }
 
 // if URL has ?host=true, cast the Steam Host commander and pass user to homepage
-const hostString = new URLSearchParams(window.location.search).get('host'); 
+const hostString = new URLSearchParams(window.location.search).get('host');
 
-if( hostString !== undefined && hostString !== null ) {
-    if(hostString === "true") {
+if (hostString) {
+    if (hostString.toLowerCase() === "true") {
         window.location.replace('steam://rungame/624970/76561198955218468/-hostname%20"bz2vsr"%20-nomovies');
-        window.location.href = "/";
+    } else {
+        alert("Invalid input. Use bz2vsr.com/?host=true if you are trying to host a game.");
     }
-    else {
-        alert("Bad input. Use bz2vsr.com/?host=true if you are trying to host a game.")
-        window.location.href = "/";
-    }
+    window.location.href = "/";
 }
 
 /*-------------------------------------------------*/
@@ -64,89 +68,58 @@ if( hostString !== undefined && hostString !== null ) {
 
 // simple string truncation
 const truncate = (str, len, end = "...") => {
-    return str.length <= len ? str : str.substring(0, len) + end
+    return (str.length <= len ? str : str.substring(0, len) + end)
 }
 
 // convert single char into hexidecimal with 2 digit padding
 function charToHex(char) {
-    var hex = char.toString(16);
-
-    if ((hex.length % 2) > 0) {
-        hex = "0" + hex;
-    }
-
-    return hex;
+    return char.toString(16).padStart(2, '0');
 }
 
 // convert ASCII string into hexidecimal
-function stringToHex(str)
-{
-    var hexString = "";
-
-    for ( var i = 0; i < str.length; i++ ) {
-        hexString = hexString + charToHex(str.charCodeAt(i));
-    }
-
-    return hexString;
+function stringToHex(str) {
+    return Array.from(str).map(char => charToHex(char.charCodeAt(0))).join('');
 }
 
 // clean input strings; not a full-proof solution, but feukers will be feukers
 function clean(str) 
 { 
-    if( str === undefined ) {
-        return "Undefined";
-    }
+    if(str === undefined) { return "Undefined"; }
 
-    const stripThatShit = str.replace(/<[^>]*>/g, '');
-    const cleanThatShit = stripThatShit.replace(/\s+/g, ' ').trim();
+    const strippedString = str.replace(/<[^>]*>/g, '');
+    const cleaned = strippedString.replace(/\s+/g, ' ').trim();
 
-    if( cleanThatShit === "" ) {
-        return "Invalid Input"
-    }
+    if(cleaned === "") { return "Invalid Input" }
 
-    return cleanThatShit;
+    return cleaned;
 }
 
 // grabs 3 random maps when loading the Map Picker modal
-async function getRandomMaps() 
-{
-    // get three random unique indexes in our map list array
-    let indexes = [];
-
-    // while loop ensures we always get 3 target indexes
-    while(!(indexes.length >= 3)) {
-        for(let i = 0; i < 3; i++) {
-            let randomIndex = Math.floor(Math.random() * VSRMapList.length);
-
-            if(!indexes.includes(randomIndex)) 
-            {
-                indexes.push(randomIndex);
-            }
-        }
+async function getRandomMaps() {
+    // Ensure we have at least 3 unique random indexes
+    const indexes = new Set();
+    while (indexes.size < 3) {
+        indexes.add(Math.floor(Math.random() * VSRMapList.length));
     }
 
-    let Maps = [];
+    const Maps = Array.from(indexes).map(index => VSRMapList[index]);
 
-    Maps.push(VSRMapList[indexes[0]]);
-    Maps.push(VSRMapList[indexes[1]]);
-    Maps.push(VSRMapList[indexes[2]]);
+    const pickerModal = document.querySelector("#pickerModal");
+    const spinner = pickerModal.querySelector(".spinner");
+    const pickerContent = pickerModal.querySelector(".picker-content");
 
-    if(document.querySelector("#pickerModal .spinner") !== null) 
-    {
-        document.querySelector("#pickerModal .spinner").remove();
+    if (spinner) {
+        spinner.remove();
     }
 
-    console.log("Target indexes:");
-    console.log(indexes);
+    pickerContent.classList.remove("d-none");
 
-    Maps.forEach(function(map, index) {
-        document.querySelector("#pickerModal .picker-content").classList.remove("d-none");
-        document.querySelector(`#pickerMapTitle-${index}`).innerHTML = map.Name;
+    Maps.forEach((map, index) => {
+        document.querySelector(`#pickerMapTitle-${index}`).textContent = map.Name;
         document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
         document.querySelector(`#pickerMapPools-${index}`).textContent = map.Pools;
         document.querySelector(`#pickerMapSize-${index}`).textContent = map.Size;
-        document.querySelector(`#pickerMapLoose-${index}`).textContent = ( map.Loose == -2 ? "INF" : (map.Loose == -1 ? "NA" : map.Loose ));
-
+        document.querySelector(`#pickerMapLoose-${index}`).textContent = map.Loose === -2 ? "INF" : (map.Loose === -1 ? "NA" : map.Loose);
     });
 }
 
@@ -240,10 +213,10 @@ async function getLobbyData()
             let game = GameList[i];
             let Players = game.Players;
             let currentActivePlayerCount = 0;
-
+            
             Players.forEach(function (player) 
             {
-                if(player.IDs.Steam !== undefined) {
+                if(player.IDs.Steam) {
                     PlayerSteamID = (player.IDs.Steam.ID).toString();
 
                     // use Steam IDs since those are less likely to change
@@ -251,6 +224,7 @@ async function getLobbyData()
                     {
                         let SteamNick = (SteamData.Nickname).toString();
 
+                        console.log((SteamNick + " " + PlayerSteamID).toString() + " " + SteamID.toString()) 
                         if((PlayerSteamID).toString() === SteamID.toString()) 
                         {
                             if(ActivePlayerList.includes(SteamNick.toLowerCase())) 
@@ -285,7 +259,6 @@ async function getLobbyData()
             let currentLobbyID  = (index + 1);
             let gameName        = clean(game.Name);
             let gameMode        = (game.Level.GameMode === undefined ? "N/A" : game.Level.GameMode.ID)
-            // let gameMode        = game.Level.GameMode.ID;
             let gameVersion     = game.Game.Version;
             let gameMod         = game.Game.Mod;
             let gameModName     = (gameMod !== undefined ? (Mods[gameMod] !== undefined ? Mods[gameMod].Name : "Unknown Mod") : "Stock");
@@ -385,6 +358,14 @@ async function getLobbyData()
             }
 
             let PlayerList = game.Players;
+
+            // if(gameName === "bz2vsr"){
+            //     console.log(gameName);
+            //     PlayerList.forEach(function(player, index) {
+            //         console.log(player);
+            //     });
+            //     console.log("---------------");
+            // }
 
             // host should always be first player in the list
             let gameHost = game.Players[0].Name;
@@ -829,7 +810,7 @@ async function getLobbyData()
                         `;
                         btn.classList.remove('btn-success');
                         btn.classList.add('btn-purple');
-                    }, 5000);
+                    }, REFRESH_RATE);
                 });
             });
         }
@@ -857,7 +838,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // run main data grab on interval if necessary, otherwise run once
     if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
         getLobbyData();
-        interval_id = setInterval(getLobbyData, 5000);
+        interval_id = setInterval(getLobbyData, REFRESH_RATE);
     }
     else {
         getLobbyData();
@@ -868,7 +849,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
             localStorage.setItem("LiveUpdatesOn", "true");
-            interval_id = setInterval(getLobbyData, 5000);
+            interval_id = setInterval(getLobbyData, REFRESH_RATE);
         }
         else {
             localStorage.setItem("LiveUpdatesOn", "false");
