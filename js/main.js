@@ -94,6 +94,20 @@ function clean(str)
     return cleaned;
 }
 
+console.image = function(url, size = 100) {
+  const image = new Image();
+  image.src = url;
+  image.onload = function() {
+    var style = [
+      'font-size: 1px;',
+      'padding: ' + this.height/100*size + 'px ' + this.width/100*size + 'px;',
+      'background: url('+ url +') no-repeat;',
+      'background-size: contain;'
+     ].join(' ');
+     console.log('%c ', style);
+  };
+};
+
 // grabs 3 random maps when loading the Map Picker modal
 async function getRandomMaps() {
     // Ensure we have at least 3 unique random indexes
@@ -208,7 +222,7 @@ async function getLobbyData()
         let VetStratGameIndex = 0;
         let VetStratGame = {};
 
-        console.log("###############################################\n\n");
+        console.log("-----------------------------------------------------");
 
         for(let i = 0; i < GameList.length; i++ ) 
         {
@@ -230,7 +244,7 @@ async function getLobbyData()
                         {
                             if(ActivePlayerList.includes(SteamNick.toLowerCase())) 
                             {
-                                console.log('Found: ' + SteamNick);
+                                console.log('%cFound: ' + SteamNick, "color:#bada55;font-weight:700;");
                                 hasActivePlayers = true;
                                 currentActivePlayerCount += 1;
                             }
@@ -239,20 +253,23 @@ async function getLobbyData()
                 }
             });
 
-
             if(currentActivePlayerCount > maxActivePlayerCount)
             {
-                console.log("New Vet Game \"" + game.Name + "\" with " + currentActivePlayerCount + " active players. (Max: " + maxActivePlayerCount + ")");
+                console.log("%cMarking as BZ2 Vet Strat",
+                    "background-color:#bada55;color:#1c1e1e;padding:6px 8px;border-radius:6px;font-weight:bold;margin-top:4px;margin-bottom:4px;"
+                );
                 VetStratGameIndex = i;
                 VetStratGame = game;
                 maxActivePlayerCount = currentActivePlayerCount;
             }
             else if(currentActivePlayerCount > 0) 
             {
-                console.log("Game has active players (" + currentActivePlayerCount + "), but not more than max (" + maxActivePlayerCount + ")");
+                console.log("%cGame has active players (" + currentActivePlayerCount + "), but not more than current max (" + maxActivePlayerCount + ")",
+                    "color:#EDD711;font-weight:bold;"
+                );
             }
 
-            console.log("\n###############################################\n\n");
+        console.log("-----------------------------------------------------");
         }
 
         if(hasActivePlayers) {
@@ -835,6 +852,9 @@ async function getLobbyData()
 /*-------------------------------------------------*/
 
 window.addEventListener('DOMContentLoaded', (event) => {
+
+    // const url = '';
+    // console.image(url, 50);
 
     // toggle the "VSR Only" switch based on localStorage value
     if( localStorage.getItem("ShowVSROnly") === "false" ) {
