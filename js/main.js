@@ -305,8 +305,15 @@ async function getLobbyData()
             let playerCount     = game.PlayerCount.Player;
             let playerCountMax  = game.PlayerTypes[0].Max;
             let mapName         = game.Level.Name;
-            let mapFileName     = game.Level.MapFile;
             let mapImage        = game.Level.Image;
+            let mapFileName     = (game.Level.MapFile).replace('.bzn', '');
+
+            // soft test of showing VSR map data for BZ2 Vet Strat game cards
+            let mapVSRObject    = VSRMapList.find(map => map.File == mapFileName);
+
+            console.log("Map File Name: ", mapFileName);
+            console.log("Map VSR Object:\n");
+            console.log(mapVSRObject);
 
             // if vsr-only is toggled, this exits the current iteration if it isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
@@ -540,7 +547,24 @@ async function getLobbyData()
                         <div class="container-fluid h-100 pb-1">
                             <div class="row border-bottom">
                                 <div class="col-3 p-1 border-0 border-end border-dotted text-center">
-                                    <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" style="filter:brightness(1.5)" class="img-thumbnail"/>
+                                        <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" style="filter:brightness(1.5)" class="img-thumbnail"/>
+                                        ${(() => {
+                                            // immediately-invoked function expressions allow us to return content based on target value
+                                            if( mapVSRObject && hasActivePlayers && index === 0) {
+                                                return `
+                                                <div class="alert alert-secondary small px-3 py-1 my-1 mx-0 mb-0 d-flex flex-wrap justify-content-between">
+                                                    <span>
+                                                        ${mapVSRObject.Pools} Pools 
+                                                    </span>
+                                                    <span>
+                                                        ${mapVSRObject.Loose == -2 ? "INF" : mapVSRObject.Loose } Loose
+                                                    </span>
+                                                </div>`
+                                            }
+                                            else {
+                                                return ``
+                                            }
+                                        })()}
                                 </div>
                                 <div class="col-9 p-0 small">
                                     <ul class="list-group list-group-flush text-secondary">
