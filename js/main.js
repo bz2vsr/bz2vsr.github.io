@@ -166,7 +166,13 @@ async function getLobbyData()
         let data = await fetchResponse.json();
 
         // players must be present if games exist, therefore relevant objects being empty undefined means no players
-        if( JSON.stringify(data.DataCache) === '{}' || ( data.DataCache.Players.IDs.Steam === undefined && data.DataCache.Players.IDs.GOG === undefined ) ) {
+        if( JSON.stringify(data.DataCache) === '{}' || ( data.DataCache.Players.IDs.Steam === undefined && data.DataCache.Players.IDs.GOG === undefined ) ) 
+        {
+            document.querySelector("#NavPlayerCount").innerHTML     = "0";
+            document.querySelector("#NavGameCount").innerHTML       = "0";
+            document.querySelector("#NavPlayerCountSm").innerHTML   = "0";
+            document.querySelector("#NavGameCountSm").innerHTML     = "0";
+
             document.querySelector("#lobbyList").innerHTML = `
                 <p class="text-center ">No players online.
                 <br><br>
@@ -200,17 +206,17 @@ async function getLobbyData()
         document.querySelector("#NavGameCountSm").innerHTML = GameList.length;
 
         // first, move any VSR games to front of the list
-        for(let i = 0; i < GameList.length; i++ ) 
-        {
-            let gName = GameList[i].Name;
+        // for(let i = 0; i < GameList.length; i++ ) 
+        // {
+        //     let gName = GameList[i].Name;
 
-            if((GameList[i].Name.toLowerCase()).includes('vsr') || GameList[i].Game.Mod === vsrModID ) 
-            {
-                let g = GameList[i];
-                GameList.splice(i, 1);
-                GameList.splice(0, 0, g);
-            }
-        }
+        //     if((GameList[i].Name.toLowerCase()).includes('vsr') || GameList[i].Game.Mod === vsrModID ) 
+        //     {
+        //         let g = GameList[i];
+        //         GameList.splice(i, 1);
+        //         GameList.splice(0, 0, g);
+        //     }
+        // }
 
         // now check if any games have players from our active player list
         // if so, move that to the front. this is an attempt to ensure any 
@@ -269,7 +275,7 @@ async function getLobbyData()
                 );
             }
 
-        console.log("-----------------------------------------------------");
+            console.log("-----------------------------------------------------");
         }
 
         if(hasActivePlayers) {
