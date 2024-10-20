@@ -261,7 +261,7 @@ async function getLobbyData()
 
             if(currentActivePlayerCount > maxActivePlayerCount)
             {
-                console.log("%cMarking as BZ2 Vet Strat",
+                console.log("%cMarking \"" + game.Name + "\" as BZ2 Vet Strat",
                     "background-color:#bada55;color:#1c1e1e;padding:6px 8px;border-radius:6px;font-weight:bold;margin-top:4px;margin-bottom:4px;"
                 );
                 VetStratGameIndex = i;
