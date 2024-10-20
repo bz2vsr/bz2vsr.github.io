@@ -31,7 +31,7 @@ const ActivePlayerList = [
     'lamper',
     'graves',
     'econchump',
-    'm.s.',
+    'm.s',
     'blue',
 ];
 
