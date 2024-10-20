@@ -283,7 +283,6 @@ async function getLobbyData()
             GameList.splice(0, 0, VetStratGame);
         }
 
-
         let Mods = data.Mods;
 
         // build a lobby card for each game
@@ -311,9 +310,11 @@ async function getLobbyData()
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
             let mapVSRObject    = VSRMapList.find(map => map.File == mapFileName);
 
-            console.log("Map File Name: ", mapFileName);
-            console.log("Map VSR Object:\n");
-            console.log(mapVSRObject);
+            if(mapVSRObject) {
+                console.log("Map File Name: ", mapFileName);
+                console.log("Map VSR Object:\n");
+                console.log(mapVSRObject);
+            }
 
             // if vsr-only is toggled, this exits the current iteration if it isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
@@ -355,7 +356,6 @@ async function getLobbyData()
                 encodedArgs = stringToHex(plainTextArgs);
 
                 directJoinURL = baseSteamProtocol + encodedArgs;
-
 
                 // we use short.io API to generate a short URL based on game's NAT ID,
                 // which ensures we only generate one join URL per game. also, since
