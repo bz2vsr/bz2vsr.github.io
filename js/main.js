@@ -174,7 +174,7 @@ async function getLobbyData()
             document.querySelector("#NavGameCountSm").innerHTML     = "0";
 
             document.querySelector("#lobbyList").innerHTML = `
-                <p class="text-center ">No players online.
+                <p class="text-center">No players online.
                 <br><br>
                 Expecting to see games here and/or suspect an error?
                 <br><br>
