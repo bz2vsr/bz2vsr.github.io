@@ -56,6 +56,12 @@ body {
     border-color: rgba(255, 255, 255, 0) !important;
 }
 
+@media (max-width: 767.98px) { 
+    .btn-join-copy {
+      border-radius: 4px !important;
+    }
+ }
+
 /***********************************/
 /********** MAP BROWSER ************/
 /***********************************/
@@ -80,12 +86,6 @@ body {
   background-position: 0 0, 10px 10px;
   background-size: 20px 20px;
 }
-
-/* #MapList, #MapViewer, .custom-scroll {
-    height: 92vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-} */
 
 .dt-scroll-body::-webkit-scrollbar {
     width: 10px;
@@ -295,8 +295,4 @@ body {
     scale: 1.2;
   }
 }
-
-/* html, body {
-  height: 100%;
-} */
 
