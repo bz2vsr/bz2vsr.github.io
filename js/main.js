@@ -373,7 +373,6 @@ async function getLobbyData()
 
             let PlayerList = game.Players;
 
-            // if(gameName === "bz2vsr"){
             //     console.log(gameName);
             //     PlayerList.forEach(function(player, index) {
             //         console.log(player);
