@@ -50,7 +50,7 @@ if (joinString) {
     window.location.href = "/";
 }
 
-// if URL has ?host=true, cast the Steam Host commander and pass user to homepage
+// if URL has ?host=true, cast the Steam Host command and pass user to homepage
 const hostString = new URLSearchParams(window.location.search).get('host');
 
 if (hostString) {
