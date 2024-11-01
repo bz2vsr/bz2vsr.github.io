@@ -191,19 +191,6 @@ async function getLobbyData()
         document.querySelector("#NavPlayerCountSm").innerHTML = OnlinePlayers;
         document.querySelector("#NavGameCountSm").innerHTML = GameList.length;
 
-        // first, move any VSR games to front of the list
-        // for(let i = 0; i < GameList.length; i++ ) 
-        // {
-        //     let gName = GameList[i].Name;
-
-        //     if((GameList[i].Name.toLowerCase()).includes('vsr') || GameList[i].Game.Mod === vsrModID ) 
-        //     {
-        //         let g = GameList[i];
-        //         GameList.splice(i, 1);
-        //         GameList.splice(0, 0, g);
-        //     }
-        // }
-
         // now check if any games have players from our active player list
         // if so, move that to the front. this is an attempt to ensure any 
         // vsr community games are always listed first. since occasionally 
