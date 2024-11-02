@@ -651,7 +651,7 @@ async function getLobbyData()
                                                                 <div class="col-3 d-none d-lg-inline ps-1">
                                                                     <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                 </div>
-                                                                <div class="col-9 text-nowrap overflow-hidden">
+                                                                <div class="col-12 col-md-9 text-nowrap overflow-hidden">
                                                                     <span class="">
                                                                         <div class="mb-1">
                                                                             ${truncate(clean(PlayerList[player].Name), 24)}<br>
@@ -709,7 +709,7 @@ async function getLobbyData()
                                                                     <div class="col-3 d-none d-lg-inline ps-1">
                                                                         <img src="${GOG.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                     </div>
-                                                                    <div class="col-9 text-nowrap overflow-hidden">
+                                                                    <div class="col-12 col-md-9 text-nowrap overflow-hidden">
                                                                         <span class="">
                                                                             <div class="mb-1">
                                                                                 ${truncate(clean(PlayerList[player].Name), 24)}<br>
