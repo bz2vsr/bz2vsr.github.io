@@ -311,8 +311,6 @@ async function getLobbyData()
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
             let mapVSRObject    = VSRMapList.find(map => map.File == mapFileName);
 
-            if(mapVSRObject) {
-
             // if vsr-only is toggled, this exits the current iteration if it isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
                 if( gameMod !== vsrModID) {
@@ -396,7 +394,6 @@ async function getLobbyData()
             }
 
             let PlayerList = game.Players;
-
 
             // host should always be first player in the list
             let gameHost = game.Players[0].Name;
@@ -696,7 +693,6 @@ async function getLobbyData()
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </a>
                                                     </div>
                                                     `
                                                 }
