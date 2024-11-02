@@ -379,7 +379,7 @@ async function getLobbyData()
                 fetch('https://api.short.io/links/public', options)
                     .then(response => response.json())
                     .then(response => { 
-                        document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @everyone`;
+                        document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @BZ2Player`;
                     })
                     .catch(err => console.error(err));
 
