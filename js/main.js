@@ -11,7 +11,7 @@ const vsrModID = "1325933293";
 // base Steam Browser protocol URL for directly joining games
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
-const useActiveServerWebhook = false;
+const useActiveServerWebhook = true;
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
@@ -69,29 +69,29 @@ if (hostString) {
 /*-------------------------------------------------*/
 
 // post message to channel with webhook
-// function sendDiscordMessage(message) {
-//     fetch('WEBHOOK_URL', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             content: message
-//         })
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         console.log('Message sent successfully:', data);
-//     })
-//     .catch(error => {
-//         console.error('There was a problem sending the message:', error);
-//     });
-// }
+function sendDiscordMessage(message) {
+    fetch('https://discord.com/api/webhooks/1302117922294075493/dbNDDTB6QZyHu9J_evJtfg2tuibkwiBXJe4gdNxJOPL48_L5UmGt8GMB8ZpT3t04KW7I', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: message
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Message sent successfully:', data);
+    })
+    .catch(error => {
+        console.error('There was a problem sending the message:', error);
+    });
+}
 
 // simple string truncation
 const truncate = (str, len, end = "...") => {
@@ -379,7 +379,7 @@ async function getLobbyData()
                 fetch('https://api.short.io/links/public', options)
                     .then(response => response.json())
                     .then(response => { 
-                        document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @BZ2Player`;
+                        document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @everyone`;
                     })
                     .catch(err => console.error(err));
 
