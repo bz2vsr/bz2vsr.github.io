@@ -11,6 +11,8 @@ const vsrModID = "1325933293";
 // base Steam Browser protocol URL for directly joining games
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
+const useActiveServerWebhook = false;
+
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
 const useCORSProxy = false;
@@ -65,6 +67,31 @@ if (hostString) {
 /*-------------------------------------------------*/
 /*------------------- FUNCTIONS -------------------*/
 /*-------------------------------------------------*/
+
+// post message to channel with webhook
+// function sendDiscordMessage(message) {
+//     fetch('WEBHOOK_URL', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             content: message
+//         })
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         console.log('Message sent successfully:', data);
+//     })
+//     .catch(error => {
+//         console.error('There was a problem sending the message:', error);
+//     });
+// }
 
 // simple string truncation
 const truncate = (str, len, end = "...") => {
@@ -279,15 +306,12 @@ async function getLobbyData()
             let mapName         = game.Level.Name;
             let mapImage        = game.Level.Image;
             let mapFileName     = (game.Level.MapFile).replace('.bzn', '');
+            let isVetStrat      = hasActivePlayers && index === 0;
 
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
             let mapVSRObject    = VSRMapList.find(map => map.File == mapFileName);
 
             if(mapVSRObject) {
-                console.log("Map File Name: ", mapFileName);
-                console.log("Map VSR Object:\n");
-                console.log(mapVSRObject);
-            }
 
             // if vsr-only is toggled, this exits the current iteration if it isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
@@ -373,12 +397,6 @@ async function getLobbyData()
 
             let PlayerList = game.Players;
 
-            //     console.log(gameName);
-            //     PlayerList.forEach(function(player, index) {
-            //         console.log(player);
-            //     });
-            //     console.log("---------------");
-            // }
 
             // host should always be first player in the list
             let gameHost = game.Players[0].Name;
@@ -467,8 +485,7 @@ async function getLobbyData()
                         <div class="card-header d-flex justify-content-between align-items-center bg-dark-subtle shadow-lg">
                             <span id="gameTitle">
                                 ${(() => {
-                                    // immediately-invoked function expressions allow us to return content based on target value
-                                    if( hasActivePlayers && index === 0) {
+                                    if( isVetStrat ) {
                                         return `<span class="shiny-cta btn btn-sm btn-dead px-3 rounded">BZ2 Vet Strat</span>`
                                     }
                                     else {
@@ -481,7 +498,6 @@ async function getLobbyData()
                                     <span id="playerCount">${playerCount}</span>/<span id="playerMax">${playerCountMax}</span>
                                 </span>
                                 ${(() => {
-                                    // immediately-invoked function expressions allow us to return content based on target value
                                     if( gameState === "PreGame") {
                                         return `<span id="gameState" class="btn btn-sm bg-secondary bg-gradient btn-dead">In-Lobby</span>`
                                     }
@@ -500,13 +516,29 @@ async function getLobbyData()
                                                     <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
                                                     </svg>
                                                 </a> 
-                                                <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple bg-gradient btn-join-copy" title="Get a shareable link for Discord.">
-                                                    <textarea class="visually-hidden"></textarea>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
-                                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
-                                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
-                                                    </svg>
-                                                </button>
+                                                ${(() => {
+                                                    if( isVetStrat && useActiveServerWebhook) {
+                                                        return `
+                                                            <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple bg-gradient btn-discord" title="Get a shareable link for Discord.">
+                                                                <textarea class="visually-hidden"></textarea>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                                                                <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+                                                                </svg>
+                                                            </button>
+                                                        `
+                                                    }
+                                                    else {
+                                                        return `
+                                                            <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple bg-gradient btn-join-copy" title="Get a shareable link for Discord.">
+                                                                <textarea class="visually-hidden"></textarea>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                                                </svg>
+                                                            </button>
+                                                        `
+                                                    }
+                                                })()}
                                             </div>
                                         </span>
                                         `
@@ -521,7 +553,6 @@ async function getLobbyData()
                                 <div class="col-3 p-1 border-0 border-end border-dotted text-center">
                                         <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" style="filter:brightness(1.5)" class="img-thumbnail"/>
                                         ${(() => {
-                                            // immediately-invoked function expressions allow us to return content based on target value
                                             if( mapVSRObject && hasActivePlayers && index === 0) {
                                                 return `
                                                 <div class="alert alert-secondary small px-3 py-1 my-1 mx-0 mb-0 d-flex flex-wrap justify-content-between">
@@ -570,7 +601,6 @@ async function getLobbyData()
                             </div>
                             <div class="row player-list">
                                 ${(() => {
-                                    // immediately-invoked function expressions allow us to return content based on target value
                                     if( hasActivePlayers && index === 0 && gameState === "InGame" && isFull) {
                                         return `
                                         <div class="col-6 px-2">
@@ -619,8 +649,7 @@ async function getLobbyData()
                                                 if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
                                                 {
                                                     return `<div class="col-6 player-slot p-2">
-                                                    <a href="${Steam.ProfileUrl}" target="_blank" class="text-decoration-none text-light position-relative">
-                                                        <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
+                                                        <div class="d-block p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
                                                             <div class="row">
                                                                 <div class="col-3 d-none d-lg-inline">
                                                                     <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
@@ -632,39 +661,30 @@ async function getLobbyData()
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
                                                                             <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
                                                                             <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
-                                                                            </svg> ${truncate(clean(Steam.Nickname), 24)}<br>
+                                                                            </svg> 
+                                                                            <a target="_blank" href="${Steam.ProfileUrl}">
+                                                                                ${truncate(clean(Steam.Nickname), 24)}
+                                                                            </a><br>
                                                                         </div>
                                                                         ${(() => {
                                                                             if( PlayerList[player].Team !== undefined ) 
                                                                             {
                                                                                 if( PlayerList[player].Team.Leader === true) 
                                                                                 {
-                                                                                    return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
+                                                                                    return `<strong class="badge text-bg-light">Command</strong>`;
                                                                                 }
                                                                                 else return ``;
                                                                             }
-                                                                            else return `<strong class="badge text-bg-danger bg-opacity-75">Hidden</strong>`;
+                                                                            else return `<strong class="badge text-bg-danger">Hidden</strong>`;
                                                                         })()}
                                                                         ${(() => {
                                                                             if( PlayerList[player].Name === gameHost ) 
                                                                             {
-                                                                                return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
+                                                                                return `<strong class="badge text-bg-warning">Host</strong>`;
                                                                             }
                                                                             else return ``;
                                                                         })()}
                                                                         <span class="d-inline d-sm-none"><br></span>
-                                                                        ${(() => {
-                                                                            return '';
-                                                                            // if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) 
-                                                                            // {
-                                                                            //     if (parseInt(PlayerList[player].Team.SubTeam.ID) < 11) 
-                                                                            //     {
-                                                                            //         return `<strong class="badge text-bg-dark bg-opacity-51 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">${PlayerList[player].Team.ID}.${PlayerList[player].Team.SubTeam.ID}</strong>`;
-                                                                            //     }
-                                                                            //     else return ``;
-                                                                            // }
-                                                                            // else return ``;
-                                                                        })()}
                                                                         ${(() => {
                                                                             if (PlayerList[player].Stats !== undefined) 
                                                                             {
@@ -807,6 +827,45 @@ async function getLobbyData()
         }
 
         // copy button for shareable short.io URL; the actual url is built in the game loop above
+        let discordBtns = document.querySelectorAll('.btn-discord');
+        if( discordBtns !== null )
+        {
+            discordBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+
+                    b = btn.querySelector('textarea');
+                    msg = b.innerHTML;
+
+                    // officially deprecated, but...still works :P
+                    // document.execCommand("copy");
+                    console.log(msg);
+                    sendDiscordMessage(msg);
+
+                    btn.classList.remove('btn-purple');
+                    btn.classList.add('btn-success');
+                    
+                    // change clipboard icon to a checkmark
+                    btn.innerHTML = `${b.outerHTML}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                        </svg>
+                    `;
+
+                    // return copy button to original state after a few seconds
+                    setTimeout(function(){
+                        btn.innerHTML = `${b.outerHTML}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                            <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+                            </svg>
+                        `;
+                        btn.classList.remove('btn-success');
+                        btn.classList.add('btn-purple');
+                    }, REFRESH_RATE);
+                });
+            });
+        }
+
+        // copy button for shareable short.io URL; the actual url is built in the game loop above
         let joinBtns = document.querySelectorAll('.btn-join-copy');
         if( joinBtns !== null )
         {
@@ -831,6 +890,7 @@ async function getLobbyData()
                     `;
 
                     window.location.replace('discord:///channels/1137584338310017098/1137619558639874129');
+
                     // return copy button to original state after a few seconds
                     setTimeout(function(){
                         btn.innerHTML = `${joinStr.outerHTML}
@@ -845,6 +905,7 @@ async function getLobbyData()
                 });
             });
         }
+
     } catch(err) {
         console.log(`${err.stack}: Catch Error: ${err}`);
     }
