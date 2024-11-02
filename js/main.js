@@ -648,7 +648,7 @@ async function getLobbyData()
                                                     return `<div class="col-6 player-slot p-2">
                                                         <div class="d-block p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
                                                             <div class="row">
-                                                                <div class="col-3 d-none d-lg-inline ps-1">
+                                                                <div class="col-3 d-none d-lg-inline px-1">
                                                                     <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                 </div>
                                                                 <div class="col-12 col-md-9 text-nowrap overflow-hidden">
@@ -706,7 +706,7 @@ async function getLobbyData()
                                                         <a href="${GOG.ProfileUrl}" target="_blank" class="text-decoration-none text-light position-relative">
                                                             <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
                                                                 <div class="row">
-                                                                    <div class="col-3 d-none d-lg-inline ps-1">
+                                                                    <div class="col-3 d-none d-lg-inline px-1">
                                                                         <img src="${GOG.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                     </div>
                                                                     <div class="col-12 col-md-9 text-nowrap overflow-hidden">
