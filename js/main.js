@@ -11,7 +11,7 @@ const vsrModID = "1325933293";
 // base Steam Browser protocol URL for directly joining games
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
-const useActiveServerWebhook = true;
+const useActiveServerWebhook = false;
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
@@ -70,7 +70,7 @@ if (hostString) {
 
 // post message to channel with webhook
 function sendDiscordMessage(message) {
-    fetch('https://discord.com/api/webhooks/1302117922294075493/dbNDDTB6QZyHu9J_evJtfg2tuibkwiBXJe4gdNxJOPL48_L5UmGt8GMB8ZpT3t04KW7I', {
+    fetch('WEBHOOK_URL', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
