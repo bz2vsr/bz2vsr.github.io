@@ -925,6 +925,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     // run main data grab on interval if necessary, otherwise run once
     if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
+        document.querySelector("#liveIndicator").classList.remove("d-none");
         getLobbyData();
         interval_id = setInterval(getLobbyData, REFRESH_RATE);
     }
@@ -936,12 +937,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let LiveUpdateToggle = document.querySelector("#LiveUpdateToggle");
     LiveUpdateToggle.addEventListener('change', function () {
         if( this.checked ) {
+            document.querySelector("#liveIndicator").classList.remove("d-none");
             localStorage.setItem("LiveUpdatesOn", "true");
             interval_id = setInterval(getLobbyData, REFRESH_RATE);
         }
         else {
             localStorage.setItem("LiveUpdatesOn", "false");
             clearInterval(interval_id);
+            document.querySelector("#liveIndicator").classList.add("d-none");
         }
     });
 

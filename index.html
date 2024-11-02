@@ -19,10 +19,15 @@
     <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand navbar-dark mb-2">
             <div class="container-fluid">
-                <a class="navbar-brand">
-                    <img src="/img/logo.png" class="img-fluid ms-2 me-1" height="32" width="32">
-                    <span class="d-none d-lg-inline">GameWatch</span>
-                </a>
+                <div>
+                    <a class="navbar-brand me-2">
+                        <img src="/img/logo.png" class="img-fluid ms-2 me-1" height="32" width="32">
+                        <span class="d-none d-lg-inline">GameWatch</span>
+                    </a>
+                    <ul id="liveIndicator" class="d-none" title="Live updates active.">
+                        <li></li>
+                    </ul>
+                </div>
                 <div>
                     <div class="btn me-1 d-none d-lg-inline-block">
                         <span class="me-3">
@@ -141,7 +146,7 @@
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <strong class="mb-0">Live Updates</strong>
-                                        <p class="text-muted mb-0">Polls new data every 3 seconds.</p>
+                                        <p class="text-muted mb-0">Poll new data every 3 seconds.</p>
                                     </div>
                                     <div class="col-auto">
                                         <div class="form-check form-check-inline form-switch">
@@ -154,7 +159,7 @@
                                 <div class="row align-items-center">
                                     <div class="col">
                                         <strong class="mb-0">VSR Only</strong>
-                                        <p class="text-muted mb-0">Only lists VSR games.</p>
+                                        <p class="text-muted mb-0">Only list VSR games.</p>
                                     </div>
                                     <div class="col-auto">
                                         <div class="form-check form-check-inline form-switch">
@@ -177,7 +182,6 @@
                         <h5 class="modal-title">Random Maps</h5>
                         <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <!-- <div class="modal-body bg-opacity-0 border-0" style="height:447px !important"> -->
                     <div class="modal-body bg-opacity-0 border-0">
                         <div class="alert alert-warning small">
                             Values of <tt>NA</tt> or <tt>-1</tt> denote missing data. If you know any of these values or can help gather more map data, please message Sev on Discord.
