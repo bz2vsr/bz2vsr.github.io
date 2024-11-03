@@ -387,6 +387,7 @@ async function getLobbyData()
             let vacantObj = {};
             vacantObj.Name = "Open";
 
+            let isFull = (PlayerList.length === 10 ? true : false);
 
             if( false && isVetStrat ) {
                 let Team1   = [];
@@ -415,8 +416,6 @@ async function getLobbyData()
                     //     PlayerListFinal[i+(subIndex-10)] = PlayerList[i]
                     // }
                 }
-
-
             }
             else {
                 PlayerList = PlayerList.sort((a, b) => {
@@ -431,7 +430,6 @@ async function getLobbyData()
                     return parseInt(a.Team.SubTeam.ID) < parseInt(b.Team.SubTeam.ID) ? -1 : 1;
                 });
 
-                let isFull = (PlayerList.length === 10 ? true : false);
 
                 if(isFull && gameState === "InGame") {
                     let PlayerListFinal = [];
