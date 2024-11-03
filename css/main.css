@@ -304,13 +304,14 @@ body {
     display: inline-block;
     margin: 0;
     padding: 0;
+    padding-bottom: 2px;
 }
 
 #liveIndicator li {
   display: block;
   float: left;
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
   margin-right: 20px;
   border-radius: 100%;
 }
