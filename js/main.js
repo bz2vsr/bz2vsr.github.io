@@ -388,7 +388,7 @@ async function getLobbyData()
             vacantObj.Name = "Open";
 
 
-            if( isVetStrat ) {
+            if( false && isVetStrat ) {
                 let Team1   = [];
                 let Team2   = [];
                 let Hidden  = [];
