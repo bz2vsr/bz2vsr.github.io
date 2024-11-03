@@ -355,7 +355,6 @@ async function getLobbyData()
                         document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @BZ2Player`;
                     })
                     .catch(err => console.error(err));
-
             }
 
             // increment our game mod counts
