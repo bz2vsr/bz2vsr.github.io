@@ -11,6 +11,8 @@ const vsrModID = "1325933293";
 // base Steam Browser protocol URL for directly joining games
 const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%20'
 
+const useActiveServerWebhook = false;
+
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
 const useCORSProxy = false;
@@ -65,6 +67,31 @@ if (hostString) {
 /*-------------------------------------------------*/
 /*------------------- FUNCTIONS -------------------*/
 /*-------------------------------------------------*/
+
+// post message to channel with webhook
+function sendDiscordMessage(message) {
+    fetch('WEBHOOK_URL', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: message
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Message sent successfully:', data);
+    })
+    .catch(error => {
+        console.error('There was a problem sending the message:', error);
+    });
+}
 
 // simple string truncation
 const truncate = (str, len, end = "...") => {
@@ -387,91 +414,58 @@ async function getLobbyData()
             let vacantObj = {};
             vacantObj.Name = "Open";
 
+            PlayerList = PlayerList.sort((a, b) => {
+                // sort by SubTeam.ID, with nulls (hidden players) at the end
+                if (a.Team === undefined) {
+                    return 1;
+                }
+                if (b.Team === undefined) {
+                    return -1;
+                }
 
-            if( isVetStrat ) {
-                let Team1   = [];
-                let Team2   = [];
-                let Hidden  = [];
+                return parseInt(a.Team.SubTeam.ID) < parseInt(b.Team.SubTeam.ID) ? -1 : 1;
+            });
+
+            let isFull = (PlayerList.length === 10 ? true : false);
+
+            if(isFull && gameState === "InGame") {
+                let PlayerListFinal = [];
+
+                for(let i = 0; i < 10; i++) 
+                {
+                    PlayerListFinal.push(vacantObj);
+                }
 
                 for(let i = 0; i < PlayerList.length; i++) 
                 {
-                    let player = PlayerList[i];
-                    if(player.Team) { 
-                        let slot = player.Team.SubTeam.ID; 
+                    let subIndex = parseInt(PlayerList[i].Team.SubTeam.ID);
+                    // console.log(PlayerList[i].Name + " in slot " + PlayerList[i].Team.SubTeam.ID);
 
-                        console.log(player.Name + " in slot " + slot);
+                    if(subIndex == 1 || subIndex == 10) {
+                        PlayerListFinal[i] = PlayerList[i] ;
+                    }
+                    else if(subIndex < 6) {
+                        PlayerListFinal[(i+i)] = PlayerList[i]; 
                     }
                     else {
-                        console.log(player.Name + " is hidden");
+                        PlayerListFinal[i+(subIndex-10)] = PlayerList[i]
                     }
-
-                    // if(subIndex == 1 || subIndex == 10) {
-                    //     PlayerListFinal[i] = PlayerList[i] ;
-                    // }
-                    // else if(subIndex < 6) {
-                    //     PlayerListFinal[(i+i)] = PlayerList[i]; 
-                    // }
-                    // else {
-                    //     PlayerListFinal[i+(subIndex-10)] = PlayerList[i]
-                    // }
                 }
 
-
+                // console.log(PlayerListFinal);
+                PlayerList = PlayerListFinal;
             }
             else {
-                PlayerList = PlayerList.sort((a, b) => {
-                    // sort by SubTeam.ID, with nulls (hidden players) at the end
-                    if (a.Team === undefined) {
-                        return 1;
-                    }
-                    if (b.Team === undefined) {
-                        return -1;
-                    }
-
-                    return parseInt(a.Team.SubTeam.ID) < parseInt(b.Team.SubTeam.ID) ? -1 : 1;
-                });
-
-                let isFull = (PlayerList.length === 10 ? true : false);
-
-                if(isFull && gameState === "InGame") {
-                    let PlayerListFinal = [];
-
-                    for(let i = 0; i < 10; i++) 
-                    {
-                        PlayerListFinal.push(vacantObj);
-                    }
-
-                    for(let i = 0; i < PlayerList.length; i++) 
-                    {
-                        let subIndex = parseInt(PlayerList[i].Team.SubTeam.ID);
-                        // console.log(PlayerList[i].Name + " in slot " + PlayerList[i].Team.SubTeam.ID);
-
-                        if(subIndex == 1 || subIndex == 10) {
-                            PlayerListFinal[i] = PlayerList[i] ;
-                        }
-                        else if(subIndex < 6) {
-                            PlayerListFinal[(i+i)] = PlayerList[i]; 
-                        }
-                        else {
-                            PlayerListFinal[i+(subIndex-10)] = PlayerList[i]
-                        }
-                    }
-
-                    // console.log(PlayerListFinal);
-                    PlayerList = PlayerListFinal;
+                // current # of players minus the player max gives the amount of open spots to add
+                let total = (playerCountMax - PlayerList.length);
+                for(let i = 0; i < total; i++){
+                    PlayerList.push(vacantObj);
                 }
-                else {
-                    // current # of players minus the player max gives the amount of open spots to add
-                    let total = (playerCountMax - PlayerList.length);
-                    for(let i = 0; i < total; i++){
-                        PlayerList.push(vacantObj);
-                    }
 
-                    // mark the rest of the slots as simply empty
-                    total = (10 - PlayerList.length);
-                    for(let i = 0; i < total; i++){
-                        PlayerList.push(emptyObj);
-                    }
+                // mark the rest of the slots as simply empty
+                total = (10 - PlayerList.length);
+                for(let i = 0; i < total; i++){
+                    PlayerList.push(emptyObj);
                 }
             }
            
@@ -519,13 +513,29 @@ async function getLobbyData()
                                                     <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
                                                     </svg>
                                                 </a> 
-                                                <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple bg-gradient btn-join-copy" title="Get a shareable link for Discord.">
-                                                    <textarea class="visually-hidden"></textarea>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
-                                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
-                                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
-                                                    </svg>
-                                                </button>
+                                                ${(() => {
+                                                    if( isVetStrat && useActiveServerWebhook) {
+                                                        return `
+                                                            <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple bg-gradient btn-discord" title="Get a shareable link for Discord.">
+                                                                <textarea class="visually-hidden"></textarea>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                                                                <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+                                                                </svg>
+                                                            </button>
+                                                        `
+                                                    }
+                                                    else {
+                                                        return `
+                                                            <button data-join-string='${encodedArgs}' class="btn btn-sm btn-purple bg-gradient btn-join-copy" title="Get a shareable link for Discord.">
+                                                                <textarea class="visually-hidden"></textarea>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                                                </svg>
+                                                            </button>
+                                                        `
+                                                    }
+                                                })()}
                                             </div>
                                         </span>
                                         `
@@ -810,6 +820,45 @@ async function getLobbyData()
             if( vsrGameCount == 0) {
                 document.querySelector("#lobbyList").innerHTML = '<p class="text-center ">No VSR games found.</p>';
             }
+        }
+
+        // copy button for shareable short.io URL; the actual url is built in the game loop above
+        let discordBtns = document.querySelectorAll('.btn-discord');
+        if( discordBtns !== null )
+        {
+            discordBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+
+                    b = btn.querySelector('textarea');
+                    msg = b.innerHTML;
+
+                    // officially deprecated, but...still works :P
+                    // document.execCommand("copy");
+                    console.log(msg);
+                    sendDiscordMessage(msg);
+
+                    btn.classList.remove('btn-purple');
+                    btn.classList.add('btn-success');
+                    
+                    // change clipboard icon to a checkmark
+                    btn.innerHTML = `${b.outerHTML}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                        </svg>
+                    `;
+
+                    // return copy button to original state after a few seconds
+                    setTimeout(function(){
+                        btn.innerHTML = `${b.outerHTML}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                            <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+                            </svg>
+                        `;
+                        btn.classList.remove('btn-success');
+                        btn.classList.add('btn-purple');
+                    }, REFRESH_RATE);
+                });
+            });
         }
 
         // copy button for shareable short.io URL; the actual url is built in the game loop above
