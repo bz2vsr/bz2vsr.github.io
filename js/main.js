@@ -497,6 +497,11 @@ async function getLobbyData()
                                         ${openSpotCount} Spot${openSpotCount === 1 ? "" : "s" } Open
                                     </span>`
                                 }
+                                else if( isVetStrat && (playerCount === playerCountMax)) {
+                                    return `<span class="ms-2 btn btn-sm btn-outline-primary bg-primary-subtle btn-dead border-primary" style="--bs-border-opacity: .5 !important;">
+                                        Full Lobby
+                                    </span>`;
+                                }
                                 else return ``;
                             })()}
                             </span>
