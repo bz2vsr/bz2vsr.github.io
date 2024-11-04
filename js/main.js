@@ -161,11 +161,9 @@ async function getLobbyData()
             document.querySelector("#NavGameCountSm").innerHTML     = "0";
 
             document.querySelector("#lobbyList").innerHTML = `
-                <p class="text-center">No players online.
-                <br><br>
-                Expecting to see games here and/or suspect an error?
-                <br><br>
-                Please send a snapshot of the <a href="http://battlezone99mp.webdev.rebellion.co.uk/lobbyServer" target="_blank">raw data</a> to Sev on Discord for troubleshooting, including the time and timezone.
+                <div class="d-flex justify-content-center mt-4">
+                    <div class="text-center alert alert-primary px-5">No players online.</div>
+                </div>
                 `;
             return;
         }
@@ -1015,7 +1013,11 @@ async function getLobbyData()
         //   3. Other non-VSR games exist
         if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked === true) {
             if( vsrGameCount == 0) {
-                document.querySelector("#lobbyList").innerHTML = '<p class="text-center ">No VSR games found.</p>';
+                document.querySelector("#lobbyList").innerHTML = `
+                    <div class="d-flex justify-content-center mt-4">
+                        <div class="text-center alert alert-primary px-5">No players online.</div>
+                    </div>
+                    `;
             }
         }
 
