@@ -1,7 +1,7 @@
 # Battlezone II Lobby Watch
 
-Simple website to pull multi-player lobby data from Battlezone II.
+Website to pull multi-player game data from Battlezone II: Combat Commander.
 
-Relies on data from: http://multiplayersessionlist.iondriver.com/
+Relies on data from: [MultiplayerSessionList](http://multiplayersessionlist.iondriver.com/) by [Nielk1](https://github.com/Nielk1)
 
-Styled using Bootstrap v5.3: https://getbootstrap.com/docs/5.3/
+Styled using [Bootstrap v5.3](https://getbootstrap.com/docs/5.3/)
