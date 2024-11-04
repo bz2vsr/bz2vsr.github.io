@@ -633,7 +633,7 @@ async function getLobbyData()
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
                                                                                 <div class="col-3 d-none d-lg-inline px-1">
-                                                                                    <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                                 </div>
                                                                                 <div class="col-12 col-md-9 text-nowrap overflow-hidden">
                                                                                     <span class="">
@@ -729,7 +729,7 @@ async function getLobbyData()
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
                                                                                 <div class="col-3 d-none d-lg-inline px-1">
-                                                                                    <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                                 </div>
                                                                                 <div class="col-12 col-md-9 text-nowrap overflow-hidden">
                                                                                     <span class="">
@@ -846,7 +846,7 @@ async function getLobbyData()
                                                                 <div class="p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
                                                                     <div class="row">
                                                                         <div class="col-3 d-none d-lg-inline px-1">
-                                                                            <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                            <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                         </div>
                                                                         <div class="col-12 col-md-9 text-nowrap overflow-hidden">
                                                                             <span class="">
@@ -911,7 +911,7 @@ async function getLobbyData()
                                                                     <div class="p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
                                                                         <div class="row">
                                                                             <div class="col-3 d-none d-lg-inline px-1">
-                                                                                <img src="${GOG.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                                <img src="${GOG.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                             </div>
                                                                             <div class="col-12 col-md-9 text-nowrap overflow-hidden">
                                                                                 <span class="">
