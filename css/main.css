@@ -21,9 +21,8 @@ body {
     border-style: dashed !important;
 } 
 
-.player-slot a:hover div,
-.player-slot a:hover .badge {
-    --bs-bg-opacity: .7 !important;
+.btn-steam:hover {
+    --bs-bg-opacity: .75 !important;
 }
 
 .btn-purple {
