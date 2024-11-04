@@ -276,7 +276,7 @@
         },
         {
           "Name": "Happy_Tabbed",
-          "Type": "Player",
+          "Type": " mb-2Player",
           "IDs": {
             "BZRNet": {
               "ID": "S76561198064801924"

@@ -276,6 +276,7 @@ async function getLobbyData()
             let netType         = clean(game.Address.NAT_TYPE);
             let playerCount     = game.PlayerCount.Player;
             let playerCountMax  = game.PlayerTypes[0].Max;
+            let openSpotCount   = playerCountMax - playerCount;
             let mapName         = game.Level.Name;
             let mapImage        = game.Level.Image;
             let mapFileName     = (game.Level.MapFile).replace('.bzn', '');
@@ -387,34 +388,34 @@ async function getLobbyData()
             vacantObj.Name = "Open";
 
             let isFull = (PlayerList.length === 10 ? true : false);
+            let Team1   = [emptyObj, emptyObj, emptyObj, emptyObj, emptyObj];
+            let Team2   = [emptyObj, emptyObj, emptyObj, emptyObj, emptyObj];
+            let Hidden  = [];
 
-            if( false && isVetStrat ) {
-                let Team1   = [];
-                let Team2   = [];
-                let Hidden  = [];
+
+            if( gameMode === "STRAT" ) {
 
                 for(let i = 0; i < PlayerList.length; i++) 
                 {
                     let player = PlayerList[i];
-                    if(player.Team) { 
-                        let slot = player.Team.SubTeam.ID; 
 
-                        console.log(player.Name + " in slot " + slot);
+                    if(player.Team) { 
+                        let slot = player.Team.SubTeam.ID;
+
+                        if(slot < 6) {
+                            Team1[(slot-1)] = player;
+                        }
+                        else if(slot > 5 && slot < 11) {
+                            Team2[(slot-6)] = player;
+                        }
                     }
                     else {
-                        console.log(player.Name + " is hidden");
+                        Hidden.push(player);
                     }
-
-                    // if(subIndex == 1 || subIndex == 10) {
-                    //     PlayerListFinal[i] = PlayerList[i] ;
-                    // }
-                    // else if(subIndex < 6) {
-                    //     PlayerListFinal[(i+i)] = PlayerList[i]; 
-                    // }
-                    // else {
-                    //     PlayerListFinal[i+(subIndex-10)] = PlayerList[i]
-                    // }
                 }
+                console.log(Team1);
+                console.log(Team2);
+                console.log(Hidden);
             }
             else {
                 PlayerList = PlayerList.sort((a, b) => {
@@ -484,19 +485,24 @@ async function getLobbyData()
                         <!-- Card Header -->
                         <div class="card-header d-flex justify-content-between align-items-center bg-dark-subtle shadow-lg">
                             <span id="gameTitle">
-                                ${(() => {
-                                    if( isVetStrat ) {
-                                        return `<span class="shiny-cta btn btn-sm btn-dead px-3 rounded">BZ2 Vet Strat</span>`
-                                    }
-                                    else {
-                                        return `<strong>Game ${currentLobbyID}</strong>`
-                                    }
-                                })()}
+                            ${(() => {
+                                if( isVetStrat) {
+                                    return `<span class="shiny-cta btn btn-sm btn-dead">BZ2 Vet Strat</span>`
+                                }
+                                else {
+                                    return `<strong>Game ${currentLobbyID}</strong>`
+                                }
+                            })()}
+                            ${(() => {
+                                if( isVetStrat && (playerCount < playerCountMax) ) {
+                                    return `<span class="ms-2 btn btn-sm btn-outline-warning bg-warning-subtle btn-dead border-warning" style="--bs-border-opacity: .5 !important;">
+                                        ${openSpotCount} Spot${openSpotCount === 1 ? "" : "s" } Open
+                                    </span>`
+                                }
+                                else return ``;
+                            })()}
                             </span>
                             <span class="">
-                                <span class="btn btn-sm bg-dark btn-dead border">
-                                    <span id="playerCount">${playerCount}</span>/<span id="playerMax">${playerCountMax}</span>
-                                </span>
                                 ${(() => {
                                     if( gameState === "PreGame") {
                                         return `<span id="gameState" class="btn btn-sm bg-secondary bg-gradient btn-dead">In-Lobby</span>`
@@ -537,7 +543,7 @@ async function getLobbyData()
                                 <div class="col-3 p-1 border-0 border-end border-dotted text-center">
                                         <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-thumbnail"/>
                                         ${(() => {
-                                            if( mapVSRObject && hasActivePlayers && index === 0) {
+                                            if( mapVSRObject && isVetStrat ) {
                                                 return `
                                                 <div class="alert alert-secondary small px-3 py-1 my-1 mx-0 mb-0 d-flex flex-wrap justify-content-between">
                                                     <span>
@@ -548,16 +554,14 @@ async function getLobbyData()
                                                     </span>
                                                 </div>`
                                             }
-                                            else {
-                                                return ``
-                                            }
+                                            else return ``;
                                         })()}
                                 </div>
                                 <div class="col-9 p-0 small">
                                     <ul class="list-group list-group-flush text-secondary">
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Map</strong>
-                                            <span title="${mapFileName}">${mapName}</span>
+                                            <span title="${mapFileName}">${mapName ? mapName : "N/A"}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Mode</strong>
@@ -566,6 +570,10 @@ async function getLobbyData()
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Time</strong>
                                             <span">${gameTime} mins</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
+                                            <strong class="text-muted">Count</strong>
+                                            <span">${playerCount} player${playerCount === 1 ? "" : "s"} / ${playerCountMax}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Name</strong>
@@ -585,172 +593,387 @@ async function getLobbyData()
                             </div>
                             <div class="row player-list">
                                 ${(() => {
-                                    if( hasActivePlayers && index === 0 && gameState === "InGame" && isFull) {
+                                    if( gameMode === "STRAT" ) {
                                         return `
-                                        <div class="col-6 px-2">
-                                            <div class="bg-secondary bg-gradient bg-opacity-50 text-center py-1 rounded mt-2">Team 1</div>
-                                        </div>
-                                        <div class="col-6 px-2">
-                                            <div class="bg-secondary bg-gradient bg-opacity-50 text-center py-1 rounded mt-2">Team 2</div>
-                                        </div>
-                                        `
-                                    }
-                                    else return ``;
-                                })()}
-                                ${Object.keys(PlayerList).map(function (player) {
-                                    // we are now iterating through the 10-element array we built earlier
-                                    // Open Slot
-                                    if( PlayerList[player].Name === "Open") {
-                                        return `<div class="col-6 player-slot player-slot-open p-2">
-                                            <div class="d-block p-2 rounded border text-secondary ps-3 text-bg-secondary bg-opacity-10 d-flex align-items-center h-100">
-                                                <span class="text-nowrap overflow-hidden align-middle">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
-                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                                    </svg>
-                                                    <span>
-                                                        ${truncate(clean(PlayerList[player].Name), 24)}
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        `
-                                    }
-                                    // Empty Slot
-                                    else if( PlayerList[player].Name === "Empty") {
-                                        return `<div class="col-6 player-slot p-2">
-                                            <div class="d-block p-2 border border-secondary rounded text-secondary ps-3" style="--bs-text-opacity:0; --bs-border-opacity:0;">
-                                                ${truncate(clean(PlayerList[player].Name), 24)}
-                                            </div>
-                                        </div>
-                                        `
-                                    }
-                                    // List Player - iterates through the Steam and GOG accounts lists to get this player's steam data
-                                    else {
-                                        for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
-                                        {
-                                            if( PlayerList[player].IDs.Steam !== undefined )
-                                            {
-                                                if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
-                                                {
-                                                    return `<div class="col-6 player-slot p-2">
-                                                        <div class="d-block p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
-                                                            <div class="row">
-                                                                <div class="col-3 d-none d-lg-inline px-1">
-                                                                    <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
-                                                                </div>
-                                                                <div class="col-12 col-md-9 text-nowrap overflow-hidden">
-                                                                    <span class="">
-                                                                        <div class="mb-1">
-                                                                            ${truncate(clean(PlayerList[player].Name), 24)}<br>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
-                                                                            <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
-                                                                            <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
-                                                                            </svg> 
-                                                                            <a target="_blank" href="${Steam.ProfileUrl}">
-                                                                                ${truncate(clean(Steam.Nickname), 24)}
-                                                                            </a><br>
-                                                                        </div>
-                                                                        ${(() => {
-                                                                            if( PlayerList[player].Team !== undefined ) 
-                                                                            {
-                                                                                if( PlayerList[player].Team.Leader === true) 
-                                                                                {
-                                                                                    return `<strong class="badge text-bg-light">Command</strong>`;
-                                                                                }
-                                                                                else return ``;
-                                                                            }
-                                                                            else return `<strong class="badge text-bg-danger">Hidden</strong>`;
-                                                                        })()}
-                                                                        ${(() => {
-                                                                            if( PlayerList[player].Name === gameHost ) 
-                                                                            {
-                                                                                return `<strong class="badge text-bg-warning">Host</strong>`;
-                                                                            }
-                                                                            else return ``;
-                                                                        })()}
-                                                                        <span class="d-inline d-sm-none"><br></span>
-                                                                        ${(() => {
-                                                                            if (PlayerList[player].Stats !== undefined) 
-                                                                            {
-                                                                                return `<span class="badge text-bg-light">${(PlayerList[player].Stats.Kills !== undefined ? PlayerList[player].Stats.Kills : "0")} <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Deaths !== undefined ? PlayerList[player].Stats.Deaths : "0")}  <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Score !== undefined ? PlayerList[player].Stats.Score : "0")} </span>`;
-                                                                            }
-                                                                            else return ``;
-                                                                        })()}
+                                        <div class="col-6 p-2">
+                                            <div class="card h-100 border-secondary-subtle">
+                                                <div class="card-header text-center">
+                                                    Team 1
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <ul class="list-group list-group-flush py-1">
+                                                    ${Team1.map(function (player) {
+                                                        if( player.Name === "Open") {
+                                                            return `<div class="col-12 player-slot player-slot-open p-2">
+                                                                <div class="p-2 py-3 rounded border text-secondary ps-3 text-bg-secondary bg-opacity-10 d-flex align-items-center h-100">
+                                                                    <span class="text-nowrap overflow-hidden align-middle">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
+                                                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                                        </svg>
+                                                                        <span>
+                                                                            ${truncate(clean(player.Name), 24)}
+                                                                        </span>
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    `
-                                                }
-                                            }
-                                            else if( PlayerList[player].IDs.Gog !== undefined ) {
-                                                for( const [GogID, GOG] of Object.entries(GogPlayerList)) 
-                                                {
-                                                    if( (PlayerList[player].IDs.Gog.ID).toString() === GogID.toString() ) 
-                                                    {
-                                                        return `<div class="col-6 player-slot p-2">
-                                                        <a href="${GOG.ProfileUrl}" target="_blank" class="text-decoration-none text-light position-relative">
-                                                            <div class="d-block p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
-                                                                <div class="row">
-                                                                    <div class="col-3 d-none d-lg-inline px-1">
-                                                                        <img src="${GOG.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
-                                                                    </div>
-                                                                    <div class="col-12 col-md-9 text-nowrap overflow-hidden">
-                                                                        <span class="">
-                                                                            <div class="mb-1">
-                                                                                ${truncate(clean(PlayerList[player].Name), 24)}<br>
-                                                                                G<span class="d-none d-lg-inline">OG</span>: ${truncate(clean(GOG.Username), 24)}<br>
+                                                            `
+                                                        }
+                                                        else {
+                                                        // List Players - iterates through the Steam and GOG accounts lists to get this player's steam data
+                                                        for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
+                                                        {
+                                                            if( player.IDs !== undefined && player.IDs.Steam !== undefined )
+                                                            {
+                                                                if( (player.IDs.Steam.ID).toString() === SteamID.toString() )
+                                                                {
+                                                                    return `<li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
+                                                                        <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
+                                                                            <div class="row">
+                                                                                <div class="col-3 d-none d-lg-inline px-1">
+                                                                                    <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-9 text-nowrap overflow-hidden">
+                                                                                    <span class="">
+                                                                                        <div class="mb-1">
+                                                                                            ${truncate(clean(player.Name), 24)}<br>
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                            <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                            <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                            </svg> 
+                                                                                            <a target="_blank" href="${Steam.ProfileUrl}">
+                                                                                                ${truncate(clean(Steam.Nickname), 24)}
+                                                                                            </a><br>
+                                                                                        </div>
+                                                                                        ${(() => {
+                                                                                            if( player.Team !== undefined ) 
+                                                                                            {
+                                                                                                if( player.Team.Leader === true) 
+                                                                                                {
+                                                                                                    return `<strong class="badge rounded-0 text-bg-light">Command</strong>`;
+                                                                                                }
+                                                                                                else return ``;
+                                                                                            }
+                                                                                            else return `<strong class="badge rounded-0 text-bg-danger">Hidden</strong>`;
+                                                                                        })()}
+                                                                                        ${(() => {
+                                                                                            if( player.Name === gameHost ) 
+                                                                                            {
+                                                                                                return `<strong class="badge rounded-0 text-bg-warning">Host</strong>`;
+                                                                                            }
+                                                                                            else return ``;
+                                                                                        })()}
+                                                                                        <span class="d-inline d-sm-none"><br></span>
+                                                                                        ${(() => {
+                                                                                            if (player.Stats !== undefined) 
+                                                                                            {
+                                                                                                return `<span class="badge text-bg-dark bg-dark-subtle rounded-0 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                                    ${(player.Stats.Kills !== undefined ? player.Stats.Kills : "0")} 
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                    ${(player.Stats.Deaths !== undefined ? player.Stats.Deaths : "0")}
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                    ${(player.Stats.Score !== undefined ? player.Stats.Score : "0")} 
+                                                                                                    </span>
+                                                                                                `;
+                                                                                            }
+                                                                                            else return ``;
+                                                                                        })()}
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
-                                                                            ${(() => {
-                                                                                if( PlayerList[player].Team !== undefined ) 
-                                                                                {
-                                                                                    if( PlayerList[player].Team.Leader === true) 
+                                                                        </div>
+                                                                    </li>
+                                                                    `
+                                                                }
+                                                            }
+                                                        }
+                                                    }}).join('')}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-2">
+                                            <div class="card h-100 border-secondary-subtle">
+                                                <div class="card-header text-center">
+                                                    Team 2
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <ul class="list-group list-group-flush py-1">
+                                                    ${Team2.map(function (player) {
+                                                        if( player.Name === "Open") {
+                                                            return `<div class="col-12 player-slot player-slot-open p-2">
+                                                                <div class="p-2 py-3 rounded border text-secondary ps-3 text-bg-secondary bg-opacity-10 d-flex align-items-center h-100">
+                                                                    <span class="text-nowrap overflow-hidden align-middle">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
+                                                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                                        </svg>
+                                                                        <span>
+                                                                            ${truncate(clean(player.Name), 24)}
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            `
+                                                        }
+                                                        else {
+                                                        // List Players - iterates through the Steam and GOG accounts lists to get this player's steam data
+                                                        for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
+                                                        {
+                                                            if( player.IDs !== undefined && player.IDs.Steam !== undefined )
+                                                            {
+                                                                if( (player.IDs.Steam.ID).toString() === SteamID.toString() )
+                                                                {
+                                                                    return `<li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
+                                                                        <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
+                                                                            <div class="row">
+                                                                                <div class="col-3 d-none d-lg-inline px-1">
+                                                                                    <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                                </div>
+                                                                                <div class="col-12 col-md-9 text-nowrap overflow-hidden">
+                                                                                    <span class="">
+                                                                                        <div class="mb-1">
+                                                                                            ${truncate(clean(player.Name), 24)}<br>
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                            <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                            <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                            </svg> 
+                                                                                            <a target="_blank" href="${Steam.ProfileUrl}">
+                                                                                                ${truncate(clean(Steam.Nickname), 24)}
+                                                                                            </a><br>
+                                                                                        </div>
+                                                                                        ${(() => {
+                                                                                            if( player.Team !== undefined ) 
+                                                                                            {
+                                                                                                if( player.Team.Leader === true) 
+                                                                                                {
+                                                                                                    return `<strong class="badge rounded-0 text-bg-light">Command</strong>`;
+                                                                                                }
+                                                                                                else return ``;
+                                                                                            }
+                                                                                            else return `<strong class="badge rounded-0 text-bg-danger">Hidden</strong>`;
+                                                                                        })()}
+                                                                                        ${(() => {
+                                                                                            if( player.Name === gameHost ) 
+                                                                                            {
+                                                                                                return `<strong class="badge rounded-0 text-bg-warning">Host</strong>`;
+                                                                                            }
+                                                                                            else return ``;
+                                                                                        })()}
+                                                                                        <span class="d-inline d-sm-none"><br></span>
+                                                                                        ${(() => {
+                                                                                            if (player.Stats !== undefined) 
+                                                                                            {
+                                                                                                return `<span class="badge text-bg-dark bg-dark-subtle rounded-0 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                                    ${(player.Stats.Kills !== undefined ? player.Stats.Kills : "0")} 
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                    ${(player.Stats.Deaths !== undefined ? player.Stats.Deaths : "0")}
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                    ${(player.Stats.Score !== undefined ? player.Stats.Score : "0")} 
+                                                                                                    </span>
+                                                                                                `;
+                                                                                            }
+                                                                                            else return ``;
+                                                                                        })()}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    `
+                                                                }
+                                                            }
+                                                        }
+                                                    }}).join('')}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ${(() => {
+                                            if (Hidden.length > 0) {
+                                                return `
+                                                <div class="col-12 p-2 py-0">
+                                                    <div class="alert alert-danger mb-1">
+                                                        <strong>Hidden:</strong> ${Hidden.map(function (player, index, array) { return clean(player.Name) }).join(', ')}
+                                                    </div>
+                                                </div>
+                                                `;
+                                            }
+                                            else return ``;
+                                        })()}
+                                        `
+                                        // END OF VET STRAT MODE
+                                    }
+                                    else {
+                                        return `
+                                        ${Object.keys(PlayerList).map(function (player) {
+                                            // we are now iterating through the 10-element array we built earlier
+                                            // Open Slot
+                                            if( PlayerList[player].Name === "Open") {
+                                                return `<div class="col-6 player-slot player-slot-open p-2">
+                                                    <div class="p-2 rounded border text-secondary ps-3 text-bg-secondary bg-opacity-10 d-flex align-items-center h-100">
+                                                        <span class="text-nowrap overflow-hidden align-middle">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill mb-1" viewBox="0 0 16 16">
+                                                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                            </svg>
+                                                            <span>
+                                                                ${truncate(clean(PlayerList[player].Name), 24)}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                `
+                                            }
+                                            // Empty Slot
+                                            else if( PlayerList[player].Name === "Empty") {
+                                                return `<div class="col-6 player-slot p-2">
+                                                    <div class="p-2 border border-secondary rounded text-secondary ps-3" style="--bs-text-opacity:0; --bs-border-opacity:0;">
+                                                        ${truncate(clean(PlayerList[player].Name), 24)}
+                                                    </div>
+                                                </div>
+                                                `
+                                            }
+                                            // List Player - iterates through the Steam and GOG accounts lists to get this player's steam data
+                                            else {
+                                                for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
+                                                {
+                                                    if( PlayerList[player].IDs.Steam !== undefined )
+                                                    {
+                                                        if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
+                                                        {
+                                                            return `<div class="col-6 player-slot p-2">
+                                                                <div class="p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
+                                                                    <div class="row">
+                                                                        <div class="col-3 d-none d-lg-inline px-1">
+                                                                            <img src="${Steam.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-9 text-nowrap overflow-hidden">
+                                                                            <span class="">
+                                                                                <div class="mb-1">
+                                                                                    ${truncate(clean(PlayerList[player].Name), 24)}<br>
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                    <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                    <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                    </svg> 
+                                                                                    <a target="_blank" href="${Steam.ProfileUrl}">
+                                                                                        ${truncate(clean(Steam.Nickname), 24)}
+                                                                                    </a><br>
+                                                                                </div>
+                                                                                ${(() => {
+                                                                                    if( PlayerList[player].Team !== undefined ) 
                                                                                     {
-                                                                                        return `<strong class="badge text-bg-light bg-opacity-75">Command</strong>`;
+                                                                                        if( PlayerList[player].Team.Leader === true) 
+                                                                                        {
+                                                                                            return `<strong class="badge rounded-0 text-bg-light">Command</strong>`;
+                                                                                        }
+                                                                                        else return ``;
                                                                                     }
-                                                                                    else return "";
-                                                                                }
-                                                                                else return `<strong class="badge text-bg-danger bg-opacity-75">Hidden</strong>`;
-                                                                            })()}
-                                                                            ${(() => {
-                                                                                if( PlayerList[player].Name === gameHost ) 
-                                                                                {
-                                                                                    return `<strong class="badge text-bg-warning bg-opacity-75">Host</strong>`;
-                                                                                }
-                                                                                else return ``;
-                                                                            })()}
-                                                                            <span class="d-inline d-sm-none"><br></span>
-                                                                            ${(() => {
-                                                                                if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) 
-                                                                                {
-                                                                                    if (parseInt(PlayerList[player].Team.SubTeam.ID) < 11) {
-                                                                                        return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">${PlayerList[player].Team.SubTeam.ID})</strong>`;
+                                                                                    else return `<strong class="badge rounded-0 text-bg-danger">Hidden</strong>`;
+                                                                                })()}
+                                                                                ${(() => {
+                                                                                    if( PlayerList[player].Name === gameHost ) 
+                                                                                    {
+                                                                                        return `<strong class="badge rounded-0 text-bg-warning">Host</strong>`;
                                                                                     }
                                                                                     else return ``;
-                                                                                }
-                                                                                else return ``;
-                                                                            })()}
-                                                                            ${(() => {
-                                                                                if (PlayerList[player].Stats !== undefined) 
-                                                                                {
-                                                                                    return `<span class="badge text-bg-light">${(PlayerList[player].Stats.Kills !== undefined ? PlayerList[player].Stats.Kills : "0")} <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Deaths !== undefined ? PlayerList[player].Stats.Deaths : "0")}  <span class="opacity-25">|</span> ${(PlayerList[player].Stats.Score !== undefined ? PlayerList[player].Stats.Score : "0")} </span>`;
-                                                                                }
-                                                                                else return ``;
-                                                                            })()}
-                                                                        </span>
+                                                                                })()}
+                                                                                <span class="d-inline d-sm-none"><br></span>
+                                                                                ${(() => {
+                                                                                    if (PlayerList[player].Stats !== undefined) 
+                                                                                    {
+                                                                                        return `<span class="badge text-bg-dark bg-dark-subtle rounded-0 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                            ${(PlayerList[player].Stats.Kills !== undefined ? PlayerList[player].Stats.Kills : "0")} 
+                                                                                            <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                            ${(PlayerList[player].Stats.Deaths !== undefined ? PlayerList[player].Stats.Deaths : "0")}
+                                                                                            <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                            ${(PlayerList[player].Stats.Score !== undefined ? PlayerList[player].Stats.Score : "0")} 
+                                                                                            </span>
+                                                                                        `;
+                                                                                    }
+                                                                                    else return ``;
+                                                                                })()}
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </a>
-                                                        </div>
-                                                        `
+                                                            `
+                                                        }
+                                                    }
+                                                    else if( PlayerList[player].IDs.Gog !== undefined ) {
+                                                        for( const [GogID, GOG] of Object.entries(GogPlayerList)) 
+                                                        {
+                                                            if( (PlayerList[player].IDs.Gog.ID).toString() === GogID.toString() ) 
+                                                            {
+                                                                return `<div class="col-6 player-slot p-2">
+                                                                <a href="${GOG.ProfileUrl}" target="_blank" class="text-decoration-none text-light position-relative">
+                                                                    <div class="p-2 bg-primary border border-dark bg-gradient bg-opacity-50 rounded ps-3 h-100" style="--bs-border-opacity: .25;">
+                                                                        <div class="row">
+                                                                            <div class="col-3 d-none d-lg-inline px-1">
+                                                                                <img src="${GOG.AvatarUrl}" width="150" height="150" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                            </div>
+                                                                            <div class="col-12 col-md-9 text-nowrap overflow-hidden">
+                                                                                <span class="">
+                                                                                    <div class="mb-1">
+                                                                                        ${truncate(clean(PlayerList[player].Name), 24)}<br>
+                                                                                        G<span class="d-none d-lg-inline">OG</span>: ${truncate(clean(GOG.Username), 24)}<br>
+                                                                                    </div>
+                                                                                    ${(() => {
+                                                                                        if( PlayerList[player].Team !== undefined ) 
+                                                                                        {
+                                                                                            if( PlayerList[player].Team.Leader === true) 
+                                                                                            {
+                                                                                                return `<strong class="badge rounded-0 text-bg-light bg-opacity-75">Command</strong>`;
+                                                                                            }
+                                                                                            else return "";
+                                                                                        }
+                                                                                        else return `<strong class="badge rounded-0 text-bg-danger bg-opacity-75">Hidden</strong>`;
+                                                                                    })()}
+                                                                                    ${(() => {
+                                                                                        if( PlayerList[player].Name === gameHost ) 
+                                                                                        {
+                                                                                            return `<strong class="badge rounded-0 text-bg-warning bg-opacity-75">Host</strong>`;
+                                                                                        }
+                                                                                        else return ``;
+                                                                                    })()}
+                                                                                    <span class="d-inline d-sm-none"><br></span>
+                                                                                    ${(() => {
+                                                                                        if (PlayerList[player].Team !== undefined && PlayerList[player].Team.SubTeam !== undefined) 
+                                                                                        {
+                                                                                            if (parseInt(PlayerList[player].Team.SubTeam.ID) < 11) {
+                                                                                                return `<strong class="badge text-bg-dark bg-opacity-50 position-absolute top-0 end-0 me-1 mt-1 d-none d-lg-inline-block">${PlayerList[player].Team.SubTeam.ID})</strong>`;
+                                                                                            }
+                                                                                            else return ``;
+                                                                                        }
+                                                                                        else return ``;
+                                                                                    })()}
+                                                                                    ${(() => {
+                                                                                        if (PlayerList[player].Stats !== undefined) 
+                                                                                        {
+                                                                                            return `<span class="badge text-bg-dark bg-dark-subtle rounded-0 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                                ${(PlayerList[player].Stats.Kills !== undefined ? PlayerList[player].Stats.Kills : "0")} 
+                                                                                                <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                ${(PlayerList[player].Stats.Deaths !== undefined ? PlayerList[player].Stats.Deaths : "0")}
+                                                                                                <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                ${(PlayerList[player].Stats.Score !== undefined ? PlayerList[player].Stats.Score : "0")} 
+                                                                                                </span>`;
+                                                                                        }
+                                                                                        else return ``;
+                                                                                    })()}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                                </div>
+                                                                `
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
+                                        }).join("")}
+                                        `;
                                     }
-                                }).join("")}
+                                })()}
                             </div>
                         </div>
                         <!-- Card Footer -->
