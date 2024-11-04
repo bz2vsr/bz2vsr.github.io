@@ -455,7 +455,7 @@ async function getLobbyData()
                             <span id="gameTitle">
                             ${(() => {
                                 if( isVetStrat) {
-                                    return `<span class="shiny-cta btn btn-sm btn-dead">BZ2 Vet Strat</span>`
+                                    return `<span class="shiny-cta btn btn-sm btn-dead rounded">BZ2 Vet Strat</span>`
                                 }
                                 else {
                                     return `<strong>Game ${currentLobbyID}</strong>`
