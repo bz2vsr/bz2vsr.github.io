@@ -414,9 +414,6 @@ async function getLobbyData()
                         Hidden.push(player);
                     }
                 }
-                console.log(Team1);
-                console.log(Team2);
-                console.log(Hidden);
             }
             else {
                 PlayerList = PlayerList.sort((a, b) => {
