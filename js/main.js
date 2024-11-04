@@ -280,6 +280,7 @@ async function getLobbyData()
             let mapImage        = game.Level.Image;
             let mapFileName     = (game.Level.MapFile).replace('.bzn', '');
             let isVetStrat      = hasActivePlayers && index === 0;
+            let fidgetSpinner   = localStorage.getItem("LinkedPlayerCards") === "true" ? true : false;
 
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
             let mapVSRObject    = VSRMapList.find(map => map.File == mapFileName);
@@ -782,7 +783,6 @@ async function getLobbyData()
                                     else {
                                         return `
                                         ${Object.keys(PlayerList).map(function (player) {
-                                            // we are now iterating through the 10-element array we built earlier
                                             // Open Slot
                                             if( PlayerList[player].Name === "Open") {
                                                 return `<div class="col-6 player-slot player-slot-open p-2 pb-0">
@@ -816,26 +816,28 @@ async function getLobbyData()
                                                     {
                                                         if( (PlayerList[player].IDs.Steam.ID).toString() === SteamID.toString() ) 
                                                         {
-                                                            return `<div class="col-6 player-slot p-2 pb-0">
+                                                            return `
+                                                            <div class="col-6 player-slot p-2 pb-0">
+                                                            ${ fidgetSpinner ?  `<a href="#" class="text-decoration-none text-light linked-card">` : '' }
                                                                 <div class="p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
                                                                     <div class="row">
                                                                         <div class="col-3 d-none d-lg-inline px-1">
                                                                             <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                         </div>
                                                                         <div class="col-12 col-md-9 text-nowrap overflow-hidden">
-                                                                                <div class="mb-1">
-                                                                                    ${truncate(clean(PlayerList[player].Name), 24)}
-                                                                                </div>
-                                                                                <div class="mb-1">
-                                                                                    <a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">
-                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
-                                                                                        <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
-                                                                                        <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
-                                                                                        </svg> 
-                                                                                        ${truncate(clean(Steam.Nickname), 24)}
-                                                                                    </a><br>
-                                                                                </div>
-                                                                                <div class="mb-1 d-lg-inline-block">
+                                                                            <div class="mb-1">
+                                                                                ${truncate(clean(PlayerList[player].Name), 24)}
+                                                                            </div>
+                                                                            <div class="mb-1">
+                                                                                ${ fidgetSpinner ? '<span class="text-link">' : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                    <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                    <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                    </svg> 
+                                                                                    ${truncate(clean(Steam.Nickname), 24)}
+                                                                                ${ fidgetSpinner ? '</span>' : `</a>` }
+                                                                            </div>
+                                                                            <div class="mb-1 d-lg-inline-block">
                                                                                 ${(() => {
                                                                                     if( PlayerList[player].Team !== undefined ) 
                                                                                     {
@@ -854,8 +856,8 @@ async function getLobbyData()
                                                                                     }
                                                                                     else return ``;
                                                                                 })()}
-                                                                                </div>
-                                                                                <div class="d-lg-inline-block">
+                                                                            </div>
+                                                                            <div class="d-lg-inline-block">
                                                                                 ${(() => {
                                                                                     if (PlayerList[player].Stats !== undefined) 
                                                                                     {
@@ -870,10 +872,11 @@ async function getLobbyData()
                                                                                     }
                                                                                     else return ``;
                                                                                 })()}
-                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            ${ fidgetSpinner ? `</a>` : '' }
                                                             </div>
                                                             `
                                                         }
@@ -1083,6 +1086,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector("#LiveUpdateToggle").checked = false;
     }
 
+    // toggle the "Linked Cards" switch based on localStorage value
+    if( localStorage.getItem("LinkedPlayerCards") === "true" ) {
+        document.querySelector("#LinkedCardsToggle").checked = true;
+    }
+
     // run main data grab on interval if necessary, otherwise run once
     if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
         document.querySelector("#liveIndicator").classList.remove("d-none");
@@ -1120,6 +1128,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
         getLobbyData();
     });
 
+    // allow users to restore old format with linked player cards
+    let LinkedCardsToggle = document.querySelector("#LinkedCardsToggle");
+    LinkedCardsToggle.addEventListener('change', function () {
+        if( this.checked ) {
+            localStorage.setItem("LinkedPlayerCards", "true");
+        }
+        else {
+            localStorage.setItem("LinkedPlayerCards", "false");
+        }
+        getLobbyData();
+    });
+
     // let ctrl + shift + X be shortcut to open host modal
     document.addEventListener('keydown', function(event) {
         if (event.ctrlKey && event.shiftKey && event.key === 'X') {
@@ -1139,12 +1159,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector("#modalHostButton").focus({focusVisible:true});
     });
 
+    // pick random maps when map picker modal loads
     document.querySelector("#pickerModal").addEventListener("show.bs.modal", function(event)
     {
         getRandomMaps();
     });
 
-    // load random map(s) when opening the map picker, pulls from /data/maps/map_lists.js)
+    // [re]pick random maps when the shuffle button is clicked on map picker modal
     document.querySelector("#pickerButton").addEventListener("click", function(event)
     {
         getRandomMaps();
