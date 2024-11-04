@@ -1015,7 +1015,7 @@ async function getLobbyData()
             if( vsrGameCount == 0) {
                 document.querySelector("#lobbyList").innerHTML = `
                     <div class="d-flex justify-content-center mt-4">
-                        <div class="text-center alert alert-primary px-5">No players online.</div>
+                        <div class="text-center alert alert-primary px-5">No VSR games found.</div>
                     </div>
                     `;
             }
