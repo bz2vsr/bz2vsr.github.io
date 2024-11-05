@@ -23,7 +23,6 @@ const ActivePlayerList = [
     'sev',
     'domakus',
     'cyber',
-    'f9bomber',
     'xohm',
     'herp mcderperson',
     'the best there is',
