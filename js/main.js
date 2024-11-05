@@ -598,7 +598,8 @@ async function getLobbyData()
                                                             {
                                                                 if( (player.IDs.Steam.ID).toString() === SteamID.toString() )
                                                                 {
-                                                                    return `<li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
+                                                                    return ` ${ fidgetSpinner ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
+                                                                    <li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
                                                                                 <div class="col-3 d-none d-lg-inline px-1">
@@ -609,13 +610,15 @@ async function getLobbyData()
                                                                                             ${truncate(clean(player.Name), 24)}
                                                                                         </div>
                                                                                         <div class="mb-1">
-                                                                                            <a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">
+                                                                                            ${ fidgetSpinner 
+                                                                                                ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
+                                                                                                : `<a target="_blank class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
                                                                                                 <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
                                                                                                 <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
                                                                                                 </svg> 
                                                                                                 ${truncate(clean(Steam.Nickname), 24)}
-                                                                                            </a><br>
+                                                                                            ${ fidgetSpinner ? '</span>' : `</a>` }
                                                                                         </div>
                                                                                         <div class="mb-1 d-lg-inline-block">
                                                                                         ${(() => {
@@ -657,6 +660,7 @@ async function getLobbyData()
                                                                             </div>
                                                                         </div>
                                                                     </li>
+                                                                    ${ fidgetSpinner ? `</a>` : '' }
                                                                     `
                                                                 }
                                                             }
@@ -697,7 +701,8 @@ async function getLobbyData()
                                                             {
                                                                 if( (player.IDs.Steam.ID).toString() === SteamID.toString() )
                                                                 {
-                                                                    return `<li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
+                                                                    return ` ${ fidgetSpinner ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
+                                                                    <li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
                                                                                 <div class="col-3 d-none d-lg-inline px-1">
@@ -708,13 +713,15 @@ async function getLobbyData()
                                                                                             ${truncate(clean(player.Name), 24)}
                                                                                         </div>
                                                                                         <div class="mb-1">
-                                                                                            <a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">
+                                                                                            ${ fidgetSpinner 
+                                                                                                ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
+                                                                                                : `<a target="_blank class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
                                                                                                 <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
                                                                                                 <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
                                                                                                 </svg> 
                                                                                                 ${truncate(clean(Steam.Nickname), 24)}
-                                                                                            </a><br>
+                                                                                            ${ fidgetSpinner ? '</span>' : `</a>` }
                                                                                         </div>
                                                                                         <div class="mb-1 d-lg-inline-block">
                                                                                         ${(() => {
@@ -756,6 +763,7 @@ async function getLobbyData()
                                                                             </div>
                                                                         </div>
                                                                     </li>
+                                                                    ${ fidgetSpinner ? `</a>` : '' }
                                                                     `
                                                                 }
                                                             }
@@ -818,7 +826,7 @@ async function getLobbyData()
                                                         {
                                                             return `
                                                             <div class="col-6 player-slot p-2 pb-0">
-                                                            ${ fidgetSpinner ?  `<a href="#" class="text-decoration-none text-light linked-card">` : '' }
+                                                            ${ fidgetSpinner ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
                                                                 <div class="p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
                                                                     <div class="row">
                                                                         <div class="col-3 d-none d-lg-inline px-1">
@@ -829,7 +837,9 @@ async function getLobbyData()
                                                                                 ${truncate(clean(PlayerList[player].Name), 24)}
                                                                             </div>
                                                                             <div class="mb-1">
-                                                                                ${ fidgetSpinner ? '<span class="text-link">' : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
+                                                                                ${ fidgetSpinner 
+                                                                                    ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
+                                                                                    : `<a target="_blank class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
                                                                                     <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
                                                                                     <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>

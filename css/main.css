@@ -59,6 +59,7 @@ body {
   color: rgb(110, 168, 254);
 }
 
+.linked-card:hover li,
 .linked-card:hover div {
   border-color: rgb(110, 168, 254) !important;
 }
