@@ -567,6 +567,23 @@ async function getLobbyData()
                                 ${(() => {
                                     if( gameMode === "STRAT" ) {
                                         return `
+                                        ${(() => {
+                                            if (Hidden.length > 0) {
+                                                return `
+                                                <div class="col-12 p-2 py-0">
+                                                    <div class="alert alert-danger mt-2 mb-0 d-flex align-items-center">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                                                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                                        </svg>
+                                                        <div class="ms-2">
+                                                            <strong>Hidden:</strong> ${Hidden.map(function (player, index, array) { return clean(player.Name) }).join(', ')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                `;
+                                            }
+                                            else return ``;
+                                        })()}
                                         <div class="col-12 col-md-6 p-2">
                                             <div class="card h-100 border-secondary-subtle">
                                                 <div class="card-header text-center">
@@ -773,18 +790,6 @@ async function getLobbyData()
                                                 </div>
                                             </div>
                                         </div>
-                                        ${(() => {
-                                            if (Hidden.length > 0) {
-                                                return `
-                                                <div class="col-12 p-2 py-0">
-                                                    <div class="alert alert-danger mb-1">
-                                                        <strong>Hidden:</strong> ${Hidden.map(function (player, index, array) { return clean(player.Name) }).join(', ')}
-                                                    </div>
-                                                </div>
-                                                `;
-                                            }
-                                            else return ``;
-                                        })()}
                                         `
                                         // END OF VET STRAT MODE
                                     }
