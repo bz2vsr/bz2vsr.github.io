@@ -164,6 +164,10 @@ async function getLobbyData()
                     <div class="text-center alert alert-primary px-5">No players online.</div>
                 </div>
                 `;
+
+            if(document.title !== 'Battlezone II: Game Watch') {
+                document.title = 'Battlezone II: Game Watch';
+            }
             return;
         }
 
