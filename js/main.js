@@ -1109,13 +1109,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector("#LinkedCardsToggle").checked = true;
     }
 
-    // toggle the "NTAS widget" switch based on localStorage value
-    if( localStorage.getItem("NTASToggle") === "true" ) {
-        document.querySelector("#NTASToggle").checked = true;
-        document.querySelector('#BannerNTAS').classList.remove('d-none');
-        document.querySelector('#BannerNTAS').classList.add('d-block');
-    }
-
     // run main data grab on interval if necessary, otherwise run once
     if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
         document.querySelector("#liveIndicator").classList.remove("d-none");
@@ -1163,22 +1156,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             localStorage.setItem("LinkedPlayerCards", "false");
         }
         getLobbyData();
-    });
-
-    // allow users to show the NTAS widget 
-    let NTASToggle = document.querySelector("#NTASToggle");
-    NTASToggle.addEventListener('change', function () {
-        if( this.checked ) {
-            localStorage.setItem("NTASToggle", "true");
-            document.querySelector('#BannerNTAS').classList.remove('d-none');
-            document.querySelector('#BannerNTAS').classList.add('d-block');
-
-        }
-        else {
-            localStorage.setItem("NTASToggle", "false");
-            document.querySelector('#BannerNTAS').classList.add('d-none');
-            document.querySelector('#BannerNTAS').classList.remove('d-block');
-        }
     });
 
     // let ctrl + shift + X be shortcut to open host modal
