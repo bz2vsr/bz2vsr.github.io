@@ -283,7 +283,7 @@ async function getLobbyData()
             let mapImage        = game.Level.Image;
             let mapFileName     = (game.Level.MapFile).replace('.bzn', '');
             let isVetStrat      = hasActivePlayers && index === 0;
-            let fidgetSpinner   = localStorage.getItem("LinkedPlayerCards") === "true" ? true : false;
+            let linkedPlayerCards   = localStorage.getItem("LinkedPlayerCards") === "true" ? true : false;
 
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
             let mapVSRObject    = VSRMapList.find(map => map.File == mapFileName);
@@ -372,7 +372,7 @@ async function getLobbyData()
             let PlayerList = game.Players;
 
             // host should always be first player in the list
-            let gameHost = game.Players[0].Name;
+            let gameHost = PlayerList[0].Name;
 
             if(hasActivePlayers && index === 0) {
                 document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${clean(gameHost)})`;
@@ -551,6 +551,27 @@ async function getLobbyData()
                                             <span">${playerCount} player${playerCount === 1 ? "" : "s"} / ${playerCountMax}</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
+                                            <strong class="text-muted">Host</strong>
+                                            <span class="text-secondary">${truncate(gameHost, 32)}
+                                            ${(() => {
+                                                for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
+                                                {
+                                                    if( PlayerList[0].IDs !== undefined && PlayerList[0].IDs.Steam !== undefined )
+                                                    {
+                                                        if( (PlayerList[0].IDs.Steam.ID).toString() === SteamID.toString() )
+                                                        {
+                                                            // only show the host's steam name if it's different from in-game nick
+                                                            if( gameHost != Steam.Nickname) {
+                                                                return `(${Steam.Nickname})`;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                return '';
+                                            })()}
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Name</strong>
                                             <span class="text-secondary">${truncate(gameName, 32)}</span>
                                         </li>
@@ -618,19 +639,19 @@ async function getLobbyData()
                                                             {
                                                                 if( (player.IDs.Steam.ID).toString() === SteamID.toString() )
                                                                 {
-                                                                    return ` ${ fidgetSpinner ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
+                                                                    return ` ${ linkedPlayerCards ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
                                                                     <li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
-                                                                                <div class="col-3 d-none d-lg-inline px-1">
+                                                                                <div class="col-4 col-lg-3 px-1">
                                                                                     <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                                 </div>
-                                                                                <div class="col-12 col-md-9 text-nowrap overflow-hidden">
+                                                                                <div class="col-8 col-lg-9 text-nowrap overflow-hidden">
                                                                                         <div class="mb-1">
                                                                                             ${truncate(clean(player.Name), 24)}
                                                                                         </div>
                                                                                         <div class="mb-1">
-                                                                                            ${ fidgetSpinner 
+                                                                                            ${ linkedPlayerCards 
                                                                                                 ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
                                                                                                 : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
@@ -638,7 +659,7 @@ async function getLobbyData()
                                                                                                 <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
                                                                                                 </svg> 
                                                                                                 ${truncate(clean(Steam.Nickname), 24)}
-                                                                                            ${ fidgetSpinner ? '</span>' : `</a>` }
+                                                                                            ${ linkedPlayerCards ? '</span>' : `</a>` }
                                                                                         </div>
                                                                                         <div class="mb-1 d-lg-inline-block">
                                                                                         ${(() => {
@@ -680,7 +701,7 @@ async function getLobbyData()
                                                                             </div>
                                                                         </div>
                                                                     </li>
-                                                                    ${ fidgetSpinner ? `</a>` : '' }
+                                                                    ${ linkedPlayerCards ? `</a>` : '' }
                                                                     `
                                                                 }
                                                             }
@@ -721,19 +742,19 @@ async function getLobbyData()
                                                             {
                                                                 if( (player.IDs.Steam.ID).toString() === SteamID.toString() )
                                                                 {
-                                                                    return ` ${ fidgetSpinner ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
+                                                                    return ` ${ linkedPlayerCards ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
                                                                     <li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
-                                                                                <div class="col-3 d-none d-lg-inline px-1">
+                                                                                <div class="col-4 col-lg-3 px-1">
                                                                                     <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
                                                                                 </div>
-                                                                                <div class="col-12 col-md-9 text-nowrap overflow-hidden">
+                                                                                <div class="col-8 col-lg-9 text-nowrap overflow-hidden">
                                                                                         <div class="mb-1">
                                                                                             ${truncate(clean(player.Name), 24)}
                                                                                         </div>
                                                                                         <div class="mb-1">
-                                                                                            ${ fidgetSpinner 
+                                                                                            ${ linkedPlayerCards 
                                                                                                 ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
                                                                                                 : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
@@ -741,7 +762,7 @@ async function getLobbyData()
                                                                                                 <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
                                                                                                 </svg> 
                                                                                                 ${truncate(clean(Steam.Nickname), 24)}
-                                                                                            ${ fidgetSpinner ? '</span>' : `</a>` }
+                                                                                            ${ linkedPlayerCards ? '</span>' : `</a>` }
                                                                                         </div>
                                                                                         <div class="mb-1 d-lg-inline-block">
                                                                                         ${(() => {
@@ -783,7 +804,7 @@ async function getLobbyData()
                                                                             </div>
                                                                         </div>
                                                                     </li>
-                                                                    ${ fidgetSpinner ? `</a>` : '' }
+                                                                    ${ linkedPlayerCards ? `</a>` : '' }
                                                                     `
                                                                 }
                                                             }
@@ -834,7 +855,7 @@ async function getLobbyData()
                                                         {
                                                             return `
                                                             <div class="col-6 player-slot p-2 pb-0">
-                                                            ${ fidgetSpinner ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
+                                                            ${ linkedPlayerCards ?  `<a href="${Steam.ProfileUrl}" class="text-decoration-none text-light linked-card">` : '' }
                                                                 <div class="p-2 bg-secondary-subtle border rounded ps-3 h-100" style="--bs-border-opacity: .5;">
                                                                     <div class="row">
                                                                         <div class="col-3 d-none d-lg-inline px-1">
@@ -845,7 +866,7 @@ async function getLobbyData()
                                                                                 ${truncate(clean(PlayerList[player].Name), 24)}
                                                                             </div>
                                                                             <div class="mb-1">
-                                                                                ${ fidgetSpinner 
+                                                                                ${ linkedPlayerCards 
                                                                                     ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
                                                                                     : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
@@ -853,7 +874,7 @@ async function getLobbyData()
                                                                                     <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
                                                                                     </svg> 
                                                                                     ${truncate(clean(Steam.Nickname), 24)}
-                                                                                ${ fidgetSpinner ? '</span>' : `</a>` }
+                                                                                ${ linkedPlayerCards ? '</span>' : `</a>` }
                                                                             </div>
                                                                             <div class="mb-1 d-lg-inline-block">
                                                                                 ${(() => {
@@ -894,7 +915,7 @@ async function getLobbyData()
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            ${ fidgetSpinner ? `</a>` : '' }
+                                                            ${ linkedPlayerCards ? `</a>` : '' }
                                                             </div>
                                                             `
                                                         }
