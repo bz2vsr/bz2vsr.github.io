@@ -1,0 +1,541 @@
+{
+  "Metadata": {
+    "ListServer": {
+      "Rebellion": {
+        "Status": "cached",
+        "Success": true,
+        "Timestamp": "2024-11-12T21:19:19.4424092Z"
+      }
+    }
+  },
+  "SessionsDefault": {
+    "Type": "Listen"
+  },
+  "DataCache": {
+    "Level": {
+      "GameType": {
+        "STRAT": {
+          "Name": "Strategy"
+        },
+        "DM": {
+          "Name": "Deathmatch"
+        }
+      },
+      "GameMode": {
+        "MPI": {
+          "Name": "MPI"
+        },
+        "DM": {
+          "Name": "Deathmatch"
+        }
+      }
+    },
+    "Players": {
+      "IDs": {
+        "Steam": {
+          "76561198440843998": {
+            "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+            "Nickname": "yeah",
+            "ProfileUrl": "https://steamcommunity.com/profiles/76561198440843998/"
+          },
+          "76561199034839225": {
+            "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+            "Nickname": "Ralf Meed",
+            "ProfileUrl": "https://steamcommunity.com/profiles/76561199034839225/"
+          },
+          "76561199177332398": {
+            "AvatarUrl": "https://avatars.steamstatic.com/cd6c054a8fb9219397f66d45653ce811291af449_full.jpg",
+            "Nickname": "oldman",
+            "ProfileUrl": "https://steamcommunity.com/profiles/76561199177332398/"
+          },
+          "76561199624647404": {
+            "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+            "Nickname": "Sinbad",
+            "ProfileUrl": "https://steamcommunity.com/profiles/76561199624647404/"
+          }
+        }
+      }
+    }
+  },
+  "Mods": {
+    "3123131462": {
+      "Name": "Warlords2",
+      "ID": "3123131462",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/3123131462/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=3123131462"
+    },
+    "0": {
+      "Name": "Stock",
+      "ID": "0",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+    },
+    "2659448064": {
+      "Name": "Genesis - All in One 2",
+      "ID": "2659448064",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2659448064/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2659448064"
+    },
+    "1329976523": {
+      "Name": "Aegeis All In One Pack",
+      "ID": "1329976523",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329976523/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329976523"
+    },
+    "1374954711": {
+      "Name": "Biometal Maps Assets",
+      "ID": "1374954711",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374954711/mod.webp",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374954711"
+    },
+    "1374955473": {
+      "Name": "ScrapPool's Collection",
+      "ID": "1374955473",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374955473/mod.webp",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374955473"
+    },
+    "1374955975": {
+      "Name": "Biometal Weapons Assets",
+      "ID": "1374955975",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374955975/mod.webp",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374955975"
+    },
+    "1374956537": {
+      "Name": "Biometal Vehicles Assets",
+      "ID": "1374956537",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374956537/mod.webp",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374956537"
+    },
+    "1386405185": {
+      "Name": "Rocket's RV Assets",
+      "ID": "1386405185",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1386405185/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1386405185"
+    },
+    "1322678425": {
+      "Name": "KatPak Assets",
+      "ID": "1322678425",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1322678425/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1322678425"
+    },
+    "1450522956": {
+      "Name": "GreenHeart Asset Pack",
+      "ID": "1450522956",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1450522956/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1450522956"
+    },
+    "1662220012": {
+      "Name": "Aegeis TOONS & Toonworld Assets",
+      "ID": "1662220012",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1662220012/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1662220012"
+    },
+    "1665391296": {
+      "Name": "War Pigs Faction (Standalone)",
+      "ID": "1665391296",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1665391296"
+    },
+    "1800746781": {
+      "Name": "FE:Remastered: Hadean Model Pack",
+      "ID": "1800746781",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1800746781/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1800746781"
+    },
+    "2034315080": {
+      "Name": "The \"Reformulated\" BZ2 Classics Maps : Asset Pack",
+      "ID": "2034315080",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2034315080/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2034315080"
+    },
+    "2049959749": {
+      "Name": "FE:Remastered: Scion Model Pack",
+      "ID": "2049959749",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+    },
+    "2049956570": {
+      "Name": "FE:Remastered: ISDF Model Pack",
+      "ID": "2049956570",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+    },
+    "2068308431": {
+      "Name": "FE:Remastered: Cerberi Model Pack",
+      "ID": "2068308431",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2068308431/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2068308431"
+    },
+    "2090767005": {
+      "Name": "Aegeis Map Pack ASSET",
+      "ID": "2090767005",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2090767005/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2090767005"
+    },
+    "2093546600": {
+      "Name": "Aegeis Map Pack ASSET 2",
+      "ID": "2093546600",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2093546600/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2093546600"
+    },
+    "1737584373": {
+      "Name": "MPI Lua Conversion",
+      "ID": "1737584373",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1737584373"
+    },
+    "2111177094": {
+      "Name": "BZCC: Phaer Rhan Asset",
+      "ID": "2111177094",
+      "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2111177094/mod.png",
+      "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2111177094"
+    }
+  },
+  "Sessions": [{
+    "ID": "Rebellion:-C5CeV1@Gt",
+    "Name": "Host yeah",
+    "PlayerTypes": [{
+      "Types": ["Player"],
+      "Max": 4
+    }],
+    "PlayerCount": {
+      "Player": 1
+    },
+    "Level": {
+      "MapFile": "mpiantilla.bzn",
+      "ID": "3123131462:mpiantilla",
+      "GameType": {
+        "ID": "STRAT"
+      },
+      "GameMode": {
+        "ID": "MPI"
+      },
+      "Image": "https://gamelistassets.iondriver.com/bzcc/assets/818329c331a873671c56c2439de39783dd8cc930c8e6f66f42e29bb9729cfae7.png",
+      "Name": "BCC-MPI: Instant Antilla",
+      "Description": "﻿# Antilla  #\r\n\r\nMap by ScrapPool\r\nModified to MPI BCC\r\nby Splinter (c) 2022"
+    },
+    "Status": {
+      "IsLocked": false,
+      "HasPassword": false,
+      "State": "PreGame"
+    },
+    "Players": [{
+      "Name": "yeah",
+      "Type": "Player",
+      "Team": {
+        "ID": "1",
+        "Leader": true,
+        "SubTeam": {
+          "ID": "1"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 1
+        },
+        "BZRNet": {
+          "ID": "S76561198440843998"
+        },
+        "Steam": {
+          "Raw": "76561198440843998",
+          "ID": "76561198440843998"
+        }
+      }
+    }],
+    "Attributes": {
+      "TPS": 20,
+      "MaxPing": 750,
+      "ListServer": "Rebellion"
+    },
+    "Address": {
+      "NAT": "-C5CeV1@Gt",
+      "NAT_TYPE": "SYMMETRIC"
+    },
+    "Game": {
+      "Mod": "3123131462",
+      "Version": "2.0.185",
+      "ModHash": "nrI7n"
+    },
+    "Time": {
+      "Seconds": 8700,
+      "Resolution": 60,
+      "Max": false,
+      "Context": "PreGame"
+    },
+    "Teams": {
+      "1": {
+        "Human": true,
+        "Computer": false,
+        "Name": "Team Humans"
+      },
+      "2": {
+        "Name": "Team Computer",
+        "Human": false,
+        "Computer": true
+      }
+    }
+  }, {
+    "ID": "Rebellion:2ayh-g2@@o",
+    "Name": "Pink Turtle",
+    "PlayerTypes": [{
+      "Types": ["Player"],
+      "Max": 4
+    }],
+    "PlayerCount": {
+      "Player": 2
+    },
+    "Level": {
+      "MapFile": "mpiantarcbcc.bzn",
+      "ID": "2659448064:mpiantarcbcc",
+      "GameType": {
+        "ID": "STRAT"
+      },
+      "GameMode": {
+        "ID": "MPI"
+      },
+      "Image": "https://gamelistassets.iondriver.com/bzcc/assets/fdc525584f7851f7652d6569c2dac8d0ceddc45066be1202d7baab7a1ddc5187.png",
+      "Name": "AI2MPI: Instant Antarctica",
+      "Description": "﻿# Antarctica #\r\n\r\nMap by ~RIP~ Maverick\r\nModified to MPI BCC\r\nby Splinter (c) 2020"
+    },
+    "Status": {
+      "IsLocked": false,
+      "HasPassword": false,
+      "State": "InGame"
+    },
+    "Players": [{
+      "Name": "Ralf Meed",
+      "Type": "Player",
+      "Team": {
+        "ID": "1",
+        "Leader": true,
+        "SubTeam": {
+          "ID": "1"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 1
+        },
+        "BZRNet": {
+          "ID": "S76561199034839225"
+        },
+        "Steam": {
+          "Raw": "76561199034839225",
+          "ID": "76561199034839225"
+        }
+      }
+    }, {
+      "Name": "oldman",
+      "Type": "Player",
+      "Stats": {
+        "Kills": 8,
+        "Score": 60
+      },
+      "Team": {
+        "ID": "1",
+        "SubTeam": {
+          "ID": "2"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 2
+        },
+        "BZRNet": {
+          "ID": "S76561199177332398"
+        },
+        "Steam": {
+          "Raw": "76561199177332398",
+          "ID": "76561199177332398"
+        }
+      }
+    }],
+    "Attributes": {
+      "TPS": 20,
+      "MaxPing": 750,
+      "MaxPingSeen": 175,
+      "ListServer": "Rebellion"
+    },
+    "Address": {
+      "NAT": "2ayh-g2@@o",
+      "NAT_TYPE": "FULL CONE"
+    },
+    "Game": {
+      "Mod": "2659448064",
+      "Version": "2.0.185",
+      "ModHash": "nrI7n"
+    },
+    "Time": {
+      "Seconds": 780,
+      "Resolution": 60,
+      "Max": false,
+      "Context": "InGame"
+    },
+    "Teams": {
+      "1": {
+        "Human": true,
+        "Computer": false,
+        "Name": "Team Humans"
+      },
+      "2": {
+        "Name": "Team Computer",
+        "Human": false,
+        "Computer": true
+      }
+    }
+  }, {
+    "ID": "Rebellion:5VJ6t@@@@i",
+    "Name": "chicha",
+    "Message": "mushi",
+    "PlayerTypes": [{
+      "Types": ["Player"],
+      "Max": 10
+    }],
+    "PlayerCount": {
+      "Player": 1
+    },
+    "Level": {
+      "MapFile": "loot.bzn",
+      "ID": "0:loot",
+      "Attributes": {
+        "Respawn": "One"
+      },
+      "GameType": {
+        "ID": "DM"
+      },
+      "GameMode": {
+        "ID": "DM"
+      },
+      "Image": "https://gamelistassets.iondriver.com/bzcc/assets/1d0f8468d1f23df3bfd98569e6bb602cb4a1bdba11a424254f0f34548ff88703.png",
+      "Name": "LOOT: Pleasantville",
+      "Description": "﻿Loot:\r\nRide into this sea side community and grab as much cash as you can out of the city's friendly banking establishments."
+    },
+    "Status": {
+      "IsLocked": false,
+      "HasPassword": true,
+      "State": "PreGame"
+    },
+    "Players": [{
+      "Name": "CODEX",
+      "Type": "Player",
+      "Team": {
+        "SubTeam": {
+          "ID": "1"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 1
+        },
+        "BZRNet": {
+          "ID": "S76561197960267366"
+        },
+        "Steam": {
+          "Raw": "76561197960267366",
+          "ID": "76561197960267366"
+        }
+      }
+    }],
+    "Attributes": {
+      "TPS": 20,
+      "MaxPing": 750,
+      "ListServer": "Rebellion"
+    },
+    "Address": {
+      "NAT": "5VJ6t@@@@i",
+      "NAT_TYPE": "SYMMETRIC"
+    },
+    "Game": {
+      "Version": "2.0.130",
+      "ModHash": "nrI7n"
+    },
+    "Time": {
+      "Seconds": 60,
+      "Resolution": 60,
+      "Max": false,
+      "Context": "PreGame"
+    }
+  }, {
+    "ID": "Rebellion:d2ePKMe@mF",
+    "Name": "Empty head",
+    "Message": "house rulz apply",
+    "PlayerTypes": [{
+      "Types": ["Player"],
+      "Max": 4
+    }],
+    "PlayerCount": {
+      "Player": 1
+    },
+    "Level": {
+      "MapFile": "mpidunes.bzn",
+      "ID": "1329976523:mpidunes",
+      "GameType": {
+        "ID": "STRAT"
+      },
+      "GameMode": {
+        "ID": "MPI"
+      },
+      "Image": "https://gamelistassets.iondriver.com/bzcc/assets/28a693f9f4e1ca7d41e21d8b6aacec3c87db78da5675eecfffe5a9f6b8c5e294.png",
+      "Name": "MPI: Instant Dunes",
+      "Description": "﻿Multiplayer Instant:\r\nAre you lord of the dunes? \r\nFight for control of the neutral zone.\r\n\r\n7 - Scrap Pools"
+    },
+    "Status": {
+      "IsLocked": false,
+      "HasPassword": false,
+      "State": "InGame"
+    },
+    "Players": [{
+      "Name": "Sinbad",
+      "Type": "Player",
+      "Team": {
+        "ID": "1",
+        "Leader": true,
+        "SubTeam": {
+          "ID": "1"
+        }
+      },
+      "IDs": {
+        "Slot": {
+          "ID": 1
+        },
+        "BZRNet": {
+          "ID": "S76561199624647404"
+        },
+        "Steam": {
+          "Raw": "76561199624647404",
+          "ID": "76561199624647404"
+        }
+      }
+    }],
+    "Attributes": {
+      "TPS": 20,
+      "MaxPing": 750,
+      "ListServer": "Rebellion"
+    },
+    "Address": {
+      "NAT": "d2ePKMe@mF",
+      "NAT_TYPE": "SYMMETRIC"
+    },
+    "Game": {
+      "Mod": "1329976523",
+      "Mods": ["1374954711", "1374955473", "1374955975", "1374956537", "1386405185", "1322678425", "1450522956", "1662220012", "1665391296", "1800746781", "2034315080", "2049959749", "2049956570", "2068308431", "2090767005", "2093546600", "1737584373", "2111177094"],
+      "Version": "2.0.185",
+      "ModHash": "nrI7n"
+    },
+    "Time": {
+      "Seconds": 120,
+      "Resolution": 60,
+      "Max": false,
+      "Context": "InGame"
+    },
+    "Teams": {
+      "1": {
+        "Human": true,
+        "Computer": false,
+        "Name": "Nomads"
+      },
+      "2": {
+        "Name": "Revolutionaires",
+        "Human": false,
+        "Computer": true
+      }
+    }
+  }]
+}
