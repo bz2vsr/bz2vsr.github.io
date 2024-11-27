@@ -580,7 +580,7 @@ async function getLobbyData()
                                                 <div class="col-3">
                                                 </div>
                                                 <div class="col-9 text-end">
-                                                    <span class="text-secondary">${truncate(gameMessage, 100)}</span>
+                                                    <span class="text-secondary">${gameMessage}</span>
                                                 </div>
                                             </div>
                                         </li>
