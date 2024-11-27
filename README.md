@@ -1,4 +1,4 @@
-# Battlezone II Lobby Watch
+# Battlezone II GameWatch
 
 Website to pull multiplayer game data from [Battlezone II: Combat Commander](https://store.steampowered.com/app/624970/Battlezone_Combat_Commander/), prioritizing VSR games hosted by the [BZ2 Vet Strat](https://discord.gg/FQnXFhnp) Discord community.
 
