@@ -19,18 +19,19 @@ const useCORSProxy = false;
 // in a vsr community game; others who often join other lobbies are excluded to avoid
 // potential duplicates
 const ActivePlayerList = [
-    'vtrider',
-    'sev',
-    'domakus',
+    'vtrider', // 76561197974548434
+    'sev', // 76561199653748651
+    'domakus', // 76561198006115793
     'cyber',
-    'xohm',
-    'herp mcderperson',
+    'xohm', // 76561198846500539
+    'herp mcderperson', // 76561197962996353
     'the best there is',
-    'happyotter',
-    'lamper',
-    'graves',
+    'happyotter', // 76561198064801924
+    'lamper', // 76561198825004088
+    'graves', // 76561197970538803
     'econchump',
     'm.s',
+    'vivify', // 76561198345909972
     'blue',
 ];
 
@@ -303,7 +304,7 @@ async function getLobbyData()
             
             // we need at least one valid game mod to create a join URL
             // we also ignore locked and password-protected games
-            if( gameMod !== undefined && !hasPassword && !isLocked ) 
+            if( isVetStrat && gameMod !== undefined && !hasPassword && !isLocked ) 
             { 
                 hasJoinURL = true;
 
