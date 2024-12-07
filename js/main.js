@@ -304,7 +304,7 @@ async function getLobbyData()
             
             // we need at least one valid game mod to create a join URL
             // we also ignore locked and password-protected games
-            if( isVetStrat && gameMod !== undefined && !hasPassword && !isLocked ) 
+            if( gameMod !== undefined && !hasPassword && !isLocked ) 
             { 
                 hasJoinURL = true;
 
