@@ -26,7 +26,7 @@ const ActivePlayerList = [
     'xohm', // 76561198846500539
     'herp mcderperson', // 76561197962996353
     'the best there is',
-    'happyotter', // 76561198064801924
+    // 'happyotter', // 76561198064801924
     'lamper', // 76561198825004088
     'graves', // 76561197970538803
     'econchump',
