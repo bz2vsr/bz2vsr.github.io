@@ -1,0 +1,732 @@
+Map: FFA: Ground Four
+Size (m): 1024x1024
+Base to Base Distance: 2181
+
+Map: FFA: River4
+Size (m): 1024x1024
+Base to Base Distance: 1231
+
+Map: ST: A Bridge Too Far
+Size (m): 640x640
+Base to Base Distance: 988
+
+Map: ST: Big Chill
+Size (m): 2048x2048
+Base to Base Distance: 1014
+
+Map: ST: Deep Blue Sea
+Size (m): 2048x2048
+Base to Base Distance: 1247
+
+Map: ST: Desert Quarry
+Size (m): 2048x2048
+Base to Base Distance: 978
+
+Map: ST: Ground Zero
+Size (m): 1024x1024
+Base to Base Distance: 2181
+
+Map: ST: High & Low
+Size (m): 512x512
+Base to Base Distance: 1109
+
+Map: ST: High Heat
+Size (m): 2048x2048
+Base to Base Distance: 1090
+
+Map: ST: Island Warfare
+Size (m): 1024x1024
+Base to Base Distance: 1215
+
+Map: ST: Mars
+Size (m): 1280x1280
+Base to Base Distance: 951
+
+Map: ST: Patton's Proving Ground
+Size (m): 2048x2048
+Base to Base Distance: 1294
+
+Map: ST: RiverWars
+Size (m): 1024x1024
+Base to Base Distance: 1231
+
+Map: ST: The Rocks
+Size (m): 512x512
+Base to Base Distance: 288
+
+Map: VSR DM: Rocky Canyon
+Size (m): 2048x2048
+Base to Base Distance: 852
+
+Map: VSR DM: Sly's Obstacle Course
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR DM: Vet Training Grounds
+Size (m): 2048x2048
+Base to Base Distance: 32
+
+Map: VSR DM: Volcanoes
+Size (m): 2048x2048
+Base to Base Distance: 656
+
+Map: VSR FFA: 4 Play
+Size (m): 2048x2048
+Base to Base Distance: 1514
+
+Map: VSR FFA: 9 Cells
+Size (m): 1280x1280
+Base to Base Distance: 1526
+
+Map: VSR FFA: Base Pits
+Size (m): 1024x1024
+Base to Base Distance: 768
+
+Map: VSR FFA: Crystal Castles
+Size (m): 1280x1280
+Base to Base Distance: 1856
+
+Map: VSR FFA: Dark Planet
+Size (m): 1024x1024
+Base to Base Distance: 1050
+
+Map: VSR FFA: Face Off
+Size (m): 1024x1024
+Base to Base Distance: 225
+
+Map: VSR FFA: Ice Path
+Size (m): 2560x2560
+Base to Base Distance: 1962
+
+Map: VSR FFA: Middle-Low
+Size (m): 1024x1024
+Base to Base Distance: 707
+
+Map: VSR FFA: Ring 8
+Size (m): 2048x2048
+Base to Base Distance: 3179
+
+Map: VSR FFA: Scrap Pit Extreme
+Size (m): 1280x1280
+Base to Base Distance: 1779
+
+Map: VSR MPI: Ascent
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR MPI: BottleNeck
+Size (m): 1024x1024
+Base to Base Distance: 2041
+
+Map: VSR MPI: Meltdown
+Size (m): 2048x2048
+Base to Base Distance: 807
+
+Map: VSR MPI: Stranded
+Size (m): 2048x2048
+Base to Base Distance: 1083
+
+Map: VSR: 310
+Size (m): 1024x1024
+Base to Base Distance: 1024
+
+Map: VSR: Abundance
+Size (m): 1024x1024
+Base to Base Distance: 0
+
+Map: VSR: Abuse
+Size (m): 1024x1024
+Base to Base Distance: 1032
+
+Map: VSR: Amino
+Size (m): 1024x1024
+Base to Base Distance: 843
+
+Map: VSR: Ammo2Go
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Ancient Hills
+Size (m): 1024x1024
+Base to Base Distance: 1153
+
+Map: VSR: Ancient Outposts
+Size (m): 1024x1024
+Base to Base Distance: 1236
+
+Map: VSR: Aussault
+Size (m): 1024x1024
+Base to Base Distance: 1024
+
+Map: VSR: Aztec
+Size (m): 640x640
+Base to Base Distance: 1172
+
+Map: VSR: Badlands
+Size (m): 512x512
+Base to Base Distance: 826
+
+Map: VSR: Barren
+Size (m): 1024x1024
+Base to Base Distance: 953
+
+Map: VSR: Beyond
+Size (m): 2048x2048
+Base to Base Distance: 803
+
+Map: VSR: Bolt
+Size (m): 512x512
+Base to Base Distance: 724
+
+Map: VSR: Bowl
+Size (m): 1024x1024
+Base to Base Distance: 1121
+
+Map: VSR: CP Devils Cauldron
+Size (m): 1280x1280
+Base to Base Distance: 1152
+
+Map: VSR: CP Outposts
+Size (m): 2048x2048
+Base to Base Distance: 836
+
+Map: VSR: Canyons
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Casius
+Size (m): 1024x1024
+Base to Base Distance: 1261
+
+Map: VSR: Cliff
+Size (m): 2048x2048
+Base to Base Distance: 1225
+
+Map: VSR: Concrete Jungle
+Size (m): 1024x1024
+Base to Base Distance: 785
+
+Map: VSR: Consciousness
+Size (m): 1024x1024
+Base to Base Distance: 862
+
+Map: VSR: Cracked
+Size (m): 2048x2048
+Base to Base Distance: 1274
+
+Map: VSR: Crater
+Size (m): 1024x1024
+Base to Base Distance: 895
+
+Map: VSR: Curiosity
+Size (m): 512x512
+Base to Base Distance: 749
+
+Map: VSR: DC
+Size (m): 1024x1024
+Base to Base Distance: 1069
+
+Map: VSR: Death Island
+Size (m): 2048x2048
+Base to Base Distance: 1185
+
+Map: VSR: Dedux
+Size (m): 1024x1024
+Base to Base Distance: 896
+
+Map: VSR: Domain
+Size (m): 1408x1408
+Base to Base Distance: 1296
+
+Map: VSR: Dream
+Size (m): 1024x1024
+Base to Base Distance: 834
+
+Map: VSR: DuneNight
+Size (m): 2048x2048
+Base to Base Distance: 736
+
+Map: VSR: Dusk
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Ebola
+Size (m): 1024x1024
+Base to Base Distance: 996
+
+Map: VSR: Echelon
+Size (m): 512x512
+Base to Base Distance: 890
+
+Map: VSR: Egypt
+Size (m): 2048x2048
+Base to Base Distance: 931
+
+Map: VSR: Equinox
+Size (m): 1024x1024
+Base to Base Distance: 933
+
+Map: VSR: Europa
+Size (m): 1024x1024
+Base to Base Distance: 975
+
+Map: VSR: Europa Night
+Size (m): 1024x1024
+Base to Base Distance: 975
+
+Map: VSR: Excavation
+Size (m): 2048x2048
+Base to Base Distance: 1136
+
+Map: VSR: Fever Valley
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Finland Daylight
+Size (m): 1024x1024
+Base to Base Distance: 1055
+
+Map: VSR: Fire Island
+Size (m): 896x896
+Base to Base Distance: 1042
+
+Map: VSR: Flooded
+Size (m): 2048x2048
+Base to Base Distance: 1409
+
+Map: VSR: Forgotten
+Size (m): 1024x1024
+Base to Base Distance: 1208
+
+Map: VSR: Fort 12C
+Size (m): 1024x1024
+Base to Base Distance: 1024
+
+Map: VSR: Garden
+Size (m): 1024x1024
+Base to Base Distance: 1067
+
+Map: VSR: Giza
+Size (m): 1024x1024
+Base to Base Distance: 928
+
+Map: VSR: Golden Sun
+Size (m): 2048x2048
+Base to Base Distance: 1184
+
+Map: VSR: Haven
+Size (m): 1024x1024
+Base to Base Distance: 841
+
+Map: VSR: Heated Strat
+Size (m): 1024x1024
+Base to Base Distance: 0
+
+Map: VSR: Hi-Mid-Lo
+Size (m): 1024x1024
+Base to Base Distance: 1267
+
+Map: VSR: Hilo Blues
+Size (m): 1024x1024
+Base to Base Distance: 1179
+
+Map: VSR: Hound
+Size (m): 256x256
+Base to Base Distance: 780
+
+Map: VSR: Hubris
+Size (m): 720x720
+Base to Base Distance: 897
+
+Map: VSR: IX: 7 Forts
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Ice Age
+Size (m): 1280x1280
+Base to Base Distance: 1229
+
+Map: VSR: Ice Cold Strat
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Iceberg
+Size (m): 2048x2048
+Base to Base Distance: 1255
+
+Map: VSR: Impact
+Size (m): 2048x2048
+Base to Base Distance: 1237
+
+Map: VSR: Insula
+Size (m): 1280x1280
+Base to Base Distance: 857
+
+Map: VSR: Iraq
+Size (m): 1024x1024
+Base to Base Distance: 1160
+
+Map: VSR: Island of *~V8~*+
+Size (m): 1280x1280
+Base to Base Distance: 792
+
+Map: VSR: JO Crystal
+Size (m): 1216x1216
+Base to Base Distance: 1024
+
+Map: VSR: Jade Green
+Size (m): 1024x1024
+Base to Base Distance: 1082
+
+Map: VSR: Jurrasic Dog Park
+Size (m): 1024x1024
+Base to Base Distance: 870
+
+Map: VSR: Know Thyself
+Size (m): 1280x1280
+Base to Base Distance: 707
+
+Map: VSR: Lunar
+Size (m): 1280x1280
+Base to Base Distance: 1188
+
+Map: VSR: Lunix
+Size (m): 640x640
+Base to Base Distance: 1050
+
+Map: VSR: MRT: Wasteland
+Size (m): 2048x2048
+Base to Base Distance: 996
+
+Map: VSR: Magma
+Size (m): 512x512
+Base to Base Distance: 561
+
+Map: VSR: Marden Warfare
+Size (m): 1152x1152
+Base to Base Distance: 0
+
+Map: VSR: Mayhem
+Size (m): 1024x1024
+Base to Base Distance: 1192
+
+Map: VSR: Mesa
+Size (m): 1024x1024
+Base to Base Distance: 1103
+
+Map: VSR: Mexican Mission
+Size (m): 1024x1024
+Base to Base Distance: 1012
+
+Map: VSR: Middle Wars
+Size (m): 1024x1024
+Base to Base Distance: 1131
+
+Map: VSR: Mirador
+Size (m): 512x512
+Base to Base Distance: 684
+
+Map: VSR: Miredon
+Size (m): 640x640
+Base to Base Distance: 838
+
+Map: VSR: Mojave
+Size (m): 1280x1280
+Base to Base Distance: 1088
+
+Map: VSR: Moonshroud
+Size (m): 1024x1024
+Base to Base Distance: 775
+
+Map: VSR: Mountain Pass
+Size (m): 1280x1280
+Base to Base Distance: 1120
+
+Map: VSR: Mountain Top
+Size (m): 1024x1024
+Base to Base Distance: 0
+
+Map: VSR: Murky
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Natural Landscape
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Nigeria
+Size (m): 896x896
+Base to Base Distance: 771
+
+Map: VSR: No Mans Land
+Size (m): 2048x2048
+Base to Base Distance: 723
+
+Map: VSR: Oasis
+Size (m): 2048x2048
+Base to Base Distance: 1216
+
+Map: VSR: Ogg Vorbis
+Size (m): 1024x1024
+Base to Base Distance: 1073
+
+Map: VSR: Oldboy
+Size (m): 1024x1024
+Base to Base Distance: 960
+
+Map: VSR: Overlook
+Size (m): 2048x2048
+Base to Base Distance: 1280
+
+Map: VSR: Oxide
+Size (m): 1024x1024
+Base to Base Distance: 1315
+
+Map: VSR: Phazon
+Size (m): 1024x1024
+Base to Base Distance: 1152
+
+Map: VSR: Phoenix
+Size (m): 1024x1024
+Base to Base Distance: 1089
+
+Map: VSR: Pit Bull
+Size (m): 1024x1024
+Base to Base Distance: 768
+
+Map: VSR: Pitfall
+Size (m): 1024x1024
+Base to Base Distance: 842
+
+Map: VSR: Planetoid
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Plaza
+Size (m): 1280x1280
+Base to Base Distance: 896
+
+Map: VSR: Plus
+Size (m): 1024x1024
+Base to Base Distance: 906
+
+Map: VSR: Power Struggle
+Size (m): 1024x1024
+Base to Base Distance: 448
+
+Map: VSR: Prodigy Ver.2
+Size (m): 640x640
+Base to Base Distance: 1222
+
+Map: VSR: Quagmire
+Size (m): 1024x1024
+Base to Base Distance: 1027
+
+Map: VSR: Quarry 2
+Size (m): 1280x1280
+Base to Base Distance: 1042
+
+Map: VSR: Ragnarok
+Size (m): 1024x1024
+Base to Base Distance: 1090
+
+Map: VSR: Rapemas
+Size (m): 1024x1024
+Base to Base Distance: 962
+
+Map: VSR: Ravine
+Size (m): 2048x2048
+Base to Base Distance: 1505
+
+Map: VSR: Rectal
+Size (m): 896x896
+Base to Base Distance: 730
+
+Map: VSR: Red Bluff
+Size (m): 1024x1024
+Base to Base Distance: 1732
+
+Map: VSR: Red Slope
+Size (m): 1024x1024
+Base to Base Distance: 916
+
+Map: VSR: Reflex
+Size (m): 1024x1024
+Base to Base Distance: 1180
+
+Map: VSR: Remnant
+Size (m): 640x640
+Base to Base Distance: 1001
+
+Map: VSR: Rendon
+Size (m): 1024x1024
+Base to Base Distance: 992
+
+Map: VSR: Revolution
+Size (m): 512x512
+Base to Base Distance: 669
+
+Map: VSR: Ridges
+Size (m): 1024x1024
+Base to Base Distance: 1108
+
+Map: VSR: Rift
+Size (m): 1024x1024
+Base to Base Distance: 1875
+
+Map: VSR: Royal Stadium
+Size (m): 512x512
+Base to Base Distance: 759
+
+Map: VSR: Sahara
+Size (m): 1280x1280
+Base to Base Distance: 1242
+
+Map: VSR: Satart
+Size (m): 1024x1024
+Base to Base Distance: 771
+
+Map: VSR: Scammed
+Size (m): 1024x1024
+Base to Base Distance: 1132
+
+Map: VSR: Scion Central
+Size (m): 1280x1280
+Base to Base Distance: 1152
+
+Map: VSR: Selena
+Size (m): 1184x1184
+Base to Base Distance: 896
+
+Map: VSR: Sinister
+Size (m): 1152x1152
+Base to Base Distance: 1016
+
+Map: VSR: Six Way
+Size (m): 2048x2048
+Base to Base Distance: 832
+
+Map: VSR: Snow Central
+Size (m): 1280x1280
+Base to Base Distance: 1024
+
+Map: VSR: Stack
+Size (m): 1024x1024
+Base to Base Distance: 896
+
+Map: VSR: Stone Circle
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Strategy Arena
+Size (m): 1024x1024
+Base to Base Distance: 862
+
+Map: VSR: Supply Lanes
+Size (m): 1280x1280
+Base to Base Distance: 1222
+
+Map: VSR: Swamp Gas
+Size (m): 896x896
+Base to Base Distance: 746
+
+Map: VSR: Tempest
+Size (m): 1024x1024
+Base to Base Distance: 1182
+
+Map: VSR: Temple Of Doom
+Size (m): 2048x2048
+Base to Base Distance: 1001
+
+Map: VSR: Terrace
+Size (m): 1024x1024
+Base to Base Distance: 768
+
+Map: VSR: Terron
+Size (m): 1024x1024
+Base to Base Distance: 1088
+
+Map: VSR: The War
+Size (m): 1024x1024
+Base to Base Distance: 758
+
+Map: VSR: Throbbing Gristle
+Size (m): 1024x1024
+Base to Base Distance: 960
+
+Map: VSR: Titan
+Size (m): 2048x2048
+Base to Base Distance: 973
+
+Map: VSR: Toon Earth, Water and Fire
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Toon World Day
+Size (m): 1024x1024
+Base to Base Distance: 0
+
+Map: VSR: Toon World Day
+Size (m): 1024x1024
+Base to Base Distance: 0
+
+Map: VSR: Toxicity
+Size (m): 1024x1024
+Base to Base Distance: 1088
+
+Map: VSR: Trail
+Size (m): 2048x2048
+Base to Base Distance: 1449
+
+Map: VSR: Transfer
+Size (m): 512x512
+Base to Base Distance: 996
+
+Map: VSR: Trapped
+Size (m): 1024x1024
+Base to Base Distance: 1090
+
+Map: VSR: Trench
+Size (m): 1024x1024
+Base to Base Distance: 1093
+
+Map: VSR: Trinity
+Size (m): 2048x2048
+Base to Base Distance: 1200
+
+Map: VSR: Twin Peaks
+Size (m): 1024x1024
+Base to Base Distance: 1020
+
+Map: VSR: Two Hills
+Size (m): 640x640
+Base to Base Distance: 1109
+
+Map: VSR: Uxbridge
+Size (m): 512x512
+Base to Base Distance: 728
+
+Map: VSR: Vegan
+Size (m): 1024x1024
+Base to Base Distance: 771
+
+Map: VSR: Vortex
+Size (m): 640x640
+Base to Base Distance: 830
+
+Map: VSR: Wales
+Size (m): 896x896
+Base to Base Distance: 1441
+
+Map: VSR: Wasteland(Aegeis)
+Size (m): 2048x2048
+Base to Base Distance: 0
+
+Map: VSR: Winter Valley
+Size (m): 640x640
+Base to Base Distance: 705
+
+Map: VSR: Wipeout
+Size (m): 2048x2048
+Base to Base Distance: 980
+

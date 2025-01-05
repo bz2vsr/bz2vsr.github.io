@@ -144,7 +144,8 @@ async function getLobbyData()
         // let fetchResponse = await fetch('/data/test/full-lobby-hidden.sample.json');
         // let fetchResponse = await fetch('/data/test/lobby-7-hidden.sample.json');
         // let fetchResponse = await fetch('/data/test/lobby-7.sample.json');
-        // let fetchResponse = await fetch('/data/test/strat-test-.sample.json');
+        // let fetchResponse = await fetch('/data/test/strat-test.sample.json');
+        // let fetchResponse = await fetch('/data/test/pirate.sample.json');
 
         if( !fetchResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);

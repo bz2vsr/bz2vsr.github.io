@@ -1,0 +1,548 @@
+Map: VSR: Death Island 
+Size (m): 2048x2048
+
+Map: VSR: No Mans Land 
+Size (m): 2048x2048
+
+Map: VSR: Amino 
+Size (m): 1024x1024
+
+Map: VSR: Ancient Hills 
+Size (m): 1024x1024
+
+Map: VSR: Barren 
+Size (m): 1024x1024
+
+Map: VSR: Hilo Blues 
+Size (m): 1024x1024
+
+Map: VSR: Bowl 
+Size (m): 1024x1024
+
+Map: VSR: Dedux 
+Size (m): 1024x1024
+
+Map: VSR: Garden 
+Size (m): 1024x1024
+
+Map: VSR: Giza 
+Size (m): 1024x1024
+
+Map: VSR: Haven 
+Size (m): 1024x1024
+
+Map: VSR: Hi-Mid-Lo 
+Size (m): 1024x1024
+
+Map: VSR: Mayhem 
+Size (m): 1024x1024
+
+Map: VSR: Mesa 
+Size (m): 1024x1024
+
+Map: VSR: Phoenix 
+Size (m): 1024x1024
+
+Map: VSR: Pit Bull 
+Size (m): 1024x1024
+
+Map: VSR: Quagmire 
+Size (m): 1024x1024
+
+Map: VSR: Red Slope 
+Size (m): 1024x1024
+
+Map: VSR: Reflex 
+Size (m): 1024x1024
+
+Map: VSR: Rendon 
+Size (m): 1024x1024
+
+Map: VSR: Ridges 
+Size (m): 1024x1024
+
+Map: VSR: Strategy Arena 
+Size (m): 1024x1024
+
+Map: VSR: Tempest 
+Size (m): 1024x1024
+
+Map: VSR: Terron 
+Size (m): 1024x1024
+
+Map: VSR: Trench 
+Size (m): 1024x1024
+
+Map: VSR: Titan 
+Size (m): 2048x2048
+
+Map: VSR: Domain 
+Size (m): 1408x1408
+
+Map: VSR: JO Crystal 
+Size (m): 1216x1216
+
+Map: VSR: Marden Warfare 
+Size (m): 1152x1152
+
+Map: VSR: Selena 
+Size (m): 1184x1184
+
+Map: VSR: Toxicity 
+Size (m): 1024x1024
+
+Map: VSR: Curiosity 
+Size (m): 512x512
+
+Map: VSR: Magma 
+Size (m): 512x512
+
+Map: VSR: Trail 
+Size (m): 2048x2048
+
+Map: VSR MPI: BottleNeck 
+Size (m): 1024x1024
+
+Map: VSR: DuneNight 
+Size (m): 2048x2048
+
+Map: VSR: Casius 
+Size (m): 1024x1024
+
+Map: VSR: Cliff 
+Size (m): 2048x2048
+
+Map: VSR: Europa Night 
+Size (m): 1024x1024
+
+Map: VSR: Finland Daylight 
+Size (m): 1024x1024
+
+Map: VSR: IX: 7 Forts 
+Size (m): 2048x2048
+
+Map: VSR: Middle Wars 
+Size (m): 1024x1024
+
+Map: VSR: Miredon 
+Size (m): 640x640
+
+Map: VSR: Plus 
+Size (m): 1024x1024
+
+Map: VSR: Scion Central 
+Size (m): 1280x1280
+
+Map: VSR: Snow Central 
+Size (m): 1280x1280
+
+Map: VSR: Twin Peaks 
+Size (m): 1024x1024
+
+Map: VSR: Two Hills 
+Size (m): 640x640
+
+Map: VSR: Beyond 
+Size (m): 2048x2048
+
+Map: VSR: Hound 
+Size (m): 256x256
+
+Map: VSR: Bolt 
+Size (m): 512x512
+
+Map: VSR DM: Rocky Canyon 
+Size (m): 2048x2048
+
+Map: VSR DM: Vet Training Grounds 
+Size (m): 2048x2048
+
+Map: VSR: Iraq 
+Size (m): 1024x1024
+
+Map: VSR: Overlook 
+Size (m): 2048x2048
+
+Map: VSR: Sinister 
+Size (m): 1152x1152
+
+Map: VSR: Canyons 
+Size (m): 2048x2048
+
+Map: VSR: Vortex 
+Size (m): 640x640
+
+Map: VSR: Winter Valley 
+Size (m): 640x640
+
+Map: VSR: Wipeout 
+Size (m): 2048x2048
+
+Map: VSR: DC 
+Size (m): 1024x1024
+
+Map: VSR: Six Way 
+Size (m): 2048x2048
+
+Map: VSR FFA: 9 Cells 
+Size (m): 1280x1280
+
+Map: VSR FFA: Crystal Castles 
+Size (m): 1280x1280
+
+Map: VSR FFA: Scrap Pit Extreme 
+Size (m): 1280x1280
+
+Map: VSR: Revolution 
+Size (m): 512x512
+
+Map: VSR: Aztec 
+Size (m): 640x640
+
+Map: VSR: Echelon 
+Size (m): 512x512
+
+Map: VSR: Europa 
+Size (m): 1024x1024
+
+Map: VSR: Ice Age 
+Size (m): 1280x1280
+
+Map: VSR: Insula 
+Size (m): 1280x1280
+
+Map: VSR: Jade Green 
+Size (m): 1024x1024
+
+Map: VSR: Lunar 
+Size (m): 1280x1280
+
+Map: VSR: Mojave 
+Size (m): 1280x1280
+
+Map: VSR: Prodigy Ver.2 
+Size (m): 640x640
+
+Map: VSR: Ravine 
+Size (m): 2048x2048
+
+Map: VSR: Remnant 
+Size (m): 640x640
+
+Map: VSR: Sahara 
+Size (m): 1280x1280
+
+Map: VSR: Uxbridge 
+Size (m): 512x512
+
+Map: VSR: Wales 
+Size (m): 896x896
+
+Map: VSR: Abundance 
+Size (m): 1024x1024
+
+Map: VSR: Ancient Outposts 
+Size (m): 1024x1024
+
+Map: VSR MPI: Ascent 
+Size (m): 2048x2048
+
+Map: VSR: Concrete Jungle 
+Size (m): 1024x1024
+
+Map: VSR: Excavation 
+Size (m): 2048x2048
+
+Map: VSR FFA: Face Off 
+Size (m): 1024x1024
+
+Map: VSR: Power Struggle 
+Size (m): 1024x1024
+
+Map: VSR: MRT: Wasteland 
+Size (m): 2048x2048
+
+Map: VSR: Badlands 
+Size (m): 512x512
+
+Map: VSR: Egypt 
+Size (m): 2048x2048
+
+Map: VSR: Equinox 
+Size (m): 1024x1024
+
+Map: VSR: Temple Of Doom 
+Size (m): 2048x2048
+
+Map: VSR DM: Sly's Obstacle Course 
+Size (m): 2048x2048
+
+Map: VSR: Mirador 
+Size (m): 512x512
+
+Map: VSR: Royal Stadium 
+Size (m): 512x512
+
+Map: VSR: Trinity 
+Size (m): 2048x2048
+
+Map: VSR: 310 
+Size (m): 1024x1024
+
+Map: VSR: Abuse 
+Size (m): 1024x1024
+
+Map: VSR: Aussault 
+Size (m): 1024x1024
+
+Map: VSR: Consciousness 
+Size (m): 1024x1024
+
+Map: VSR DM: Volcanoes 
+Size (m): 2048x2048
+
+Map: VSR: Dream 
+Size (m): 1024x1024
+
+Map: VSR: Ebola 
+Size (m): 1024x1024
+
+Map: VSR FFA: Base Pits 
+Size (m): 1024x1024
+
+Map: VSR FFA: Dark Planet 
+Size (m): 1024x1024
+
+Map: VSR FFA: Ice Path 
+Size (m): 2560x2560
+
+Map: VSR FFA: Middle-Low 
+Size (m): 1024x1024
+
+Map: VSR FFA: Ring 8 
+Size (m): 2048x2048
+
+Map: VSR: Fire Island 
+Size (m): 896x896
+
+Map: VSR: Forgotten 
+Size (m): 1024x1024
+
+Map: VSR: Fort 12C 
+Size (m): 1024x1024
+
+Map: VSR: Island of *~V8~*+ 
+Size (m): 1280x1280
+
+Map: VSR: Jurrasic Dog Park 
+Size (m): 1024x1024
+
+Map: VSR: Know Thyself 
+Size (m): 1280x1280
+
+Map: VSR: Lunix 
+Size (m): 640x640
+
+Map: VSR: Mexican Mission 
+Size (m): 1024x1024
+
+Map: VSR: Nigeria 
+Size (m): 896x896
+
+Map: VSR: Ogg Vorbis 
+Size (m): 1024x1024
+
+Map: VSR: Oldboy 
+Size (m): 1024x1024
+
+Map: VSR: Pitfall 
+Size (m): 1024x1024
+
+Map: VSR: Quarry 2 
+Size (m): 1280x1280
+
+Map: VSR: Ragnarok 
+Size (m): 1024x1024
+
+Map: VSR: Rapemas 
+Size (m): 1024x1024
+
+Map: VSR: Rectal 
+Size (m): 896x896
+
+Map: VSR: Satart 
+Size (m): 1024x1024
+
+Map: VSR: Scammed 
+Size (m): 1024x1024
+
+Map: VSR: Stack 
+Size (m): 1024x1024
+
+Map: VSR: Swamp Gas 
+Size (m): 896x896
+
+Map: VSR: The War 
+Size (m): 1024x1024
+
+Map: VSR: Throbbing Gristle 
+Size (m): 1024x1024
+
+Map: VSR: Trapped 
+Size (m): 1024x1024
+
+Map: VSR: Vegan 
+Size (m): 1024x1024
+
+Map: VSR: Crater 
+Size (m): 1024x1024
+
+Map: VSR: Mountain Pass 
+Size (m): 1280x1280
+
+Map: VSR: Oxide 
+Size (m): 1024x1024
+
+Map: VSR: Plaza 
+Size (m): 1280x1280
+
+Map: VSR: Red Bluff 
+Size (m): 1024x1024
+
+Map: VSR: Supply Lanes 
+Size (m): 1280x1280
+
+Map: VSR: Terrace 
+Size (m): 1024x1024
+
+Map: VSR: Golden Sun 
+Size (m): 2048x2048
+
+Map: VSR FFA: 4 Play 
+Size (m): 2048x2048
+
+Map: VSR: Moonshroud 
+Size (m): 1024x1024
+
+Map: VSR: Iceberg 
+Size (m): 2048x2048
+
+Map: ST: A Bridge Too Far 
+Size (m): 640x640
+
+Map: ST: Big Chill 
+Size (m): 2048x2048
+
+Map: ST: Ground Zero 
+Size (m): 1024x1024
+
+Map: FFA: Ground Four 
+Size (m): 1024x1024
+
+Map: ST: High & Low 
+Size (m): 512x512
+
+Map: ST: Desert Quarry 
+Size (m): 2048x2048
+
+Map: ST: High Heat 
+Size (m): 2048x2048
+
+Map: ST: RiverWars 
+Size (m): 1024x1024
+
+Map: FFA: River4 
+Size (m): 1024x1024
+
+Map: ST: Mars 
+Size (m): 1280x1280
+
+Map: ST: Deep Blue Sea 
+Size (m): 2048x2048
+
+Map: ST: Patton's Proving Ground 
+Size (m): 2048x2048
+
+Map: ST: Island Warfare 
+Size (m): 1024x1024
+
+Map: ST: The Rocks 
+Size (m): 512x512
+
+Map: VSR: CP Devils Cauldron
+Size (m): 1280x1280
+
+Map: VSR: CP Outposts
+Size (m): 2048x2048
+
+Map: VSR: Cracked
+Size (m): 2048x2048
+
+Map: VSR: Fever Valley
+Size (m): 2048x2048
+
+Map: VSR: Flooded
+Size (m): 2048x2048
+
+Map: VSR: Hubris
+Size (m): 720x720
+
+Map: VSR: Impact
+Size (m): 2048x2048
+
+Map: VSR MPI: Meltdown
+Size (m): 2048x2048
+
+Map: VSR MPI: Stranded
+Size (m): 2048x2048
+
+Map: VSR: Oasis
+Size (m): 2048x2048
+
+Map: VSR: Phazon
+Size (m): 1024x1024
+
+Map: VSR: Rift
+Size (m): 1024x1024
+
+Map: VSR: Transfer
+Size (m): 512x512
+
+Map: VSR: Ammo2Go
+Size (m): 2048x2048
+
+Map: VSR: Dusk
+Size (m): 2048x2048
+
+Map: VSR: Heated Strat
+Size (m): 1024x1024
+
+Map: VSR: Ice Cold Strat
+Size (m): 2048x2048
+
+Map: VSR: Mountain Top
+Size (m): 1024x1024
+
+Map: VSR: Murky
+Size (m): 2048x2048
+
+Map: VSR: Natural Landscape
+Size (m): 2048x2048
+
+Map: VSR: Planetoid
+Size (m): 2048x2048
+
+Map: VSR: Stone Circle
+Size (m): 2048x2048
+
+Map: VSR: Toon Earth, Water and Fire
+Size (m): 2048x2048
+
+Map: VSR: Toon World Night
+Size (m): 1024x1024
+
+Map: VSR: Toon World Night
+Size (m): 1024x1024
+
+Map: VSR: Wasteland(Aegeis)
+Size (m): 2048x2048
