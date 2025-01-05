@@ -336,3 +336,12 @@ body {
       0px 0px 15px 2px rgba(0, 255, 135, 1);
   }
 }
+
+th > select, th.dt-type-numeric select {
+  width: 100% !important;
+}
+
+table.table.dataTable>tbody>tr.selected>* {
+    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, .2) !important;
+    color: rgb(255, 255, 255) !important;
+}

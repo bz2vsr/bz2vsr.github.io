@@ -13,7 +13,7 @@ const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 // player list for better game identification - these are players most likely to be
 // in a vsr community game; others who often join other lobbies are excluded to avoid
@@ -95,32 +95,38 @@ function clean(str)
 }
 
 // grabs 3 random maps when loading the Map Picker modal
-async function getRandomMaps() {
-    // Ensure we have at least 3 unique random indexes
-    const indexes = new Set();
-    while (indexes.size < 3) {
-        indexes.add(Math.floor(Math.random() * VSRMapList.length));
-    }
+function getRandomMaps() {
+    fetch('/data/maps/vsrmaplist.json')
+        .then(response => response.json())
+        .then(MapData => {
+            // Ensure we have at least 3 unique random indexes
+            const indexes = new Set();
+            while (indexes.size < 3) {
+                indexes.add(Math.floor(Math.random() * MapData.length));
+            }
 
-    const Maps = Array.from(indexes).map(index => VSRMapList[index]);
+            const Maps = Array.from(indexes).map(index => MapData[index]);
 
-    const pickerModal = document.querySelector("#pickerModal");
-    const spinner = pickerModal.querySelector(".spinner");
-    const pickerContent = pickerModal.querySelector(".picker-content");
+            const pickerModal = document.querySelector("#pickerModal");
+            const spinner = pickerModal.querySelector(".spinner");
+            const pickerContent = pickerModal.querySelector(".picker-content");
 
-    if (spinner) {
-        spinner.remove();
-    }
+            if (spinner) {
+                spinner.remove();
+            }
 
-    pickerContent.classList.remove("d-none");
+            pickerContent.classList.remove("d-none");
 
-    Maps.forEach((map, index) => {
-        document.querySelector(`#pickerMapTitle-${index}`).textContent = map.Name;
-        document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
-        document.querySelector(`#pickerMapPools-${index}`).textContent = map.Pools;
-        document.querySelector(`#pickerMapSize-${index}`).textContent = map.Size;
-        document.querySelector(`#pickerMapLoose-${index}`).textContent = map.Loose === -2 ? "INF" : (map.Loose === -1 ? "NA" : map.Loose);
-    });
+            Maps.forEach((map, index) => {
+                document.querySelector(`#pickerMapTitle-${index}`).textContent = map.Name;
+                document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
+                document.querySelector(`#pickerMapPools-${index}`).textContent = map.Pools;
+                document.querySelector(`#pickerMapSize-${index}`).textContent = map.Size.baseToBase;
+                document.querySelector(`#pickerMapLoose-${index}`).textContent = map.Loose === -2 ? "INF" : (map.Loose === -1 ? "NA" : map.Loose);
+            });
+        })
+        .catch(error => console.error('Error loading MapData: ', error));
+
 }
 
 // main function to get game data and produce content based on that data
@@ -140,18 +146,25 @@ async function getLobbyData()
 
     try {
 
+        // fetch primary game data
         let fetchResponse = await fetch(sourceURL);
+
+        // alternative static source data for testing
         // let fetchResponse = await fetch('/data/test/full-lobby-hidden.sample.json');
         // let fetchResponse = await fetch('/data/test/lobby-7-hidden.sample.json');
         // let fetchResponse = await fetch('/data/test/lobby-7.sample.json');
         // let fetchResponse = await fetch('/data/test/strat-test.sample.json');
         // let fetchResponse = await fetch('/data/test/pirate.sample.json');
 
-        if( !fetchResponse.ok ) {
+        // also fetch map data from local JSON file
+        let fetchMapDataResponse = await fetch('/data/maps/vsrmaplist.json');
+
+        if( !fetchResponse.ok || !fetchMapDataResponse.ok ) {
             console.log(`Error with response. Make sure source and proxy URLs are accessible and returning valid data.`);
         }
 
         let data = await fetchResponse.json();
+        let MapData = await fetchMapDataResponse.json();
 
         // players must be present if games exist, therefore relevant objects being empty undefined means no players
         if( JSON.stringify(data.DataCache) === '{}' || ( data.DataCache.Players.IDs.Steam === undefined && data.DataCache.Players.IDs.GOG === undefined ) ) 
@@ -288,7 +301,7 @@ async function getLobbyData()
             let linkedPlayerCards   = localStorage.getItem("LinkedPlayerCards") === "true" ? true : false;
 
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
-            let mapVSRObject    = VSRMapList.find(map => map.File == mapFileName);
+            let mapVSRObject    = MapData.find(map => map.File == mapFileName);
 
             // if vsr-only is toggled, this exits the current iteration if it isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {

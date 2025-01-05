@@ -7,7 +7,9 @@
         <meta property="description" content="Browser for VSR-capable maps Battlezone II: Combat Commander. Built for the BZ2 Vet Strats Discord community.">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/main.css">
-        <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.7/b-3.1.2/b-colvis-3.1.2/rg-1.5.0/sp-2.3.2/datatables.min.css" rel="stylesheet">
+        <!-- <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.7/b-3.1.2/b-colvis-3.1.2/rg-1.5.0/sp-2.3.2/datatables.min.css" rel="stylesheet"> -->
+        <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/rg-1.5.1/sp-2.3.3/sl-2.1.0/datatables.min.css" rel="stylesheet">
+
     </head>
     <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand navbar-dark">
@@ -28,23 +30,17 @@
         </nav>
         <main class="container-fluid">
             <div class="row mb-5">
-                <div class="p-2 pb-0">
-                    <div class="alert alert-warning alert-dismissible fade show py-2">
-                            Values of <tt>NA</tt> or <tt>-1</tt> denote missing data. If you know any of these values or can help gather more map data, please message Sev on Discord.
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="padding: .75rem .75rem;"></button>
-                    </div>
-                </div>
                 <div class="col-12 col-md-9">
                     <!-- NOTE: This table gets initialized as a DataTable in map_browser.js -->
-                    <table id="MapList" class="table table-hover align-middle custom-scroll">
+                    <table id="MapList" class="table table-hover table-bordered border-dark-subtle align-middle custom-scroll">
                         <thead>
                             <tr>
                                 <th>Image</th>
                                 <th>Name</th>
+                                <th class="col-filter text-center" title="Base-To-Base Distance in meters.">B2B Distance (m)</th>
+                                <th class="col-filter text-center">Pools</th>
+                                <th class="col-filter text-center">Loose</th>
                                 <th>File</th>
-                                <th class="col-filter">Pools</th>
-                                <th class="col-filter">Loose</th>
-                                <th class="col-filter">Size</th>
                                 <th class="col-filter">Author</th>
                                 <th class="col-filter">Tags</th>
                             </tr>
@@ -73,10 +69,9 @@
             </div>
         </main>
 
-        <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.7/b-3.1.2/b-colvis-3.1.2/rg-1.5.0/sp-2.3.2/datatables.min.js"></script>
+        <!-- <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.7/b-3.1.2/b-colvis-3.1.2/rg-1.5.0/sp-2.3.2/datatables.min.js"></script> -->
+        <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/rg-1.5.1/sp-2.3.3/sl-2.1.0/datatables.min.js"></script>
         <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="/data/maps/maplist.js"></script>
-        <script src="/data/maps/vsrmaplist.js"></script>
         <script src="/js/map_browser.js"></script>
         <script async data-id="101466371" src="//static.getclicky.com/js"></script>
     </body>
