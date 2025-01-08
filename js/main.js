@@ -708,19 +708,19 @@ async function getLobbyData()
                                                                                                 <span class="badge text-bg-dark bg-primary-subtle rounded-1 border border-primary me-1" style="--bs-border-opacity:.5;">
                                                                                                     K 
                                                                                                     <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
-                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                    ${(player.Stats.Kills !== undefined ? player.Stats.Kills : "0")} 
                                                                                                 </span>
 
                                                                                                 <span class="badge text-bg-dark bg-danger-subtle rounded-1 border border-danger me-1" style="--bs-border-opacity:.5;">
                                                                                                     D
                                                                                                     <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
-                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                    ${(player.Stats.Deaths !== undefined ? player.Stats.Deaths : "0")}
                                                                                                 </span>
 
                                                                                                 <span class="badge text-bg-dark bg-dark-subtle rounded-1 border border-secondary" style="--bs-border-opacity:.5;">
                                                                                                     S
                                                                                                     <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
-                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                    ${(player.Stats.Score !== undefined ? player.Stats.Score : "0")} 
                                                                                                 </span>
                                                                                                 </div>
                                                                                                 `
