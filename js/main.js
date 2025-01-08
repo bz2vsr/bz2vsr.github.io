@@ -13,7 +13,7 @@ const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
-const useCORSProxy = true;
+const useCORSProxy = false;
 
 // player list for better game identification - these are players most likely to be
 // in a vsr community game; others who often join other lobbies are excluded to avoid
@@ -287,7 +287,7 @@ async function getLobbyData()
             let gameModName     = (gameMod !== undefined ? (Mods[gameMod] !== undefined ? Mods[gameMod].Name : "Unknown Mod") : "Stock");
             let gameTime        = (game.Time.Seconds/60);
             let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
-            let gameState       = clean(game.Status.State);
+            let gameState       = (game.Status.State === "PreGame" ? "In-Lobby" : (game.Status.State === "InGame" ? "In-Game" : "N/A"));
             let hasPassword     = game.Status.HasPassword;
             let isLocked        = game.Status.IsLocked;
             let netType         = clean(game.Address.NAT_TYPE);
@@ -299,6 +299,7 @@ async function getLobbyData()
             let mapFileName     = (game.Level.MapFile).replace('.bzn', '');
             let isVetStrat      = hasActivePlayers && index === 0;
             let linkedPlayerCards   = localStorage.getItem("LinkedPlayerCards") === "true" ? true : false;
+            let compactPlayerCards  = (localStorage.getItem("CompactPlayerCards") === "true" || document.querySelector("#CompactCardsToggle").checked ? true : false);
 
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
             let mapVSRObject    = MapData.find(map => map.File == mapFileName);
@@ -315,7 +316,10 @@ async function getLobbyData()
             let directJoinURL = "#";
             let modList;
             let encodedArgs;
-            
+
+            // Print player names as a comma-separated string
+            let playerNames = game.Players.map(player => player.Name).join(', ');
+
             // we need at least one valid game mod to create a join URL
             // we also ignore locked and password-protected games
             if( gameMod !== undefined && !hasPassword && !isLocked ) 
@@ -390,7 +394,7 @@ async function getLobbyData()
             let gameHost = PlayerList[0].Name;
 
             if(hasActivePlayers && index === 0) {
-                document.title = `${(gameState === "PreGame" ? "In-Lobby" : (gameState === "InGame" ? "In-Game": "N/A"))}: ${playerCount}/${playerCountMax} (Host: ${clean(gameHost)})`;
+                document.title = `${gameState}: ${playerCount}/${playerCountMax} (Host: ${clean(gameHost)})`;
             }
             else if(!hasActivePlayers) {
                 document.title = `Battlezone II: Game Watch`;
@@ -481,12 +485,20 @@ async function getLobbyData()
                             ${(() => {
                                 if( isVetStrat && (playerCount < playerCountMax) ) {
                                     return `<span class="ms-2 btn btn-sm btn-outline-warning bg-warning-subtle btn-dead border-warning" style="--bs-border-opacity: .5 !important;">
-                                        ${openSpotCount} Spot${openSpotCount === 1 ? "" : "s" } Open
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" style="position:relative;top:-2;"
+                                            viewBox="0 0 16 16">
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                        </svg>
+                                        ${playerCount} / ${playerCountMax} 
                                     </span>`
                                 }
                                 else if( isVetStrat && (playerCount === playerCountMax)) {
                                     return `<span class="ms-2 btn btn-sm btn-outline-primary bg-primary-subtle btn-dead border-primary" style="--bs-border-opacity: .5 !important;">
-                                        Full Lobby
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" style="position:relative;top:-2;"
+                                            viewBox="0 0 16 16">
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                        </svg>
+                                        ${playerCount} / ${playerCountMax} 
                                     </span>`;
                                 }
                                 else return ``;
@@ -494,10 +506,10 @@ async function getLobbyData()
                             </span>
                             <span class="">
                                 ${(() => {
-                                    if( gameState === "PreGame") {
+                                    if( gameState === "In-Lobby") {
                                         return `<span id="gameState" class="btn btn-sm bg-secondary bg-gradient btn-dead">In-Lobby</span>`
                                     }
-                                    else if ( gameState === "InGame") {
+                                    else if ( gameState === "In-Game") {
                                         return `<span id="gameState" class="btn btn-sm btn-success bg-gradient btn-dead">In-Game</span>`
                                     }
                                 })()}
@@ -551,23 +563,15 @@ async function getLobbyData()
                                     <ul class="list-group list-group-flush text-secondary">
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Map</strong>
-                                            <span title="${mapFileName}">${mapName ? mapName : "N/A"}</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
-                                            <strong class="text-muted">Mode</strong>
-                                            <span>${gameMode}</span>
+                                            <span title="${mapFileName}">${mapName ? mapName : "N/A"} (${gameMode})</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Time</strong>
-                                            <span">${gameTime} mins</span>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
-                                            <strong class="text-muted">Count</strong>
-                                            <span">${playerCount} player${playerCount === 1 ? "" : "s"} / ${playerCountMax}</span>
+                                            <span">${gameState} for ${gameTime} mins</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
                                             <strong class="text-muted">Host</strong>
-                                            <span class="text-secondary">${truncate(gameHost, 32)}
+                                            <span class="text-light fw-bold">${truncate(gameHost, 32)}
                                             ${(() => {
                                                 for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
                                                 {
@@ -658,61 +662,131 @@ async function getLobbyData()
                                                                     <li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
-                                                                                <div class="col-4 col-lg-3 px-1">
-                                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
-                                                                                </div>
-                                                                                <div class="col-8 col-lg-9 text-nowrap overflow-hidden">
-                                                                                        <div class="mb-1">
-                                                                                            ${truncate(clean(player.Name), 24)}
-                                                                                        </div>
-                                                                                        <div class="mb-1">
-                                                                                            ${ linkedPlayerCards 
-                                                                                                ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
-                                                                                                : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
-                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
-                                                                                                <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
-                                                                                                <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
-                                                                                                </svg> 
-                                                                                                ${truncate(clean(Steam.Nickname), 24)}
-                                                                                            ${ linkedPlayerCards ? '</span>' : `</a>` }
-                                                                                        </div>
-                                                                                        <div class="mb-1 d-lg-inline-block">
-                                                                                        ${(() => {
-                                                                                            if( player.Team !== undefined ) 
-                                                                                            {
-                                                                                                if( player.Team.Leader === true) 
+                                                                                ${ compactPlayerCards 
+                                                                                 ? `
+                                                                                    <div class="col-12 text-nowrap overflow-hidden">
+                                                                                        <div class="d-flex justify-content-between">
+                                                                                            <div class="d-inline-block w-50 d-flex align-items-center">
+                                                                                            ${(() => {
+                                                                                                if( player.Team !== undefined ) 
                                                                                                 {
-                                                                                                    return `<strong class="badge rounded-1 text-bg-light">Command</strong>`;
+                                                                                                    if( player.Team.Leader === true) 
+                                                                                                    {
+                                                                                                        return `
+                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-command me-1" viewBox="0 0 16 16">
+                                                                                                        <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3M6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5zm4 1v4H6V6zm1-1V3.5A1.5 1.5 0 1 1 12.5 5zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11z"/>
+                                                                                                        </svg>
+                                                                                                        `
+                                                                                                    }
+                                                                                                    else return ``;
                                                                                                 }
-                                                                                                else return ``;
-                                                                                            }
-                                                                                            else return `<strong class="badge rounded-1 text-bg-danger">Hidden</strong>`;
-                                                                                        })()}
-                                                                                        ${(() => {
-                                                                                            if( player.Name === gameHost ) 
-                                                                                            {
-                                                                                                return `<strong class="badge rounded-1 text-bg-warning">Host</strong>`;
-                                                                                            }
-                                                                                            else return ``;
-                                                                                        })()}
+                                                                                            })()}
+                                                                                            ${truncate(clean(player.Name), 26)}
+                                                                                            </div>
+                                                                                            <div class="d-inline-block d-flex align-items-center">
+                                                                                                ${ linkedPlayerCards 
+                                                                                                    ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
+                                                                                                    : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                                    <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                                    <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                                    </svg> 
+                                                                                                    ${(() => {
+                                                                                                        if( player.Name.toLowerCase() !== Steam.Nickname.toLowerCase() ) {
+                                                                                                            return `<span class="d-none d-lg-inline">${truncate(clean(Steam.Nickname), 24)}</span>`
+                                                                                                        }
+                                                                                                        else return ``;
+                                                                                                    })()}
+                                                                                                ${ linkedPlayerCards ? '</span>' : `</a>` }
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="d-lg-inline-block">
                                                                                         ${(() => {
                                                                                             if (player.Stats !== undefined) 
                                                                                             {
-                                                                                                return `<span class="badge text-bg-dark bg-dark-subtle rounded-1 border border-secondary" style="--bs-border-opacity:.5;">
-                                                                                                    ${(player.Stats.Kills !== undefined ? player.Stats.Kills : "0")} 
-                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
-                                                                                                    ${(player.Stats.Deaths !== undefined ? player.Stats.Deaths : "0")}
-                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
-                                                                                                    ${(player.Stats.Score !== undefined ? player.Stats.Score : "0")} 
-                                                                                                    </span>
-                                                                                                `;
+                                                                                                return `
+                                                                                                <div class="d-inline-block d-flex justify-content-center mt-2 bg-dark p-1 rounded">
+                                                                                                <span class="badge text-bg-dark bg-primary-subtle rounded-1 border border-primary me-1" style="--bs-border-opacity:.5;">
+                                                                                                    K 
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
+                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                </span>
+
+                                                                                                <span class="badge text-bg-dark bg-danger-subtle rounded-1 border border-danger me-1" style="--bs-border-opacity:.5;">
+                                                                                                    D
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
+                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                </span>
+
+                                                                                                <span class="badge text-bg-dark bg-dark-subtle rounded-1 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                                    S
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
+                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                </span>
+                                                                                                </div>
+                                                                                                `
                                                                                             }
                                                                                             else return ``;
                                                                                         })()}
-                                                                                        <div>
-                                                                                </div>
+                                                                                    </div>
+                                                                                 `
+                                                                                 : `
+                                                                                    <div class="col-4 col-lg-3 px-1">
+                                                                                        <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                                    </div>
+                                                                                    <div class="col-8 col-lg-9 text-nowrap overflow-hidden">
+                                                                                            <div class="mb-1">
+                                                                                                ${truncate(clean(player.Name), 24)}
+                                                                                            </div>
+                                                                                            <div class="mb-1">
+                                                                                                ${ linkedPlayerCards 
+                                                                                                    ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
+                                                                                                    : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                                    <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                                    <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                                    </svg> 
+                                                                                                    ${truncate(clean(Steam.Nickname), 24)}
+                                                                                                ${ linkedPlayerCards ? '</span>' : `</a>` }
+                                                                                            </div>
+                                                                                            <div class="mb-1 d-lg-inline-block">
+                                                                                            ${(() => {
+                                                                                                if( player.Team !== undefined ) 
+                                                                                                {
+                                                                                                    if( player.Team.Leader === true) 
+                                                                                                    {
+                                                                                                        return `<strong class="badge rounded-1 text-bg-light">Command</strong>`;
+                                                                                                    }
+                                                                                                    else return ``;
+                                                                                                }
+                                                                                                else return `<strong class="badge rounded-1 text-bg-danger">Hidden</strong>`;
+                                                                                            })()}
+                                                                                            ${(() => {
+                                                                                                if( player.Name === gameHost ) 
+                                                                                                {
+                                                                                                    return `<strong class="badge rounded-1 text-bg-warning">Host</strong>`;
+                                                                                                }
+                                                                                                else return ``;
+                                                                                            })()}
+                                                                                            </div>
+                                                                                            <div class="d-lg-inline-block">
+                                                                                            ${(() => {
+                                                                                                if (player.Stats !== undefined) 
+                                                                                                {
+                                                                                                    return `<span class="badge text-bg-dark bg-dark-subtle rounded-1 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                                        ${(player.Stats.Kills !== undefined ? player.Stats.Kills : "0")} 
+                                                                                                        <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                        ${(player.Stats.Deaths !== undefined ? player.Stats.Deaths : "0")}
+                                                                                                        <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                        ${(player.Stats.Score !== undefined ? player.Stats.Score : "0")} 
+                                                                                                        </span>
+                                                                                                    `;
+                                                                                                }
+                                                                                                else return ``;
+                                                                                            })()}
+                                                                                            <div>
+                                                                                    </div>
+                                                                                 `
+                                                                                 }
                                                                             </div>
                                                                         </div>
                                                                     </li>
@@ -761,61 +835,131 @@ async function getLobbyData()
                                                                     <li class="list-group-item bg-secondary-subtle mx-2 my-1 rounded border">
                                                                         <div class="p-1 bg-secondary-subtle" style="--bs-border-opacity: .5;">
                                                                             <div class="row">
-                                                                                <div class="col-4 col-lg-3 px-1">
-                                                                                    <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
-                                                                                </div>
-                                                                                <div class="col-8 col-lg-9 text-nowrap overflow-hidden">
-                                                                                        <div class="mb-1">
-                                                                                            ${truncate(clean(player.Name), 24)}
-                                                                                        </div>
-                                                                                        <div class="mb-1">
-                                                                                            ${ linkedPlayerCards 
-                                                                                                ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
-                                                                                                : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
-                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
-                                                                                                <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
-                                                                                                <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
-                                                                                                </svg> 
-                                                                                                ${truncate(clean(Steam.Nickname), 24)}
-                                                                                            ${ linkedPlayerCards ? '</span>' : `</a>` }
-                                                                                        </div>
-                                                                                        <div class="mb-1 d-lg-inline-block">
-                                                                                        ${(() => {
-                                                                                            if( player.Team !== undefined ) 
-                                                                                            {
-                                                                                                if( player.Team.Leader === true) 
+                                                                                ${ compactPlayerCards 
+                                                                                 ? `
+                                                                                    <div class="col-12 text-nowrap overflow-hidden">
+                                                                                        <div class="d-flex justify-content-between">
+                                                                                            <div class="d-inline-block w-50 d-flex align-items-center">
+                                                                                            ${(() => {
+                                                                                                if( player.Team !== undefined ) 
                                                                                                 {
-                                                                                                    return `<strong class="badge rounded-1 text-bg-light">Command</strong>`;
+                                                                                                    if( player.Team.Leader === true) 
+                                                                                                    {
+                                                                                                        return `
+                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-command me-1" viewBox="0 0 16 16">
+                                                                                                        <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3M6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5zm4 1v4H6V6zm1-1V3.5A1.5 1.5 0 1 1 12.5 5zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11z"/>
+                                                                                                        </svg>
+                                                                                                        `
+                                                                                                    }
+                                                                                                    else return ``;
                                                                                                 }
-                                                                                                else return ``;
-                                                                                            }
-                                                                                            else return `<strong class="badge rounded-1 text-bg-danger">Hidden</strong>`;
-                                                                                        })()}
-                                                                                        ${(() => {
-                                                                                            if( player.Name === gameHost ) 
-                                                                                            {
-                                                                                                return `<strong class="badge rounded-1 text-bg-warning">Host</strong>`;
-                                                                                            }
-                                                                                            else return ``;
-                                                                                        })()}
+                                                                                            })()}
+                                                                                            ${truncate(clean(player.Name), 26)}
+                                                                                            </div>
+                                                                                            <div class="mb-1 d-inline-block">
+                                                                                                ${ linkedPlayerCards 
+                                                                                                    ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
+                                                                                                    : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                                    <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                                    <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                                    </svg> 
+                                                                                                    ${(() => {
+                                                                                                        if( player.Name.toLowerCase() !== Steam.Nickname.toLowerCase() ) {
+                                                                                                            return `<span class="d-none d-lg-inline">${truncate(clean(Steam.Nickname), 24)}</span>`
+                                                                                                        }
+                                                                                                        else return ``;
+                                                                                                    })()}
+                                                                                                ${ linkedPlayerCards ? '</span>' : `</a>` }
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="d-lg-inline-block">
                                                                                         ${(() => {
                                                                                             if (player.Stats !== undefined) 
                                                                                             {
-                                                                                                return `<span class="badge text-bg-dark bg-dark-subtle rounded-1 border border-secondary" style="--bs-border-opacity:.5;">
-                                                                                                    ${(player.Stats.Kills !== undefined ? player.Stats.Kills : "0")} 
-                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
-                                                                                                    ${(player.Stats.Deaths !== undefined ? player.Stats.Deaths : "0")}
-                                                                                                    <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
-                                                                                                    ${(player.Stats.Score !== undefined ? player.Stats.Score : "0")} 
-                                                                                                    </span>
-                                                                                                `;
+                                                                                                return `
+                                                                                                <div class="d-inline-block d-flex justify-content-center mt-2 bg-dark p-1 rounded">
+                                                                                                <span class="badge text-bg-dark bg-primary-subtle rounded-1 border border-primary me-1" style="--bs-border-opacity:.5;">
+                                                                                                    K 
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
+                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                </span>
+
+                                                                                                <span class="badge text-bg-dark bg-danger-subtle rounded-1 border border-danger me-1" style="--bs-border-opacity:.5;">
+                                                                                                    D
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
+                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                </span>
+
+                                                                                                <span class="badge text-bg-dark bg-dark-subtle rounded-1 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                                    S
+                                                                                                    <span class="opacity-25">&nbsp;&nbsp;:&nbsp;&nbsp;</span> 
+                                                                                                    ${Math.floor(Math.random() * (50 - 0 + 1)) + 0}
+                                                                                                </span>
+                                                                                                </div>
+                                                                                                `
                                                                                             }
                                                                                             else return ``;
                                                                                         })()}
-                                                                                        </div>
-                                                                                </div>
+                                                                                    </div>
+                                                                                 `
+                                                                                 : `
+                                                                                    <div class="col-4 col-lg-3 px-1">
+                                                                                        <img src="${Steam.AvatarUrl}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-fluid img-thumbnail rounded"/>
+                                                                                    </div>
+                                                                                    <div class="col-8 col-lg-9 text-nowrap overflow-hidden">
+                                                                                            <div class="mb-1">
+                                                                                                ${truncate(clean(player.Name), 24)}
+                                                                                            </div>
+                                                                                            <div class="mb-1">
+                                                                                                ${ linkedPlayerCards 
+                                                                                                    ? `<span class="btn-steam btn-dead text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` 
+                                                                                                    : `<a target="_blank" class="btn-steam text-decoration-none btn btn-sm btn-primary text-bg-primary border border-primary" href="${Steam.ProfileUrl}" style="--bs-bg-opacity:.3;--bs-border-opacity:.3;">` }
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam pe-1" viewBox="0 0 16 16" style="margin-bottom:3px;">
+                                                                                                    <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                                                                                                    <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                                                                                                    </svg> 
+                                                                                                    ${truncate(clean(Steam.Nickname), 24)}
+                                                                                                ${ linkedPlayerCards ? '</span>' : `</a>` }
+                                                                                            </div>
+                                                                                            <div class="mb-1 d-lg-inline-block">
+                                                                                            ${(() => {
+                                                                                                if( player.Team !== undefined ) 
+                                                                                                {
+                                                                                                    if( player.Team.Leader === true) 
+                                                                                                    {
+                                                                                                        return `<strong class="badge rounded-1 text-bg-light">Command</strong>`;
+                                                                                                    }
+                                                                                                    else return ``;
+                                                                                                }
+                                                                                                else return `<strong class="badge rounded-1 text-bg-danger">Hidden</strong>`;
+                                                                                            })()}
+                                                                                            ${(() => {
+                                                                                                if( player.Name === gameHost ) 
+                                                                                                {
+                                                                                                    return `<strong class="badge rounded-1 text-bg-warning">Host</strong>`;
+                                                                                                }
+                                                                                                else return ``;
+                                                                                            })()}
+                                                                                            </div>
+                                                                                            <div class="d-lg-inline-block">
+                                                                                            ${(() => {
+                                                                                                if (player.Stats !== undefined) 
+                                                                                                {
+                                                                                                    return `<span class="badge text-bg-dark bg-dark-subtle rounded-1 border border-secondary" style="--bs-border-opacity:.5;">
+                                                                                                        ${(player.Stats.Kills !== undefined ? player.Stats.Kills : "0")} 
+                                                                                                        <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                        ${(player.Stats.Deaths !== undefined ? player.Stats.Deaths : "0")}
+                                                                                                        <span class="opacity-25">&nbsp;&nbsp;|&nbsp;&nbsp;</span> 
+                                                                                                        ${(player.Stats.Score !== undefined ? player.Stats.Score : "0")} 
+                                                                                                        </span>
+                                                                                                    `;
+                                                                                                }
+                                                                                                else return ``;
+                                                                                            })()}
+                                                                                            <div>
+                                                                                    </div>
+                                                                                 `
+                                                                                 }
                                                                             </div>
                                                                         </div>
                                                                     </li>
@@ -1130,9 +1274,14 @@ async function getLobbyData()
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
-    // toggle the "VSR Only" switch based on localStorage value
-    if( localStorage.getItem("ShowVSROnly") === "false" ) {
-        document.querySelector("#VSRToggle").checked = false;
+    // set state of toggle switches on Settings modal if LocalStorage values exists
+    if( localStorage.getItem("ShowVSROnly") === "true" ) {
+        document.querySelector("#VSRToggle").checked = true;
+    }
+
+    // toggle the "Linked Cards" switch based on localStorage value
+    if( localStorage.getItem("LinkedPlayerCards") === "true" ) {
+        document.querySelector("#LinkedCardsToggle").checked = true;
     }
 
     // toggle the "Live Updates" switch based on localStorage value
@@ -1140,10 +1289,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector("#LiveUpdateToggle").checked = false;
     }
 
-    // toggle the "Linked Cards" switch based on localStorage value
-    if( localStorage.getItem("LinkedPlayerCards") === "true" ) {
-        document.querySelector("#LinkedCardsToggle").checked = true;
+    // toggle the "Live Updates" switch based on localStorage value
+    if( localStorage.getItem("CompactCards") === "false" ) {
+        document.querySelector("#CompactCardsToggle").checked = false;
     }
+
 
     // run main data grab on interval if necessary, otherwise run once
     if( localStorage.getItem("LiveUpdatesOn") == "true" || document.querySelector("#LiveUpdateToggle").checked ) {
@@ -1168,6 +1318,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
             clearInterval(interval_id);
             document.querySelector("#liveIndicator").classList.add("d-none");
         }
+    });
+
+    // allow user to toggle compact player cards
+    let CompactCardToggle = document.querySelector("#CompactCardsToggle");
+    CompactCardToggle.addEventListener('change', function () {
+        if( this.checked ) {
+            localStorage.setItem("CompactCards", "true");
+        }
+        else {
+            localStorage.setItem("CompactCards", "false");
+        }
+        getLobbyData();
     });
 
     // allow user to toggle VSR mod games only
