@@ -32,7 +32,7 @@ const ActivePlayerList = [
     'econchump',
     'm.s',
     'vivify', // 76561198345909972
-    'blue',
+    // 'blue',
 ];
 
 // refresh rate in milliseconds, for live updates
