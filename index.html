@@ -153,68 +153,67 @@
 
         <!-- VSR Map Modal -->
         <div class="modal fade" id="mapModal" tabindex="-1">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="bg-dark-subtle rounded-top w-100">
-                        <div class="mv-header bg-dark-subtle rounded-top py-2 px-3 border-bottom d-flex justify-content-between align-items-center">
-                            <div>
-                                <span id="mmName">${map.Name}</span>
-                                <span id="mmFile" class="ms-2 text-secondary small">${map.File}</span>
+                    <div class="modal-header bg-dark-subtle d-flex justify-content-between align-items-center">
+                        <div>
+                            <span id="mmName">${map.Name}</span>
+                            <span id="mmFile" class="ms-2 text-secondary small">${map.File}</span>
+                        </div>
+                        <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="bg-dark-subtle rounded-top w-100">
+                            <div class="mv-image text-center">
+                                <img id="mmImage" class="border border-secondary-subtle border-2 rounded my-3" width="325" height="325" src="/img/no_steam_pfp.jpg" style="filter:brightness(1.25)" height="auto"  onerror="this.src='/img/no_steam_pfp.jpg'">
                             </div>
-                            <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="mv-image text-center">
-                            <img id="mmImage" class="border border-secondary-subtle border-2 rounded my-3" width="325" height="325" src="/img/no_steam_pfp.jpg" style="filter:brightness(1.25)" height="auto"  onerror="this.src='/img/no_steam_pfp.jpg'">
-                        </div>
-                        <div class="mv-body bg-secondary-subtle">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>Pools</strong>
-                                    <span id="mmPools">${map.Pools}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>Loose</strong>
-                                    <span id="mmLoose">${map.Loose}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>Base-To-Base Distance (m)</strong>
-                                    <span id="mmB2B">${map.Size.baseToBase}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>TER Size (m)</strong>
-                                    <span id="mmSize">${map.Size.formattedSize}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>Author</strong>
-                                    <span id="mmAuthor">${map.Author}</span>
-                                </li>
-                                <li class="list-group-item text-secondary p-3">
-                                    <span id="mmDescription">
-                                        ${map.Description}
-                                    </span>
-                                    <br>
-                                    <span id="mmTags">${map.Tags}</span>
-                                </li>
-                            </ul>
+                            <div class="mv-body bg-secondary-subtle">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Pools</strong>
+                                        <span id="mmPools">${map.Pools}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Loose</strong>
+                                        <span id="mmLoose">${map.Loose}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Base-To-Base Distance (m)</strong>
+                                        <span id="mmB2B">${map.Size.baseToBase}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>TER Size (m)</strong>
+                                        <span id="mmSize">${map.Size.formattedSize}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Author</strong>
+                                        <span id="mmAuthor">${map.Author}</span>
+                                    </li>
+                                    <li class="list-group-item text-secondary p-3">
+                                        <span id="mmDescription">
+                                            ${map.Description}
+                                        </span>
+                                        <br>
+                                        <span id="mmTags">${map.Tags}</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="/maps" class="btn btn-purple text-light bg-gradient">
-                        Browse All Maps
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task"
-                            viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
-                            <path
-                                d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
-                            <path fill-rule="evenodd"
-                                d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z" />
-                        </svg>
-                    </a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+                    <div class="modal-footer">
+                        <a href="/maps" class="btn btn-purple text-light bg-gradient">
+                            Browse All Maps
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
+                                <path
+                                    d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
+                                <path fill-rule="evenodd"
+                                    d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

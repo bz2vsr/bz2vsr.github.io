@@ -100,6 +100,27 @@ body {
   background-size: 20px 20px;
 }
 
+.modal-dialog-scrollable .modal-body::-webkit-scrollbar {
+  width: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.modal-dialog-scrollable .modal-body::-webkit-scrollbar-track {
+  background: rgba(173, 181, 189, 0.08);
+  border-radius: 4px;
+}
+
+.modal-dialog-scrollable .modal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.modal-dialog-scrollable .modal-body::-webkit-scrollbar-thumb:hover {
+  background: #633aaf;
+}
+
 .dt-scroll-body::-webkit-scrollbar {
   width: 10px;
   cursor: pointer;

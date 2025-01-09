@@ -296,13 +296,15 @@ async function getLobbyData()
             let openSpotCount   = playerCountMax - playerCount;
             let mapName         = game.Level.Name;
             let mapImage        = game.Level.Image;
-            let mapFileName     = (game.Level.MapFile).replace('.bzn', '');
+            let mapFileName     = ((game.Level.MapFile).replace('.bzn', '')).toLowerCase();
             let isVetStrat      = hasActivePlayers && index === 0;
             let linkedPlayerCards   = localStorage.getItem("LinkedPlayerCards") === "true" ? true : false;
             let compactPlayerCards  = (localStorage.getItem("CompactPlayerCards") === "true" || document.querySelector("#CompactCardsToggle").checked ? true : false);
 
             // soft test of showing VSR map data for BZ2 Vet Strat game cards
-            let mapVSRObject    = MapData.find(map => map.File == mapFileName);
+            let mapVSRObject    = MapData.find(map => map.File.toLowerCase() === mapFileName);
+
+
 
             // if vsr-only is toggled, this exits the current iteration if it isn't VSR
             if( localStorage.getItem("ShowVSROnly") === "true" || document.querySelector("#VSRToggle").checked ) {
@@ -507,7 +509,7 @@ async function getLobbyData()
                             <span>
                                 ${(() => {
                                     if( isLocked) {
-                                        return `<span title="Joins not allowed, game is locked.">
+                                        return `<span title="Game is locked, no players allowed to join.">
                                             <svg class="me-1" fill="#ffc107" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M18,8H17V7A5,5,0,0,0,7,7V8H6a2,2,0,0,0-2,2V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10A2,2,0,0,0,18,8Zm-5,8.79V17a1,1,0,0,1-2,0v-.21a2.5,2.5,0,1,1,2,0ZM15,8H9V7a3,3,0,0,1,6,0Z"/>
                                             </svg>
@@ -516,7 +518,7 @@ async function getLobbyData()
 
                                     }
                                     else if( hasPassword ) {
-                                        return `<span title="Password-protected game.">
+                                        return `<span title="Host has set a password for this game.">
                                             <svg class="me-1" fill="#DC3545" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M18,8H17V7A5,5,0,0,0,7,7V8H6a2,2,0,0,0-2,2V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10A2,2,0,0,0,18,8Zm-5,8.79V17a1,1,0,0,1-2,0v-.21a2.5,2.5,0,1,1,2,0ZM15,8H9V7a3,3,0,0,1,6,0Z"/>
                                             </svg>
