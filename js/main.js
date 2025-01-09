@@ -483,7 +483,7 @@ async function getLobbyData()
                                 }
                             })()}
                             ${(() => {
-                                if( isVetStrat && (playerCount < playerCountMax) ) {
+                                if( playerCount < playerCountMax ) {
                                     return `<span class="ms-2 btn btn-sm btn-outline-warning bg-warning-subtle btn-dead border-warning" style="--bs-border-opacity: .5 !important;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" style="position:relative;top:-2;"
                                             viewBox="0 0 16 16">
@@ -504,15 +504,17 @@ async function getLobbyData()
                                 else return ``;
                             })()}
                             </span>
-                            <span class="">
+                            <span>
                                 ${(() => {
-                                    if( gameState === "In-Lobby") {
-                                        return `<span id="gameState" class="btn btn-sm bg-secondary bg-gradient btn-dead">In-Lobby</span>`
+                                    if( hasPassword ) {
+                                        return `<svg class="me-1" fill="#DC3545" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M18,8H17V7A5,5,0,0,0,7,7V8H6a2,2,0,0,0-2,2V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10A2,2,0,0,0,18,8Zm-5,8.79V17a1,1,0,0,1-2,0v-.21a2.5,2.5,0,1,1,2,0ZM15,8H9V7a3,3,0,0,1,6,0Z"/>
+                                            </svg>
+                                        `
                                     }
-                                    else if ( gameState === "In-Game") {
-                                        return `<span id="gameState" class="btn btn-sm btn-success bg-gradient btn-dead">In-Game</span>`
-                                    }
+                                    else { return `` }
                                 })()}
+                                <span id="gameState" class="btn btn-sm ${gameState === "In-Lobby" ? 'bg-secondary' : 'bg-success'} bg-gradient btn-dead">${gameState}</span>
                                 ${(() => {
                                     if( hasJoinURL ) {
                                         return `
@@ -1177,12 +1179,6 @@ async function getLobbyData()
                                     // IIFEs need a return value, otherwise it returns undefined, thus the else statement
                                     if( isLocked === true) {
                                         return `<span class="btn btn-sm btn-outline-warning opacity-75 btn-dead ms-2">Locked</span>`
-                                    }
-                                    else return ``
-                                })()}
-                                ${(() => {
-                                    if( hasPassword === true) {
-                                        return `<span class="btn btn-sm btn-outline-danger opacity-75 btn-dead ms-2">Password</span>`
                                     }
                                     else return ``
                                 })()}
