@@ -483,7 +483,7 @@ async function getLobbyData()
                                 }
                             })()}
                             ${(() => {
-                                if( playerCount < playerCountMax ) {
+                                if(playerCount < playerCountMax) {
                                     return `<span class="ms-2 btn btn-sm btn-outline-warning bg-warning-subtle btn-dead border-warning" style="--bs-border-opacity: .5 !important;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" style="position:relative;top:-2;"
                                             viewBox="0 0 16 16">
@@ -492,7 +492,7 @@ async function getLobbyData()
                                         ${playerCount} / ${playerCountMax} 
                                     </span>`
                                 }
-                                else if( isVetStrat && (playerCount === playerCountMax)) {
+                                else if(playerCount === playerCountMax) {
                                     return `<span class="ms-2 btn btn-sm btn-outline-primary bg-primary-subtle btn-dead border-primary" style="--bs-border-opacity: .5 !important;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" style="position:relative;top:-2;"
                                             viewBox="0 0 16 16">
@@ -506,7 +506,16 @@ async function getLobbyData()
                             </div>
                             <span>
                                 ${(() => {
-                                    if( hasPassword ) {
+                                    if( isLocked) {
+                                        return `<span title="Joins not allowed, game is locked.">
+                                            <svg class="me-1" fill="#ffc107" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M18,8H17V7A5,5,0,0,0,7,7V8H6a2,2,0,0,0-2,2V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10A2,2,0,0,0,18,8Zm-5,8.79V17a1,1,0,0,1-2,0v-.21a2.5,2.5,0,1,1,2,0ZM15,8H9V7a3,3,0,0,1,6,0Z"/>
+                                            </svg>
+                                        </span>
+                                        `
+
+                                    }
+                                    else if( hasPassword ) {
                                         return `<span title="Password-protected game.">
                                             <svg class="me-1" fill="#DC3545" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M18,8H17V7A5,5,0,0,0,7,7V8H6a2,2,0,0,0-2,2V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10A2,2,0,0,0,18,8Zm-5,8.79V17a1,1,0,0,1-2,0v-.21a2.5,2.5,0,1,1,2,0ZM15,8H9V7a3,3,0,0,1,6,0Z"/>
@@ -539,26 +548,49 @@ async function getLobbyData()
                                         </span>
                                         `
                                     }
-                                    else { return `` }
+                                    else return ``
                                 })()}
                             </span>
                         </div>
                         <!-- Card Body -->
                         <div class="container-fluid h-100 pb-1">
                             <div class="row border-bottom">
-                                <div class="col-3 p-1 border-0 border-end border-dotted text-center">
-                                        <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-thumbnail"/>
+                                <div class="col-3 p-1 border-0 border-end border-dotted text-center position-relative z-3">
+                                        <img width="250" length="250" src="${mapImage}" onError="this.src='/img/no_steam_pfp.jpg'" class="img-thumbnail 
+                                        ${mapVSRObject && isVetStrat 
+                                            ? `vsr-cursor-pointer img-map" data-bs-toggle="modal" data-bs-target="#mapModal" 
+                                                data-bs-map-name="${mapVSRObject.Name}" 
+                                                data-bs-map-pools="${mapVSRObject.Pools}" 
+                                                data-bs-map-size="${mapVSRObject.Size.formattedSize}" 
+                                                data-bs-map-b2b="${mapVSRObject.Size.baseToBase}" 
+                                                data-bs-map-binary="${mapVSRObject.Size.binarySave}"
+                                                data-bs-map-loose="${mapVSRObject.Loose}" 
+                                                data-bs-map-image="${mapImage}" 
+                                                data-bs-map-file="${mapFileName}"
+                                                data-bs-map-description="${mapVSRObject.Description}" 
+                                                data-bs-map-author="${mapVSRObject.Author}"
+                                                data-bs-map-tags="${mapVSRObject.Tags}"
+                                                ` 
+                                            : '"'}
+                                        />
+                                          <span class="position-absolute top-0 end-0 px-1 text-secondary rounded m-2 vsr-cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                                                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+                                            </svg>
+                                          </span>
                                         ${(() => {
                                             if( mapVSRObject && isVetStrat ) {
                                                 return `
                                                 <div class="alert alert-secondary small px-3 py-1 my-1 mx-0 mb-0 d-flex flex-wrap justify-content-between">
                                                     <span>
-                                                        ${mapVSRObject.Pools} Pools 
+                                                        ${mapVSRObject.Pools} Pools
                                                     </span>
                                                     <span>
-                                                        ${mapVSRObject.Loose == -2 ? "INF" : mapVSRObject.Loose } Loose
+                                                        B2B: ${mapVSRObject.Size.baseToBase}m 
                                                     </span>
-                                                </div>`
+                                                </div>
+                                                `
                                             }
                                             else return ``;
                                         })()}
@@ -685,7 +717,7 @@ async function getLobbyData()
                                                                                                     else return ``;
                                                                                                 }
                                                                                             })()}
-                                                                                            ${truncate(clean(player.Name), 26)}
+                                                                                            <span title="${player.Name}">${truncate(clean(Steam.Nickname), 26)}</span>
                                                                                             </div>
                                                                                             <div class="d-inline-block d-flex align-items-center">
                                                                                                 ${ linkedPlayerCards 
@@ -695,12 +727,6 @@ async function getLobbyData()
                                                                                                     <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
                                                                                                     <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
                                                                                                     </svg> 
-                                                                                                    ${(() => {
-                                                                                                        if( player.Name.toLowerCase() !== Steam.Nickname.toLowerCase() ) {
-                                                                                                            return `<span class="d-none d-lg-inline">${truncate(clean(Steam.Nickname), 24)}</span>`
-                                                                                                        }
-                                                                                                        else return ``;
-                                                                                                    })()}
                                                                                                 ${ linkedPlayerCards ? '</span>' : `</a>` }
                                                                                             </div>
                                                                                         </div>
@@ -1177,13 +1203,6 @@ async function getLobbyData()
                                 </svg>
                             </a>
                             <div class="d-flex justify-content-end align-items-center">
-                                ${(() => {
-                                    // IIFEs need a return value, otherwise it returns undefined, thus the else statement
-                                    if( isLocked === true) {
-                                        return `<span class="btn btn-sm btn-outline-warning opacity-75 btn-dead ms-2">Locked</span>`
-                                    }
-                                    else return ``
-                                })()}
                                 <span id="NATType" class="btn btn-sm btn-outline-secondary btn-vsr btn-dead ms-2">
                                     ${(() => {
                                         // there are more values than just these two, but they are the most common
@@ -1260,6 +1279,51 @@ async function getLobbyData()
                 });
             });
         }
+
+        // initialize map modal to show dynamic content
+        const mapModal = document.getElementById('mapModal')
+        if (mapModal) {
+        mapModal.addEventListener('show.bs.modal', event => {
+
+            const button = event.relatedTarget;
+
+            // Extract info from data-bs-* attributes
+            const mapName = button.getAttribute('data-bs-map-name');
+            const mapImage = button.getAttribute('data-bs-map-image');
+            const mapFile = button.getAttribute('data-bs-map-file');
+            const mapPools = button.getAttribute('data-bs-map-pools');
+            const mapLoose = button.getAttribute('data-bs-map-loose');
+            const mapDescription = button.getAttribute('data-bs-map-description');
+            const mapAuthor = button.getAttribute('data-bs-map-author');
+            const mapSize = button.getAttribute('data-bs-map-size');
+            const mapB2B = button.getAttribute('data-bs-map-b2b');
+            const mapTags = button.getAttribute('data-bs-map-tags');
+            const mapBinarySave = button.getAttribute('data-bs-map-binary');
+
+            // create references to modal elements
+            const mmName = mapModal.querySelector('#mmName');
+            const mmImage = mapModal.querySelector('#mmImage');
+            const mmFile = mapModal.querySelector('#mmFile');
+            const mmPools = mapModal.querySelector('#mmPools');
+            const mmLoose = mapModal.querySelector('#mmLoose');
+            const mmDescription = mapModal.querySelector('#mmDescription');
+            const mmAuthor = mapModal.querySelector('#mmAuthor');
+            const mmSize = mapModal.querySelector('#mmSize');
+            const mmB2B = mapModal.querySelector('#mmB2B');
+            const mmTags = mapModal.querySelector('#mmTags');
+
+            mmName.textContent = mapName;
+            mmImage.src = mapImage;
+            mmFile.textContent = mapFile;
+            mmPools.textContent = mapPools;
+            mmLoose.textContent = mapLoose;
+            mmDescription.innerHTML = mapDescription;
+            mmAuthor.textContent = mapAuthor;
+            mmSize.textContent = mapSize;
+            mmB2B.innerHTML = (mapBinarySave === "true" ? '<span class="text-danger">N/A (Binary Save)</span>': mapB2B);
+            mmTags.textContent = (mapTags !== '' ? `tags: ${mapTags}` : 'N/A');
+        })
+}
 
     } catch(err) {
         console.log(`${err.stack}: Catch Error: ${err}`);

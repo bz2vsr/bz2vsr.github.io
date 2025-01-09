@@ -31,9 +31,8 @@
                 <div>
                     <div class="btn me-1 d-none d-lg-inline-block">
                         <span class="me-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill mb-1"
-                                viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill mb-1" viewBox="0 0 16 16">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                             </svg>
                             <span id="NavPlayerCount">0</span> Players
                         </span>
@@ -68,11 +67,6 @@
                             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
                             </svg>
                         </button>
-                        <!-- <button id="settings" class="btn" data-bs-toggle="modal" data-bs-target="#settingsModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-                            </svg>
-                        </button> -->
                         <ul class="dropdown-menu dropdown-menu-end border-2 border-primary p-0 me-2 mt-2">
                             <li>
                                 <a class="dropdown-item vsr-cursor-pointer p-3" data-bs-toggle="modal" data-bs-target="#settingsModal">
@@ -100,9 +94,8 @@
             <div class="d-block d-sm-none mb-1 d-flex justify-content-center">
                 <div class="btn">
                     <span class="me-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill mb-1"
-                            viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill mb-1" viewBox="0 0 16 16">
+                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                         </svg>
                         <span id="NavPlayerCountSm">0</span> Players
                     </span>
@@ -154,6 +147,74 @@
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VSR Map Modal -->
+        <div class="modal fade" id="mapModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="bg-dark-subtle rounded-top w-100">
+                        <div class="mv-header bg-dark-subtle rounded-top py-2 px-3 border-bottom d-flex justify-content-between align-items-center">
+                            <div>
+                                <span id="mmName">${map.Name}</span>
+                                <span id="mmFile" class="ms-2 text-secondary small">${map.File}</span>
+                            </div>
+                            <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="mv-image text-center">
+                            <img id="mmImage" class="border border-secondary-subtle border-2 rounded my-3" width="325" height="325" src="/img/no_steam_pfp.jpg" style="filter:brightness(1.25)" height="auto"  onerror="this.src='/img/no_steam_pfp.jpg'">
+                        </div>
+                        <div class="mv-body bg-secondary-subtle">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Pools</strong>
+                                    <span id="mmPools">${map.Pools}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Loose</strong>
+                                    <span id="mmLoose">${map.Loose}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Base-To-Base Distance (m)</strong>
+                                    <span id="mmB2B">${map.Size.baseToBase}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>TER Size (m)</strong>
+                                    <span id="mmSize">${map.Size.formattedSize}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Author</strong>
+                                    <span id="mmAuthor">${map.Author}</span>
+                                </li>
+                                <li class="list-group-item text-secondary p-3">
+                                    <span id="mmDescription">
+                                        ${map.Description}
+                                    </span>
+                                    <br>
+                                    <span id="mmTags">${map.Tags}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/maps" class="btn btn-purple text-light bg-gradient">
+                        Browse All Maps
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
+                            <path
+                                d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
+                            <path fill-rule="evenodd"
+                                d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z" />
+                        </svg>
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
                 </div>
             </div>
         </div>
