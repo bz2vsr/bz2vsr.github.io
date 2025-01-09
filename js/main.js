@@ -473,9 +473,9 @@ async function getLobbyData()
                     <div class="card h-100 border-secondary" style="--bs-border-opacity: .15;">
                         <!-- Card Header -->
                         <div class="card-header d-flex justify-content-between align-items-center bg-dark-subtle shadow-lg">
-                            <span id="gameTitle">
+                            <div id="gameTitle" class="d-flex align-items-center">
                             ${(() => {
-                                if( isVetStrat) {
+                                if( false && isVetStrat) {
                                     return `<span class="shiny-cta btn btn-sm btn-dead rounded">BZ2 Vet Strat</span>`
                                 }
                                 else {
@@ -503,13 +503,15 @@ async function getLobbyData()
                                 }
                                 else return ``;
                             })()}
-                            </span>
+                            </div>
                             <span>
                                 ${(() => {
                                     if( hasPassword ) {
-                                        return `<svg class="me-1" fill="#DC3545" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        return `<span title="Password-protected game.">
+                                            <svg class="me-1" fill="#DC3545" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M18,8H17V7A5,5,0,0,0,7,7V8H6a2,2,0,0,0-2,2V20a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V10A2,2,0,0,0,18,8Zm-5,8.79V17a1,1,0,0,1-2,0v-.21a2.5,2.5,0,1,1,2,0ZM15,8H9V7a3,3,0,0,1,6,0Z"/>
                                             </svg>
+                                        </span>
                                         `
                                     }
                                     else { return `` }
@@ -564,15 +566,15 @@ async function getLobbyData()
                                 <div class="col-9 p-0 small">
                                     <ul class="list-group list-group-flush text-secondary">
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
-                                            <strong class="text-muted">Map</strong>
+                                            <strong class="text-muted pe-3">Map</strong>
                                             <span title="${mapFileName}">${mapName ? mapName : "N/A"} (${gameMode})</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
-                                            <strong class="text-muted">Time</strong>
+                                            <strong class="text-muted pe-3">Time</strong>
                                             <span">${gameState} for ${gameTime} mins</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
-                                            <strong class="text-muted">Host</strong>
+                                            <strong class="text-muted pe-3">Host</strong>
                                             <span class="text-light fw-bold">${truncate(gameHost, 32)}
                                             ${(() => {
                                                 for( const [SteamID, Steam] of Object.entries(SteamPlayerList)) 
@@ -593,7 +595,7 @@ async function getLobbyData()
                                             </span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-dotted">
-                                            <strong class="text-muted">Name</strong>
+                                            <strong class="text-muted pe-3">Name</strong>
                                             <span class="text-secondary">${truncate(gameName, 32)}</span>
                                         </li>
                                         <li class="list-group-item border-dotted">
