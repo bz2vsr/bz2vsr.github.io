@@ -26,7 +26,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand">
                     <img src="/img/logo.png" class="img-fluid ms-2 me-1" height="32" width="32">
-                    <span class="d-none d-lg-inline">Game Stats</span>
+                    <span class="d-none d-lg-inline">Game Stats 2024</span>
                 </a>
                 <div class="d-none d-lg-block">
                     <a href="/" class="btn btn-success">
@@ -39,18 +39,33 @@
             </div>
         </nav>
         <main class="container-fluid">
-            <div class="row mb-5">
-                <div class="col-6">
-                    Nothing here, yet.
+            <div class="row">
+                <div class="col-12 col-lg-12 px-5">
+                    <canvas id="factionsChart"></canvas>
                 </div> 
-                <div class="col-6">
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <canvas id="mapsChart"></canvas>
+                </div> 
+                <div class="col-12 col-lg-6">
+                    <canvas id="winrateChart"></canvas>
+                </div> 
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-lg-6">
+                    <canvas id="factionChoiceChart"></canvas>
+                </div> 
+                <div class="col-12 col-lg-6">
+                    <canvas id="playersChart"></canvas>
                 </div> 
             </div>
         </main>
 
-        <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.2.1/b-3.2.0/b-colvis-3.2.0/rg-1.5.1/sc-2.4.3/sp-2.3.3/sl-3.0.0/datatables.min.js"></script>
+        <!-- <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.2.1/b-3.2.0/b-colvis-3.2.0/rg-1.5.1/sc-2.4.3/sp-2.3.3/sl-3.0.0/datatables.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="/js/map_browser.js"></script>
+        <script src="/js/stats.js"></script>
         <script async data-id="101466371" src="//static.getclicky.com/js"></script>
     </body>
 </html>

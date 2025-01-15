@@ -1,5 +1,4 @@
 {
-	"year": 2024,
 	"all_maps_played": {
 		"Mojave": 14,
 		"Overlook": 13,
@@ -108,7 +107,7 @@
 		"Jabbapop": 21,
 		"Zack": 21,
 		"Muffin": 20,
-		"Herp McDerperson": 19,
+		"Herp": 19,
 		"Cyber": 17,
 		"Domakus": 16,
 		"Gravey": 14,
@@ -276,7 +275,7 @@
 			33.33333333333333
 		],
 		[
-			"Herp McDerperson",
+			"Herp",
 			19,
 			6,
 			31.57894736842105
@@ -469,7 +468,7 @@
 				3
 			]
 		],
-		"Herp McDerperson": [
+		"Herp": [
 			[
 				"I.S.D.F",
 				18
@@ -745,6 +744,5 @@
 				3
 			]
 		]
-	},
-	"stats": "stats by F9bomber"
+	}
 }
