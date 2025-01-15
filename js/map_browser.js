@@ -60,6 +60,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 scrollCollapse: true,
                 scrollY: '75vh',
                 select: true,
+                select: {
+                    style: 'single'
+                },
                 layout: {
                     topStart: {
                         search: {
