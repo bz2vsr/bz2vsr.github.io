@@ -1,6 +1,7 @@
 const vsrModID = "1325933293";
 const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=';
 const assetsURL = "https://gamelistassets.iondriver.com/bzcc/";
+const REFRESH_RATE = 3000;
 
 const MapList  = document.querySelector("#MapList tbody");
 
@@ -127,8 +128,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 document.querySelector("#MapViewer").innerHTML = `                   
                     <div class="border bg-dark-subtle rounded-top w-100">
                         <div class="mv-header bg-dark-subtle rounded-top py-2 px-3 border-bottom d-flex justify-content-between align-items-center">
-                            <span>${map.Name}</span>
-                            <span class="text-secondary small">${map.File}</span>
+                            <span>
+                                <span class="fw-bold">${map.Name}</span>
+                                <span class="text-secondary ms-2 border rounded px-1 small">${map.File}</span>
+                            </span>
+                            <span class="">
+                                <button data-join-string='${window.location.host + window.location.pathname}?=${map.File}' class="btn btn-sm btn-purple bg-gradient btn-join-copy ms-2" title="Get a shareable link for Discord.">
+                                    <textarea class="visually-hidden">${window.location.host + window.location.pathname}?=${map.File}</textarea>
+                                    Share
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard ms-1 position-relative" viewBox="0 0 16 16" style="top:-2;">
+                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                    </svg>
+                                </button>
+                            </span>
                         </div>
                         <div class="mv-image text-center">
                             <img class="border border-secondary-subtle border-2 rounded my-3" width="325" height="325" style="filter:brightness(1.25)" height="auto" src="${map.Image}" onerror="this.src='/img/no_steam_pfp.jpg'">
@@ -166,11 +179,54 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         </div>
                     </div>
                 `;
+
+                let mapShareBtn = document.querySelectorAll('.btn-join-copy');
+                if( mapShareBtn !== null )
+                {
+                    mapShareBtn.forEach(btn => {
+                        btn.addEventListener('click', () => {
+
+                            joinStr = btn.querySelector('textarea');
+                            joinStr.focus();
+                            joinStr.select();
+
+                            // officially deprecated, but...still works :P
+                            document.execCommand("copy");
+
+                            btn.classList.remove('btn-purple');
+                            btn.classList.add('btn-success');
+                            
+                            // change clipboard icon to a checkmark
+                            btn.innerHTML = `${joinStr.outerHTML}
+                                Copied
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                </svg>
+                            `;
+
+                            // return copy button to original state after a few seconds
+                            setTimeout(function(){
+                                btn.innerHTML = `${joinStr.outerHTML}
+                                    <textarea class="visually-hidden">${window.location.host + window.location.pathname}?=FOOBAR</textarea>
+                                    Share
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard ms-1 position-relative" viewBox="0 0 16 16" style="top:-2;">
+                                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+                                    </svg>
+                                `;
+                                btn.classList.remove('btn-success');
+                                btn.classList.add('btn-purple');
+                            }, REFRESH_RATE);
+                        });
+                    });
+                }
             });
             
             if( mapTarget ){
                 dt.row(`[data-mapfile="${mapTarget}"]`).select().scrollTo();
-                document.querySelector(`[data-mapfile="${mapTarget}"]`).click();            }
+                document.querySelector(`[data-mapfile="${mapTarget}"]`).click();            
+            }
+
         })
         .catch(error => console.error('Error loading MapData: ', error));
 
