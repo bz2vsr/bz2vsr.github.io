@@ -1,7 +1,7 @@
 const vsrModID = "1325933293";
 const proxyURL = 'https://api.codetabs.com/v1/proxy/?quest=';
 const assetsURL = "https://gamelistassets.iondriver.com/bzcc/";
-const REFRESH_RATE = 3000;
+const REFRESH_RATE = 2000;
 
 const MapList  = document.querySelector("#MapList tbody");
 
@@ -133,8 +133,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                 <span class="text-secondary ms-2 border rounded px-1 small">${map.File}</span>
                             </span>
                             <span class="">
-                                <button data-join-string='${window.location.host + window.location.pathname}?=${map.File}' class="btn btn-sm btn-purple bg-gradient btn-join-copy ms-2" title="Get a shareable link for Discord.">
-                                    <textarea class="visually-hidden">${window.location.host + window.location.pathname}?=${map.File}</textarea>
+                                <button data-join-string='${window.location.host + window.location.pathname}?map=${map.File}' class="btn btn-sm btn-purple bg-gradient btn-join-copy ms-2" title="Get a shareable link for Discord.">
+                                    <textarea class="visually-hidden">${window.location.host + window.location.pathname}?map=${map.File}</textarea>
                                     Share
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard ms-1 position-relative" viewBox="0 0 16 16" style="top:-2;">
                                         <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
@@ -196,6 +196,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             btn.classList.remove('btn-purple');
                             btn.classList.add('btn-success');
                             
+                            let saveBtn = btn.innerHTML;
                             // change clipboard icon to a checkmark
                             btn.innerHTML = `${joinStr.outerHTML}
                                 Copied
@@ -207,7 +208,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             // return copy button to original state after a few seconds
                             setTimeout(function(){
                                 btn.innerHTML = `${joinStr.outerHTML}
-                                    <textarea class="visually-hidden">${window.location.host + window.location.pathname}?=FOOBAR</textarea>
                                     Share
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard ms-1 position-relative" viewBox="0 0 16 16" style="top:-2;">
                                         <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
