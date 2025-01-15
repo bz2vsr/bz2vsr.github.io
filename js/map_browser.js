@@ -134,7 +134,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             </span>
                             <span class="">
                                 <button class="btn btn-sm btn-purple bg-gradient btn-join-copy ms-2" title="Get a shareable link for Discord.">
-                                    <textarea class="visually-hidden">${(window.Location.protocol ? windows.location.protocol + "//": '')}${window.location.host + window.location.pathname}?map=${map.File}</textarea>
+                                    <textarea class="visually-hidden">${((window.Location.protocol !== undefined) ? windows.location.protocol + "//" : '')}${window.location.host + window.location.pathname}?map=${map.File}</textarea>
                                     Share
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard ms-1 position-relative" viewBox="0 0 16 16" style="top:-2;">
                                         <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
