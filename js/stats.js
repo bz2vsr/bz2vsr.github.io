@@ -31,7 +31,7 @@ function createMapsChart(mapsData) {
             datasets: [{
                 label: 'Times Played',
                 data: sortedData.map(([,count]) => count),
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                backgroundColor: 'rgba(54, 162, 235, 0.75)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
             }]
@@ -72,7 +72,7 @@ function createPlayersChart(playersData) {
             datasets: [{
                 label: 'Times Commanded',
                 data: sortedData.map(([,count]) => count),
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: 'rgba(255, 99, 132, 0.75)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth:1,
             }]
@@ -110,9 +110,9 @@ function createFactionsChart(factionsData) {
         datasets: Object.entries(factionsData).map(([faction, count]) => ({
             label: faction,
             data: [count],
-            backgroundColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.5)' :
-                           faction === 'Hadean' ? 'rgba(255, 99, 132, 0.5)' :
-                           'rgba(255, 206, 86, 0.5)',
+            backgroundColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
+                           faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
+                           'rgba(255, 206, 86, 0.75)',
             borderColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 1)' :
                         faction === 'Hadean' ? 'rgba(255, 99, 132, 1)' :
                         'rgba(255, 206, 86, 1)',
@@ -165,7 +165,7 @@ function createWinrateChart(winrateData) {
             datasets: [{
                 label: 'Winrate %',
                 data: filteredData.map(player => player[3]),
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                backgroundColor: 'rgba(75, 192, 192, 0.75)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth:1,
             }]
@@ -213,9 +213,9 @@ function createFactionChoiceChart(factionChoiceData) {
             return factionData ? factionData[1] : 0;
         }),
         borderWidth: 1,
-        backgroundColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.5)' :
-                        faction === 'Hadean' ? 'rgba(255, 99, 132, 0.5)' :
-                        'rgba(255, 206, 86, 0.5)'
+        backgroundColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
+                        faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
+                        'rgba(255, 206, 86, 0.75)'
     }));
 
     new Chart(ctx, {
