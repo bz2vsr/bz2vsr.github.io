@@ -4,6 +4,9 @@ const assetsURL = "https://gamelistassets.iondriver.com/bzcc/";
 
 const MapList  = document.querySelector("#MapList tbody");
 
+// if URL has a map string, process that immediately
+const mapTarget = new URLSearchParams(window.location.search).get('map');
+
 function filter_maps() {
     let input = document.querySelector("#mapSearch").value.toLowerCase();
 
@@ -52,7 +55,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
             // initialize map list table as a DataTable
             let dt = new DataTable('#MapList', {
-                paging: false,
+                paging: true,
+                scroller: true,
                 scrollCollapse: true,
                 scrollY: '75vh',
                 select: true,
@@ -160,6 +164,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     </div>
                 `;
             });
+            
+            if( mapTarget ){
+                dt.row(`[data-mapfile="${mapTarget}"]`).select().scrollTo();
+                document.querySelector(`[data-mapfile="${mapTarget}"]`).click();            }
         })
         .catch(error => console.error('Error loading MapData: ', error));
 
