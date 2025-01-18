@@ -7,21 +7,20 @@ const legendConfig = {
 
 // Add this shared plugin configuration
 const datalabelsConfig = {
-    anchor: 'center',  // Center point of attachment to the bar
-    align: 'center',   // Center the text relative to the anchor point
-    clamp: true,      // Prevent labels from exceeding chart area
+    anchor: 'center',
+    align: 'center',
+    clamp: true,
     font: {
         weight: 'bold'
     },
-    // Display labels with different opacities
     color: (context) => {
         const playerFilter = getPlayerParam();
         const label = context.dataset.labels ? 
-            context.dataset.labels[context.dataIndex] : // For stacked charts
-            context.chart.data.labels[context.dataIndex]; // For regular charts
+            context.dataset.labels[context.dataIndex] : 
+            context.chart.data.labels[context.dataIndex];
             
         // Target player gets full opacity
-        if (playerFilter && label.toLowerCase() === playerFilter) {
+        if (playerFilter && label.toLowerCase() === playerFilter.toLowerCase()) {
             return 'rgba(255, 255, 255, 0.65)';
         }
         
@@ -33,7 +32,6 @@ const datalabelsConfig = {
         // Others get 25% opacity
         return 'rgba(255, 255, 255, 0.25)';
     },
-    // Only display labels for target player and top 3
     display: (context) => {
         if (context.chart.canvas.id === 'mapsChart') {
             return false;  // No labels for maps chart
@@ -45,7 +43,7 @@ const datalabelsConfig = {
             context.chart.data.labels[context.dataIndex];
             
         // Show label if it's target player or in top 3
-        return (playerFilter && label.toLowerCase() === playerFilter) || 
+        return (playerFilter && label.toLowerCase() === playerFilter.toLowerCase()) || 
                context.dataIndex < 3;
     }
 };
@@ -60,10 +58,51 @@ function getPlayerParam() {
     return player ? player.toLowerCase().replace('_', ' ') : null;
 }
 
-// Load stats data
-fetch('/data/stats/stats.json')
-    .then(response => response.json())
-    .then(data => {
+// Add this function to populate the dropdown
+function populatePlayerDropdown(data) {
+    const playerSelect = document.getElementById('playerSelect');
+    
+    // Get unique players from various data sources
+    const players = new Set([
+        ...Object.keys(data.all_players_commanded),
+        ...data.player_winrate_by_commanding.map(p => p[0]),
+        ...Object.keys(data.player_faction_choice)
+    ]);
+    
+    // Sort players alphabetically
+    [...players].sort().forEach(player => {
+        const option = document.createElement('option');
+        option.value = player;  // Keep original case
+        option.textContent = player;
+        playerSelect.appendChild(option);
+    });
+
+    // Set initial value if URL has player parameter
+    const urlPlayer = getPlayerParam();
+    if (urlPlayer) {
+        // Find the matching option regardless of case
+        const matchingOption = Array.from(playerSelect.options)
+            .find(option => option.value.toLowerCase() === urlPlayer.toLowerCase());
+        if (matchingOption) {
+            playerSelect.value = matchingOption.value;
+        }
+    }
+
+    // Add event listeners
+    playerSelect.addEventListener('change', (e) => {
+        const player = e.target.value;
+        if (player) {
+            // Update URL with the original case-sensitive player name
+            const url = new URL(window.location);
+            url.searchParams.set('player', player);
+            window.history.pushState({}, '', url);
+        } else {
+            // Remove parameter if no selection
+            const url = new URL(window.location);
+            url.searchParams.delete('player');
+            window.history.pushState({}, '', url);
+        }
+        // Refresh all charts
         createMapsChart(data.all_maps_played);
         createPlayersChart(data.all_players_commanded);
         createFactionsChart(data.most_played_factions);
@@ -71,14 +110,137 @@ fetch('/data/stats/stats.json')
         createFactionChoiceChart(data.player_faction_choice);
     });
 
+    // Add clear button handler
+    document.getElementById('clearSelect').addEventListener('click', () => {
+        playerSelect.value = '';
+        const url = new URL(window.location);
+        url.searchParams.delete('player');
+        window.history.pushState({}, '', url);
+        // Refresh all charts
+        createMapsChart(data.all_maps_played);
+        createPlayersChart(data.all_players_commanded);
+        createFactionsChart(data.most_played_factions);
+        createWinrateChart(data.player_winrate_by_commanding);
+        createFactionChoiceChart(data.player_faction_choice);
+    });
+}
+
+// Add at the top with other state variables
+let expandedCharts = {
+    mapsChart: false,
+    playersChart: false,
+    winrateChart: false,
+    factionChoiceChart: false
+};
+
+// Add this function to adjust chart container height
+function adjustChartHeight(chartId, expanded) {
+    const container = document.querySelector(`#${chartId}`).parentElement;
+    if (chartId === 'mapsChart' || chartId === 'factionChoiceChart') {
+        container.style.height = expanded ? '1750px' : '400px';  // Maps and faction choice charts
+    } else {
+        container.style.height = expanded ? '1000px' : '400px';  // Other charts
+    }
+}
+
+// Add event listeners after chart creation
+function addExpandListeners(data) {
+    document.getElementById('expandMaps').addEventListener('click', function() {
+        expandedCharts.mapsChart = !expandedCharts.mapsChart;
+        this.textContent = expandedCharts.mapsChart ? 'Show Less' : 'View More';
+        adjustChartHeight('mapsChart', expandedCharts.mapsChart);
+        createMapsChart(data.all_maps_played);
+    });
+
+    document.getElementById('expandPlayers').addEventListener('click', function() {
+        expandedCharts.playersChart = !expandedCharts.playersChart;
+        this.textContent = expandedCharts.playersChart ? 'Show Less' : 'View More';
+        adjustChartHeight('playersChart', expandedCharts.playersChart);
+        createPlayersChart(data.all_players_commanded);
+    });
+
+    document.getElementById('expandWinrate').addEventListener('click', function() {
+        expandedCharts.winrateChart = !expandedCharts.winrateChart;
+        this.textContent = expandedCharts.winrateChart ? 'Show Less' : 'View More';
+        adjustChartHeight('winrateChart', expandedCharts.winrateChart);
+        createWinrateChart(data.player_winrate_by_commanding);
+    });
+
+    document.getElementById('expandFactions').addEventListener('click', function() {
+        expandedCharts.factionChoiceChart = !expandedCharts.factionChoiceChart;
+        this.textContent = expandedCharts.factionChoiceChart ? 'Show Less' : 'View More';
+        adjustChartHeight('factionChoiceChart', expandedCharts.factionChoiceChart);
+        createFactionChoiceChart(data.player_faction_choice);
+    });
+
+    document.getElementById('expandAll').addEventListener('click', function() {
+        const isExpanded = this.textContent === 'Collapse All';
+        toggleAllCharts(data, !isExpanded);
+    });
+
+    document.getElementById('resetAll').addEventListener('click', function() {
+        resetAllCharts(data);
+    });
+}
+
+// Load stats data
+fetch('/data/stats/stats.json')
+    .then(response => response.json())
+    .then(data => {
+        populatePlayerDropdown(data);
+        createMapsChart(data.all_maps_played);
+        createPlayersChart(data.all_players_commanded);
+        createFactionsChart(data.most_played_factions);
+        createWinrateChart(data.player_winrate_by_commanding);
+        createFactionChoiceChart(data.player_faction_choice);
+        addExpandListeners(data);
+    });
+
+// Add this at the top to store chart instances
+let charts = {
+    mapsChart: null,
+    playersChart: null,
+    factionsChart: null,
+    winrateChart: null,
+    factionChoiceChart: null
+};
+
+// Add this function to handle resize
+function handleResize() {
+    Object.values(charts).forEach(chart => {
+        if (chart) {
+            chart.resize();
+        }
+    });
+}
+
+// Add the resize event listener after chart registration
+Chart.register(ChartDataLabels);
+window.addEventListener('resize', handleResize);
+
+// Add this shared grid configuration
+const gridConfig = {
+    display: true,
+    drawBorder: true,
+    drawOnChartArea: true,
+    drawTicks: true,
+    color: 'rgba(255, 255, 255, 0.05)'  // Changed from 0.5 to 0.05 for 5% opacity
+};
+
+// Modify each create function to destroy existing chart first
 function createMapsChart(mapsData) {
+    if (charts.mapsChart) {
+        charts.mapsChart.destroy();
+    }
     const ctx = document.getElementById('mapsChart').getContext('2d');
     
     const sortedData = Object.entries(mapsData)
         .sort(([,a], [,b]) => b - a)
-        .slice(0, 20);
+        .slice(0, expandedCharts.mapsChart ? undefined : 20);
 
-    new Chart(ctx, {
+    const maxValue = Math.max(...sortedData.map(([,count]) => count));
+
+    charts.mapsChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: sortedData.map(([map]) => map),
@@ -86,11 +248,13 @@ function createMapsChart(mapsData) {
                 label: 'Times Played',
                 data: sortedData.map(([,count]) => count),
                 backgroundColor: 'rgba(54, 162, 235, 0.75)',
+                hoverBackgroundColor: 'rgba(54, 162, 235, 1)',  // Full opacity on hover
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
             }]
         },
         options: {
+            maintainAspectRatio: false,
             indexAxis: 'y',
             responsive: true,
             plugins: {
@@ -106,6 +270,11 @@ function createMapsChart(mapsData) {
                 }
             },
             scales: {
+                x: {
+                    grid: gridConfig,
+                    max: maxValue,
+                    beginAtZero: true
+                },
                 y: {
                     beginAtZero: true,
                     ticks: {
@@ -117,15 +286,44 @@ function createMapsChart(mapsData) {
     });
 }
 
+// Add this helper function to check if a player is in the data
+function isPlayerInData(player, data, accessor) {
+    return data.some(item => accessor(item).toLowerCase() === player.toLowerCase());
+}
+
 function createPlayersChart(playersData) {
+    if (charts.playersChart) {
+        charts.playersChart.destroy();
+    }
     const ctx = document.getElementById('playersChart').getContext('2d');
     const playerFilter = getPlayerParam();
     
-    const sortedData = Object.entries(playersData)
-        .sort(([,a], [,b]) => b - a)
-        .slice(0, 15);
+    // Get all data first
+    let sortedData = Object.entries(playersData)
+        .sort(([,a], [,b]) => b - a);
 
-    new Chart(ctx, {
+    // If chart is collapsed and player is selected
+    if (!expandedCharts.playersChart && playerFilter) {
+        // Check if player is not in the top 15
+        if (!sortedData.slice(0, 15).some(([player]) => player.toLowerCase() === playerFilter.toLowerCase())) {
+            // Find the player's data
+            const playerData = sortedData.find(([player]) => player.toLowerCase() === playerFilter.toLowerCase());
+            if (playerData) {
+                // Remove from current position and add to end of visible range
+                sortedData = sortedData.filter(([player]) => player.toLowerCase() !== playerFilter.toLowerCase());
+                sortedData = [...sortedData.slice(0, 14), playerData];
+            }
+        }
+    }
+
+    // Apply slice after player addition
+    if (!expandedCharts.playersChart) {
+        sortedData = sortedData.slice(0, 15);
+    }
+
+    const maxValue = Math.max(...sortedData.map(([,count]) => count));
+
+    charts.playersChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: sortedData.map(([player]) => player),
@@ -134,22 +332,23 @@ function createPlayersChart(playersData) {
                 data: sortedData.map(([,count]) => count),
                 backgroundColor: playerFilter 
                     ? sortedData.map(([player]) => 
-                        player.toLowerCase() === playerFilter 
+                        player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
                             ? 'rgba(255, 215, 0, 0.75)'
                             : 'rgba(128, 128, 128, 0.35)'
                     )
-                    : 'rgba(255, 99, 132, 0.75)',  // Default color if no player filter
-                borderColor: playerFilter
+                    : 'rgba(255, 99, 132, 0.75)',
+                hoverBackgroundColor: playerFilter
                     ? sortedData.map(([player]) => 
-                        player.toLowerCase() === playerFilter 
+                        player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
                             ? 'rgba(255, 215, 0, 1)'
-                            : 'rgba(128, 128, 128, 0.5)'
+                            : 'rgba(128, 128, 128, 0.6)'
                     )
-                    : 'rgba(255, 99, 132, 1)',  // Default border if no player filter
+                    : 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
             }]
         },
         options: {
+            maintainAspectRatio: false,
             indexAxis: 'y',
             responsive: true,
             plugins: {
@@ -163,6 +362,11 @@ function createPlayersChart(playersData) {
                 datalabels: datalabelsConfig
             },
             scales: {
+                x: {
+                    grid: gridConfig,
+                    max: maxValue,
+                    beginAtZero: true
+                },
                 y: {
                     beginAtZero: true
                 }
@@ -172,6 +376,9 @@ function createPlayersChart(playersData) {
 }
 
 function createFactionsChart(factionsData) {
+    if (charts.factionsChart) {
+        charts.factionsChart.destroy();
+    }
     const ctx = document.getElementById('factionsChart').getContext('2d');
     
     // Calculate total games for max x-axis value
@@ -193,14 +400,15 @@ function createFactionsChart(factionsData) {
         }))
     };
 
-    new Chart(ctx, {
+    const maxValue = Math.max(...Object.values(factionsData).map(count => count));
+
+    charts.factionsChart = new Chart(ctx, {
         type: 'bar',
         data: data,
         options: {
+            maintainAspectRatio: false,
             indexAxis: 'y',
             responsive: true,
-            maintainAspectRatio: true,
-            aspectRatio: 14,
             plugins: {
                 title: {
                     display: true,
@@ -213,7 +421,13 @@ function createFactionsChart(factionsData) {
                 x: {
                     stacked: true,
                     beginAtZero: true,
-                    max: totalGames  // Set max to total games
+                    max: totalGames,
+                    ticks: {
+                        display: false
+                    },
+                    grid: {
+                        display: false  // Disable grid lines for this chart
+                    }
                 },
                 y: {
                     stacked: true
@@ -224,15 +438,39 @@ function createFactionsChart(factionsData) {
 } 
 
 function createWinrateChart(winrateData) {
+    if (charts.winrateChart) {
+        charts.winrateChart.destroy();
+    }
     const ctx = document.getElementById('winrateChart').getContext('2d');
     const playerFilter = getPlayerParam();
     
-    const filteredData = winrateData
+    // Filter and sort all data first
+    let filteredData = winrateData
         .filter(player => player[1] >= 5)
-        .sort((a, b) => b[3] - a[3])
-        .slice(0, 15);
+        .sort((a, b) => b[3] - a[3]);
 
-    new Chart(ctx, {
+    // If chart is collapsed and player is selected
+    if (!expandedCharts.winrateChart && playerFilter) {
+        // Check if player is not in the top 15
+        if (!filteredData.slice(0, 15).some(player => player[0].toLowerCase() === playerFilter.toLowerCase())) {
+            // Find the player's data
+            const playerData = filteredData.find(player => player[0].toLowerCase() === playerFilter.toLowerCase());
+            if (playerData) {
+                // Remove from current position and add to end of visible range
+                filteredData = filteredData.filter(player => player[0].toLowerCase() !== playerFilter.toLowerCase());
+                filteredData = [...filteredData.slice(0, 14), playerData];
+            }
+        }
+    }
+
+    // Apply slice after player addition
+    if (!expandedCharts.winrateChart) {
+        filteredData = filteredData.slice(0, 15);
+    }
+
+    const maxValue = Math.max(...filteredData.map(player => player[3]));
+
+    charts.winrateChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: filteredData.map(player => player[0]),
@@ -241,22 +479,23 @@ function createWinrateChart(winrateData) {
                 data: filteredData.map(player => player[3]),
                 backgroundColor: playerFilter
                     ? filteredData.map(player => 
-                        player[0].toLowerCase() === playerFilter 
+                        player[0].toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
                             ? 'rgba(255, 215, 0, 0.75)'
                             : 'rgba(128, 128, 128, 0.35)'
                     )
-                    : 'rgba(75, 192, 192, 0.75)',  // Default color if no player filter
-                borderColor: playerFilter
+                    : 'rgba(75, 192, 192, 0.75)',
+                hoverBackgroundColor: playerFilter
                     ? filteredData.map(player => 
-                        player[0].toLowerCase() === playerFilter 
+                        player[0].toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
                             ? 'rgba(255, 215, 0, 1)'
-                            : 'rgba(128, 128, 128, 0.5)'
+                            : 'rgba(128, 128, 128, 0.6)'
                     )
-                    : 'rgba(75, 192, 192, 1)',  // Default border if no player filter
+                    : 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             }]
         },
         options: {
+            maintainAspectRatio: false,
             indexAxis: 'y',
             responsive: true,
             plugins: {
@@ -273,6 +512,11 @@ function createWinrateChart(winrateData) {
                 }
             },
             scales: {
+                x: {
+                    grid: gridConfig,
+                    max: maxValue,
+                    beginAtZero: true
+                },
                 y: {
                     beginAtZero: true,
                     max: 100
@@ -283,17 +527,40 @@ function createWinrateChart(winrateData) {
 }
 
 function createFactionChoiceChart(factionChoiceData) {
+    if (charts.factionChoiceChart) {
+        charts.factionChoiceChart.destroy();
+    }
     const ctx = document.getElementById('factionChoiceChart').getContext('2d');
     const playerFilter = getPlayerParam();
     
-    const topPlayers = Object.entries(factionChoiceData)
+    // Get all players sorted by total games
+    let topPlayers = Object.entries(factionChoiceData)
         .map(([player, factions]) => ({
             player,
             total: factions.reduce((sum, [,count]) => sum + count, 0)
         }))
-        .sort((a, b) => b.total - a.total)
-        .slice(0, 10)
-        .map(({player}) => player);
+        .sort((a, b) => b.total - a.total);
+
+    // If chart is collapsed and player is selected
+    if (!expandedCharts.factionChoiceChart && playerFilter) {
+        // Check if player is not in the top 10
+        if (!topPlayers.slice(0, 10).some(({player}) => player.toLowerCase() === playerFilter.toLowerCase())) {
+            // Find the player's data
+            const playerData = topPlayers.find(({player}) => player.toLowerCase() === playerFilter.toLowerCase());
+            if (playerData) {
+                // Remove from current position and add to end of visible range
+                topPlayers = topPlayers.filter(({player}) => player.toLowerCase() !== playerFilter.toLowerCase());
+                topPlayers = [...topPlayers.slice(0, 9), playerData];
+            }
+        }
+    }
+
+    // Apply slice after player addition
+    if (!expandedCharts.factionChoiceChart) {
+        topPlayers = topPlayers.slice(0, 10);
+    }
+
+    topPlayers = topPlayers.map(({player}) => player);
 
     const datasets = ['I.S.D.F', 'Hadean', 'Scion'].map(faction => ({
         label: faction,
@@ -301,25 +568,38 @@ function createFactionChoiceChart(factionChoiceData) {
             const factionData = factionChoiceData[player].find(([f]) => f === faction);
             return factionData ? factionData[1] : 0;
         }),
-        labels: topPlayers, // Add labels array for datalabels display condition
+        labels: topPlayers,
         borderWidth: 1,
         backgroundColor: topPlayers.map(player => {
             const baseColor = faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
                             faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
                             'rgba(255, 206, 86, 0.75)';
-            return playerFilter && player.toLowerCase() === playerFilter 
+            return playerFilter && player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
                 ? baseColor
                 : playerFilter ? baseColor.replace('0.75', '0.15') : baseColor;
+        }),
+        hoverBackgroundColor: topPlayers.map(player => {
+            const baseColor = faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 1)' :
+                            faction === 'Hadean' ? 'rgba(255, 99, 132, 1)' :
+                            'rgba(255, 206, 86, 1)';
+            return playerFilter && player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
+                ? baseColor
+                : playerFilter ? baseColor.replace('1)', '0.4)') : baseColor;
         })
     }));
 
-    new Chart(ctx, {
+    const maxValue = Math.max(...datasets.map(dataset => 
+        Math.max(...dataset.data)
+    ));
+
+    charts.factionChoiceChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: topPlayers,
             datasets: datasets
         },
         options: {
+            maintainAspectRatio: false,
             indexAxis: 'y',
             responsive: true,
             plugins: {
@@ -331,7 +611,10 @@ function createFactionChoiceChart(factionChoiceData) {
             },
             scales: {
                 x: {
-                    stacked: true
+                    stacked: true,
+                    grid: gridConfig,
+                    max: maxValue,
+                    beginAtZero: true
                 },
                 y: {
                     stacked: true,
@@ -341,4 +624,67 @@ function createFactionChoiceChart(factionChoiceData) {
             legend: legendConfig
         }
     });
+} 
+
+// Add this function to handle expanding/collapsing all charts
+function toggleAllCharts(data, expand) {
+    // Update all chart states to the specified state
+    Object.keys(expandedCharts).forEach(key => {
+        expandedCharts[key] = expand;
+    });
+
+    // Update all button texts to match the specified state
+    document.getElementById('expandMaps').textContent = expand ? 'Show Less' : 'View More';
+    document.getElementById('expandPlayers').textContent = expand ? 'Show Less' : 'View More';
+    document.getElementById('expandWinrate').textContent = expand ? 'Show Less' : 'View More';
+    document.getElementById('expandFactions').textContent = expand ? 'Show Less' : 'View More';
+    document.getElementById('expandAll').textContent = expand ? 'Collapse All' : 'Expand All';
+
+    // Adjust heights and redraw charts
+    adjustChartHeight('mapsChart', expand);
+    adjustChartHeight('playersChart', expand);
+    adjustChartHeight('winrateChart', expand);
+    adjustChartHeight('factionChoiceChart', expand);
+
+    createMapsChart(data.all_maps_played);
+    createPlayersChart(data.all_players_commanded);
+    createWinrateChart(data.player_winrate_by_commanding);
+    createFactionChoiceChart(data.player_faction_choice);
+} 
+
+// Add this function to handle complete reset
+function resetAllCharts(data) {
+    // Reset dropdown
+    document.getElementById('playerSelect').value = '';
+    
+    // Clear URL parameter
+    const url = new URL(window.location);
+    url.searchParams.delete('player');
+    window.history.pushState({}, '', url);
+
+    // Collapse all charts
+    expandedCharts.mapsChart = false;
+    expandedCharts.playersChart = false;
+    expandedCharts.winrateChart = false;
+    expandedCharts.factionChoiceChart = false;
+
+    // Update all button texts
+    document.getElementById('expandMaps').textContent = 'View More';
+    document.getElementById('expandPlayers').textContent = 'View More';
+    document.getElementById('expandWinrate').textContent = 'View More';
+    document.getElementById('expandFactions').textContent = 'View More';
+    document.getElementById('expandAll').textContent = 'Expand All';
+
+    // Reset chart heights
+    adjustChartHeight('mapsChart', false);
+    adjustChartHeight('playersChart', false);
+    adjustChartHeight('winrateChart', false);
+    adjustChartHeight('factionChoiceChart', false);
+
+    // Redraw all charts
+    createMapsChart(data.all_maps_played);
+    createPlayersChart(data.all_players_commanded);
+    createFactionsChart(data.most_played_factions);
+    createWinrateChart(data.player_winrate_by_commanding);
+    createFactionChoiceChart(data.player_faction_choice);
 } 
