@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" class="h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BZ2VSR Community Videos</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <meta property="description" content="Community videos for Battlezone II: Combat Commander. Prioritizes VSR games hosted by the BZ2 Vet Strats Discord community.">
+        <meta property="og:site_name" content="bz2vsr.com"/>
+    </head>
+    <body class="d-flex flex-column h-100">
+        <nav class="navbar navbar-expand navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand">
+                    <img src="/img/logo.png" class="img-fluid ms-2 me-1" height="32" width="32">
+                    <span class="d-none d-lg-inline">Video Browser</span>
+                </a>
+                <div id="right-side-nav" class="d-none d-lg-block">
+                    <span id="key-name" class="me-3 text-muted"></span>
+                    <!-- <span id="quota-counter" class="me-3 text-muted">Quota: 0</span> -->
+                    <a href="/" class="btn btn-success">
+                        Return Home
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill mb-1" viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <main class="container mt-4">
+            <div class="modal fade" id="quotaWarningModal" tabindex="-1" aria-labelledby="quotaWarningModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="quotaWarningModalLabel">⚠️ API Quota Usage Notice</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Please be mindful of our YouTube API quota usage:</p>
+                            <ul>
+                                <li>The "Search All Videos" feature uses significant API quota</li>
+                                <li>Please use this feature sparingly</li>
+                                <li>Consider using the regular filter instead for basic searches</li>
+                            </ul>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="dontShowAgainCheck">
+                                <label class="form-check-label" for="dontShowAgainCheck">
+                                    Don't show me this again
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Understand</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="api-error-alert" class="alert alert-danger d-none" role="alert">
+                <strong>API Error:</strong> <span id="api-error-message"></span>
+            </div>
+            
+            <div id="latest-video" class="ratio ratio-16x9 mb-4"></div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="input-group">
+                        <input type="text" id="search-input" class="form-control rounded" placeholder="Filter videos...">
+                        <button class="btn btn-outline-secondary d-none rounded-end" id="clear-filter-button" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <input type="text" id="global-search-input" class="form-control" placeholder="Search all videos...">
+                        <button class="btn btn-primary" id="global-search-button" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-secondary w-100" id="reset-search-button" type="button">
+                        Reset
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="search-results" class="d-none">
+                <h2>Search Results</h2>
+                <div id="search-results-container" class="row g-3"></div>
+            </div>
+
+            <div id="regular-content" class="row mb-5">
+                <div class="col-12 col-md-6">
+                    <h2>F9bomber</h2>
+                    <div id="f9bomber-videos" class="row g-3"></div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary view-more" data-channel="f9bomber">View More</button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h2>HerpMcDerperson</h2>
+                    <div id="herp-videos" class="row g-3"></div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary view-more" data-channel="herp">View More</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const hideWarning = localStorage.getItem('hideQuotaWarning');
+                if (hideWarning !== 'true') {
+                    const modal = new bootstrap.Modal(document.getElementById('quotaWarningModal'));
+                    modal.show();
+                }
+
+                document.getElementById('dontShowAgainCheck').addEventListener('change', function(e) {
+                    if (e.target.checked) {
+                        localStorage.setItem('hideQuotaWarning', 'true');
+                    } else {
+                        localStorage.removeItem('hideQuotaWarning');
+                    }
+                });
+            });
+        </script>
+        <script src="/js/vid.js"></script>
+        <script async data-id="101466371" src="//static.getclicky.com/js"></script> 
+    </body>
+</html>
