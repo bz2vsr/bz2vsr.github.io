@@ -21,6 +21,45 @@ let dailyQuotaUsed = 0;
 let f9NextPageToken = null;
 let herpNextPageToken = null;
 
+// Add cache management at the top of the file
+const CACHE_KEY = 'videoCache';
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+
+function getCache() {
+    const cache = localStorage.getItem(CACHE_KEY);
+    if (!cache) {
+        console.log('No cache found');
+        return null;
+    }
+    
+    const parsedCache = JSON.parse(cache);
+    console.log('Retrieved raw cache:', parsedCache); // Debug log
+    
+    // Check if cache has expired or is missing required data
+    if (Date.now() - parsedCache.timestamp > CACHE_DURATION || 
+        !parsedCache.f9Videos || 
+        !parsedCache.herpVideos || 
+        !parsedCache.f9NextPageToken || 
+        !parsedCache.herpNextPageToken) {
+        console.log('Cache invalid or expired, clearing');
+        localStorage.removeItem(CACHE_KEY);
+        return null;
+    }
+    return parsedCache;
+}
+
+function setCache(data) {
+    const cacheData = {
+        timestamp: Date.now(),
+        f9Videos: data.f9Videos || [],
+        herpVideos: data.herpVideos || [],
+        f9NextPageToken: data.f9NextPageToken || null,
+        herpNextPageToken: data.herpNextPageToken || null
+    };
+    console.log('Setting cache with data:', cacheData); // Debug log
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+}
+
 function getCurrentApiKey() {
     return API_KEYS[currentKeyIndex].key;
 }
@@ -90,35 +129,23 @@ function videoMatchesFilter(video) {
            description.includes('battlezone');
 }
 
-async function fetchVideos(channelId, pageToken = null, retryCount = 0) {
-    if (retryCount >= API_KEYS.length) {
-        console.error('All API keys exhausted');
-        throw new Error('All API keys failed');
-    }
-
-    const apiKey = getCurrentApiKey();
-    const maxResults = 12;
-    let url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=${maxResults}`;
-    
-    if (pageToken) {
-        url += `&pageToken=${pageToken}`;
-    }
-
+async function fetchVideos(channelId, pageToken = '', retryCount = 0) {
     try {
-        console.log(`Using API Key: ${API_KEYS[currentKeyIndex].name}`);
-        const response = await fetch(url);
+        console.log('Fetching videos with token:', pageToken); // Debug log
+        const apiKey = getCurrentApiKey();
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=6&pageToken=${pageToken}&type=video`;
         
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP Error ${response.status}`);
         }
         
         const data = await response.json();
-        if (data.error) {
-            throw new Error(data.error.message);
-        }
+        console.log('API Response:', data); // Debug log
 
         updateQuotaUsage(100);
         const videos = data.items.filter(item => item.id.kind === 'youtube#video' && videoMatchesFilter(item));
+        console.log('Filtered videos:', videos.length, 'Next token:', data.nextPageToken); // Debug log
         return {
             videos: videos,
             nextPageToken: data.nextPageToken
@@ -153,7 +180,7 @@ function createVideoCard(video, isSearchResult = false) {
     const publishedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear().toString().slice(-2)}`;
     
     return `
-        <div class="col-12 mb-4">
+        <div class="col-12 mb-2">
             <div class="card border-2 hover-border-primary" style="transition: border-color 0.2s ease; cursor: pointer;" onclick="handleVideoClick('${video.id.videoId}')">
                 <div class="row g-0">
                     <div class="${isSearchResult ? 'col-md-2' : 'col-md-4'} position-relative">
@@ -196,37 +223,43 @@ function performSearch() {
     const searchInput = document.getElementById('search-input');
     const searchTerm = searchInput.value.toLowerCase().trim();
     
+    // Get both content containers
+    const regularContent = document.getElementById('regular-content');
+    const searchResults = document.getElementById('search-results');
+    const searchResultsContainer = document.getElementById('search-results-container');
+    
+    // If search is empty, show appropriate content
     if (!searchTerm) {
-        document.getElementById('regular-content').classList.remove('d-none');
-        document.getElementById('search-results').classList.add('d-none');
+        if (searchResults.classList.contains('d-none')) {
+            // We're in regular view, show all videos
+            document.querySelectorAll('.card').forEach(card => {
+                card.closest('.col-12').classList.remove('d-none');
+            });
+        } else {
+            // We're in search results view, show all results
+            document.querySelectorAll('#search-results-container .card').forEach(card => {
+                card.closest('.col-12').classList.remove('d-none');
+            });
+        }
         return;
     }
     
-    // Debounce search for better performance
-    clearTimeout(window.searchTimeout);
-    window.searchTimeout = setTimeout(() => {
-        const results = allVideos.filter(video => 
-            video.snippet.title.toLowerCase().includes(searchTerm) ||
-            video.snippet.description.toLowerCase().includes(searchTerm)
-        );
-        
-        const searchResultsSection = document.getElementById('search-results');
-        const regularContent = document.getElementById('regular-content');
-        const searchResultsContainer = document.getElementById('search-results-container');
-        
-        searchResultsContainer.innerHTML = '';
-        
-        if (results.length > 0) {
-            results.forEach(video => {
-                searchResultsContainer.insertAdjacentHTML('beforeend', createVideoCard(video, true));
-            });
-        } else {
-            searchResultsContainer.innerHTML = '<div class="col-12"><p class="text-muted">No videos found matching your search.</p></div>';
-        }
-        
-        searchResultsSection.classList.remove('d-none');
-        regularContent.classList.add('d-none');
-    }, 300);
+    // Filter function for both views
+    const filterCard = (card) => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const description = card.querySelector('.description').textContent.toLowerCase();
+        const matches = title.includes(searchTerm) || description.includes(searchTerm);
+        card.closest('.col-12').classList.toggle('d-none', !matches);
+    };
+    
+    // Apply filter to appropriate view
+    if (searchResults.classList.contains('d-none')) {
+        // Filter regular content
+        document.querySelectorAll('#regular-content .card').forEach(filterCard);
+    } else {
+        // Filter search results
+        document.querySelectorAll('#search-results-container .card').forEach(filterCard);
+    }
 }
 
 // Add event listener for Enter key in search input
@@ -237,49 +270,97 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-async function handleViewMore(event) {
-    const channel = event.target.dataset.channel;
-    console.log('Loading more videos for channel:', channel);
-    
+async function loadMoreVideos(channel) {
     try {
-        if (channel === 'f9bomber') {
-            const result = await fetchVideos(CHANNELS.f9bomber, f9NextPageToken);
-            f9NextPageToken = result.nextPageToken;
-            
-            const container = document.getElementById('f9bomber-videos');
-            result.videos.forEach(video => {
-                container.insertAdjacentHTML('beforeend', createVideoCard(video));
-            });
-            
-            // Hide button if no more pages
-            if (!f9NextPageToken) {
-                event.target.style.display = 'none';
+        console.log('LoadMoreVideos called for channel:', channel); // Debug log
+        console.log('Current tokens - F9:', f9NextPageToken, 'Herp:', herpNextPageToken); // Debug log
+        
+        const container = channel === 'f9bomber' ? 
+            document.getElementById('f9bomber-videos') : 
+            document.getElementById('herp-videos');
+        
+        const pageToken = channel === 'f9bomber' ? f9NextPageToken : herpNextPageToken;
+        
+        console.log('Using page token:', pageToken); // Debug log
+
+        if (!pageToken) {
+            console.log('No page token available for', channel);
+            const button = document.querySelector(`button[data-channel="${channel}"]`);
+            if (button) {
+                button.disabled = true;
+                button.textContent = 'No More Videos';
             }
-            
-            // Add new videos to allVideos array for search
-            allVideos = [...allVideos, ...result.videos];
-            
-        } else if (channel === 'herp') {
-            const result = await fetchVideos(CHANNELS.herp, herpNextPageToken);
-            herpNextPageToken = result.nextPageToken;
-            
-            const container = document.getElementById('herp-videos');
-            result.videos.forEach(video => {
-                container.insertAdjacentHTML('beforeend', createVideoCard(video));
-            });
-            
-            // Hide button if no more pages
-            if (!herpNextPageToken) {
-                event.target.style.display = 'none';
-            }
-            
-            // Add new videos to allVideos array for search
-            allVideos = [...allVideos, ...result.videos];
+            return;
         }
+
+        const channelId = await fetchChannelInfo(CHANNELS[channel], getCurrentApiKey());
+        console.log('Channel ID:', channelId); // Debug log
+        
+        const result = await fetchVideos(channelId, pageToken);
+        console.log('Fetch result:', result); // Debug log
+
+        // Update next page token
+        if (channel === 'f9bomber') {
+            f9NextPageToken = result.nextPageToken;
+        } else {
+            herpNextPageToken = result.nextPageToken;
+        }
+        
+        console.log('Updated tokens - F9:', f9NextPageToken, 'Herp:', herpNextPageToken); // Debug log
+
+        // Add new videos to container
+        if (container && result.videos.length > 0) {
+            result.videos.forEach(video => {
+                container.insertAdjacentHTML('beforeend', createVideoCard(video));
+            });
+            allVideos = [...allVideos, ...result.videos];
+            console.log('Added', result.videos.length, 'new videos'); // Debug log
+        }
+
+        // Update cache with new videos and tokens
+        const cache = getCache() || {};
+        if (channel === 'f9bomber') {
+            cache.f9Videos = [...(cache.f9Videos || []), ...result.videos];
+            cache.f9NextPageToken = result.nextPageToken;
+        } else {
+            cache.herpVideos = [...(cache.herpVideos || []), ...result.videos];
+            cache.herpNextPageToken = result.nextPageToken;
+        }
+        setCache(cache);
+
+        // Disable button if no more videos
+        if (!result.nextPageToken) {
+            console.log('No next page token in result, disabling button'); // Debug log
+            const button = document.querySelector(`button[data-channel="${channel}"]`);
+            if (button) {
+                button.disabled = true;
+                button.textContent = 'No More Videos';
+            }
+        }
+
     } catch (error) {
         console.error('Error loading more videos:', error);
+        const errorAlert = document.getElementById('api-error-alert');
+        const errorMessage = document.getElementById('api-error-message');
+        if (errorAlert && errorMessage) {
+            errorMessage.textContent = error.message;
+            errorAlert.classList.remove('d-none');
+        }
     }
 }
+
+// Add event listeners for View More buttons
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing DOMContentLoaded code ...
+
+    // Add View More button handlers
+    document.querySelectorAll('.view-more').forEach(button => {
+        button.addEventListener('click', function() {
+            const channel = this.dataset.channel;
+            loadMoreVideos(channel);
+        });
+    });
+});
 
 async function performGlobalSearch() {
     const searchInput = document.getElementById('global-search-input');
@@ -349,33 +430,32 @@ async function performGlobalSearch() {
 }
 
 function resetSearch() {
-    // Clear the search input
-    const globalSearchInput = document.getElementById('global-search-input');
-    globalSearchInput.value = '';
+    // Clear both search inputs
+    document.getElementById('search-input').value = '';
+    document.getElementById('global-search-input').value = '';
     
-    // Show regular content and hide search results
-    document.getElementById('regular-content').classList.remove('d-none');
-    document.getElementById('search-results').classList.add('d-none');
-    
-    // Reload only the video listings, not the player
-    const f9bomberContainer = document.getElementById('f9bomber-videos');
-    const herpContainer = document.getElementById('herp-videos');
-    
-    f9bomberContainer.innerHTML = '';
-    herpContainer.innerHTML = '';
-    
-    // Fetch and display initial videos for both channels
-    fetchVideos(CHANNELS.f9bomber).then(result => {
-        result.videos.forEach(video => {
-            f9bomberContainer.insertAdjacentHTML('beforeend', createVideoCard(video));
-        });
-    });
+    // Hide clear filter button if it exists
+    const clearFilterButton = document.getElementById('clear-filter-button');
+    if (clearFilterButton) {
+        clearFilterButton.classList.add('d-none');
+    }
 
-    fetchVideos(CHANNELS.herp).then(result => {
-        result.videos.forEach(video => {
-            herpContainer.insertAdjacentHTML('beforeend', createVideoCard(video));
-        });
-    });
+    // Hide search results and show regular content
+    document.getElementById('search-results').classList.add('d-none');
+    document.getElementById('regular-content').classList.remove('d-none');
+    
+    // Reset page tokens
+    f9NextPageToken = null;
+    herpNextPageToken = null;
+    
+    // Clear any error messages
+    const errorAlert = document.getElementById('api-error-alert');
+    if (errorAlert) {
+        errorAlert.classList.add('d-none');
+    }
+
+    // Load videos (will use cache if available)
+    loadVideos();
 }
 
 // Update the DOMContentLoaded event listener
@@ -391,8 +471,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     loadVideos();
     
+    // Add View More button handlers - fixed to use loadMoreVideos directly
     document.querySelectorAll('.view-more').forEach(button => {
-        button.addEventListener('click', handleViewMore);
+        button.addEventListener('click', function() {
+            const channel = this.dataset.channel;
+            loadMoreVideos(channel);
+        });
     });
 
     // Add global search event listeners
@@ -400,9 +484,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const globalSearchInput = document.getElementById('global-search-input');
     const resetSearchButton = document.getElementById('reset-search-button');
     
-    // Add click handler only
     globalSearchButton.addEventListener('click', performGlobalSearch);
-    
     resetSearchButton.addEventListener('click', resetSearch);
 
     // Add filter clear button functionality
@@ -434,14 +516,53 @@ async function loadVideos() {
         if (f9Container) f9Container.innerHTML = '';
         if (herpContainer) herpContainer.innerHTML = '';
         allVideos = [];
+
+        // Check cache first
+        const cache = getCache();
+        if (cache) {
+            console.log('Using cached videos and tokens:', cache);
+            
+            if (f9Container && cache.f9Videos.length > 0) {
+                cache.f9Videos.forEach(video => {
+                    f9Container.insertAdjacentHTML('beforeend', createVideoCard(video));
+                });
+                allVideos = [...allVideos, ...cache.f9Videos];
+            }
+            
+            if (herpContainer && cache.herpVideos.length > 0) {
+                cache.herpVideos.forEach(video => {
+                    herpContainer.insertAdjacentHTML('beforeend', createVideoCard(video));
+                });
+                allVideos = [...allVideos, ...cache.herpVideos];
+            }
+
+            // Restore page tokens from cache
+            f9NextPageToken = cache.f9NextPageToken;
+            herpNextPageToken = cache.herpNextPageToken;
+            
+            // Find and play the most recent video from cache
+            const allCachedVideos = [...cache.f9Videos, ...cache.herpVideos];
+            if (allCachedVideos.length > 0) {
+                const mostRecent = allCachedVideos.reduce((latest, current) => {
+                    return new Date(current.snippet.publishedAt) > new Date(latest.snippet.publishedAt) ? current : latest;
+                });
+                updateEmbeddedPlayer(mostRecent.id.videoId);
+            }
+            
+            console.log('Restored tokens from cache - F9:', f9NextPageToken, 'Herp:', herpNextPageToken);
+            return;
+        }
+
+        // If no cache or expired, fetch from API
+        console.log('No valid cache found, fetching from API');
         
-        // Get channel IDs first
         const f9ChannelId = await fetchChannelInfo(CHANNELS.f9bomber, getCurrentApiKey());
         const f9Result = await fetchVideos(f9ChannelId);
-        f9NextPageToken = f9Result.nextPageToken;
+        console.log('Initial F9 fetch result:', f9Result);
+        f9NextPageToken = f9Result.nextPageToken || null;
         
-        if (f9Container && f9Result.videos.length > 0) {
-            const f9Videos = f9Result.videos.slice(0, 6);
+        const f9Videos = f9Result.videos;
+        if (f9Container && f9Videos.length > 0) {
             f9Videos.forEach(video => {
                 f9Container.insertAdjacentHTML('beforeend', createVideoCard(video));
             });
@@ -450,24 +571,48 @@ async function loadVideos() {
 
         const herpChannelId = await fetchChannelInfo(CHANNELS.herp, getCurrentApiKey());
         const herpResult = await fetchVideos(herpChannelId);
-        herpNextPageToken = herpResult.nextPageToken;
+        console.log('Initial Herp fetch result:', herpResult);
+        herpNextPageToken = herpResult.nextPageToken || null;
         
-        if (herpContainer && herpResult.videos.length > 0) {
-            const herpVideos = herpResult.videos.slice(0, 6);
+        const herpVideos = herpResult.videos;
+        if (herpContainer && herpVideos.length > 0) {
             herpVideos.forEach(video => {
                 herpContainer.insertAdjacentHTML('beforeend', createVideoCard(video));
             });
             allVideos = [...allVideos, ...herpVideos];
         }
-        
-        if (allVideos.length > 0) {
-            allVideos.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
-            const latestVideo = allVideos[0];
-            updateEmbeddedPlayer(latestVideo.id.videoId);
+
+        // Find and play the most recent video from fresh data
+        const allFetchedVideos = [...f9Videos, ...herpVideos];
+        if (allFetchedVideos.length > 0) {
+            const mostRecent = allFetchedVideos.reduce((latest, current) => {
+                return new Date(current.snippet.publishedAt) > new Date(latest.snippet.publishedAt) ? current : latest;
+            });
+            updateEmbeddedPlayer(mostRecent.id.videoId);
         }
 
+        // Cache the results including page tokens
+        const cacheData = {
+            f9Videos: f9Videos,
+            herpVideos: herpVideos,
+            f9NextPageToken: f9NextPageToken,
+            herpNextPageToken: herpNextPageToken,
+            timestamp: Date.now()
+        };
+        
+        console.log('Caching initial data:', cacheData);
+        setCache(cacheData);
+
+        console.log('Initial page tokens set - F9:', f9NextPageToken, 'Herp:', herpNextPageToken);
+
     } catch (error) {
-        console.error('Error in loadVideos:', error);
+        console.error('Error loading videos:', error);
+        const errorAlert = document.getElementById('api-error-alert');
+        const errorMessage = document.getElementById('api-error-message');
+        if (errorAlert && errorMessage) {
+            errorMessage.textContent = error.message;
+            errorAlert.classList.remove('d-none');
+        }
     }
 }
 
