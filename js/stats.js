@@ -5,6 +5,54 @@ const legendConfig = {
     }
 };
 
+// Add this shared plugin configuration
+const datalabelsConfig = {
+    anchor: 'center',  // Center point of attachment to the bar
+    align: 'center',   // Center the text relative to the anchor point
+    clamp: true,      // Prevent labels from exceeding chart area
+    font: {
+        weight: 'bold'
+    },
+    // Display labels with different opacities
+    color: (context) => {
+        const playerFilter = getPlayerParam();
+        const label = context.dataset.labels ? 
+            context.dataset.labels[context.dataIndex] : // For stacked charts
+            context.chart.data.labels[context.dataIndex]; // For regular charts
+            
+        // Target player gets full opacity
+        if (playerFilter && label.toLowerCase() === playerFilter) {
+            return 'rgba(255, 255, 255, 0.65)';
+        }
+        
+        // Top 3 get 65% opacity
+        if (context.dataIndex < 3) {
+            return 'rgba(255, 255, 255, 0.65)';
+        }
+        
+        // Others get 25% opacity
+        return 'rgba(255, 255, 255, 0.25)';
+    },
+    // Always display labels except for maps chart
+    display: (context) => {
+        if (context.chart.canvas.id === 'mapsChart') {
+            return context.dataIndex < 3;  // Only top 3 for maps
+        }
+        
+        return true;  // Show all labels for other charts
+    }
+};
+
+// Register the plugin
+Chart.register(ChartDataLabels);
+
+// Add this helper function at the top
+function getPlayerParam() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const player = urlParams.get('player');
+    return player ? player.toLowerCase().replace('_', ' ') : null;
+}
+
 // Load stats data
 fetch('/data/stats/stats.json')
     .then(response => response.json())
@@ -19,10 +67,9 @@ fetch('/data/stats/stats.json')
 function createMapsChart(mapsData) {
     const ctx = document.getElementById('mapsChart').getContext('2d');
     
-    // Sort data by play count descending
     const sortedData = Object.entries(mapsData)
         .sort(([,a], [,b]) => b - a)
-        .slice(0, 20); // Show top 20 maps
+        .slice(0, 20);
 
     new Chart(ctx, {
         type: 'bar',
@@ -46,6 +93,11 @@ function createMapsChart(mapsData) {
                 },
                 legend: {
                     display: false
+                },
+                datalabels: {
+                    ...datalabelsConfig,
+                    color: 'rgba(255, 255, 255, 1)',  // Full opacity for map values
+                    display: (context) => context.dataIndex < 3  // Only show top 3
                 }
             },
             scales: {
@@ -59,11 +111,11 @@ function createMapsChart(mapsData) {
 
 function createPlayersChart(playersData) {
     const ctx = document.getElementById('playersChart').getContext('2d');
+    const playerFilter = getPlayerParam();
     
-    // Sort data by command count descending
     const sortedData = Object.entries(playersData)
         .sort(([,a], [,b]) => b - a)
-        .slice(0, 15); // Show top 15 players
+        .slice(0, 15);
 
     new Chart(ctx, {
         type: 'bar',
@@ -72,9 +124,21 @@ function createPlayersChart(playersData) {
             datasets: [{
                 label: 'Times Commanded',
                 data: sortedData.map(([,count]) => count),
-                backgroundColor: 'rgba(255, 99, 132, 0.75)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth:1,
+                backgroundColor: playerFilter 
+                    ? sortedData.map(([player]) => 
+                        player.toLowerCase() === playerFilter 
+                            ? 'rgba(255, 215, 0, 0.75)'
+                            : 'rgba(128, 128, 128, 0.35)'
+                    )
+                    : 'rgba(255, 99, 132, 0.75)',  // Default color if no player filter
+                borderColor: playerFilter
+                    ? sortedData.map(([player]) => 
+                        player.toLowerCase() === playerFilter 
+                            ? 'rgba(255, 215, 0, 1)'
+                            : 'rgba(128, 128, 128, 0.5)'
+                    )
+                    : 'rgba(255, 99, 132, 1)',  // Default border if no player filter
+                borderWidth: 1,
             }]
         },
         options: {
@@ -87,7 +151,8 @@ function createPlayersChart(playersData) {
                 },
                 legend: {
                     display: false,
-                }
+                },
+                datalabels: datalabelsConfig
             },
             scales: {
                 y: {
@@ -131,9 +196,10 @@ function createFactionsChart(factionsData) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Faction Distribution'
+                    text: 'Faction Distribution Totals'
                 },
-                legend: legendConfig
+                legend: legendConfig,
+                datalabels: datalabelsConfig
             },
             scales: {
                 x: {
@@ -151,12 +217,12 @@ function createFactionsChart(factionsData) {
 
 function createWinrateChart(winrateData) {
     const ctx = document.getElementById('winrateChart').getContext('2d');
+    const playerFilter = getPlayerParam();
     
-    // Filter for players with at least 5 games and sort by winrate
     const filteredData = winrateData
         .filter(player => player[1] >= 5)
         .sort((a, b) => b[3] - a[3])
-        .slice(0, 15); // Show top 15 players
+        .slice(0, 15);
 
     new Chart(ctx, {
         type: 'bar',
@@ -165,9 +231,21 @@ function createWinrateChart(winrateData) {
             datasets: [{
                 label: 'Winrate %',
                 data: filteredData.map(player => player[3]),
-                backgroundColor: 'rgba(75, 192, 192, 0.75)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth:1,
+                backgroundColor: playerFilter
+                    ? filteredData.map(player => 
+                        player[0].toLowerCase() === playerFilter 
+                            ? 'rgba(255, 215, 0, 0.75)'
+                            : 'rgba(128, 128, 128, 0.35)'
+                    )
+                    : 'rgba(75, 192, 192, 0.75)',  // Default color if no player filter
+                borderColor: playerFilter
+                    ? filteredData.map(player => 
+                        player[0].toLowerCase() === playerFilter 
+                            ? 'rgba(255, 215, 0, 1)'
+                            : 'rgba(128, 128, 128, 0.5)'
+                    )
+                    : 'rgba(75, 192, 192, 1)',  // Default border if no player filter
+                borderWidth: 1,
             }]
         },
         options: {
@@ -180,6 +258,10 @@ function createWinrateChart(winrateData) {
                 },
                 legend: {
                     display: false
+                },
+                datalabels: {
+                    ...datalabelsConfig,
+                    formatter: (value) => value.toFixed(1) + '%'
                 }
             },
             scales: {
@@ -194,8 +276,8 @@ function createWinrateChart(winrateData) {
 
 function createFactionChoiceChart(factionChoiceData) {
     const ctx = document.getElementById('factionChoiceChart').getContext('2d');
+    const playerFilter = getPlayerParam();
     
-    // Get top 10 players by total games
     const topPlayers = Object.entries(factionChoiceData)
         .map(([player, factions]) => ({
             player,
@@ -205,17 +287,22 @@ function createFactionChoiceChart(factionChoiceData) {
         .slice(0, 10)
         .map(({player}) => player);
 
-    // Prepare data for each faction
     const datasets = ['I.S.D.F', 'Hadean', 'Scion'].map(faction => ({
         label: faction,
         data: topPlayers.map(player => {
             const factionData = factionChoiceData[player].find(([f]) => f === faction);
             return factionData ? factionData[1] : 0;
         }),
+        labels: topPlayers, // Add labels array for datalabels display condition
         borderWidth: 1,
-        backgroundColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
-                        faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
-                        'rgba(255, 206, 86, 0.75)'
+        backgroundColor: topPlayers.map(player => {
+            const baseColor = faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
+                            faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
+                            'rgba(255, 206, 86, 0.75)';
+            return playerFilter && player.toLowerCase() === playerFilter 
+                ? baseColor
+                : playerFilter ? baseColor.replace('0.75', '0.15') : baseColor;
+        })
     }));
 
     new Chart(ctx, {
@@ -231,7 +318,8 @@ function createFactionChoiceChart(factionChoiceData) {
                 title: {
                     display: true,
                     text: 'Top Players Faction Distribution'
-                }
+                },
+                datalabels: datalabelsConfig
             },
             scales: {
                 x: {
