@@ -107,7 +107,10 @@ function createMapsChart(mapsData) {
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        autoSkip: false  // Prevent skipping labels
+                    }
                 }
             }
         }
