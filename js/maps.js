@@ -184,7 +184,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 const mapfile = contextMenu.dataset.mapfile;
                 if (mapfile) {
                     // Navigate to the static page
-                    window.location.href = `/maps/m/${mapfile}/`;
+                    window.location.href = `/maps/m/${mapfile}/?redirect=false`;
                 }
                 contextMenu.classList.add('d-none');
             });
