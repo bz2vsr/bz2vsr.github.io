@@ -33,13 +33,20 @@ const datalabelsConfig = {
         // Others get 25% opacity
         return 'rgba(255, 255, 255, 0.25)';
     },
-    // Always display labels except for maps chart
+    // Only display labels for target player and top 3
     display: (context) => {
         if (context.chart.canvas.id === 'mapsChart') {
-            return context.dataIndex < 3;  // Only top 3 for maps
+            return false;  // No labels for maps chart
         }
         
-        return true;  // Show all labels for other charts
+        const playerFilter = getPlayerParam();
+        const label = context.dataset.labels ? 
+            context.dataset.labels[context.dataIndex] : 
+            context.chart.data.labels[context.dataIndex];
+            
+        // Show label if it's target player or in top 3
+        return (playerFilter && label.toLowerCase() === playerFilter) || 
+               context.dataIndex < 3;
     }
 };
 
@@ -95,9 +102,7 @@ function createMapsChart(mapsData) {
                     display: false
                 },
                 datalabels: {
-                    ...datalabelsConfig,
-                    color: 'rgba(255, 255, 255, 1)',  // Full opacity for map values
-                    display: (context) => context.dataIndex < 3  // Only show top 3
+                    display: false  // Disable datalabels for maps chart
                 }
             },
             scales: {
