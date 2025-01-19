@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Twitch integration
-const channels = ['blue_banana_bz2', 'sevsunday'];
+const channels = ['blue_banana_bz2', 'happyotter', 'hypervivify_'];
 
 async function updateTwitchStreams() {
     const container = document.getElementById('twitchEmbeds');

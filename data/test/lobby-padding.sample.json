@@ -1,0 +1,596 @@
+{
+    "Metadata": {
+        "ListServer": {
+            "Rebellion": {
+                "Status": "cached",
+                "Success": true,
+                "Timestamp": "2025-01-17T02:05:19.9511945Z"
+            }
+        }
+    },
+    "SessionsDefault": {
+        "Type": "Listen"
+    },
+    "DataCache": {
+        "Level": {
+            "GameType": {
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            },
+            "GameMode": {
+                "STRAT": {
+                    "Name": "Strategy"
+                },
+                "MPI": {
+                    "Name": "MPI"
+                }
+            }
+        },
+        "Players": {
+            "IDs": {
+                "Steam": {
+                    "76561197962996353": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/2077310655e8a64afabf1bd88b3c38e5e65bff1b_full.jpg",
+                        "Nickname": "Herp McDerperson",
+                        "ProfileUrl": "https://steamcommunity.com/id/herpmcderperson/"
+                    },
+                    "76561198043392032": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/80a25b80bbc99b3bcea39e1a59a0c7a0ba41a92a_full.jpg",
+                        "Nickname": "blue",
+                        "ProfileUrl": "https://steamcommunity.com/id/bzlolol/"
+                    },
+                    "76561198045619216": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/cf23b79009899e1aa191ea823a4993e9c6ff64b3_full.jpg",
+                        "Nickname": "Zack",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198045619216/"
+                    },
+                    "76561197974548434": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/3b6482ed10032723c6f710f0b61fa3c5c82a040f_full.jpg",
+                        "Nickname": "VTrider",
+                        "ProfileUrl": "https://steamcommunity.com/id/vtrider/"
+                    },
+                    "76561198058690608": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/7ffdf383dbc5a966ee1aad6d1643c70e06b9fe1b_full.jpg",
+                        "Nickname": "judgeguns",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198058690608/"
+                    },
+                    "76561198026325621": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/5114be0aaaecc3142d29c7acadbdee92d0f1118a_full.jpg",
+                        "Nickname": "F9bomber",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198026325621/"
+                    },
+                    "76561199653748651": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/d11a4032178ddcad6c2951556bd6a8952fc2aaba_full.jpg",
+                        "Nickname": "Sev",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199653748651/"
+                    },
+                    "76561199037128718": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/da1102f0bf69acc839f6918f7ea52ea5feaffd98_full.jpg",
+                        "Nickname": "iPhingrMyAyniss",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199037128718/"
+                    },
+                    "76561199484417148": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+                        "Nickname": "MyAyniss",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199484417148/"
+                    }
+                }
+            }
+        }
+    },
+    "Mods": {
+        "1325933293": {
+            "Name": "Vet Strat Recycler Variant",
+            "ID": "1325933293",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1325933293/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+        },
+        "1329659846": {
+            "Name": "Aegeis VSR Map Pack",
+            "ID": "1329659846",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329659846/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+        },
+        "2785557433": {
+            "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+            "ID": "2785557433",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785557433/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+        },
+        "2785542655": {
+            "Name": "FE:Remastered: Hadean Asset Pack",
+            "ID": "2785542655",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785542655/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+        },
+        "2814914461": {
+            "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+            "ID": "2814914461",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2814914461/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+        },
+        "2049956570": {
+            "Name": "FE:Remastered: ISDF Model Pack",
+            "ID": "2049956570",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+        },
+        "2049959749": {
+            "Name": "FE:Remastered: Scion Model Pack",
+            "ID": "2049959749",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+        },
+        "2467249743": {
+            "Name": "Gravey's VSR Map Pack",
+            "ID": "2467249743",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2467249743/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+        },
+        "0": {
+            "Name": "Stock",
+            "ID": "0",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+        },
+        "1329976523": {
+            "Name": "Aegeis All In One Pack",
+            "ID": "1329976523",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329976523/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329976523"
+        },
+        "1374954711": {
+            "Name": "Biometal Maps Assets",
+            "ID": "1374954711",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374954711/mod.webp",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374954711"
+        },
+        "1374955473": {
+            "Name": "ScrapPool's Collection",
+            "ID": "1374955473",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374955473/mod.webp",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374955473"
+        },
+        "1374955975": {
+            "Name": "Biometal Weapons Assets",
+            "ID": "1374955975",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374955975/mod.webp",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374955975"
+        },
+        "1374956537": {
+            "Name": "Biometal Vehicles Assets",
+            "ID": "1374956537",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1374956537/mod.webp",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1374956537"
+        },
+        "1386405185": {
+            "Name": "Rocket's RV Assets",
+            "ID": "1386405185",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1386405185/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1386405185"
+        },
+        "1322678425": {
+            "Name": "KatPak Assets",
+            "ID": "1322678425",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1322678425/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1322678425"
+        },
+        "1450522956": {
+            "Name": "GreenHeart Asset Pack",
+            "ID": "1450522956",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1450522956/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1450522956"
+        },
+        "1662220012": {
+            "Name": "Aegeis TOONS & Toonworld Assets",
+            "ID": "1662220012",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1662220012/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1662220012"
+        },
+        "1665391296": {
+            "Name": "War Pigs Faction (Standalone)",
+            "ID": "1665391296",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1665391296"
+        },
+        "1800746781": {
+            "Name": "FE:Remastered: Hadean Model Pack",
+            "ID": "1800746781",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1800746781/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1800746781"
+        },
+        "2034315080": {
+            "Name": "The \"Reformulated\" BZ2 Classics Maps : Asset Pack",
+            "ID": "2034315080",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2034315080/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2034315080"
+        },
+        "2068308431": {
+            "Name": "FE:Remastered: Cerberi Model Pack",
+            "ID": "2068308431",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2068308431/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2068308431"
+        },
+        "2090767005": {
+            "Name": "Aegeis Map Pack ASSET",
+            "ID": "2090767005",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2090767005/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2090767005"
+        },
+        "2093546600": {
+            "Name": "Aegeis Map Pack ASSET 2",
+            "ID": "2093546600",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2093546600/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2093546600"
+        },
+        "1737584373": {
+            "Name": "MPI Lua Conversion",
+            "ID": "1737584373",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1737584373"
+        },
+        "2111177094": {
+            "Name": "BZCC: Phaer Rhan Asset",
+            "ID": "2111177094",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2111177094/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2111177094"
+        }
+    },
+    "Sessions": [
+        {
+            "ID": "Rebellion:69IFEC@@mp",
+            "Name": "vidya",
+            "Message": "Oh god how did this get in here I am not good with computer",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 10
+                }
+            ],
+            "PlayerCount": {
+                "Player": 7
+            },
+            "Level": {
+                "MapFile": "vsrpstrgle.bzn",
+                "ID": "1325933293:vsrpstrgle",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "STRAT"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/c64c36eac16e6ea09d02e75e55c020800acc72dcd255c6d57a723d3a843f0d17.png",
+                "Name": "VSR: Power Struggle",
+                "Description": "﻿ST: VSR: Power Struggle\r\nEnvironment: The Dark Planet \r\nPools: 7\r\nLoose: 265\r\n\r\nInspired by ST: The Rock, this map features adjacent bases, separated by a wall."
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "PreGame"
+            },
+            "Players": [
+                {
+                    "Name": "Herp McDerperson",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "2",
+                        "SubTeam": {
+                            "ID": "7"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 7
+                        },
+                        "BZRNet": {
+                            "ID": "S76561197962996353"
+                        },
+                        "Steam": {
+                            "Raw": "76561197962996353",
+                            "ID": "76561197962996353"
+                        }
+                    }
+                },
+                {
+                    "Name": "brb iPhawndelMyAyniss",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "2",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "6"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 6
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198043392032"
+                        },
+                        "Steam": {
+                            "Raw": "76561198043392032",
+                            "ID": "76561198043392032"
+                        }
+                    }
+                },
+                {
+                    "Name": "ping when rdy Zack",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "2"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 2
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198045619216"
+                        },
+                        "Steam": {
+                            "Raw": "76561198045619216",
+                            "ID": "76561198045619216"
+                        }
+                    }
+                },
+                {
+                    "Name": "VTtabbed",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "3"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 3
+                        },
+                        "BZRNet": {
+                            "ID": "S76561197974548434"
+                        },
+                        "Steam": {
+                            "Raw": "76561197974548434",
+                            "ID": "76561197974548434"
+                        }
+                    }
+                },
+                {
+                    "Name": "judgeguns",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "4"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 4
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198058690608"
+                        },
+                        "Steam": {
+                            "Raw": "76561198058690608",
+                            "ID": "76561198058690608"
+                        }
+                    }
+                },
+                {
+                    "Name": "F9bomber",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "2",
+                        "SubTeam": {
+                            "ID": "8"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 8
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198026325621"
+                        },
+                        "Steam": {
+                            "Raw": "76561198026325621",
+                            "ID": "76561198026325621"
+                        }
+                    }
+                },
+                {
+                    "Name": "iDeestroyAyniss",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "2",
+                        "SubTeam": {
+                            "ID": "9"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 9
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199653748651"
+                        },
+                        "Steam": {
+                            "Raw": "76561199653748651",
+                            "ID": "76561199653748651"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "MaxPingSeen": 127,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "69IFEC@@mp",
+                "NAT_TYPE": "FULL CONE"
+            },
+            "Game": {
+                "Mod": "1325933293",
+                "Version": "2.0.194.5",
+                "ModHash": "Dx7b73"
+            },
+            "Time": {
+                "Seconds": 840,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "PreGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Team 1"
+                },
+                "2": {
+                    "Name": "Team 2",
+                    "Human": true,
+                    "Computer": false
+                }
+            }
+        },
+        {
+            "ID": "Rebellion:RXN2F@@@Wk",
+            "Name": "stuff me like a boston creampie",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 4
+                }
+            ],
+            "PlayerCount": {
+                "Player": 2
+            },
+            "Level": {
+                "MapFile": "Excavation2.bzn",
+                "ID": "1329976523:excavation2",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "MPI"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/dba7f75cad3baea0b384d8fba9b6558f30ce68fe750a2273cd490464d899053d.png",
+                "Name": "MPI: Excavation",
+                "Description": "An abandoned excavation site was once here, where the winds and sands hide what once remain.\r\n\r\n7 BioMetal Pools\r\n\r\nOriginal Map by Pandemic:\r\n\"Desert Quarry\"\r\nRemade by: BioMetalical"
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": true,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "iPhingrMyAyniss",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "3"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 3
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199037128718"
+                        },
+                        "Steam": {
+                            "Raw": "76561199037128718",
+                            "ID": "76561199037128718"
+                        }
+                    }
+                },
+                {
+                    "Name": "MyAyniss",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199484417148"
+                        },
+                        "Steam": {
+                            "Raw": "76561199484417148",
+                            "ID": "76561199484417148"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "MaxPingSeen": 51,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "RXN2F@@@Wk",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Mod": "1329976523",
+                "Mods": [
+                    "1374954711",
+                    "1374955473",
+                    "1374955975",
+                    "1374956537",
+                    "1386405185",
+                    "1322678425",
+                    "1450522956",
+                    "1662220012",
+                    "1665391296",
+                    "1800746781",
+                    "2034315080",
+                    "2049959749",
+                    "2049956570",
+                    "2068308431",
+                    "2090767005",
+                    "2093546600",
+                    "1737584373",
+                    "2111177094"
+                ],
+                "Version": "2.0.185",
+                "ModHash": "nrI7n"
+            },
+            "Time": {
+                "Seconds": 180,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Nomads"
+                },
+                "2": {
+                    "Name": "Revolutionaires",
+                    "Human": false,
+                    "Computer": true
+                }
+            }
+        }
+    ]
+}
