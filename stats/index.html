@@ -22,19 +22,80 @@
 
     </head>
     <body class="d-flex flex-column h-100">
-        <nav class="navbar navbar-expand navbar-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark mb-1">
             <div class="container-fluid">
-                <a class="navbar-brand">
-                    <img src="/img/logo.png" class="img-fluid ms-2 me-1" height="32" width="32">
-                    <span class="d-none d-lg-inline">Game Stats 2024</span>
-                </a>
-                <div class="d-none d-lg-block">
-                    <a href="/" class="btn btn-success">
-                        Return Home
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill mb-1" viewBox="0 0 16 16">
-                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.5.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"/>
-                        </svg>
+                <div class="d-inline m-0 p-0">
+                    <a class="navbar-brand me-2">
+                        <img src="/img/logo.png" class="img-fluid ms-2 me-1" height="30" width="30">
+                        <span class="d-none d-lg-inline" style="position:relative;top:1px;">GameWatch</span>
                     </a>
+                    <ul id="liveIndicator" class="d-none" title="Live updates active.">
+                        <li></li>
+                    </ul>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="/">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill mb-1 me-1" viewBox="0 0 16 16">
+                                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+                                    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                                </svg>
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="/maps">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul mb-1 me-1" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                                </svg>
+                                Maps
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#hostModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1 me-1" viewBox="0 0 16 16">
+                                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                                </svg>
+                                Host
+                            </a>
+                        </li>
+
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" href="/stats">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-fill mb-1 me-1" viewBox="0 0 16 16">
+                                    <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+                                </svg>
+                                Stats
+                            </a>
+                        </li>
+
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="/vid">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video-fill mb-1 me-1" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2z"/>
+                                </svg>
+                                Videos
+                            </a>
+                        </li>
+
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#aboutModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill mb-1 me-1" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                </svg>
+                                About
+                            </a>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -105,6 +166,312 @@
                 </div> 
             </div>
         </main>
+        <!-- Host Game Modal -->
+        <div class="modal fade" id="hostModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Host Game</h5>
+                        <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body bg-opacity-0 border-0">
+                        <p class="text-muted small alert alert-secondary">
+                            This will host a game called "bz2vsr" as you.
+                            It will not work if Battlezone is already open. 
+                            <br><br>
+                            <span class="badge text-bg-secondary">Ctrl-Shift-X</span> followed by <span class="badge text-bg-secondary">Enter</span> can be used as a quick way to host a game.
+                        </p>
+                        <div class="d-flex justify-content-end">
+                            <a id="modalHostButton" href='steam://rungame/624970/76561198955218468/-hostname%20"bz2vsr"%20-nomovies' 
+                                onclick='document.querySelector("#modalCloseButton").click();'
+                                class="btn btn-success">
+                                Host
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill mb-1" viewBox="0 0 16 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VSR Map Modal -->
+        <div class="modal fade" id="mapModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-subtle d-flex justify-content-between align-items-center">
+                        <div>
+                            <span id="mmName">${map.Name}</span>
+                            <span id="mmFile" class="ms-2 text-secondary small">${map.File}</span>
+                        </div>
+                        <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="bg-dark-subtle rounded-top w-100">
+                            <div class="mv-image text-center">
+                                <img id="mmImage" class="border border-secondary-subtle border-2 rounded my-3" width="325" height="325" src="/img/no_steam_pfp.jpg" style="filter:brightness(1.25)" height="auto"  onerror="this.src='/img/no_steam_pfp.jpg'">
+                            </div>
+                            <div class="mv-body bg-secondary-subtle">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Pools</strong>
+                                        <span id="mmPools">${map.Pools}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Loose</strong>
+                                        <span id="mmLoose">${map.Loose}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Base-To-Base Distance (m)</strong>
+                                        <span id="mmB2B">${map.Size.baseToBase}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>TER Size (m)</strong>
+                                        <span id="mmSize">${map.Size.formattedSize}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <strong>Author</strong>
+                                        <span id="mmAuthor">${map.Author}</span>
+                                    </li>
+                                    <li class="list-group-item text-secondary p-3">
+                                        <span id="mmDescription">
+                                            ${map.Description}
+                                        </span>
+                                        <br>
+                                        <span id="mmTags">${map.Tags}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/maps" class="btn btn-purple text-light bg-gradient">
+                            Browse All Maps
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
+                                <path
+                                    d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
+                                <path fill-rule="evenodd"
+                                    d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Modal -->
+        <div class="modal fade" id="aboutModal" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-subtle">
+                        <h5 class="modal-title">About</h5>
+                        <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body bg-opacity-0 border-0">
+                        <p>
+                            This page displays statistics for players, maps, and factions per a manual collection process. While this can never be truly comprehensive, it provides a fun and interesting overview of various aspects of the game.
+                        </p>
+                        <p>
+                        </p>
+                        <p>
+                        All data is created and maintained by F9Bomber (<a target="_blank" href="https://steamcommunity.com/profiles/76561198026325621/">Steam</a> | <a target="_blank" href="https://www.youtube.com/@F9bomber">YouTube</a>), based on VSR games hosted by the <a target="_blank" href="https://discord.gg/FQnXFhnp">BZ2 Vet Strat</a> Discord community (yes, we're still here!).
+                        </p>
+                        <p>
+                            For source code and technical details, see the <a target="_blank" href="https://github.com/bz2vsr/bz2vsr.github.io">Github repo</a>.
+                        </p>
+                    </div>
+                    <div class="modal-footer p-2">
+                        <a target="_blank" href="https://github.com/bz2vsr/bz2vsr.github.io" class="btn btn-secondary text-light bg-gradient">
+                            Source Code
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github mb-1 ms-1" viewBox="0 0 16 16">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                            </svg>
+                        </a>
+                        <a target="_blank" href="https://discord.com/invite/FQnXFhnp" class="btn btn-purple text-light bg-gradient">
+                            BZ2 Vet Strats
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord mb-1 ms-1" viewBox="0 0 16 16">
+                            <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+                            </svg>
+                        </a>
+                        <a target="_blank" href="https://store.steampowered.com/app/624970/Battlezone_Combat_Commander/" class="btn btn-primary text-light bg-gradient">
+                            Get Battlezone
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-steam mb-1 ms-1" viewBox="0 0 16 16">
+                            <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+                            <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Setting Modal -->
+        <div class="modal fade" id="settingsModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-subtle">
+                        <h5 class="modal-title">Settings</h5>
+                        <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body bg-opacity-0 border-0">
+                        <div class="list-group shadow">
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <strong class="mb-0">Live Updates</strong>
+                                        <p class="text-muted mb-0">Poll new data every 3 seconds.</p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="form-check form-check-inline form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="LiveUpdateToggle" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <strong class="mb-0">Compact Player Cards</strong>
+                                        <p class="text-muted mb-0">Removes Steam PFP and reduces dimensions.</p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="form-check form-check-inline form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="CompactCardsToggle" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <strong class="mb-0">Linked Player Cards</strong>
+                                        <p class="text-muted mb-0">Turns entire player cards into profile links.</p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="form-check form-check-inline form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="LinkedCardsToggle">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <strong class="mb-0">VSR Only</strong>
+                                        <p class="text-muted mb-0">Only list VSR games.</p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="form-check form-check-inline form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="VSRToggle">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Picker Game Modal -->
+        <div class="modal fade" id="pickerModal" tabindex="-1">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-subtle">
+                        <h5 class="modal-title">Random Maps</h5>
+                        <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body bg-opacity-0 border-0">
+                        <div class="d-flex justify-content-center spinner h-100 align-items-center">
+                            <div class="spinner-border text-secondary my-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="row d-none picker-content">
+                            <div class="col-12 col-md-4 text-center">
+                                <h5 id="pickerMapTitle-0" class="mb-0 rounded-0 rounded-top border-bottom-0 alert alert-secondary fw-bold"></h5>
+                                <img width="100%" height="250" class="img-thumbnail rounded-0 rounded-bottom bg-dark-subtle" id="pickerMapImage-0" onError="this.src='/img/no_steam_pfp.jpg'"/>
+                                <div class="alert alert-secondary mt-2 small d-flex justify-content-between align-middle mb-1">
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">Pools</strong>
+                                        <span id="pickerMapPools-0">0</span>
+                                   </span>
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">B2B Distance</strong>
+                                        <span id="pickerMapSize-0">NA</span>
+                                   </span>
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">Loose</strong>
+                                        <span id="pickerMapLoose-0">NA</span> 
+                                   </span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 text-center">
+                                <h5 id="pickerMapTitle-1" class="mb-0 rounded-0 rounded-top border-bottom-0 alert alert-secondary fw-bold"></h5>
+                                <img width="100%" height="250" class="img-thumbnail rounded-0 rounded-bottom bg-dark-subtle" id="pickerMapImage-1" onError="this.src='/img/no_steam_pfp.jpg'"/>
+                                <div class="alert alert-secondary mt-2 small d-flex justify-content-between align-middle mb-1">
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">Pools</strong>
+                                        <span id="pickerMapPools-1">0</span>
+                                   </span>
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">B2B Distance</strong>
+                                        <span id="pickerMapSize-1">NA</span>
+                                   </span>
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">Loose</strong>
+                                        <span id="pickerMapLoose-1">NA</span> 
+                                   </span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 text-center">
+                                <h5 id="pickerMapTitle-2" class="mb-0 rounded-0 rounded-top border-bottom-0 alert alert-secondary fw-bold"></h5>
+                                <img width="100%" height="250" class="img-thumbnail rounded-0 rounded-bottom bg-dark-subtle" id="pickerMapImage-2" onError="this.src='/img/no_steam_pfp.jpg'"/>
+                                <div class="alert alert-secondary mt-2 small d-flex justify-content-between align-middle mb-1">
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">Pools</strong>
+                                        <span id="pickerMapPools-2">0</span>
+                                   </span>
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">B2B Distance</strong>
+                                        <span id="pickerMapSize-2">NA</span>
+                                   </span>
+                                   <span>
+                                        <strong class="d-block mb-1 border-bottom">Loose</strong>
+                                        <span id="pickerMapLoose-2">NA</span> 
+                                   </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer p-2">
+                        <a href="/maps" class="btn btn-purple text-light bg-gradient">
+                            Browse All Maps
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
+                                <path
+                                    d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
+                                <path fill-rule="evenodd"
+                                    d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z" />
+                            </svg>
+                        </a>
+                        <button id="pickerButton" type="button" class="btn btn-primary text-light bg-gradient">
+                            Shuffle
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shuffle" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.6 9.6 0 0 0 7.556 8a9.6 9.6 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.6 10.6 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.6 9.6 0 0 0 6.444 8a9.6 9.6 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5"/>
+                            <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192m0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.2.1/b-3.2.0/b-colvis-3.2.0/rg-1.5.1/sc-2.4.3/sp-2.3.3/sl-3.0.0/datatables.min.js"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

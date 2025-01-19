@@ -159,9 +159,9 @@ async function fetchVideos(channelId, pageToken = '', retryCount = 0) {
 }
 
 function updateEmbeddedPlayer(videoId) {
-    const embedContainer = document.getElementById('latest-video');
-    if (embedContainer) {
-        embedContainer.innerHTML = `
+    const playerContainer = document.getElementById('latest-video');
+    if (playerContainer) {
+        playerContainer.innerHTML = `
             <iframe 
                 width="100%" 
                 height="100%" 
@@ -663,3 +663,64 @@ function resetQuotaAtMidnight() {
 }
 
 resetQuotaAtMidnight();
+
+document.addEventListener('DOMContentLoaded', function() {
+    const hideWarning = localStorage.getItem('hideQuotaWarning');
+    if (hideWarning !== 'true') {
+        const modal = new bootstrap.Modal(document.getElementById('quotaWarningModal'));
+        modal.show();
+    }
+
+    document.getElementById('dontShowAgainCheck').addEventListener('change', function(e) {
+        if (e.target.checked) {
+            localStorage.setItem('hideQuotaWarning', 'true');
+        } else {
+            localStorage.removeItem('hideQuotaWarning');
+        }
+    });
+});
+
+// Twitch integration
+const channels = ['blue_banana_bz2', 'sevsunday'];
+
+async function updateTwitchStreams() {
+    const container = document.getElementById('twitchEmbeds');
+    if (!container) return;
+    
+    container.innerHTML = '';
+
+    for (const channel of channels) {
+        const streamContainer = document.createElement('div');
+        streamContainer.className = 'mb-4';
+        container.appendChild(streamContainer);
+
+        try {
+            const embed = new Twitch.Embed(streamContainer, {
+                channel: channel,
+                width: '100%',
+                height: 300,
+                layout: 'video',
+                parent: ['localhost', 'bz2vsr.com']
+            });
+
+            embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+                console.log(`${channel} stream is live!`);
+            });
+
+        } catch (error) {
+            console.error('Error creating Twitch embed:', error);
+            streamContainer.innerHTML = `
+                <div class="alert alert-danger">
+                    <small>Error loading stream for ${channel}</small>
+                </div>
+            `;
+        }
+    }
+}
+
+// Initialize Twitch embed after DOM content is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    updateTwitchStreams();
+    // Check for new streams every 30 seconds
+    setInterval(updateTwitchStreams, 5 * 60 * 1000);
+});

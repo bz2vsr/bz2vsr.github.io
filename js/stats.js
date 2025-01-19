@@ -183,10 +183,37 @@ function addExpandListeners(data) {
     });
 }
 
+// Add this helper function at the top
+function handlePlayerClick(playerName) {
+    // Update dropdown selection
+    const playerSelect = document.getElementById('playerSelect');
+    const matchingOption = Array.from(playerSelect.options)
+        .find(option => option.value.toLowerCase() === playerName.toLowerCase());
+    if (matchingOption) {
+        playerSelect.value = matchingOption.value;
+        
+        // Update URL
+        const url = new URL(window.location);
+        url.searchParams.set('player', matchingOption.value);
+        window.history.pushState({}, '', url);
+        
+        // Refresh all charts
+        createMapsChart(currentData.all_maps_played);
+        createPlayersChart(currentData.all_players_commanded);
+        createFactionsChart(currentData.most_played_factions);
+        createWinrateChart(currentData.player_winrate_by_commanding);
+        createFactionChoiceChart(currentData.player_faction_choice);
+    }
+}
+
+// Store data globally
+let currentData = null;
+
 // Load stats data
 fetch('/data/stats/stats.json')
     .then(response => response.json())
     .then(data => {
+        currentData = data;
         populatePlayerDropdown(data);
         createMapsChart(data.all_maps_played);
         createPlayersChart(data.all_players_commanded);
@@ -332,14 +359,14 @@ function createPlayersChart(playersData) {
                 data: sortedData.map(([,count]) => count),
                 backgroundColor: playerFilter 
                     ? sortedData.map(([player]) => 
-                        player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
+                        player.toLowerCase() === playerFilter.toLowerCase()
                             ? 'rgba(255, 215, 0, 0.75)'
                             : 'rgba(128, 128, 128, 0.35)'
                     )
                     : 'rgba(255, 99, 132, 0.75)',
                 hoverBackgroundColor: playerFilter
                     ? sortedData.map(([player]) => 
-                        player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
+                        player.toLowerCase() === playerFilter.toLowerCase()
                             ? 'rgba(255, 215, 0, 1)'
                             : 'rgba(128, 128, 128, 0.6)'
                     )
@@ -360,6 +387,13 @@ function createPlayersChart(playersData) {
                     display: false,
                 },
                 datalabels: datalabelsConfig
+            },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const playerName = sortedData[index][0];
+                    handlePlayerClick(playerName);
+                }
             },
             scales: {
                 x: {
@@ -479,14 +513,14 @@ function createWinrateChart(winrateData) {
                 data: filteredData.map(player => player[3]),
                 backgroundColor: playerFilter
                     ? filteredData.map(player => 
-                        player[0].toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
+                        player[0].toLowerCase() === playerFilter.toLowerCase()
                             ? 'rgba(255, 215, 0, 0.75)'
                             : 'rgba(128, 128, 128, 0.35)'
                     )
                     : 'rgba(75, 192, 192, 0.75)',
                 hoverBackgroundColor: playerFilter
                     ? filteredData.map(player => 
-                        player[0].toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
+                        player[0].toLowerCase() === playerFilter.toLowerCase()
                             ? 'rgba(255, 215, 0, 1)'
                             : 'rgba(128, 128, 128, 0.6)'
                     )
@@ -509,6 +543,13 @@ function createWinrateChart(winrateData) {
                 datalabels: {
                     ...datalabelsConfig,
                     formatter: (value) => value.toFixed(1) + '%'
+                }
+            },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const playerName = filteredData[index][0];
+                    handlePlayerClick(playerName);
                 }
             },
             scales: {
@@ -568,24 +609,13 @@ function createFactionChoiceChart(factionChoiceData) {
             const factionData = factionChoiceData[player].find(([f]) => f === faction);
             return factionData ? factionData[1] : 0;
         }),
-        labels: topPlayers,
-        borderWidth: 1,
-        backgroundColor: topPlayers.map(player => {
-            const baseColor = faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
-                            faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
-                            'rgba(255, 206, 86, 0.75)';
-            return playerFilter && player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
-                ? baseColor
-                : playerFilter ? baseColor.replace('0.75', '0.15') : baseColor;
-        }),
-        hoverBackgroundColor: topPlayers.map(player => {
-            const baseColor = faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 1)' :
-                            faction === 'Hadean' ? 'rgba(255, 99, 132, 1)' :
-                            'rgba(255, 206, 86, 1)';
-            return playerFilter && player.toLowerCase() === playerFilter.toLowerCase()  // Add toLowerCase() here
-                ? baseColor
-                : playerFilter ? baseColor.replace('1)', '0.4)') : baseColor;
-        })
+        backgroundColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
+                       faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
+                       'rgba(255, 206, 86, 0.75)',
+        borderColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 1)' :
+                    faction === 'Hadean' ? 'rgba(255, 99, 132, 1)' :
+                    'rgba(255, 206, 86, 1)',
+        borderWidth: 1
     }));
 
     const maxValue = Math.max(...datasets.map(dataset => 
@@ -608,6 +638,13 @@ function createFactionChoiceChart(factionChoiceData) {
                     text: 'Top Players Faction Distribution'
                 },
                 datalabels: datalabelsConfig
+            },
+            onClick: (event, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const playerName = topPlayers[index];
+                    handlePlayerClick(playerName);
+                }
             },
             scales: {
                 x: {
@@ -688,3 +725,50 @@ function resetAllCharts(data) {
     createWinrateChart(data.player_winrate_by_commanding);
     createFactionChoiceChart(data.player_faction_choice);
 } 
+
+// grabs 3 random maps when loading the Map Picker modal
+function getRandomMaps() {
+    fetch('/data/maps/vsrmaplist.json')
+        .then(response => response.json())
+        .then(MapData => {
+            // Ensure we have at least 3 unique random indexes
+            const indexes = new Set();
+            while (indexes.size < 3) {
+                indexes.add(Math.floor(Math.random() * MapData.length));
+            }
+
+            const Maps = Array.from(indexes).map(index => MapData[index]);
+
+            const pickerModal = document.querySelector("#pickerModal");
+            const spinner = pickerModal.querySelector(".spinner");
+            const pickerContent = pickerModal.querySelector(".picker-content");
+
+            if (spinner) {
+                spinner.remove();
+            }
+
+            pickerContent.classList.remove("d-none");
+
+            Maps.forEach((map, index) => {
+                document.querySelector(`#pickerMapTitle-${index}`).textContent = map.Name;
+                document.querySelector(`#pickerMapImage-${index}`).src = map.Image;
+                document.querySelector(`#pickerMapPools-${index}`).textContent = map.Pools;
+                document.querySelector(`#pickerMapSize-${index}`).textContent = map.Size.baseToBase;
+                document.querySelector(`#pickerMapLoose-${index}`).textContent = map.Loose === -2 ? "INF" : (map.Loose === -1 ? "NA" : map.Loose);
+            });
+        })
+        .catch(error => console.error('Error loading MapData: ', error));
+
+}
+
+    // pick random maps when map picker modal loads
+    document.querySelector("#pickerModal").addEventListener("show.bs.modal", function(event)
+    {
+        getRandomMaps();
+    });
+
+    // [re]pick random maps when the shuffle button is clicked on map picker modal
+    document.querySelector("#pickerButton").addEventListener("click", function(event)
+    {
+        getRandomMaps();
+    });
