@@ -601,6 +601,9 @@ function createFactionChoiceChart(factionChoiceData) {
         topPlayers = topPlayers.slice(0, 10);
     }
 
+    // Store the highest total before converting topPlayers to just names
+    const maxTotal = Math.max(...topPlayers.map(p => p.total));
+    
     topPlayers = topPlayers.map(({player}) => player);
 
     const datasets = ['I.S.D.F', 'Hadean', 'Scion'].map(faction => ({
@@ -609,18 +612,21 @@ function createFactionChoiceChart(factionChoiceData) {
             const factionData = factionChoiceData[player].find(([f]) => f === faction);
             return factionData ? factionData[1] : 0;
         }),
-        backgroundColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 0.75)' :
-                       faction === 'Hadean' ? 'rgba(255, 99, 132, 0.75)' :
-                       'rgba(255, 206, 86, 0.75)',
+        backgroundColor: topPlayers.map(player => {
+            const baseColor = faction === 'I.S.D.F' ? 'rgba(54, 162, 235, ' :
+                            faction === 'Hadean' ? 'rgba(255, 99, 132, ' :
+                            'rgba(255, 206, 86, ';
+            // If no player is filtered, use 0.75 opacity for all
+            // If player is filtered, use 0.75 for selected player and 0.35 for others
+            return baseColor + (playerFilter ? 
+                (player.toLowerCase() === playerFilter.toLowerCase() ? '0.75)' : '0.35)') : 
+                '0.75)');
+        }),
         borderColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 1)' :
                     faction === 'Hadean' ? 'rgba(255, 99, 132, 1)' :
                     'rgba(255, 206, 86, 1)',
         borderWidth: 1
     }));
-
-    const maxValue = Math.max(...datasets.map(dataset => 
-        Math.max(...dataset.data)
-    ));
 
     charts.factionChoiceChart = new Chart(ctx, {
         type: 'bar',
@@ -650,7 +656,7 @@ function createFactionChoiceChart(factionChoiceData) {
                 x: {
                     stacked: true,
                     grid: gridConfig,
-                    max: maxValue,
+                    max: maxTotal,
                     beginAtZero: true
                 },
                 y: {
