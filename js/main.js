@@ -574,7 +574,7 @@ async function getLobbyData()
                                                 data-bs-map-loose="${mapVSRObject.Loose}" 
                                                 data-bs-map-image="${mapImage}" 
                                                 data-bs-map-file="${mapFileName}"
-                                                data-bs-map-description="${mapVSRObject.Description}" 
+                                                data-bs-map-description="${escapeHtml(mapVSRObject.Description)}" 
                                                 data-bs-map-author="${mapVSRObject.Author}"
                                                 data-bs-map-tags="${mapVSRObject.Tags}"
                                                 />
@@ -1456,3 +1456,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
         getRandomMaps();
     });
 });
+
+// Add this helper function at the top of your file
+function escapeHtml(unsafe) {
+    if (!unsafe) return '';
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
