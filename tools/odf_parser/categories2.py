@@ -5,38 +5,32 @@ def categorize_objects(input_file, output_file):
     with open(input_file, 'r') as f:
         data = json.load(f)
 
-    # Initialize category arrays
+    # Initialize category dictionaries
     categories = {
-        "Weapons": [],
-        "Units": [],
-        "Buildings": []
+        "Weapons": {},
+        "Units": {},
+        "Buildings": {}
     }
 
     # Iterate through all objects
     for obj_name, obj_data in data.items():
-        # Create an object with its name and data
-        categorized_obj = {
-            "name": obj_name,
-            "data": obj_data
-        }
-
         # Check for OrdnanceClass (Weapons)
         if "OrdnanceClass" in obj_data:
-            categories["Weapons"].append(categorized_obj)
+            categories["Weapons"][obj_name] = obj_data
             continue
 
         # Check for CraftClass (Units)
         if "CraftClass" in obj_data:
-            categories["Units"].append(categorized_obj)
+            categories["Units"][obj_name] = obj_data
             continue
 
         # Check for BuildingClass (Buildings)
         if "BuildingClass" in obj_data:
-            categories["Buildings"].append(categorized_obj)
+            categories["Buildings"][obj_name] = obj_data
 
     # Write the categorized data to output file
     with open(output_file, 'w') as f:
         json.dump(categories, f, indent=2)
 
 if __name__ == "__main__":
-    categorize_objects("tools/odf_parser/odf-1.0filtered-numbers.json", "categories.json") 
+    categorize_objects("tools/odf_parser/names.json", "tools/odf_parser/categories2.json") 
