@@ -1,0 +1,631 @@
+{
+    "Metadata": {
+      "ListServer": {
+        "Rebellion": {
+          "Status": "cached",
+          "Success": true,
+          "Timestamp": "2025-01-22T06:05:50.0089437Z"
+        }
+      }
+    },
+    "SessionsDefault": {
+      "Type": "Listen"
+    },
+    "DataCache": {
+      "Level": {
+        "GameType": {
+          "STRAT": {
+            "Name": "Strategy"
+          }
+        },
+        "GameMode": {
+          "STRAT": {
+            "Name": "Strategy"
+          },
+          "MPI": {
+            "Name": "MPI"
+          },
+          "FFA": {
+            "Name": "Free for All"
+          }
+        }
+      },
+      "Players": {
+        "IDs": {
+          "Steam": {
+            "76561199653748651": {
+              "AvatarUrl": "https://avatars.steamstatic.com/d11a4032178ddcad6c2951556bd6a8952fc2aaba_full.jpg",
+              "Nickname": "Sev",
+              "ProfileUrl": "https://steamcommunity.com/profiles/76561199653748651/"
+            },
+            "76561198056077055": {
+              "AvatarUrl": "https://avatars.steamstatic.com/cf435434c1187161d27480301a3a3e8fb3874c55_full.jpg",
+              "Nickname": "Eat Cake",
+              "ProfileUrl": "https://steamcommunity.com/profiles/76561198056077055/"
+            },
+            "76561198127077056": {
+              "AvatarUrl": "https://avatars.steamstatic.com/24f5682c33e00598f29e6de9bc1e161af2322dbc_full.jpg",
+              "Nickname": "Varmint",
+              "ProfileUrl": "https://steamcommunity.com/id/VarmintVal/"
+            },
+            "76561198027490455": {
+              "AvatarUrl": "https://avatars.steamstatic.com/a7d0bddaeb4b4d0b876f2c493b7cb2794a077a9b_full.jpg",
+              "Nickname": "Devious_Craven",
+              "ProfileUrl": "https://steamcommunity.com/id/killerpacman80/"
+            },
+            "76561198026325621": {
+              "AvatarUrl": "https://avatars.steamstatic.com/5114be0aaaecc3142d29c7acadbdee92d0f1118a_full.jpg",
+              "Nickname": "F9bomber",
+              "ProfileUrl": "https://steamcommunity.com/profiles/76561198026325621/"
+            },
+            "76561198064801924": {
+              "AvatarUrl": "https://avatars.steamstatic.com/d46e04752efb49f9c0625bcd78e6037e8ef914c5_full.jpg",
+              "Nickname": "HappyOtter",
+              "ProfileUrl": "https://steamcommunity.com/id/InfectedOtter/"
+            },
+            "76561198065368630": {
+              "AvatarUrl": "https://avatars.steamstatic.com/4efd6a7d9ec68ddedb345fb31320c15e21aeb0d8_full.jpg",
+              "Nickname": "Shock",
+              "ProfileUrl": "https://steamcommunity.com/profiles/76561198065368630/"
+            }
+          },
+          "Gog": {
+            "58299767644965591": {
+              "AvatarUrl": "https://images.gog.com/e2c951de580d9fa526ef7d9d444dd50b5cab5a8b594ddf486bf88f8e7f6badd6_sdk_img184.jpg",
+              "Username": "mueller43",
+              "ProfileUrl": "https://www.gog.com/u/mueller43"
+            }
+          }
+        }
+      }
+    },
+    "Mods": {
+      "1325933293": {
+        "Name": "Vet Strat Recycler Variant",
+        "ID": "1325933293",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1325933293/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+      },
+      "1329659846": {
+        "Name": "Aegeis VSR Map Pack",
+        "ID": "1329659846",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329659846/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+      },
+      "2785557433": {
+        "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+        "ID": "2785557433",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785557433/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+      },
+      "2785542655": {
+        "Name": "FE:Remastered: Hadean Asset Pack",
+        "ID": "2785542655",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785542655/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+      },
+      "2814914461": {
+        "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+        "ID": "2814914461",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2814914461/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+      },
+      "2049956570": {
+        "Name": "FE:Remastered: ISDF Model Pack",
+        "ID": "2049956570",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+      },
+      "2049959749": {
+        "Name": "FE:Remastered: Scion Model Pack",
+        "ID": "2049959749",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+      },
+      "2467249743": {
+        "Name": "Gravey's VSR Map Pack",
+        "ID": "2467249743",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2467249743/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+      },
+      "3410237354": {
+        "Name": "2025 Battlezone Combat Commander Tournament Map Pack",
+        "ID": "3410237354",
+        "Image": "https://gamelistassets.iondriver.com/bzcc/mods/3410237354/mod.png",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=3410237354"
+      },
+      "0": {
+        "Name": "Stock",
+        "ID": "0",
+        "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+      }
+    },
+    "Sessions": [
+      {
+        "ID": "Rebellion:joY2u1@@@E",
+        "Name": "bz2vsr",
+        "PlayerTypes": [
+          {
+            "Types": [
+              "Player"
+            ],
+            "Max": 10
+          }
+        ],
+        "PlayerCount": {
+          "Player": 1
+        },
+        "Level": {
+          "MapFile": "vsreuropa25.bzn",
+          "ID": "1325933293:vsreuropa25",
+          "GameType": {
+            "ID": "STRAT"
+          },
+          "GameMode": {
+            "ID": "STRAT"
+          },
+          "Image": "https://gamelistassets.iondriver.com/bzcc/assets/7343a0a267b99b78a15a813628367cc866e49c4d07d37710703d62089ce32c39.png",
+          "Name": "2025: VSR: Europa",
+          "Description": "Jupiter's Icey moon!\r\n\r\n7 Pools, Medium map\r\n\r\nby {bac}MalevolencE"
+        },
+        "Status": {
+          "IsLocked": true,
+          "HasPassword": false,
+          "State": "PreGame"
+        },
+        "Players": [
+          {
+            "Name": "Sev",
+            "Type": "Player",
+            "Team": {
+              "ID": "2",
+              "Leader": true,
+              "SubTeam": {
+                "ID": "6"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 6
+              },
+              "BZRNet": {
+                "ID": "S76561199653748651"
+              },
+              "Steam": {
+                "Raw": "76561199653748651",
+                "ID": "76561199653748651"
+              }
+            }
+          }
+        ],
+        "Attributes": {
+          "TPS": 20,
+          "MaxPing": 750,
+          "ListServer": "Rebellion"
+        },
+        "Address": {
+          "NAT": "joY2u1@@@E",
+          "NAT_TYPE": "UNKNOWN"
+        },
+        "Game": {
+          "Mod": "1325933293",
+          "Version": "2.0.194.5",
+          "ModHash": "Dx7b73"
+        },
+        "Time": {
+          "Seconds": 15300,
+          "Resolution": 60,
+          "Max": true,
+          "Context": "PreGame"
+        },
+        "Teams": {
+          "1": {
+            "Human": true,
+            "Computer": false,
+            "Name": "Team 1"
+          },
+          "2": {
+            "Name": "Team 2",
+            "Human": true,
+            "Computer": false
+          }
+        }
+      },
+      {
+        "ID": "Rebellion:HrhEpFg@@8",
+        "Name": "join the game",
+        "PlayerTypes": [
+          {
+            "Types": [
+              "Player"
+            ],
+            "Max": 4
+          }
+        ],
+        "PlayerCount": {
+          "Player": 2
+        },
+        "Level": {
+          "MapFile": "MPIchill.bzn",
+          "ID": "0:mpichill",
+          "GameType": {
+            "ID": "STRAT"
+          },
+          "GameMode": {
+            "ID": "MPI"
+          },
+          "Image": "https://gamelistassets.iondriver.com/bzcc/assets/b2a31af4dc3b8e953c5b15bd775d4cdae955dd215704131c24bb18ce234dc9eb.png",
+          "Name": "MPI: Instant Chill",
+          "Description": "﻿Multiplayer Instant:\r\nA Bane map.  \r\n\r\n7 - Biometal pools."
+        },
+        "Status": {
+          "IsLocked": false,
+          "HasPassword": false,
+          "State": "InGame"
+        },
+        "Players": [
+          {
+            "Name": "Eat Cake",
+            "Type": "Player",
+            "Stats": {
+              "Kills": 3,
+              "Score": 15
+            },
+            "Team": {
+              "ID": "1",
+              "Leader": true,
+              "SubTeam": {
+                "ID": "1"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 1
+              },
+              "BZRNet": {
+                "ID": "S76561198056077055"
+              },
+              "Steam": {
+                "Raw": "76561198056077055",
+                "ID": "76561198056077055"
+              }
+            }
+          },
+          {
+            "Name": "mueller43",
+            "Type": "Player",
+            "Stats": {
+              "Kills": 1,
+              "Score": 5
+            },
+            "Team": {
+              "ID": "1",
+              "SubTeam": {
+                "ID": "2"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 2
+              },
+              "BZRNet": {
+                "ID": "G202414955720821463"
+              },
+              "Gog": {
+                "Raw": "202414955720821463",
+                "ID": "58299767644965591"
+              }
+            }
+          }
+        ],
+        "Attributes": {
+          "TPS": 20,
+          "MaxPing": 750,
+          "MaxPingSeen": 181,
+          "ListServer": "Rebellion"
+        },
+        "Address": {
+          "NAT": "HrhEpFg@@8",
+          "NAT_TYPE": "SYMMETRIC"
+        },
+        "Game": {
+          "Version": "2.0.185",
+          "ModHash": "nrI7n"
+        },
+        "Time": {
+          "Seconds": 540,
+          "Resolution": 60,
+          "Max": false,
+          "Context": "InGame"
+        },
+        "Teams": {
+          "1": {
+            "Human": true,
+            "Computer": false,
+            "Name": "Team Humans"
+          },
+          "2": {
+            "Name": "Team Computer",
+            "Human": false,
+            "Computer": true
+          }
+        }
+      },
+      {
+        "ID": "Rebellion:zNSI5C7@ma",
+        "Name": "buh",
+        "Message": "buh",
+        "PlayerTypes": [
+          {
+            "Types": [
+              "Player"
+            ],
+            "Max": 5
+          }
+        ],
+        "PlayerCount": {
+          "Player": 2
+        },
+        "Level": {
+          "MapFile": "vsroverlook25.bzn",
+          "ID": "1325933293:vsroverlook25",
+          "GameType": {
+            "ID": "STRAT"
+          },
+          "GameMode": {
+            "ID": "MPI"
+          },
+          "Image": "https://gamelistassets.iondriver.com/bzcc/assets/335ffe06472d5bc4e57abc2bc2b7178f8dece1c6c9be339bdf96a798a94c3e55.png",
+          "Name": "2025: VSR: Overlook",
+          "Description": "Face off in a large valley with a scenic overlook of the battlefield.\r\n\r\nSize - Large\r\n8 - Pools\r\n225 - Loose Scrap\r\nBy Feared_1"
+        },
+        "Status": {
+          "IsLocked": false,
+          "HasPassword": true,
+          "State": "InGame"
+        },
+        "Players": [
+          {
+            "Name": "Varmint",
+            "Type": "Player",
+            "Stats": {
+              "Kills": 4,
+              "Score": 10
+            },
+            "Team": {
+              "ID": "1",
+              "Leader": true,
+              "SubTeam": {
+                "ID": "1"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 1
+              },
+              "BZRNet": {
+                "ID": "S76561198127077056"
+              },
+              "Steam": {
+                "Raw": "76561198127077056",
+                "ID": "76561198127077056"
+              }
+            }
+          },
+          {
+            "Name": "Devious_Craven",
+            "Type": "Player",
+            "Stats": {
+              "Kills": 11,
+              "Score": 32
+            },
+            "Team": {
+              "ID": "1",
+              "SubTeam": {
+                "ID": "2"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 2
+              },
+              "BZRNet": {
+                "ID": "S76561198027490455"
+              },
+              "Steam": {
+                "Raw": "76561198027490455",
+                "ID": "76561198027490455"
+              }
+            }
+          }
+        ],
+        "Attributes": {
+          "TPS": 20,
+          "MaxPing": 750,
+          "MaxPingSeen": 25,
+          "ListServer": "Rebellion"
+        },
+        "Address": {
+          "NAT": "zNSI5C7@ma",
+          "NAT_TYPE": "SYMMETRIC"
+        },
+        "Game": {
+          "Mod": "1325933293",
+          "Mods": [
+            "1329659846",
+            "2785557433",
+            "2785542655",
+            "2814914461",
+            "2049956570",
+            "2049959749",
+            "2467249743",
+            "3410237354"
+          ],
+          "Version": "2.0.185",
+          "ModHash": "Dx7b73"
+        },
+        "Time": {
+          "Seconds": 600,
+          "Resolution": 60,
+          "Max": false,
+          "Context": "InGame"
+        },
+        "Teams": {
+          "1": {
+            "Human": true,
+            "Computer": false,
+            "Name": "Team 1"
+          },
+          "2": {
+            "Name": "Team 2",
+            "Human": false,
+            "Computer": true
+          }
+        }
+      },
+      {
+        "ID": "Rebellion:-9@Xy@@@mj",
+        "Name": "Practice",
+        "Message": "https://discord.gg/battlezonestrategy",
+        "PlayerTypes": [
+          {
+            "Types": [
+              "Player"
+            ],
+            "Max": 4
+          }
+        ],
+        "PlayerCount": {
+          "Player": 3
+        },
+        "Level": {
+          "MapFile": "vsrffa4play.bzn",
+          "ID": "1325933293:vsrffa4play",
+          "GameType": {
+            "ID": "STRAT"
+          },
+          "GameMode": {
+            "ID": "FFA"
+          },
+          "Image": "https://gamelistassets.iondriver.com/bzcc/assets/d4513d318899c5e4b6ae83e9ea85297f633815fbc8384895825be8caa5e9fcff.png",
+          "Name": "VSR FFA: 4 Play",
+          "Description": "4 Play\r\nYou like 1 on 1? \r\nHow about 3 on 1?\r\nTake on all your friends\r\nat one time \r\n\r\n4 - Commanders\r\n13- Pools\r\n \r\nMade by (USMC)SilverB1rD"
+        },
+        "Status": {
+          "IsLocked": true,
+          "HasPassword": false,
+          "State": "InGame"
+        },
+        "Players": [
+          {
+            "Name": "F9bomber",
+            "Type": "Player",
+            "Stats": {
+              "Kills": 16,
+              "Deaths": 1,
+              "Score": 60
+            },
+            "Team": {
+              "SubTeam": {
+                "ID": "2"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 2
+              },
+              "BZRNet": {
+                "ID": "S76561198026325621"
+              },
+              "Steam": {
+                "Raw": "76561198026325621",
+                "ID": "76561198026325621"
+              }
+            }
+          },
+          {
+            "Name": "HappyOtter",
+            "Type": "Player",
+            "Stats": {
+              "Kills": 18,
+              "Deaths": 4,
+              "Score": 64
+            },
+            "Team": {
+              "SubTeam": {
+                "ID": "3"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 3
+              },
+              "BZRNet": {
+                "ID": "S76561198064801924"
+              },
+              "Steam": {
+                "Raw": "76561198064801924",
+                "ID": "76561198064801924"
+              }
+            }
+          },
+          {
+            "Name": "Shock",
+            "Type": "Player",
+            "Stats": {
+              "Kills": 5,
+              "Score": 12
+            },
+            "Team": {
+              "SubTeam": {
+                "ID": "1"
+              }
+            },
+            "IDs": {
+              "Slot": {
+                "ID": 1
+              },
+              "BZRNet": {
+                "ID": "S76561198065368630"
+              },
+              "Steam": {
+                "Raw": "76561198065368630",
+                "ID": "76561198065368630"
+              }
+            }
+          }
+        ],
+        "Attributes": {
+          "TPS": 20,
+          "MaxPing": 750,
+          "MaxPingSeen": 73,
+          "ListServer": "Rebellion"
+        },
+        "Address": {
+          "NAT": "-9@Xy@@@mj",
+          "NAT_TYPE": "FULL CONE"
+        },
+        "Game": {
+          "Mod": "1325933293",
+          "Mods": [
+            "1329659846",
+            "2785557433",
+            "2785542655",
+            "2814914461",
+            "2049956570",
+            "2049959749",
+            "2467249743",
+            "3410237354"
+          ],
+          "Version": "2.0.185",
+          "ModHash": "Dx7b73"
+        },
+        "Time": {
+          "Seconds": 3360,
+          "Resolution": 60,
+          "Max": false,
+          "Context": "InGame"
+        }
+      }
+    ]
+  }
