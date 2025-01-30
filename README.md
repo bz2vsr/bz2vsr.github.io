@@ -4,7 +4,7 @@ Website to pull multiplayer game data from [Battlezone II: Combat Commander](htt
 
 Credits:
 
-- Relies on the MultiplayerSessionList API by Nielk1 ([Github](https://github.com/Nielk1) | [Twitter](https://x.com/nielk1)).
+- Game Data API created by Nielk1 ([Github](https://github.com/Nielk1) | [Twitter](https://x.com/nielk1)).
 - ODF data provided by [AI_Unit](https://discord.com/users/125055986632228865).
 - Game statistics provided by [F9Bomber](https://steamcommunity.com/profiles/76561198026325621/).
 - Map size data provided by [VTrider](https://github.com/VTrider) ([Github](https://github.com/VTrider) | [Steam](https://steamcommunity.com/id/vtrider/)).
