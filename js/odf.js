@@ -54,6 +54,11 @@ class ODFBrowser {
         
         // Initialize
         this.loadData();
+        
+        // Add tab change listener
+        document.addEventListener('shown.bs.tab', (event) => {
+            this.updateBadgeStyles();
+        });
     }
     
     showDefaultContent() {
@@ -82,7 +87,7 @@ class ODFBrowser {
                        placeholder="Type here to filter..." aria-label="Search ODFs">
                 <button class="btn btn-outline-secondary" id="clearSearch" type="button">
                     Clear
-                </button>
+            </button>
             </div>
         `;
         
@@ -114,9 +119,9 @@ class ODFBrowser {
                         </div>
                     </div>
                 `).join('')}
-            </div>
-        `;
-        
+        </div>
+    `;
+    
         // Wrap everything in a d-flex flex-column container
         this.sidebar.innerHTML = `
             <div class="d-flex flex-column h-100">
@@ -176,17 +181,32 @@ class ODFBrowser {
             }).join('');
     }
     
+    updateBadgeStyles() {
+        // Update all badge styles based on current active tab
+        document.querySelectorAll('#categoryTabs .nav-link').forEach(tab => {
+            const badge = tab.querySelector('.badge');
+            if (badge) {
+                badge.classList.remove('bg-dark', 'bg-secondary');
+                badge.classList.add(tab.classList.contains('active') ? 'bg-dark' : 'bg-secondary');
+            }
+        });
+    }
+    
     handleSearch(term) {
         if (!term) {
             // Show all items if search is empty
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.style.display = '';
-                item.classList.remove('active'); // Remove active state from all items
+                item.classList.remove('active');
             });
             // Reset tab labels
             Object.keys(this.data).forEach(category => {
                 const tab = document.getElementById(`tab-${category}`);
                 tab.textContent = category;
+            });
+            // Remove all "no matches" alerts
+            document.querySelectorAll('.no-matches-alert').forEach(alert => {
+                alert.remove();
             });
             // Show default content when clearing search
             this.showDefaultContent();
@@ -228,13 +248,50 @@ class ODFBrowser {
             }
         });
         
-        // Update tab labels with counts
+        // Update tab labels with counts and show/hide no matches alert
         Object.entries(categoryCounts).forEach(([category, count]) => {
             const tab = document.getElementById(`tab-${category}`);
+            const isActiveCategory = tab.classList.contains('active');
+            const tabPane = document.getElementById(`list-${category}`);
+            const odfList = tabPane.querySelector('.odf-list');
+            
+            // Update tab label
             tab.innerHTML = count > 0 ? 
-                `${category} <span class="badge bg-secondary ms-1">${count}</span>` : 
+                `${category} <span class="badge ${isActiveCategory ? 'bg-dark' : 'bg-secondary'} ms-1">${count}</span>` : 
                 category;
+            
+            // Show/hide no matches alert
+            if (count === 0) {
+                // Remove existing alert if any
+                const existingAlert = tabPane.querySelector('.no-matches-alert');
+                if (existingAlert) existingAlert.remove();
+                
+                // Add new alert before the list
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-secondary no-matches-alert mb-3';
+                alert.textContent = `No matches for "${term}" found in ${category}`;
+                odfList.insertAdjacentElement('beforebegin', alert);
+            } else {
+                // Remove alert if exists
+                const existingAlert = tabPane.querySelector('.no-matches-alert');
+                if (existingAlert) existingAlert.remove();
+            }
         });
+        
+        // Get currently active category
+        const activeTab = document.querySelector('#categoryTabs .nav-link.active');
+        const currentCategory = activeTab.id.replace('tab-', '');
+        
+        // Find category with most matches
+        const bestCategory = Object.entries(categoryCounts)
+            .reduce((best, [category, count]) => 
+                count > best.count ? {category, count} : best
+            , {category: currentCategory, count: categoryCounts[currentCategory]});
+        
+        // Switch to category with most matches if it's different from current
+        if (bestCategory.category !== currentCategory) {
+            document.querySelector(`#tab-${bestCategory.category}`).click();
+        }
     }
     
     displayODFData(category, filename) {
@@ -434,8 +491,16 @@ class ODFBrowser {
                 value = value.slice(1, -1);
             }
             
-            // Check if the string is a number (including decimals)
-            if (/^-?\d*\.?\d+$/.test(value)) {
+            // Check for different number formats:
+            // 1. Single numbers (including decimals)
+            // 2. Numbers with 'f' suffix
+            // 3. Space-separated groups of numbers
+            if (
+                // Single number (including decimals)
+                /^-?\d*\.?\d+f?$/.test(value) ||
+                // Space-separated numbers (2+ numbers)
+                /^-?\d*\.?\d+(?:f?\s+-?\d*\.?\d+f?)+$/.test(value)
+            ) {
                 return `<code style="color: rgba(255, 107, 74, 0.85)">${value}</code>`;
             }
         }

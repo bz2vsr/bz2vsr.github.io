@@ -402,6 +402,12 @@ table.table.dataTable>tbody>tr.selected>* {
     padding: 0;
     height: calc(100vh - 90px);
     overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Keep column spacing */
+#odfContentContent .col-6 {
+    padding: 0 0.5rem;
 }
 
 /* Fix card styling in ODF content */
@@ -419,10 +425,6 @@ table.table.dataTable>tbody>tr.selected>* {
 /* Adjust row and column spacing */
 #odfContentContent .row {
     margin: 0;
-}
-
-#odfContentContent .col-6 {
-    padding: 0 0.5rem;
 }
 
 #odfContentContent .card-body {
