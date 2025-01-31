@@ -128,12 +128,12 @@ body {
 
 .dt-scroll-body::-webkit-scrollbar-track {
   background: rgba(173, 181, 189, 0.08);
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .dt-scroll-body::-webkit-scrollbar-thumb {
   background: rgba(13, 110, 253, 0.8);
-  border-radius: 2px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -373,4 +373,106 @@ table.table.dataTable>tbody>tr.selected>* {
 
 .nav-link[data-bs-toggle="modal"] {
     cursor: pointer;
+}
+
+#odfContentContent code {
+    color: #6ea8fe;
+    background: none;
+    padding: 0;
+}
+
+.odf-item.active {
+    background-color: rgba(var(--bs-secondary-rgb), 0.6) !important;
+    border-color: var(--bs-secondary-border-subtle) !important;
+}
+
+.odf-item.active .text-secondary {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.odf-item.active .odf-name {
+    font-weight: bold;
+}
+
+.odf-item:hover:not(.active) {
+    background-color: var(--bs-secondary-bg-subtle) !important;
+}
+
+#odfContentContent {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding: 0;
+}
+
+/* Add padding to the card body instead */
+#odfContentContent .card-body {
+    padding: 1rem;
+}
+
+/* Keep column spacing */
+#odfContentContent .col-6 {
+    padding: 0 0.5rem;
+}
+
+/* Make cards more compact */
+#odfContentContent .card-header {
+    padding: 0.5rem 1rem;
+}
+
+/* Adjust table padding to be more compact */
+#odfContentContent .table td, 
+#odfContentContent .table th {
+    padding: 0.4rem 0.75rem;
+}
+
+#odfContentContent::-webkit-scrollbar {
+    width: 10px;
+    cursor: pointer;
+}
+
+#odfContentContent::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 4px;
+}
+
+#odfContentContent::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#odfContentContent::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
+}
+
+/* Make sidebar match content height but remove scrolling */
+#odfSidebarContent {
+    height: calc(100vh - 100px);
+    padding-right: 0.5rem;
+}
+
+/* Move scrollbar styling to the list itself */
+.odf-list {
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.odf-list::-webkit-scrollbar {
+    width: 10px;
+    cursor: pointer;
+}
+
+.odf-list::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 4px;
+}
+
+.odf-list::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.odf-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
 }
