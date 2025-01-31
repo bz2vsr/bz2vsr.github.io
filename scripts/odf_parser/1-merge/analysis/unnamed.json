@@ -20292,6 +20292,44 @@
             "animateTime": "4.0"
         }
     },
+    "apflar.odf": {
+        "GameObjectClass": {
+            "baseName": "apflar",
+            "classLabel": "apspecial",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "ibarmo",
+            "requireText1": "Build Armory"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gflare"
+        }
+    },
+    "apforce.odf": {
+        "GameObjectClass": {
+            "baseName": "apffld",
+            "classLabel": "apspecial",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "ibarmo",
+            "requiretext1": "Build Armory"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gforce"
+        }
+    },
+    "apshd3.odf": {
+        "GameObjectClass": {
+            "baseName": "apshdw",
+            "classLabel": "aprocket"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gshadow_c"
+        }
+    },
     "scatter.odf": {
         "Scatter": {
             "baseName": "scatter",
@@ -20346,6 +20384,119 @@
             "emitDelay": "0.05",
             "emitVelocity": "6.0 6.0 4.0",
             "emitVariance": "11.5 12.0 11.5"
+        }
+    },
+    "apmini3.odf": {
+        "GameObjectClass": {
+            "baseName": "apmini",
+            "classLabel": "apgun"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gminigun_c"
+        }
+    },
+    "apffld1.odf": {
+        "GameObjectClass": {
+            "baseName": "apffld",
+            "classLabel": "apspecial",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "fbstroin",
+            "requiretext1": "Build Stronghold"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gforce"
+        }
+    },
+    "apthmp.odf": {
+        "GameObjectClass": {
+            "baseName": "apthmp",
+            "classLabel": "apspecial",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "ibarmo",
+            "requiretext1": "Build Armory"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gthumper"
+        }
+    },
+    "apgaus.odf": {
+        "GameObjectClass": {
+            "baseName": "apgaus",
+            "classLabel": "apgun",
+            "scrapCost": "30",
+            "requireCount": "3",
+            "requireName1": "fbkiln",
+            "requireText1": "Build Kiln",
+            "requireName2": "fbforg",
+            "requireText2": "Upgrade Kiln",
+            "requireName3": "fbdowe",
+            "requireText3": "Build Dower"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "ggauss_c"
+        }
+    },
+    "apflar_s.odf": {
+        "GameObjectClass": {
+            "baseName": "apflar",
+            "classLabel": "apspecial",
+            "scrapCost": "20"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gflare_s"
+        }
+    },
+    "apabso.odf": {
+        "GameObjectClass": {
+            "baseName": "apabso",
+            "classLabel": "apshield",
+            "scrapCost": "10",
+            "requireCount": "2",
+            "requireName1": "fbkiln",
+            "requireText1": "Build Kiln",
+            "requireName2": "fbstro",
+            "requireText2": "Build Stronghold"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gabsorb"
+        }
+    },
+    "apdefl.odf": {
+        "GameObjectClass": {
+            "baseName": "apdefl",
+            "classLabel": "apshield",
+            "scrapCost": "10",
+            "requireCount": "2",
+            "requireName1": "fbkiln",
+            "requireText1": "Build Kiln",
+            "requireName2": "fbantm",
+            "requireText2": "Build Antenna Mound"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gdeflect"
+        }
+    },
+    "apshld.odf": {
+        "GameObjectClass": {
+            "baseName": "apshld",
+            "classLabel": "apshield",
+            "scrapCost": "10",
+            "requireCount": "1",
+            "requireName1": "fbdowe",
+            "requireText1": "Build Dower"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gshield"
         }
     },
     "xbazgnd_a.odf": {
@@ -20643,6 +20794,14 @@
             "weaponName2": "fpjetpvsr"
         }
     },
+    "aparccvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "aparcc"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "garcvsr_c"
+        }
+    },
     "garcvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "garc_a",
@@ -20667,6 +20826,34 @@
             "classLabel": "xarccar_a",
             "kickRadius": "0",
             "kickOmega": "0.0"
+        }
+    },
+    "apsplasmavsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apsplasma",
+            "requireCount": "0"
+        }
+    },
+    "apquilvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apquil",
+            "requireName2": "fbkiln",
+            "requireText2": "Build Kiln"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gquill_c"
+        }
+    },
+    "apsonicvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apsonic",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "fbforg",
+            "requireText1": "Build Forge"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gsonicvsr_c"
         }
     },
     "gsonicvsr_a.odf": {
@@ -20702,6 +20889,16 @@
             "kickVeloc": "0.0"
         }
     },
+    "aplockvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "aplock",
+            "infoName": "aplockvsr.inf",
+            "scrapCost": "20"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "glockvsr_c"
+        }
+    },
     "glockvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "glock_a",
@@ -20732,6 +20929,27 @@
         "WeaponClass": {
             "classLabel": "fgsnip_c",
             "altName": "fgsnipvsr_a"
+        }
+    },
+    "fpsnipvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "fpsnip",
+            "infoName": "fpsnipvsr.inf",
+            "requireCount": "1",
+            "requireName1": "fbantm_vsr",
+            "requireText1": "Build Antenna Mound"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "fgsnipvsr_c"
+        }
+    },
+    "apseekvsr.odf": {
+        "GameObjectClass": {
+            "infoName": "apseekvsr.inf",
+            "classLabel": "apseek"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gseekervsr"
         }
     },
     "gseekervsr.odf": {
@@ -20780,6 +20998,14 @@
             "damageValue(S)": "200"
         }
     },
+    "apflar_svsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apflar_s"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gflare_svsr"
+        }
+    },
     "flaremine_s_vsr.odf": {
         "GameObjectClass": {
             "classLabel": "flaremine_s",
@@ -20792,6 +21018,17 @@
         },
         "DispenserClass": {
             "objectClass": "flaremine_s_vsr"
+        }
+    },
+    "apmlockvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apmlock",
+            "requireCount": "1",
+            "requireName1": "fbantm",
+            "requiretext1": "Build Antenna Mound"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gmlockvsr_c"
         }
     },
     "gmlockvsr_a.odf": {
@@ -20862,6 +21099,17 @@
             "damageValue(S)": "1100"
         }
     },
+    "apstingvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apsting",
+            "requireCount": "1",
+            "requireName1": "fbantm",
+            "requiretext1": "Build Antenna Mound"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gstingvsr_c"
+        }
+    },
     "gstingvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "gsting_a",
@@ -20874,6 +21122,14 @@
             "classLabel": "gsting_c",
             "altName": "gstingvsr_a",
             "ordName": "stingervsr_c"
+        }
+    },
+    "apgasvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apgas"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "ggasmortvsr"
         }
     },
     "gasbomb2vsr.odf": {
@@ -20923,6 +21179,15 @@
             "shotVariance": "0.15"
         }
     },
+    "appopgvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "appopg",
+            "infoName": "appopgvsr.inf"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gpopgunvsr"
+        }
+    },
     "gpopgunvsr.odf": {
         "WeaponClass": {
             "classLabel": "gpopgun",
@@ -20931,6 +21196,23 @@
         },
         "CannonClass": {
             "shotDelay": "1.2"
+        }
+    },
+    "apblnkvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apblnk",
+            "requireCount": "4",
+            "requireName1": "fbstro",
+            "requireText1": "Build Stronghold",
+            "requireName2": "fbdowe",
+            "requireText2": "Build Dower",
+            "requireName3": "fbantm",
+            "requireText3": "Build Antenna Mound",
+            "requireName4": "fbover",
+            "requireText4": "Upgrade Antenna Mound"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gblinkvsr"
         }
     },
     "gblinkvsr.odf": {
@@ -21021,6 +21303,21 @@
             "weaponName2": "apjetpvsr"
         }
     },
+    "apstabvsr.odf": {
+        "GameObjectClass": {
+            "baseName": "apstabvsr",
+            "classLabel": "apcannon",
+            "scrapCost": "10",
+            "lightName1": "omnipurp-ap",
+            "requireCount": "1",
+            "requireName1": "ibfact",
+            "requireText1": "Build Factory"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gatstabvsr_c"
+        }
+    },
     "gatstabvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "gatstab_a",
@@ -21044,6 +21341,15 @@
             "ordName": "towergnvsr"
         }
     },
+    "apmaggvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apmagg",
+            "scrapCost": "20"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gmaggunvsr_c"
+        }
+    },
     "gmaggunvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "gmaggun_a",
@@ -21062,6 +21368,14 @@
             "holdRate": "70.0"
         }
     },
+    "applasvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "applas"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gplasmavsr_c"
+        }
+    },
     "gplasmavsr_a.odf": {
         "WeaponClass": {
             "classLabel": "gplasma_a",
@@ -21076,6 +21390,15 @@
             "ordName": "plasmavsr_c"
         }
     },
+    "appstbvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "appstb",
+            "infoName": "appstbvsr.inf"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gplstabvsr_c"
+        }
+    },
     "gplstabvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "gplstab_a",
@@ -21088,6 +21411,16 @@
             "classLabel": "gplstab_c",
             "altName": "gplstabvsr_a",
             "ordName": "plstabvsr_c"
+        }
+    },
+    "apchainvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apchain",
+            "infoName": "apchain.inf",
+            "scrapCost": "20"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gchainvsr_c"
         }
     },
     "gchainvsr_a.odf": {
@@ -21120,6 +21453,15 @@
             "kickVeloc": "0"
         }
     },
+    "aplasevsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "aplase",
+            "infoName": "aplasevsr.inf"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "glaservsr_c"
+        }
+    },
     "glaservsr_a.odf": {
         "WeaponClass": {
             "classLabel": "glaser_a",
@@ -21133,6 +21475,16 @@
             "classLabel": "glaser_c",
             "altName": "glaservsr_a",
             "ordName": "laservsr_c"
+        }
+    },
+    "appummvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "appumm",
+            "infoName": "apchain.inf",
+            "scrapCost": "20"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gpummelvsr_c"
         }
     },
     "gpummelvsr_a.odf": {
@@ -21152,6 +21504,19 @@
             "shotVariance": "0.35"
         }
     },
+    "apsnipvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apsnip",
+            "infoName": "apsnipvsr.inf",
+            "scrapCost": "30",
+            "requireCount": "1",
+            "requireName1": "ibcbun_vsr",
+            "requireText1": "Build Relay Bunk"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "igsnipvsr_c"
+        }
+    },
     "igsnipvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "igsnip_a",
@@ -21164,6 +21529,14 @@
         "WeaponClass": {
             "classLabel": "igsnip_c",
             "altName": "igsnipvsr_a"
+        }
+    },
+    "apmcurvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apmcur"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gmcurminvsr"
         }
     },
     "gmcurminvsr.odf": {
@@ -21198,6 +21571,14 @@
             "ordDragEdge": "1.5"
         }
     },
+    "apmitsvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apmits"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gmitsminvsr"
+        }
+    },
     "gmitsminvsr.odf": {
         "WeaponClass": {
             "classLabel": "gmitsmin"
@@ -21227,6 +21608,14 @@
         "MagnetMineClass": {
             "objDrag": "2.0",
             "ordDrag": "5.0"
+        }
+    },
+    "approxvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "approx"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gproxminvsr"
         }
     },
     "gproxminvsr.odf": {
@@ -21264,6 +21653,14 @@
             "kickVeloc": "-20.0"
         }
     },
+    "apflarvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apflar"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gflarevsr"
+        }
+    },
     "flaremine_vsr.odf": {
         "GameObjectClass": {
             "classLabel": "flaremine",
@@ -21276,6 +21673,14 @@
         },
         "DispenserClass": {
             "objectClass": "flaremine_vsr"
+        }
+    },
+    "apfafmvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apfafm"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gfafmslvsr_c"
         }
     },
     "gfafmslvsr_a.odf": {
@@ -21300,11 +21705,27 @@
             "ordName": "fafmsl_c"
         }
     },
+    "apshdwvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apshdw"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gshadowvsr_c"
+        }
+    },
     "gshadowvsr_a.odf": {
         "WeaponClass": {
             "classLabel": "gshadow_a",
             "altName": "gshadowvsr_c",
             "ordName": "shadow_a"
+        }
+    },
+    "aptaggvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "aptagg"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gtaggunvsr_c"
         }
     },
     "cometvsr.odf": {
@@ -21355,6 +21776,30 @@
             "damageValue(S)": "1100",
             "damageValue(D)": "800",
             "damageValue(A)": "1400"
+        }
+    },
+    "apmdmgvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apmdmg",
+            "scrapCost": "25"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gmdmgun"
+        }
+    },
+    "apmortvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apmort",
+            "scrapCost": "25"
+        }
+    },
+    "apsplnvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apspln",
+            "scrapCost": "25"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gsplintvsr"
         }
     },
     "gsplintvsr.odf": {
@@ -21413,6 +21858,14 @@
             "damageValue(A)": "12"
         }
     },
+    "apphanvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apphan"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gphantomvsr"
+        }
+    },
     "gphantomvsr.odf": {
         "WeaponClass": {
             "classLabel": "gphantom"
@@ -21421,12 +21874,28 @@
             "ammoCost": "16"
         }
     },
+    "apredfvsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apredf"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gredfldvsr"
+        }
+    },
     "gredfldvsr.odf": {
         "WeaponClass": {
             "classLabel": "gredfld"
         },
         "SpecialItemClass": {
             "ammoCost": "14"
+        }
+    },
+    "apsitevsr.odf": {
+        "GameObjectClass": {
+            "classLabel": "apsite"
+        },
+        "WeaponPowerupClass": {
+            "weaponName": "gsitecamvsr"
         }
     },
     "gsitecamvsr.odf": {
@@ -22430,6 +22899,63 @@
             "weaponName": "eggren"
         }
     },
+    "apcphlas.odf": {
+        "GameObjectClass": {
+            "baseName": "apcphlas",
+            "classLabel": "apcannon",
+            "scrapCost": "10",
+            "lightName1": "omnipurp-ap",
+            "requireCount": "1",
+            "requireName1": "ebcbun",
+            "requireText1": "Build Eyes of Xyr"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcphlas_c"
+        }
+    },
+    "apdragb.odf": {
+        "GameObjectClass": {
+            "baseName": "apdragb",
+            "classLabel": "apcannon",
+            "scrapCost": "10",
+            "lightName1": "omnipurp-ap",
+            "requireCount": "1",
+            "requireName1": "ebfact2",
+            "requireText1": "Upgrade Xenomator"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gdragb_c"
+        }
+    },
+    "apfbgun.odf": {
+        "GameObjectClass": {
+            "baseName": "apfbgun",
+            "classLabel": "apcannon",
+            "scrapCost": "10",
+            "lightName1": "omnipurp-ap",
+            "requireCount": "1",
+            "requireName1": "ebtrain",
+            "requireText1": "Build Believers Vat"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gfbgun_c"
+        }
+    },
+    "apfocus.odf": {
+        "GameObjectClass": {
+            "baseName": "apfocus",
+            "classLabel": "apcannon",
+            "scrapCost": "10",
+            "lightName1": "omnipurp-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gmfocus"
+        }
+    },
     "xfocusbld.odf": {
         "ExplosionClass": {
             "classLabel": "explosion",
@@ -22656,6 +23182,72 @@
             "finishRadius": "2.0",
             "animateTime": "1.0",
             "useTerrainColor": "0.9"
+        }
+    },
+    "apslagstab.odf": {
+        "GameObjectClass": {
+            "baseName": "apslagstab",
+            "classLabel": "apcannon",
+            "scrapCost": "10",
+            "lightName1": "omnipurp-ap",
+            "requireCount": "1",
+            "requireName1": "ebsbay",
+            "requireText1": "Build Repair Vat"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gslagstab_c"
+        }
+    },
+    "apeburst.odf": {
+        "GameObjectClass": {
+            "baseName": "apeburst",
+            "classLabel": "apgun",
+            "scrapCost": "10",
+            "lightName1": "omnicyan-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "geburst_c"
+        }
+    },
+    "apcphcg.odf": {
+        "GameObjectClass": {
+            "baseName": "apcphcg",
+            "classLabel": "apgun",
+            "scrapCost": "10",
+            "lightName1": "omnicyan-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcphcg_c"
+        }
+    },
+    "apshellgun.odf": {
+        "GameObjectClass": {
+            "baseName": "apshellgun",
+            "classLabel": "apgun",
+            "scrapCost": "10",
+            "lightName1": "omnicyan-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gshellgun_c"
+        }
+    },
+    "apslicer.odf": {
+        "GameObjectClass": {
+            "baseName": "apslicer",
+            "classLabel": "apgun",
+            "scrapCost": "10",
+            "lightName1": "omnicyan-ap",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Arsenal"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gslicer_c"
         }
     },
     "xebazgnd_a.odf": {
@@ -23592,6 +24184,20 @@
         },
         "CannonClass": {}
     },
+    "apflamemin.odf": {
+        "GameObjectClass": {
+            "baseName": "apflaremin",
+            "classLabel": "apspecial",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "ebsbay",
+            "requireText1": "Build Repair Vat"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gmflamemin"
+        }
+    },
     "xfblaunch.odf": {
         "ExplosionClass": {
             "classLabel": "explosion",
@@ -23876,6 +24482,34 @@
             "textureRate": "0.2"
         }
     },
+    "apcpmits.odf": {
+        "GameObjectClass": {
+            "baseName": "apcpmits",
+            "classLabel": "apspecial",
+            "scrapCost": "10",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Arsenal"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcpmitsmin"
+        }
+    },
+    "apsnaremn.odf": {
+        "GameObjectClass": {
+            "baseName": "apsnare",
+            "classLabel": "apspecial",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Arsenal"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gsnare"
+        }
+    },
     "xsnarexpl.odf": {
         "ExplosionClass": {
             "classLabel": "explosion",
@@ -23908,6 +24542,51 @@
             "attenuateLinear": "0.0",
             "attenuateQuadratic": "15.0",
             "lensFlare": "1"
+        }
+    },
+    "aptagcr_a.odf": {
+        "GameObjectClass": {
+            "baseName": "aptagcr_a",
+            "classLabel": "apmortar",
+            "scrapCost": "10",
+            "lightName1": "omnibrwn-ap",
+            "requireCount": "1",
+            "requireName1": "ebtcen",
+            "requireText1": "Build Xyr Tower"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gtagcr_a"
+        }
+    },
+    "aptagcr_c.odf": {
+        "GameObjectClass": {
+            "baseName": "aptagcr_c",
+            "classLabel": "apmortar",
+            "scrapCost": "10",
+            "lightName1": "omnibrwn-ap",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Weapon Vat"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gtagcr_c"
+        }
+    },
+    "aphfire.odf": {
+        "GameObjectClass": {
+            "baseName": "aphfire",
+            "classLabel": "apmortar",
+            "scrapCost": "40",
+            "requireCount": "1",
+            "requireName1": "ebtcen",
+            "requireText1": "Build Xyr Tower",
+            "lightName1": "omnibrwn-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "ghfire"
         }
     },
     "xhfire.odf": {
@@ -24166,6 +24845,21 @@
             "damageValue(S)": "100",
             "damageValue(D)": "140",
             "damageValue(A)": "50"
+        }
+    },
+    "appoptag.odf": {
+        "GameObjectClass": {
+            "baseName": "appoptag",
+            "classLabel": "apmortar",
+            "scrapCost": "40",
+            "requireCount": "1",
+            "requireName1": "ebtcen",
+            "requireText1": "Build Xyr Tower",
+            "lightName1": "omnibrwn-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gpoptag"
         }
     },
     "xpoptagfir.odf": {
@@ -24593,6 +25287,21 @@
             "textureRate": "0.1"
         }
     },
+    "apslagmort.odf": {
+        "GameObjectClass": {
+            "baseName": "apslagmort",
+            "classLabel": "apmortar",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Arsenal",
+            "lightName1": "omnibrwn-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gslagmort"
+        }
+    },
     "xslagmort.odf": {
         "ExplosionClass": {
             "classLabel": "explosion",
@@ -24969,6 +25678,21 @@
             "useTerrainColor": "0.9"
         }
     },
+    "aphmort.odf": {
+        "GameObjectClass": {
+            "baseName": "aphmort",
+            "classLabel": "apmortar",
+            "scrapCost": "20",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Arsenal",
+            "lightName1": "omnibrwn-ap"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "ghmortar"
+        }
+    },
     "xhmortgn.odf": {
         "ExplosionClass": {
             "classLabel": "explosion",
@@ -25320,6 +26044,20 @@
             "lensFlare": "0"
         }
     },
+    "apcpworm.odf": {
+        "GameObjectClass": {
+            "baseName": "apcpworm",
+            "classLabel": "aprocket",
+            "scrapCost": "10",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Arsenal"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcpworm_c"
+        }
+    },
     "xwormacar(unused).odf": {
         "ExplosionClass": {
             "classLabel": "explosion",
@@ -25384,6 +26122,20 @@
             "attenuateLinear": "0.0",
             "attenuateQuadratic": "15.0",
             "lensFlare": "0"
+        }
+    },
+    "aptagcr.odf": {
+        "GameObjectClass": {
+            "baseName": "aptagcr",
+            "classLabel": "aprocket",
+            "scrapCost": "10",
+            "requireCount": "1",
+            "requireName1": "ebtcen",
+            "requireText1": "Build Xyr Tower"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gtagcr"
         }
     },
     "xcpcruxpl.odf": {
@@ -25555,6 +26307,54 @@
             "textureRate": "0.2"
         }
     },
+    "apcombo1.odf": {
+        "GameObjectClass": {
+            "baseName": "apcombo1",
+            "classLabel": "aprocket",
+            "scrapCost": "10",
+            "maxHealth": "250",
+            "requireCount": "2",
+            "requireName1": "ebfact",
+            "requireText1": "Build Xenomator",
+            "requireName2": "ebtrain",
+            "requireText2": "Build Believers Vat"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcombo1_c"
+        }
+    },
+    "apcombo2.odf": {
+        "GameObjectClass": {
+            "baseName": "apcombo2",
+            "classLabel": "aprocket",
+            "scrapCost": "10",
+            "maxHealth": "250",
+            "requireCount": "2",
+            "requireName1": "ebfact",
+            "requireText1": "Build Xenomator",
+            "requireName2": "ebtrain",
+            "requireText2": "Build Believers Vat"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcombo2_c"
+        }
+    },
+    "apsprink.odf": {
+        "GameObjectClass": {
+            "baseName": "apsprink",
+            "classLabel": "aprocket",
+            "scrapCost": "10",
+            "requireCount": "1",
+            "requireName1": "ebfact2",
+            "requireText1": "Upgrade Xenomator"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gsprink_c"
+        }
+    },
     "xsalvocar(unused).odf": {
         "ExplosionClass": {
             "classLabel": "explosion",
@@ -25631,6 +26431,20 @@
             "animateTime": "0.4",
             "latitudeBands": "8",
             "longitudeSegments": "16"
+        }
+    },
+    "apcphan.odf": {
+        "GameObjectClass": {
+            "baseName": "apcphan",
+            "classLabel": "apspecial",
+            "scrapCost": "10",
+            "requireCount": "1",
+            "requireName1": "ebarmo",
+            "requireText1": "Build Arsenal"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcphantom"
         }
     },
     "xcplasblda.odf": {
@@ -26118,6 +26932,21 @@
             "animateTime": "2.1",
             "rotationRate": "1.6",
             "BottomInteractsWithTerrain": "false"
+        }
+    },
+    "apcphlaser.odf": {
+        "GameObjectClass": {
+            "baseName": "apcphlas",
+            "classLabel": "apcannon",
+            "scrapCost": "10",
+            "lightName1": "omnipurp-ap",
+            "requireCount": "1",
+            "requireName1": "ebcbun",
+            "requireText1": "Build Eyes of Xyr"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gcphlaser"
         }
     },
     "gcphlaser_gt.odf": {

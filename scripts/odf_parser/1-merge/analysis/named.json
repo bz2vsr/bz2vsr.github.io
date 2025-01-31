@@ -15607,6 +15607,143 @@
             "loseAngle": "0.2"
         }
     },
+    "apammo.odf": {
+        "GameObjectClass": {
+            "geometryName": "apammo00.fbx",
+            "classLabel": "ammopack",
+            "scrapCost": "1",
+            "scrapValue": "0",
+            "maxHealth": "150",
+            "maxAmmo": "0",
+            "heatSignature": "0",
+            "imageSignature": "0",
+            "radarSignature": "0",
+            "unitName": "Ammo",
+            "aiName": "PowerUpProcess",
+            "lightHard1": "hp_light_1",
+            "lightName1": "omniblue-ap",
+            "effectHard1": "hp_emit_1",
+            "effectName1": "apserv.blue",
+            "effectHard2": "hp_emit_2",
+            "effectName2": "emit_sprtjetblu",
+            "effectMinAltitude2": "4.0",
+            "effectMaxAltitude2": "500.0"
+        },
+        "blue": {
+            "renderBase": "draw_sprite",
+            "textureName": "lightflare.tga",
+            "textureBlend": "one one modulate",
+            "startColor": "0 150 255 255",
+            "finishColor": "0 150 255 255",
+            "startRadius": "4.0",
+            "finishRadius": "4.0"
+        },
+        "PowerUpClass": {
+            "soundPickup": "pickup01.wav",
+            "soundReject": "reject.wav"
+        },
+        "AmmoPowerupClass": {
+            "ammoUp": "500"
+        }
+    },
+    "aprepa.odf": {
+        "GameObjectClass": {
+            "geometryName": "aprepa00.fbx",
+            "classLabel": "repairkit",
+            "scrapCost": "1",
+            "scrapValue": "0",
+            "maxHealth": "150",
+            "maxAmmo": "0",
+            "heatSignature": "0",
+            "imageSignature": "0",
+            "radarSignature": "0",
+            "unitName": "Repair",
+            "aiName": "PowerUpProcess",
+            "lightHard1": "hp_light_1",
+            "lightName1": "omnigren-ap",
+            "effectHard1": "hp_emit_1",
+            "effectName1": "aprepa.green",
+            "effectHard2": "hp_emit_2",
+            "effectName2": "emit_sprtjetblu",
+            "effectMinAltitude2": "4.0",
+            "effectMaxAltitude2": "500.0"
+        },
+        "green": {
+            "renderBase": "draw_sprite",
+            "textureName": "lightflare.tga",
+            "textureBlend": "one one modulate",
+            "startColor": "0 255 100 255",
+            "finishColor": "0 255 100 255",
+            "startRadius": "4.0",
+            "finishRadius": "4.0"
+        },
+        "PowerUpClass": {
+            "soundPickup": "pickup01.wav",
+            "soundReject": "reject.wav"
+        },
+        "HealthPowerupClass": {
+            "healthUp": "1000"
+        }
+    },
+    "apserv.odf": {
+        "GameObjectClass": {
+            "geometryName": "apammo00.fbx",
+            "classLabel": "servicepod",
+            "scrapCost": "2",
+            "scrapValue": "0",
+            "maxHealth": "150",
+            "maxAmmo": "0",
+            "unitName": "Service Pod",
+            "aiName": "PowerUpProcess",
+            "lightHard1": "hp_light_1",
+            "lightName1": "omniblue-ap",
+            "effectHard1": "hp_emit_1",
+            "effectName1": "apserv.blue",
+            "effectHard2": "hp_emit_2",
+            "effectName2": "emit_sprtjetblu",
+            "effectMinAltitude2": "4.0",
+            "effectMaxAltitude2": "500.0"
+        },
+        "blue": {
+            "renderBase": "draw_sprite",
+            "textureName": "lightflare.tga",
+            "textureBlend": "one one modulate",
+            "startColor": "0 150 255 255",
+            "finishColor": "0 150 255 255",
+            "startRadius": "4.0",
+            "finishRadius": "4.0"
+        },
+        "PowerUpClass": {
+            "soundPickup": "pickup01.wav",
+            "soundReject": "reject.wav"
+        },
+        "ServicePowerupClass": {
+            "serviceUp": "1500"
+        }
+    },
+    "apwrck.odf": {
+        "GameObjectClass": {
+            "geometryName": "daywrecker00.fbx",
+            "classLabel": "daywrecker",
+            "scrapCost": "20",
+            "scrapValue": "0",
+            "maxHealth": "500",
+            "maxAmmo": "0",
+            "unitName": "Day Wrecker",
+            "aiName": "PowerUpProcess",
+            "requireCount": "1",
+            "requireName1": "ibarmo",
+            "requiretext1": "Build Armory",
+            "ClearBuildZone": "0"
+        },
+        "PowerUpClass": {
+            "SlowFall": "false",
+            "FallSpeed": "12"
+        },
+        "DayWreckerClass": {
+            "xplBlast": "xbmbxpl"
+        }
+    },
     "boltmine.odf": {
         "GameObjectClass": {
             "geometryName": "igbolt00.fbx",
@@ -15949,6 +16086,21 @@
         "ProximityMineClass": {
             "triggerRadius": "20.0",
             "suppressRadius": "40.0"
+        }
+    },
+    "apflam.odf": {
+        "GameObjectClass": {
+            "baseName": "apflam",
+            "classLabel": "apcannon",
+            "scrapCost": "5",
+            "unitName": "Flamethrower",
+            "requireCount": "1",
+            "requireName1": "ibarmo",
+            "requireText1": "Build Armory"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "gflamer_c"
         }
     },
     "satchel1.odf": {
@@ -17491,6 +17643,18 @@
             "objectClass": "fountain"
         }
     },
+    "aplaserrocket.odf": {
+        "GameObjectClass": {
+            "baseName": "aplaserrocket",
+            "classLabel": "aprocket",
+            "scrapCost": "20",
+            "unitName": "Laser Missile"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "glaserrocket"
+        }
+    },
     "glaserrocket.odf": {
         "WeaponClass": {
             "classLabel": "cannon",
@@ -17505,6 +17669,66 @@
         "CannonClass": {
             "shotDelay": "1.0",
             "shotLead": "0"
+        }
+    },
+    "apbazo.odf": {
+        "GameObjectClass": {
+            "baseName": "apbazo",
+            "classLabel": "aphand",
+            "scrapCost": "30",
+            "unitName": "ISDF Bazooka",
+            "requireCount": "1",
+            "requireName1": "ibtcen",
+            "requireText1": "Build Tech Center"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "igbzka_c"
+        }
+    },
+    "apshot.odf": {
+        "GameObjectClass": {
+            "baseName": "apshot",
+            "classLabel": "aphand",
+            "scrapCost": "4",
+            "unitName": "ISDF Shotgun",
+            "requireCount": "1",
+            "requireName1": "ibtrain",
+            "requireText1": "Build Training Fac."
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "igshot_c"
+        }
+    },
+    "apsnip.odf": {
+        "GameObjectClass": {
+            "baseName": "apsnip",
+            "classLabel": "aphand",
+            "scrapCost": "30",
+            "unitName": "ISDF Pulse Rifle",
+            "requireCount": "1",
+            "requireName1": "ibtcen",
+            "requireText1": "Build Tech Center"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "igsnip_c"
+        }
+    },
+    "apsnipx.odf": {
+        "GameObjectClass": {
+            "baseName": "apsnip",
+            "classLabel": "aphand",
+            "scrapCost": "4",
+            "unitName": "ISDF Rifle",
+            "requireCount": "1",
+            "requireName1": "ibtrain",
+            "requireText1": "Build Training Fac."
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "igsnipx_c"
         }
     },
     "holdpull.odf": {
@@ -17564,6 +17788,51 @@
             "shotAlternate": "1"
         }
     },
+    "apgren.odf": {
+        "GameObjectClass": {
+            "baseName": "apgren",
+            "classLabel": "appack",
+            "scrapCost": "30",
+            "unitName": "ISDF Grenade",
+            "requireCount": "1",
+            "requireName1": "ibtcen",
+            "requireText1": "Build Tech Center"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "iggren"
+        }
+    },
+    "apjetp.odf": {
+        "GameObjectClass": {
+            "baseName": "apjetp",
+            "classLabel": "appack",
+            "scrapCost": "30",
+            "unitName": "ISDF Jetpack",
+            "requireCount": "1",
+            "requireName1": "ibtcen",
+            "requireText1": "Build Tech Center"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "igjetp"
+        }
+    },
+    "apsatc.odf": {
+        "GameObjectClass": {
+            "baseName": "apsatc",
+            "classLabel": "appack",
+            "scrapCost": "20",
+            "unitName": "ISDF Satchel",
+            "requireCount": "1",
+            "requireName1": "ibtrain",
+            "requireText1": "Build Training Facility"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "igsatc"
+        }
+    },
     "gthumper.odf": {
         "WeaponClass": {
             "classLabel": "cannon",
@@ -17578,6 +17847,21 @@
         "CannonClass": {
             "shotDelay": "5.0",
             "shotAlternate": "1"
+        }
+    },
+    "fplaserpopgun.odf": {
+        "GameObjectClass": {
+            "baseName": "fplaserpopgun",
+            "classLabel": "apmortar",
+            "scrapCost": "40",
+            "unitName": "Laser Popper",
+            "requireCount": "1",
+            "requireName1": "fbstro",
+            "requireText1": "Build Stronghold"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "glaserpopgun"
         }
     },
     "glaserpopgun.odf": {
@@ -17617,6 +17901,23 @@
             "shotDelay": "1.5"
         }
     },
+    "fpgren.odf": {
+        "GameObjectClass": {
+            "baseName": "fpgren",
+            "classLabel": "appack",
+            "scrapCost": "30",
+            "unitName": "Scion Grenade",
+            "requireCount": "2",
+            "requireName1": "fbantm",
+            "requireText1": "Build Antenna Mound",
+            "requireName2": "fbover",
+            "requireText2": "Upgrade Antenna Mound"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "fggren"
+        }
+    },
     "fgsatc.odf": {
         "WeaponClass": {
             "classLabel": "satchelpack",
@@ -17634,6 +17935,23 @@
         "SatchelPackClass": {
             "objectClass": "f_satch1",
             "shotDelay": "15.0"
+        }
+    },
+    "fpsatc.odf": {
+        "GameObjectClass": {
+            "baseName": "fpsatc",
+            "classLabel": "appack",
+            "scrapCost": "20",
+            "unitName": "Scion Satchel",
+            "requireCount": "2",
+            "requireName1": "fbantm",
+            "requireText1": "Build Antenna Mound",
+            "requireName2": "fbover",
+            "requireText2": "Upgrade Antenna Mound"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "fgsatc"
         }
     },
     "f_satch1.odf": {
@@ -17768,6 +18086,45 @@
             "emitLife": "0.1"
         }
     },
+    "fpjetpvsr.odf": {
+        "GameObjectClass": {
+            "baseName": "fpjetpvsr",
+            "classLabel": "appack",
+            "scrapCost": "30",
+            "unitName": "Scion Jetpack",
+            "requireCount": "2",
+            "requireName1": "fbantm",
+            "requireText1": "Build Antenna Mound",
+            "requireName2": "fbover",
+            "requireText2": "Upgrade Antenna Mound"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "fgjetpvsr"
+        }
+    },
+    "apwrckvsr.odf": {
+        "GameObjectClass": {
+            "geometryName": "daywrecker00.fbx",
+            "classLabel": "daywrecker",
+            "scrapCost": "20",
+            "scrapValue": "0",
+            "maxHealth": "1000",
+            "maxAmmo": "0",
+            "unitName": "Day Wrecker",
+            "aiName": "PowerUpProcess",
+            "requireCount": "1",
+            "requireName1": "ibarmo",
+            "ClearBuildZone": "0"
+        },
+        "PowerUpClass": {
+            "SlowFall": "false",
+            "FallSpeed": "36"
+        },
+        "DayWreckerClass": {
+            "xplBlast": "xbmbxpl"
+        }
+    },
     "gshadowvsr_c.odf": {
         "WeaponClass": {
             "classLabel": "gshadow_c",
@@ -17819,6 +18176,21 @@
         },
         "TorpedoLauncherClass": {
             "objectClass": "cometvsr"
+        }
+    },
+    "apjetpvsr.odf": {
+        "GameObjectClass": {
+            "baseName": "apjetpvsr",
+            "classLabel": "appack",
+            "scrapCost": "30",
+            "unitName": "ISDF Jetpack",
+            "requireCount": "1",
+            "requireName1": "ibtcen",
+            "requireText1": "Build Tech Center"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "igjetpvsr"
         }
     },
     "igjetpvsr.odf": {
@@ -18795,6 +19167,18 @@
         "DispenserClass": {
             "shotDelay": "2.0",
             "objectClass": "cpmitsmin1"
+        }
+    },
+    "aphprox.odf": {
+        "GameObjectClass": {
+            "baseName": "approx",
+            "classLabel": "apspecial",
+            "scrapCost": "20",
+            "unitName": "Prox Mine"
+        },
+        "PowerUpClass": {},
+        "WeaponPowerupClass": {
+            "weaponName": "ghproxmin"
         }
     },
     "ghproxmin.odf": {
