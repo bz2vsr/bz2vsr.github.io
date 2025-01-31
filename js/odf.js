@@ -241,6 +241,11 @@ class ODFBrowser {
         const odfData = this.data[category][filename];
         this.selectedODF = {category, filename};
         
+        // Get display name based on ODF type
+        const displayName = category === 'Weapon' ? 
+            odfData.WeaponClass?.wpnName || filename :
+            odfData.GameObjectClass?.unitName || filename;
+        
         // Get inheritance chain if it exists
         const inheritanceHtml = odfData.inheritanceChain?.length ? `
             <div class="mt-1">
@@ -250,32 +255,112 @@ class ODFBrowser {
             </div>
         ` : '';
         
-        // Get all class entries and split them into two arrays
-        const classEntries = Object.entries(odfData).filter(([, data]) => 
-            typeof data === 'object' && data !== null
-        );
+        // Group entries by prefix
+        const groupedEntries = Object.entries(odfData).reduce((acc, [key, value]) => {
+            if (typeof value !== 'object' || value === null) return acc;
+            
+            const prefix = key.split('.')[0];
+            if (key.includes('.')) {
+                // Handle prefixed entries (Ordnance., Powerup., etc)
+                if (!acc[prefix]) acc[prefix] = [];
+                acc[prefix].push([key, value]);
+            } else {
+                // Handle regular entries
+                if (!acc['Base']) acc['Base'] = [];
+                acc['Base'].push([key, value]);
+            }
+            return acc;
+        }, {});
         
-        const midPoint = Math.ceil(classEntries.length / 2);
-        const leftColumns = classEntries.slice(0, midPoint);
-        const rightColumns = classEntries.slice(midPoint);
+        // Only show tabs if there are multiple groups
+        const hasMultipleGroups = Object.keys(groupedEntries).length > 1;
+        
+        // Create tabs HTML only if multiple groups exist
+        const tabsHtml = hasMultipleGroups ? `
+            <ul class="nav nav-pills mb-3" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" 
+                            id="tab-All" 
+                            data-bs-toggle="pill"
+                            data-bs-target="#content-All"
+                            type="button"
+                            role="tab">
+                        All
+                    </button>
+                </li>
+                ${Object.keys(groupedEntries).map((group) => `
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" 
+                                id="tab-${group}" 
+                                data-bs-toggle="pill"
+                                data-bs-target="#content-${group}"
+                                type="button"
+                                role="tab">
+                            ${group}
+                        </button>
+                    </li>
+                `).join('')}
+            </ul>
+        ` : '';
+        
+        // Create content HTML - if single group, don't wrap in tab-pane
+        const contentHtml = hasMultipleGroups ? `
+            <div class="tab-content">
+                <div class="tab-pane fade show active" 
+                     id="content-All" 
+                     role="tabpanel">
+                    <div class="row">
+                        <div class="col-6 ps-0">
+                            ${this.formatODFDataColumn(Object.entries(groupedEntries).flatMap(([, entries]) => entries).slice(0, Math.ceil(Object.entries(groupedEntries).flatMap(([, entries]) => entries).length / 2)))}
+                        </div>
+                        <div class="col-6 pe-0">
+                            ${this.formatODFDataColumn(Object.entries(groupedEntries).flatMap(([, entries]) => entries).slice(Math.ceil(Object.entries(groupedEntries).flatMap(([, entries]) => entries).length / 2)))}
+                        </div>
+                    </div>
+                </div>
+                ${Object.entries(groupedEntries).map(([group, entries]) => {
+                    const midPoint = Math.ceil(entries.length / 2);
+                    const leftColumns = entries.slice(0, midPoint);
+                    const rightColumns = entries.slice(midPoint);
+                    
+                    return `
+                        <div class="tab-pane fade" 
+                             id="content-${group}" 
+                             role="tabpanel">
+                            <div class="row">
+                                <div class="col-6 ps-0">
+                                    ${this.formatODFDataColumn(leftColumns)}
+                                </div>
+                                <div class="col-6 pe-0">
+                                    ${this.formatODFDataColumn(rightColumns)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        ` : `
+            <div class="row">
+                <div class="col-6 ps-0">
+                    ${this.formatODFDataColumn(groupedEntries[Object.keys(groupedEntries)[0]].slice(0, Math.ceil(groupedEntries[Object.keys(groupedEntries)[0]].length / 2)))}
+                </div>
+                <div class="col-6 pe-0">
+                    ${this.formatODFDataColumn(groupedEntries[Object.keys(groupedEntries)[0]].slice(Math.ceil(groupedEntries[Object.keys(groupedEntries)[0]].length / 2)))}
+                </div>
+            </div>
+        `;
         
         // Create the entire card structure
         this.content.innerHTML = `
             <div class="card">
                 <div class="card-header bg-secondary-subtle">
-                    <h3 class="mb-0">${odfData.GameObjectClass?.unitName || filename}</h3>
+                    <h3 class="mb-0">${displayName}</h3>
                     <small class="text-secondary">${filename}</small>
                     ${inheritanceHtml}
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            ${this.formatODFDataColumn(leftColumns)}
-                        </div>
-                        <div class="col-6">
-                            ${this.formatODFDataColumn(rightColumns)}
-                        </div>
-                    </div>
+                    ${tabsHtml}
+                    ${contentHtml}
                 </div>
             </div>
         `;
