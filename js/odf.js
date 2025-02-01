@@ -54,7 +54,15 @@ class ODFBrowser {
         this.showDefaultContent();
         
         // Initialize
-        this.loadData();
+        this.loadData().then(() => {
+            // Check for ODF parameter after data is loaded
+            const urlParams = new URLSearchParams(window.location.search);
+            const odfToLoad = urlParams.get('odf');
+            
+            if (odfToLoad) {
+                this.selectODFByName(odfToLoad);
+            }
+        });
         
         // Add tab change listener
         document.addEventListener('shown.bs.tab', (event) => {
@@ -118,8 +126,10 @@ class ODFBrowser {
             const response = await fetch('/data/odf/odf.json');
             this.data = await response.json();
             this.initializeSidebar();
+            return true;
         } catch (error) {
             console.error('Error loading ODF data:', error);
+            return false;
         }
     }
     
@@ -663,6 +673,37 @@ class ODFBrowser {
         audio.play().catch(error => {
             errorSpan.textContent = 'Sound file not found.';
         });
+    }
+
+    // Add this new method to find and select an ODF by name
+    selectODFByName(odfName) {
+        // Normalize the name (add .odf if not present)
+        const normalizedName = odfName.toLowerCase().endsWith('.odf') ? 
+            odfName.toLowerCase() : 
+            `${odfName.toLowerCase()}.odf`;
+        
+        // Search through categories to find the ODF
+        for (const [category, odfs] of Object.entries(this.data)) {
+            if (normalizedName in odfs) {
+                // Found the ODF - activate its category tab
+                const tab = document.querySelector(`#tab-${category}`);
+                if (tab) {
+                    tab.click();
+                }
+                
+                // Find and click the ODF item
+                const odfItem = document.querySelector(`.odf-item[data-filename="${normalizedName}"]`);
+                if (odfItem) {
+                    odfItem.click();
+                    odfItem.scrollIntoView({ block: 'center' });
+                }
+                
+                return true;
+            }
+        }
+        
+        console.warn(`ODF '${odfName}' not found`);
+        return false;
     }
 }
 
