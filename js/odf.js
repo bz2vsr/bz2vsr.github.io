@@ -44,6 +44,7 @@ class ODFBrowser {
         this.currentCategory = null;
         this.searchTerm = '';
         this.selectedODF = null;
+        this.currentAudio = null;
         
         // Cache DOM elements
         this.sidebar = document.getElementById('odfSidebarContent');
@@ -58,6 +59,49 @@ class ODFBrowser {
         // Add tab change listener
         document.addEventListener('shown.bs.tab', (event) => {
             this.updateBadgeStyles();
+        });
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            // Special handling for arrow keys - allow them even in search input
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                this.cycleODFs(e.key === 'ArrowDown' ? 1 : -1);
+                return;
+            }
+            
+            // Don't handle other keyboard shortcuts if user is typing in an input
+            if (e.target.tagName === 'INPUT' && e.key !== 'Escape') {
+                return;
+            }
+            
+            switch (e.key) {
+                case 'Tab':
+                    e.preventDefault();
+                    this.cycleTabs(!e.shiftKey);
+                    break;
+                    
+                case 'Enter':
+                    e.preventDefault();
+                    const activeODF = document.querySelector('.odf-item.active');
+                    if (activeODF) {
+                        activeODF.click();
+                    }
+                    break;
+                    
+                case 'k':
+                    if (e.ctrlKey) {
+                        e.preventDefault();
+                        document.getElementById('odfSearch').focus();
+                    }
+                    break;
+                    
+                case 'Escape':
+                    e.preventDefault();
+                    document.getElementById('clearSearch').click();
+                    document.getElementById('odfSearch').focus();
+                    break;
+            }
         });
     }
     
@@ -228,12 +272,11 @@ class ODFBrowser {
             // Initialize counter for this category if needed
             categoryCounts[category] = categoryCounts[category] || 0;
             
-            // Create searchable text from relevant properties
+            // Create searchable text from all data
             const searchableTerms = [
                 filename.toLowerCase(),
-                odfData.GameObjectClass?.unitName?.toLowerCase() || '',
-                odfData.WeaponClass?.wpnName?.toLowerCase() || '',
-            ].filter(Boolean);
+                ...this.getAllSearchableTerms(odfData)
+            ];
             
             // Search through each term
             const isMatch = searchableTerms.some(text => 
@@ -294,6 +337,35 @@ class ODFBrowser {
         }
     }
     
+    // New helper method to recursively get all searchable terms from an object
+    getAllSearchableTerms(obj, terms = []) {
+        if (!obj || typeof obj !== 'object') return terms;
+        
+        // Process each key/value pair
+        Object.entries(obj).forEach(([key, value]) => {
+            // Add the key itself
+            terms.push(key.toLowerCase());
+            
+            if (value === null) return;
+            
+            if (typeof value === 'object') {
+                // Recursively process nested objects
+                this.getAllSearchableTerms(value, terms);
+            } else {
+                // Convert value to string and add to terms
+                const strValue = String(value).toLowerCase();
+                terms.push(strValue);
+                
+                // If the value was quoted, also add unquoted version
+                if (strValue.startsWith('"') && strValue.endsWith('"')) {
+                    terms.push(strValue.slice(1, -1));
+                }
+            }
+        });
+        
+        return terms;
+    }
+    
     displayODFData(category, filename) {
         const odfData = this.data[category][filename];
         this.selectedODF = {category, filename};
@@ -306,7 +378,7 @@ class ODFBrowser {
         // Get inheritance chain if it exists
         const inheritanceHtml = odfData.inheritanceChain?.length ? `
             <div class="mt-1">
-                <small class="text-secondary">
+                <small class="text-info">
                     Inherits: ${odfData.inheritanceChain.join(' → ')}
                 </small>
             </div>
@@ -491,14 +563,24 @@ class ODFBrowser {
                 value = value.slice(1, -1);
             }
             
-            // Check for different number formats:
-            // 1. Single numbers (including decimals)
-            // 2. Numbers with 'f' suffix
-            // 3. Space-separated groups of numbers
+            // Check if value is a WAV file reference
+            if (value.toLowerCase().endsWith('.wav')) {
+                return `
+                    <div class="d-flex align-items-center gap-2">
+                        <code style="color: rgba(255, 107, 74, 0.85)">${value}</code>
+                        <button class="btn btn-sm btn-outline-secondary d-flex align-items-center p-1 rounded-circle" 
+                                onclick="browser.playAudio('../data/audio/${value}', this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                            </svg>
+                        </button>
+                        <span class="error-message text-danger small"></span>
+                    </div>`;
+            }
+            
+            // Check for different number formats
             if (
-                // Single number (including decimals)
                 /^-?\d*\.?\d+f?$/.test(value) ||
-                // Space-separated numbers (2+ numbers)
                 /^-?\d*\.?\d+(?:f?\s+-?\d*\.?\d+f?)+$/.test(value)
             ) {
                 return `<code style="color: rgba(255, 107, 74, 0.85)">${value}</code>`;
@@ -507,11 +589,87 @@ class ODFBrowser {
         
         return value;
     }
+    
+    // Add these new methods to handle keyboard navigation
+    cycleTabs(forward = true) {
+        const tabs = Array.from(document.querySelectorAll('#categoryTabs .nav-link'));
+        const currentTab = document.querySelector('#categoryTabs .nav-link.active');
+        const currentIndex = tabs.indexOf(currentTab);
+        
+        let nextIndex;
+        if (forward) {
+            nextIndex = currentIndex + 1 >= tabs.length ? 0 : currentIndex + 1;
+        } else {
+            nextIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
+        }
+        
+        tabs[nextIndex].click();
+    }
+    
+    cycleODFs(direction) {
+        const activeTab = document.querySelector('#categoryTabs .nav-link.active');
+        const categoryId = activeTab.getAttribute('data-bs-target').slice(1);
+        const visibleODFs = Array.from(
+            document.querySelectorAll(`#${categoryId} .odf-item`)
+        ).filter(item => item.style.display !== 'none');
+        
+        if (!visibleODFs.length) return;
+        
+        const currentODF = document.querySelector('.odf-item.active');
+        let currentIndex = currentODF ? visibleODFs.indexOf(currentODF) : -1;
+        
+        // Calculate next index
+        let nextIndex;
+        if (currentIndex === -1) {
+            nextIndex = direction > 0 ? 0 : visibleODFs.length - 1;
+        } else {
+            nextIndex = currentIndex + direction;
+            if (nextIndex >= visibleODFs.length) nextIndex = 0;
+            if (nextIndex < 0) nextIndex = visibleODFs.length - 1;
+        }
+        
+        // Remove active class from all ODFs
+        document.querySelectorAll('.odf-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Add active class to next ODF and scroll it into view
+        const nextODF = visibleODFs[nextIndex];
+        nextODF.classList.add('active');
+        nextODF.scrollIntoView({ block: 'nearest' });
+    }
+
+    playAudio(url, buttonElement) {
+        // Create and play new audio
+        const audio = new Audio(url);
+        const errorSpan = buttonElement.nextElementSibling;
+        
+        // Clear any previous error message
+        errorSpan.textContent = '';
+        
+        // Handle loading errors
+        audio.addEventListener('error', () => {
+            errorSpan.textContent = 'Sound file not found.';
+        });
+        
+        // Stop any currently playing audio
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio.currentTime = 0;
+        }
+        
+        // Play the audio
+        this.currentAudio = audio;
+        audio.play().catch(error => {
+            errorSpan.textContent = 'Sound file not found.';
+        });
+    }
 }
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    const browser = new ODFBrowser();
+    // Make browser instance globally accessible
+    window.browser = new ODFBrowser();
     
     // Add click handler for ODF items
     document.addEventListener('click', (e) => {
