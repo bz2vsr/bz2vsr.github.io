@@ -476,80 +476,103 @@ class ODFBrowser {
         // Only show tabs if there are multiple groups
         const hasMultipleGroups = Object.keys(groupedEntries).length > 1;
         
-        // Create tabs HTML only if multiple groups exist
-        const tabsHtml = hasMultipleGroups ? `
-            <ul class="nav nav-pills mb-3" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" 
-                            id="tab-All" 
-                            data-bs-toggle="pill"
-                            data-bs-target="#content-All"
-                            type="button"
-                            role="tab">
-                        All
-                    </button>
-                </li>
-                ${Object.keys(groupedEntries).map((group) => `
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" 
-                                id="tab-${group}" 
-                                data-bs-toggle="pill"
-                                data-bs-target="#content-${group}"
-                                type="button"
-                                role="tab">
-                            ${group}
-                        </button>
-                    </li>
-                `).join('')}
-            </ul>
-        ` : '';
-        
-        // Create content HTML - if single group, don't wrap in tab-pane
+        // Helper function to estimate table height
+        const estimateHeight = (entries) => {
+            const [className, classData] = entries;
+            // Card header + table header + (rows * row height)
+            return 60 + 42 + (Object.keys(classData).length * 42);
+        };
+
+        // For content HTML generation with balanced columns:
+        const distributeEntries = (entries) => {
+            // Sort entries by height (largest first)
+            const sortedEntries = [...entries].sort((a, b) => 
+                estimateHeight(b) - estimateHeight(a)
+            );
+
+            const leftColumn = [];
+            const rightColumn = [];
+            let leftHeight = 0;
+            let rightHeight = 0;
+
+            // Handle largest tables first
+            sortedEntries.forEach(entry => {
+                const entryHeight = estimateHeight(entry);
+                
+                // If one column is significantly taller, force entry into shorter column
+                if (Math.abs(leftHeight - rightHeight) > entryHeight * 0.7) {
+                    if (leftHeight < rightHeight) {
+                        leftColumn.push(entry);
+                        leftHeight += entryHeight;
+                    } else {
+                        rightColumn.push(entry);
+                        rightHeight += entryHeight;
+                    }
+                } else {
+                    // Otherwise use standard balancing
+                    if (leftHeight <= rightHeight) {
+                        leftColumn.push(entry);
+                        leftHeight += entryHeight;
+                    } else {
+                        rightColumn.push(entry);
+                        rightHeight += entryHeight;
+                    }
+                }
+            });
+
+            return [leftColumn, rightColumn];
+        };
+
+        // Generate content HTML with balanced columns
         const contentHtml = hasMultipleGroups ? `
             <div class="tab-content">
-                <div class="tab-pane fade show active" 
-                     id="content-All" 
-                     role="tabpanel">
+                <div class="tab-pane fade show active" id="content-All" role="tabpanel">
                     <div class="row">
-                        <div class="col-6 ps-0">
-                            ${this.formatODFDataColumn(Object.entries(groupedEntries).flatMap(([, entries]) => entries).slice(0, Math.ceil(Object.entries(groupedEntries).flatMap(([, entries]) => entries).length / 2)))}
-                        </div>
-                        <div class="col-6 pe-0">
-                            ${this.formatODFDataColumn(Object.entries(groupedEntries).flatMap(([, entries]) => entries).slice(Math.ceil(Object.entries(groupedEntries).flatMap(([, entries]) => entries).length / 2)))}
-                        </div>
+                        ${(() => {
+                            const allEntries = Object.entries(groupedEntries)
+                                .flatMap(([, entries]) => entries);
+                            const [leftCol, rightCol] = distributeEntries(allEntries);
+                            return `
+                                <div class="col-6 ps-0">
+                                    ${this.formatODFDataColumn(leftCol)}
+                                </div>
+                                <div class="col-6 pe-0">
+                                    ${this.formatODFDataColumn(rightCol)}
+                                </div>
+                            `;
+                        })()}
                     </div>
                 </div>
                 ${Object.entries(groupedEntries).map(([group, entries]) => {
-                    const midPoint = Math.ceil(entries.length / 2);
-                    const leftColumns = entries.slice(0, midPoint);
-                    const rightColumns = entries.slice(midPoint);
-                    
+                    const [leftCol, rightCol] = distributeEntries(entries);
                     return `
-                        <div class="tab-pane fade" 
-                             id="content-${group}" 
-                             role="tabpanel">
+                        <div class="tab-pane fade" id="content-${group}" role="tabpanel">
                             <div class="row">
                                 <div class="col-6 ps-0">
-                                    ${this.formatODFDataColumn(leftColumns)}
+                                    ${this.formatODFDataColumn(leftCol)}
                                 </div>
                                 <div class="col-6 pe-0">
-                                    ${this.formatODFDataColumn(rightColumns)}
+                                    ${this.formatODFDataColumn(rightCol)}
                                 </div>
                             </div>
                         </div>
                     `;
                 }).join('')}
             </div>
-        ` : `
-            <div class="row">
-                <div class="col-6 ps-0">
-                    ${this.formatODFDataColumn(groupedEntries[Object.keys(groupedEntries)[0]].slice(0, Math.ceil(groupedEntries[Object.keys(groupedEntries)[0]].length / 2)))}
+        ` : (() => {
+            const entries = groupedEntries[Object.keys(groupedEntries)[0]];
+            const [leftCol, rightCol] = distributeEntries(entries);
+            return `
+                <div class="row">
+                    <div class="col-6 ps-0">
+                        ${this.formatODFDataColumn(leftCol)}
+                    </div>
+                    <div class="col-6 pe-0">
+                        ${this.formatODFDataColumn(rightCol)}
+                    </div>
                 </div>
-                <div class="col-6 pe-0">
-                    ${this.formatODFDataColumn(groupedEntries[Object.keys(groupedEntries)[0]].slice(Math.ceil(groupedEntries[Object.keys(groupedEntries)[0]].length / 2)))}
-                </div>
-            </div>
-        `;
+            `;
+        })();
         
         // Create the entire card structure
         this.content.innerHTML = `
@@ -560,7 +583,32 @@ class ODFBrowser {
                     ${inheritanceHtml}
                 </div>
                 <div class="card-body">
-                    ${tabsHtml}
+                    ${hasMultipleGroups ? `
+                        <ul class="nav nav-pills mb-3" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" 
+                                        id="tab-All" 
+                                        data-bs-toggle="pill"
+                                        data-bs-target="#content-All"
+                                        type="button"
+                                        role="tab">
+                                    All
+                                </button>
+                            </li>
+                            ${Object.keys(groupedEntries).map((group) => `
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" 
+                                            id="tab-${group}" 
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#content-${group}"
+                                            type="button"
+                                            role="tab">
+                                        ${group}
+                                    </button>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    ` : ''}
                     ${contentHtml}
                 </div>
             </div>
