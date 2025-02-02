@@ -462,6 +462,8 @@ class ODFBrowser {
     
     displayODFData(category, filename) {
         const odfData = this.data[category][filename];
+        this.selectedODF = {category, filename};
+
         const displayName = odfData.GameObjectClass?.unitName || odfData.WeaponClass?.wpnName || filename;
         const inheritanceHtml = odfData.inheritanceChain ? 
             `<div class="text-info small">Inherits: ${odfData.inheritanceChain.join(' → ')}</div>` : '';
