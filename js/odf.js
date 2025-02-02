@@ -66,37 +66,37 @@ class ODFBrowser {
         this.lastEscapePress = 0;
         
         document.addEventListener('keydown', (e) => {
+            // Up/Down arrows always control ODF list regardless of focus
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
                 this.cycleODFs(e.key === 'ArrowDown' ? 1 : -1);
                 return;
             }
             
+            // Left/Right arrows for tab navigation (always)
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                this.cycleTabs(e.key === 'ArrowRight');
+                return;
+            }
+            
+            // Don't handle other keyboard shortcuts if user is typing in an input
             if (e.target.tagName === 'INPUT' && !['Escape', 'Enter'].includes(e.key)) {
                 return;
             }
             
             switch (e.key) {
-                case 'Tab':
-                    e.preventDefault();
-                    this.cycleTabs(!e.shiftKey);
-                    break;
-                    
                 case 'Enter':
                     e.preventDefault();
-                    console.log('Enter key pressed');
                     const activeODF = document.querySelector('.odf-item.active');
-                    console.log('Active ODF found:', activeODF);
                     if (activeODF) {
                         const {filename, category} = activeODF.dataset;
-                        console.log('ODF data:', {filename, category});
                         browser.displayODFData(category, filename);
                         
                         document.querySelectorAll('.odf-item').forEach(item => {
                             item.classList.remove('active');
                         });
                         activeODF.classList.add('active');
-                        console.log('Active state updated');
                     }
                     break;
                     
