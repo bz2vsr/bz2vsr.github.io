@@ -496,8 +496,8 @@ class ODFBrowser {
                 const match = name.match(/^(.+?)(\d+)?$/);
                 if (match) {
                     const [, base] = match;
-                    // Special case: if base is only one letter, put in Other
-                    if (base.length === 1) {
+                    // Special case to handle short entries like "Lod" and "e"
+                    if (base.length < 4) {
                         groupedEntries['Other'] = groupedEntries['Other'] || [];
                         groupedEntries['Other'].push([name, data]);
                     } else {
