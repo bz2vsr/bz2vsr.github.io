@@ -633,3 +633,33 @@ table.table.dataTable>tbody>tr.selected>* {
 .input-group:has(#odfPropertySearch):focus-within #clearPropertySearch {
     border-color: #86b7fe; /* Match input focus border color */
 }
+
+/* Always show focus outline on ODF items */
+.odf-item:focus:not(:focus-visible),
+.odf-item:focus {
+    outline: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color-light) !important;
+}
+
+/* ODF item arrow styling */
+.odf-item {
+    position: relative;
+}
+
+.odf-item .odf-dot {
+    opacity: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--bs-primary);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.odf-item.selected .odf-dot {
+    opacity: 1.0;
+}
+
+/* Ensure long names don't overlap with arrow */
+.odf-item > div {
+    min-width: 0;
+}
