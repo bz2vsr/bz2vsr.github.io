@@ -59,6 +59,8 @@ class ODFBrowser {
             }
         });
         
+        this.initializeEventListeners();
+        
         document.addEventListener('shown.bs.tab', (event) => {
             this.updateBadgeStyles();
         });
@@ -705,25 +707,30 @@ class ODFBrowser {
     }
     
     formatClassProperties(classData) {
+        // Get the current category and class name from the selected ODF
+        const category = this.selectedODF?.category;
+        
         return Object.entries(classData)
             .map(([key, value]) => `
                 <tr>
                     <td><code>${key}</code></td>
-                    <td>${this.formatValue(value)}</td>
+                    <td>${this.formatValue(value, key, category)}</td>
                 </tr>
             `).join('');
     }
     
-    formatValue(value) {
+    formatValue(value, propertyName = '', category = '') {
         if (typeof value === 'object' && value !== null) {
             return `<pre class="mb-0"><code>${JSON.stringify(value, null, 2)}</code></pre>`;
         }
         
         if (typeof value === 'string') {
+            // Remove quotes if present
             if (value.startsWith('"') && value.endsWith('"')) {
                 value = value.slice(1, -1);
             }
             
+            // Handle audio files
             if (value.toLowerCase().endsWith('.wav')) {
                 return `
                     <div class="d-flex align-items-center gap-2">
@@ -737,7 +744,17 @@ class ODFBrowser {
                         <span class="error-message text-danger small"></span>
                     </div>`;
             }
+
+            // Check if this value should be a link to another ODF
+            if (this.shouldLinkToODF(propertyName, category, value)) {
+                // Try to find the ODF in our data
+                const targetCategory = this.findODFCategory(value);
+                if (targetCategory) {
+                    return `<a href="#" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-category="${targetCategory}" data-filename="${value}.odf">${value}</a>`;
+                }
+            }
             
+            // Handle numeric values
             if (
                 /^-?\d*\.?\d+f?$/.test(value) ||
                 /^-?\d*\.?\d+(?:f?\s+-?\d*\.?\d+f?)+$/.test(value)
@@ -747,6 +764,60 @@ class ODFBrowser {
         }
         
         return value;
+    }
+    
+    shouldLinkToODF(propertyName, category, value) {
+        // Skip empty values
+        if (!value) return false;
+
+        // Skip if the value points to the current ODF
+        const currentFilename = this.selectedODF?.filename;
+        if (currentFilename && value + '.odf' === currentFilename) {
+            return false;
+        }
+
+        // Universal properties that should link
+        const universalProperties = ['classLabel', 'baseName'];
+        if (universalProperties.includes(propertyName)) return true;
+
+        // Category-specific properties
+        const categoryProperties = {
+            'Vehicle': [
+                /^weaponName\d*$/,  // weaponName, weaponName1, etc.
+                /^requireName\d*$/   // requireName, requireName1, etc.
+            ],
+            'Weapon': [
+                'altName'
+            ],
+            'Pilot': [
+                /^weaponName\d*$/
+            ],
+            'Building': [
+                'upgradeName',
+                /^requireName\d*$/,
+                'powerName',
+                /^buildItem\d*$/    // buildItem, buildItem1, etc.
+            ]
+        };
+
+        // Check if property matches any patterns for the current category
+        const patterns = categoryProperties[category] || [];
+        return patterns.some(pattern => {
+            if (pattern instanceof RegExp) {
+                return pattern.test(propertyName);
+            }
+            return propertyName === pattern;
+        });
+    }
+
+    findODFCategory(odfName) {
+        // Search through all categories to find which one contains this ODF
+        for (const [category, odfs] of Object.entries(this.data)) {
+            if (odfs[`${odfName}.odf`]) {
+                return category;
+            }
+        }
+        return null;
     }
     
     cycleTabs(forward = true) {
@@ -897,6 +968,41 @@ class ODFBrowser {
         
         console.log('No tab selection performed');
         return false;
+    }
+
+    initializeEventListeners() {
+        // Add click handler for ODF links
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('a[data-category][data-filename]')) {
+                e.preventDefault();
+                const category = e.target.dataset.category;
+                const filename = e.target.dataset.filename;
+                
+                // First, switch to the correct category tab in sidebar
+                const categoryTab = document.querySelector(`#sidebar-tab-${category}`);
+                if (categoryTab && !categoryTab.classList.contains('active')) {
+                    categoryTab.click();
+                }
+                
+                // Then find and select the ODF item in the list
+                const odfItem = document.querySelector(`.odf-item[data-filename="${filename}"]`);
+                if (odfItem) {
+                    // Remove active class from all items
+                    document.querySelectorAll('.odf-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to target item
+                    odfItem.classList.add('active');
+                    
+                    // Scroll the item into view
+                    odfItem.scrollIntoView({ block: 'nearest' });
+                }
+                
+                // Finally, display the ODF data
+                this.displayODFData(category, filename);
+            }
+        });
     }
 }
 
