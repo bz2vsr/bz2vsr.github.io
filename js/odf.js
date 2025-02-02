@@ -122,13 +122,17 @@ class ODFBrowser {
                     e.preventDefault();
                     const now = Date.now();
                     
-                    // Check if this is a double-press (within 500ms)
+                    // Check if this is a double-press (within 750ms)
                     if (now - this.lastEscapePress < 750) {
                         // Double escape - trigger reset
-                        document.getElementById('resetView').click();
+                        const resetButton = document.getElementById('resetView');
+                        this.flashButton(resetButton);
+                        resetButton.click();
                     } else {
                         // Single escape - trigger clear
-                        document.getElementById('clearSearch').click();
+                        const clearButton = document.getElementById('clearSearch');
+                        this.flashButton(clearButton);
+                        clearButton.click();
                     }
                     
                     this.lastEscapePress = now;
@@ -136,6 +140,16 @@ class ODFBrowser {
                     break;
             }
         });
+        
+        // Add flash button helper method
+        this.flashButton = (button) => {
+            const originalClasses = button.className;
+            button.className = 'btn text-bg-primary';
+            
+            setTimeout(() => {
+                button.className = originalClasses;
+            }, 150);
+        };
     }
     
     showDefaultContent() {
