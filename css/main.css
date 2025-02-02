@@ -398,11 +398,77 @@ table.table.dataTable>tbody>tr.selected>* {
     background-color: var(--bs-secondary-bg-subtle) !important;
 }
 
+/* Main ODF content container */
 #odfContentContent {
     padding: 0;
     height: calc(100vh - 90px);
-    overflow-y: auto;
+    overflow: hidden;
     padding-right: 4px;
+}
+
+/* Primary outer card structure */
+#odfContentContent > .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Fixed header of primary card */
+#odfContentContent > .card > .card-header {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+}
+
+/* Card body container of primary card */
+#odfContentContent > .card > .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    padding: 1rem;
+}
+
+/* Keep nav pills fixed */
+#odfContentContent > .card > .card-body > .nav-pills {
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+}
+
+/* Make tab content scrollable */
+#odfContentContent > .card > .card-body > .tab-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* When no tabs, make primary card body itself scrollable */
+#odfContentContent > .card > .card-body:not(:has(.tab-content)) {
+    overflow-y: auto;
+}
+
+/* Scrollbar styling for scrollable areas */
+#odfContentContent > .card > .card-body > .tab-content::-webkit-scrollbar,
+#odfContentContent > .card > .card-body:not(:has(.tab-content))::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+}
+
+#odfContentContent > .card > .card-body > .tab-content::-webkit-scrollbar-track,
+#odfContentContent > .card > .card-body:not(:has(.tab-content))::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 4px;
+}
+
+#odfContentContent > .card > .card-body > .tab-content::-webkit-scrollbar-thumb,
+#odfContentContent > .card > .card-body:not(:has(.tab-content))::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#odfContentContent > .card > .card-body > .tab-content::-webkit-scrollbar-thumb:hover,
+#odfContentContent > .card > .card-body:not(:has(.tab-content))::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
 }
 
 /* Keep column spacing */
@@ -414,12 +480,6 @@ table.table.dataTable>tbody>tr.selected>* {
 #odfContentContent .card {
     border-radius: 0.375rem;
     border: 1px solid var(--bs-border-color);
-}
-
-#odfContentContent .card-header {
-    border-top-left-radius: calc(0.375rem - 1px);
-    border-top-right-radius: calc(0.375rem - 1px);
-    padding: 0.5rem 1rem;
 }
 
 /* Adjust row and column spacing */
@@ -436,60 +496,37 @@ table.table.dataTable>tbody>tr.selected>* {
     padding-right: 1rem;
 }
 
-#odfContentContent::-webkit-scrollbar {
-    width: 8px;
-    cursor: pointer;
-}
-
-#odfContentContent::-webkit-scrollbar-track {
-    background: rgba(173, 181, 189, 0.08);
-    border-radius: 4px;
-}
-
-#odfContentContent::-webkit-scrollbar-thumb {
-    background: rgba(13, 110, 253, 0.8);
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#odfContentContent::-webkit-scrollbar-thumb:hover {
-    background: rgba(13, 110, 253, 1.0);
-}
-
-/* Make sidebar match content height but remove scrolling */
+/* Make sidebar match content height */
 #odfSidebarContent {
     padding-right: 0.5rem;
-}
-
-#odfSidebarContent, #odfContentContent {
     height: calc(100vh - 80px);
-    overflow-y: auto;
 }
 
-/* Apply scrollbar styling to tab-content instead of odf-list */
-.tab-content {
-    padding-right: 4px;
-    overflow-y: auto;
+/* Style sidebar tab content */
+#odfSidebarContent .tab-content {
     height: 100%;
+    overflow-y: auto;
+    padding-right: 4px;
 }
 
-.tab-content::-webkit-scrollbar {
+/* Sidebar tab content scrollbar styling */
+#odfSidebarContent .tab-content::-webkit-scrollbar {
     width: 8px;
     cursor: pointer;
 }
 
-.tab-content::-webkit-scrollbar-track {
+#odfSidebarContent .tab-content::-webkit-scrollbar-track {
     background: rgba(173, 181, 189, 0.08);
     border-radius: 4px;
 }
 
-.tab-content::-webkit-scrollbar-thumb {
+#odfSidebarContent .tab-content::-webkit-scrollbar-thumb {
     background: rgba(13, 110, 253, 0.8);
     border-radius: 4px;
     cursor: pointer;
 }
 
-.tab-content::-webkit-scrollbar-thumb:hover {
+#odfSidebarContent .tab-content::-webkit-scrollbar-thumb:hover {
     background: rgba(13, 110, 253, 1.0);
 }
 
@@ -497,4 +534,17 @@ table.table.dataTable>tbody>tr.selected>* {
 #shortcutsModal .table tr td {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+}
+
+/* Style last row cells in ODF content tables */
+#odfContentContent .card .table tr:last-child td {
+    border-bottom: none;
+}
+
+#odfContentContent .card .table tr:last-child td:first-child {
+    border-bottom-left-radius: calc(0.375rem - 1px);
+}
+
+#odfContentContent .card .table tr:last-child td:last-child {
+    border-bottom-right-radius: calc(0.375rem - 1px);
 }

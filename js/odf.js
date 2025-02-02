@@ -78,18 +78,6 @@ class ODFBrowser {
                 return;
             }
             
-            // Handle Enter key regardless of focus if there's a selected ODF
-            if (e.key === 'Enter') {
-                const activeODF = document.querySelector('.odf-item.active');
-                if (activeODF) {
-                    e.preventDefault();
-                    const category = activeODF.dataset.category;
-                    const filename = activeODF.dataset.filename;
-                    this.displayODFData(category, filename);
-                    return;
-                }
-            }
-            
             // Don't handle other keyboard shortcuts if user is typing in an input
             if (e.target.tagName === 'INPUT' && e.key !== 'Escape') {
                 return;
@@ -99,6 +87,14 @@ class ODFBrowser {
                 case 'Tab':
                     e.preventDefault();
                     this.cycleTabs(!e.shiftKey);
+                    break;
+                    
+                case 'Enter':
+                    e.preventDefault();
+                    const activeODF = document.querySelector('.odf-item.active');
+                    if (activeODF) {
+                        activeODF.click();
+                    }
                     break;
                     
                 case 'k':
