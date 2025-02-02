@@ -427,10 +427,6 @@ table.table.dataTable>tbody>tr.selected>* {
     margin: 0;
 }
 
-#odfContentContent .card-body {
-    padding: 1rem;
-}
-
 /* Remove margin from first and last columns */
 #odfContentContent .col-6:first-child {
     padding-left: 1rem;
@@ -495,4 +491,10 @@ table.table.dataTable>tbody>tr.selected>* {
 
 .tab-content::-webkit-scrollbar-thumb:hover {
     background: rgba(13, 110, 253, 1.0);
+}
+
+/* Add spacing to keyboard shortcut rows */
+#shortcutsModal .table tr td {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
