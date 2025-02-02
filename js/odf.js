@@ -434,72 +434,69 @@ class ODFBrowser {
         const inheritanceHtml = odfData.inheritanceChain ? 
             `<div class="text-secondary">Inherits: ${odfData.inheritanceChain.join(' → ')}</div>` : '';
 
-        // Group entries based on category type
+        // Group entries based on common patterns
         const groupedEntries = {};
         
-        if (category === 'Weapon') {
-            // Existing weapon grouping logic
-            Object.entries(odfData).forEach(([className, classData]) => {
-                if (className === 'inheritanceChain') return;
-                
-                const group = className.split('.')[0];
+        // First, collect all entries to analyze patterns
+        const entries = Object.keys(odfData).filter(name => name !== 'inheritanceChain');
+        
+        // Find groups of similar names (e.g., ArmoryGroup1, ArmoryGroup2)
+        const patterns = new Map(); // Store pattern -> array of entries
+        
+        entries.forEach(name => {
+            const data = odfData[name];
+            const isEmpty = Object.keys(data).length === 0;
+            
+            if (name.includes('.')) {
+                // Handle entries with dots (e.g., "Ordnance.Render", "PowerUp.PowerUpClass")
+                const group = name.split('.')[0];
                 groupedEntries[group] = groupedEntries[group] || [];
-                groupedEntries[group].push([className, classData]);
-            });
-        } else {
-            // First, collect all class names to analyze patterns
-            const classNames = Object.keys(odfData).filter(name => name !== 'inheritanceChain');
-            
-            // Find groups of similar names (e.g., ArmoryGroup1, ArmoryGroup2)
-            const patterns = new Map(); // Store pattern -> array of class names
-            
-            classNames.forEach(name => {
-                const data = odfData[name];
-                const isEmpty = Object.keys(data).length === 0;
-                
-                if (name.endsWith('Class')) {
-                    if (isEmpty) {
-                        // Move empty Class entries to Other
+                groupedEntries[group].push([name, data]);
+            } else if (name.endsWith('Class') && !isEmpty) {
+                // Handle non-empty Class entries
+                const group = name.replace('Class', '');
+                groupedEntries[group] = groupedEntries[group] || [];
+                groupedEntries[group].push([name, data]);
+            } else {
+                // Look for numbered patterns (e.g., ArmoryGroup1, ArmoryGroup2)
+                const match = name.match(/^(.+?)(\d+)?$/);
+                if (match) {
+                    const [, base] = match;
+                    // Special case: if base is only one letter, put in Other
+                    if (base.length === 1) {
                         groupedEntries['Other'] = groupedEntries['Other'] || [];
                         groupedEntries['Other'].push([name, data]);
                     } else {
-                        // Handle non-empty Class entries
-                        const group = name.replace('Class', '');
-                        groupedEntries[group] = groupedEntries[group] || [];
-                        groupedEntries[group].push([name, data]);
-                    }
-                } else {
-                    // Look for numbered patterns
-                    const match = name.match(/^(.+?)(\d+)?$/);
-                    if (match) {
-                        const [, base] = match;
                         if (!patterns.has(base)) {
                             patterns.set(base, []);
                         }
                         patterns.get(base).push(name);
-                    } else {
-                        // Handle entries without numbers or 'Class' suffix
-                        groupedEntries['Other'] = groupedEntries['Other'] || [];
-                        groupedEntries['Other'].push([name, data]);
                     }
-                }
-            });
-            
-            // Process the patterns we found
-            patterns.forEach((names, base) => {
-                if (names.length > 1) {
-                    // If we found multiple entries with the same base name,
-                    // group them together under the base name
-                    groupedEntries[base] = names.map(name => [name, odfData[name]]);
                 } else {
-                    // Single entry - put in Other
+                    // Move to Other:
+                    // - Empty Class entries
+                    // - Non-Class entries without dots
+                    // - Entries without patterns
                     groupedEntries['Other'] = groupedEntries['Other'] || [];
-                    names.forEach(name => {
-                        groupedEntries['Other'].push([name, odfData[name]]);
-                    });
+                    groupedEntries['Other'].push([name, data]);
                 }
-            });
-        }
+            }
+        });
+        
+        // Process the patterns we found
+        patterns.forEach((names, base) => {
+            if (names.length > 1) {
+                // If we found multiple entries with the same base name,
+                // group them together under the base name
+                groupedEntries[base] = names.map(name => [name, odfData[name]]);
+            } else {
+                // Single entry - put in Other
+                groupedEntries['Other'] = groupedEntries['Other'] || [];
+                names.forEach(name => {
+                    groupedEntries['Other'].push([name, odfData[name]]);
+                });
+            }
+        });
 
         const hasMultipleGroups = Object.keys(groupedEntries).length > 1;
 
