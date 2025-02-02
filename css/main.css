@@ -601,13 +601,20 @@ table.table.dataTable>tbody>tr.selected>* {
 }
 
 #clearPropertySearch:hover {
-    background: none;
-    border-color: var(--bs-border-color); /* Maintain border color on hover */
+    background: var(--bs-secondary-bg) !important;
+    border-color: var(--bs-border-color);
 }
 
 #clearPropertySearch:focus {
-    border-color: #86b7fe; /* Match Bootstrap's focus border color */
-    box-shadow: none; /* Remove default focus shadow */
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: var(--bs-border-color) !important;
+}
+
+#clearPropertySearch:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: var(--bs-border-color) !important;
 }
 
 #clearPropertySearch svg {

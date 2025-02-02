@@ -86,10 +86,18 @@ class ODFBrowser {
                 return;
             }
             
-            // Left/Right arrows for tab navigation (always)
+            // Left/Right arrows - handle differently based on focus
             if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                 e.preventDefault();
-                this.cycleTabs(e.key === 'ArrowRight');
+                const propertySearch = document.getElementById('odfPropertySearch');
+                
+                if (document.activeElement === propertySearch) {
+                    // Cycle through ODF content tabs when property search is focused
+                    this.cycleContentTabs(e.key === 'ArrowRight');
+                } else {
+                    // Default behavior - cycle through sidebar tabs
+                    this.cycleTabs(e.key === 'ArrowRight');
+                }
                 return;
             }
             
@@ -1172,6 +1180,24 @@ class ODFBrowser {
                 rightHeight += height;
             }
         });
+    }
+
+    // Add new method to handle cycling through content tabs
+    cycleContentTabs(forward = true) {
+        const tabs = Array.from(document.querySelectorAll('#odfContentContent [data-bs-toggle="pill"]'));
+        if (!tabs.length) return; // No tabs to cycle through
+        
+        const currentTab = document.querySelector('#odfContentContent [data-bs-toggle="pill"].active');
+        const currentIndex = tabs.indexOf(currentTab);
+        
+        let nextIndex;
+        if (forward) {
+            nextIndex = currentIndex + 1 >= tabs.length ? 0 : currentIndex + 1;
+        } else {
+            nextIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
+        }
+        
+        tabs[nextIndex].click();
     }
 }
 
