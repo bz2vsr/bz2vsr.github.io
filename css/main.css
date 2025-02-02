@@ -419,13 +419,13 @@ table.table.dataTable>tbody>tr.selected>* {
     padding: 0.5rem 1rem;
 }
 
-/* Card body container of primary card */
+/* Card body container of primary card - adjust right padding */
 #odfContentContent > .card > .card-body {
     display: flex;
     flex-direction: column;
     flex: 1;
     min-height: 0;
-    padding: 1rem;
+    padding: 1rem 0.75rem 1rem 1rem; /* Reduced right padding */
 }
 
 /* Keep nav pills fixed */
@@ -434,11 +434,13 @@ table.table.dataTable>tbody>tr.selected>* {
     margin-bottom: 1rem;
 }
 
-/* Make tab content scrollable */
+/* Make tab content scrollable - add left spacing */
 #odfContentContent > .card > .card-body > .tab-content {
     flex: 1;
     overflow-y: auto;
     min-height: 0;
+    padding-right: 4px;
+    padding-left: 4px;
 }
 
 /* When no tabs, make primary card body itself scrollable */
