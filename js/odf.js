@@ -754,10 +754,11 @@ class ODFBrowser {
                 }
             }
             
-            // Handle numeric values
+            // Handle numeric values including scientific notation
             if (
-                /^-?\d*\.?\d+f?$/.test(value) ||
-                /^-?\d*\.?\d+(?:f?\s+-?\d*\.?\d+f?)+$/.test(value)
+                /^-?\d*\.?\d+f?$/.test(value) ||  // Regular numbers with optional decimal and 'f' suffix
+                /^-?\d*\.?\d+(?:f?\s+-?\d*\.?\d+f?)+$/.test(value) ||  // Space-separated numbers
+                /^-?\d*\.?\d+e[+-]?\d+f?$/i.test(value)  // Scientific notation with optional 'f' suffix
             ) {
                 return `<code style="color: rgba(255, 107, 74, 0.85)">${value}</code>`;
             }
