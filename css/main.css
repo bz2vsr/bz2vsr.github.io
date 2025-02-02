@@ -587,3 +587,42 @@ table.table.dataTable>tbody>tr.selected>* {
 #odfSearch:focus + .search-shortcut {
     display: none;
 }
+
+/* Update the property search input and clear button styles */
+#odfPropertySearch {
+    border-right: 0;
+}
+
+#clearPropertySearch {
+    border-left: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-color: var(--bs-border-color); /* Match Bootstrap's default border color */
+}
+
+#clearPropertySearch:hover {
+    background: none;
+    border-color: var(--bs-border-color); /* Maintain border color on hover */
+}
+
+#clearPropertySearch:focus {
+    border-color: #86b7fe; /* Match Bootstrap's focus border color */
+    box-shadow: none; /* Remove default focus shadow */
+}
+
+#clearPropertySearch svg {
+    opacity: 0.75;
+}
+
+#clearPropertySearch:hover svg {
+    opacity: 1.0;
+}
+
+/* Ensure input group has consistent styling */
+.input-group:has(#odfPropertySearch) {
+    border-radius: var(--bs-border-radius-sm);
+}
+
+.input-group:has(#odfPropertySearch):focus-within #clearPropertySearch {
+    border-color: #86b7fe; /* Match input focus border color */
+}

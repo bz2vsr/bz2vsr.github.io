@@ -68,6 +68,17 @@ class ODFBrowser {
         this.lastEscapePress = 0;
         
         document.addEventListener('keydown', (e) => {
+            // Handle Escape key for property search first
+            if (e.key === 'Escape') {
+                const propertySearch = document.getElementById('odfPropertySearch');
+                if (document.activeElement === propertySearch) {
+                    e.preventDefault();
+                    propertySearch.value = '';
+                    this.handlePropertySearch('');
+                    return;
+                }
+            }
+
             // Up/Down arrows always control ODF list regardless of focus
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
@@ -179,31 +190,34 @@ class ODFBrowser {
         const tabsHTML = `
             <ul class="nav nav-pills mb-3" id="categoryTabs" role="tablist">
                 ${Object.keys(this.data).map((category, idx) => `
-            <li class="nav-item" role="presentation">
+                    <li class="nav-item" role="presentation">
                         <button class="nav-link ${idx === 0 ? 'active' : ''}" 
                                 id="sidebar-tab-${category}" 
                                 data-bs-toggle="pill" 
                                 data-bs-target="#list-${category}" 
-                                type="button" role="tab">
+                                type="button" role="tab"
+                                tabindex="-1">
                             ${category}
-                </button>
-            </li>
+                        </button>
+                    </li>
                 `).join('')}
-        </ul>
+            </ul>
         `;
         
         const contentHTML = `
-            <div class="tab-content flex-grow-1 overflow-auto" id="categoryContent">
+            <div class="tab-content flex-grow-1 overflow-auto" id="categoryContent" tabindex="-1">
                 ${Object.entries(this.data).map(([category, odfs], idx) => `
                     <div class="tab-pane fade h-100 ${idx === 0 ? 'show active' : ''}" 
-                         id="list-${category}" role="tabpanel">
+                         id="list-${category}" 
+                         role="tabpanel"
+                         tabindex="-1">
                         <div class="list-group odf-list">
                             ${this.generateODFList(category, odfs)}
-            </div>
-            </div>
+                        </div>
+                    </div>
                 `).join('')}
-        </div>
-    `;
+            </div>
+        `;
 
         this.sidebar.innerHTML = `
             <div class="d-flex flex-column h-100">
@@ -268,7 +282,8 @@ class ODFBrowser {
                 return `
                     <button class="list-group-item list-group-item-action odf-item" 
                             data-filename="${filename}" 
-                            data-category="${category}">
+                            data-category="${category}"
+                            tabindex="-1">
                         ${displayName ? 
                             `<span class="odf-name">${displayName}</span> <span class="ms-2 text-secondary">${filename.replace('.odf', '')}</span>` : 
                             filename.replace('.odf', '')}
@@ -624,9 +639,16 @@ class ODFBrowser {
                             ${inheritanceHtml}
                         </div>
                         <div class="position-relative" style="width: 200px;">
-                            <input type="text" class="form-control form-control-sm" 
-                                   id="odfPropertySearch" placeholder="Filter properties..."
-                                   aria-label="Filter properties">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" 
+                                       id="odfPropertySearch" placeholder="Filter properties..."
+                                       aria-label="Filter properties">
+                                <button class="btn btn-outline-secondary" type="button" id="clearPropertySearch">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -676,10 +698,17 @@ class ODFBrowser {
             </div>
         `;
 
-        // Add property search handler
+        // Update the property search handler setup:
         const propertySearch = document.getElementById('odfPropertySearch');
+        const clearPropertySearch = document.getElementById('clearPropertySearch');
+
         propertySearch.addEventListener('input', 
             debounce(e => this.handlePropertySearch(e.target.value), 300));
+
+        clearPropertySearch.addEventListener('click', () => {
+            propertySearch.value = '';
+            this.handlePropertySearch('');
+        });
 
         // Add tab change handler to reapply search
         document.querySelectorAll('[data-bs-toggle="pill"]').forEach(tab => {
@@ -687,6 +716,9 @@ class ODFBrowser {
                 this.handlePropertySearch(propertySearch.value);
             });
         });
+
+        // Store grouped entries for later use
+        this.groupedEntries = groupedEntries;
     }
     
     formatODFDataColumn(classEntries) {
@@ -871,15 +903,18 @@ class ODFBrowser {
     }
     
     cycleODFs(direction) {
-        const activeTab = document.querySelector('#categoryTabs .nav-link.active');
-        const categoryId = activeTab.getAttribute('data-bs-target').slice(1);
+        // Get the active tab pane first
+        const activeTabPane = document.querySelector('#categoryContent .tab-pane.active');
+        if (!activeTabPane) return;
+
+        // Get only visible ODFs within the active tab pane
         const visibleODFs = Array.from(
-            document.querySelectorAll(`.odf-item`)  // Remove category filter to search all items
+            activeTabPane.querySelectorAll('.odf-item')
         ).filter(item => item.style.display !== 'none');
         
         if (!visibleODFs.length) return;
         
-        const currentODF = document.querySelector('.odf-item.active');
+        const currentODF = activeTabPane.querySelector('.odf-item.active');
         let currentIndex = currentODF ? visibleODFs.indexOf(currentODF) : -1;
         
         let nextIndex;
@@ -898,12 +933,6 @@ class ODFBrowser {
         const nextODF = visibleODFs[nextIndex];
         nextODF.classList.add('active');
         nextODF.scrollIntoView({ block: 'nearest' });
-        
-        const category = nextODF.dataset.category;
-        const targetTab = document.querySelector(`#sidebar-tab-${category}`);
-        if (targetTab && !targetTab.classList.contains('active')) {
-            targetTab.click();
-        }
     }
 
     playAudio(url, buttonElement) {
@@ -1041,12 +1070,37 @@ class ODFBrowser {
     }
 
     handlePropertySearch(term) {
-        // Get the active tab content, or the main content if no tabs
         const activeTabContent = document.querySelector('#odfContentContent .tab-pane.active') || 
                                 document.querySelector('#odfContentContent .card-body');
         
         if (!activeTabContent) return;
-        
+
+        // Remove any existing alert
+        const existingAlert = activeTabContent.querySelector('.alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+
+        // If clearing search, re-render the active tab's content
+        if (!term) {
+            const activeTabId = activeTabContent.id;
+            if (activeTabId === 'content-All') {
+                // Re-render all entries
+                const allEntries = [];
+                Object.values(this.groupedEntries).forEach(entries => {
+                    allEntries.push(...entries);
+                });
+                this.renderColumnContent(activeTabContent, allEntries);
+            } else {
+                // Re-render specific tab content
+                const groupName = activeTabId.replace('content-', '');
+                const entries = this.groupedEntries[groupName] || [];
+                this.renderColumnContent(activeTabContent, entries);
+            }
+            return;
+        }
+
+        // Rest of the existing search logic...
         const cards = Array.from(activeTabContent.querySelectorAll('.card'));
         term = term.toLowerCase();
 
@@ -1059,74 +1113,65 @@ class ODFBrowser {
                 const propertyName = row.querySelector('td:first-child').textContent.toLowerCase();
                 const propertyValue = row.querySelector('td:last-child').textContent.toLowerCase();
                 
-                const isMatch = !term || 
-                    propertyName.includes(term) || 
-                    propertyValue.includes(term);
-                
-                row.style.display = isMatch ? '' : 'none';
+                const isMatch = propertyName.includes(term) || propertyValue.includes(term);
+                row.classList.toggle('d-none', !isMatch);
                 if (isMatch) hasVisibleRows = true;
             });
 
-            card.style.display = hasVisibleRows ? '' : 'none';
+            card.classList.toggle('d-none', !hasVisibleRows);
             return hasVisibleRows;
         });
 
-        // Get current tab name
+        // Get current tab name and show alert if no matches
         const activeTabButton = document.querySelector('#odfContentContent [data-bs-toggle="pill"].active');
         const tabName = activeTabButton ? activeTabButton.textContent.trim() : 'All';
 
-        // Remove any existing alert
-        const existingAlert = activeTabContent.querySelector('.alert');
-        if (existingAlert) {
-            existingAlert.remove();
-        }
-
-        if (visibleCards.length === 0 && term) {
-            // Show "no matches" alert
+        if (visibleCards.length === 0) {
             const alertHtml = `
                 <div class="alert alert-primary mb-3" role="alert">
                     No matches for "${term}" found in ${tabName}
                 </div>
             `;
-            
-            // Insert alert at the top of the content area
             const contentArea = activeTabContent.querySelector('.row') || activeTabContent;
             contentArea.insertAdjacentHTML('beforebegin', alertHtml);
-        } else if (visibleCards.length > 0) {
-            // Redistribute cards between columns
-            const leftColumn = activeTabContent.querySelector('.col-6:first-child');
-            const rightColumn = activeTabContent.querySelector('.col-6:last-child');
-            
-            if (leftColumn && rightColumn) {
-                // Clear existing content
-                leftColumn.innerHTML = '';
-                rightColumn.innerHTML = '';
-                
-                // Helper function to estimate card height
-                const estimateHeight = (card) => {
-                    const visibleRows = Array.from(card.querySelectorAll('tbody tr'))
-                        .filter(row => row.style.display !== 'none');
-                    return 60 + 42 + (visibleRows.length * 42);
-                };
-
-                // Calculate heights and distribute
-                let leftHeight = 0;
-                let rightHeight = 0;
-
-                visibleCards.forEach(card => {
-                    const height = estimateHeight(card);
-                    const clone = card.cloneNode(true);
-                    
-                    if (leftHeight <= rightHeight) {
-                        leftColumn.appendChild(clone);
-                        leftHeight += height;
-                    } else {
-                        rightColumn.appendChild(clone);
-                        rightHeight += height;
-                    }
-                });
-            }
         }
+
+        // Redistribute visible cards
+        this.renderColumnContent(activeTabContent, visibleCards);
+    }
+
+    renderColumnContent(container, entries) {
+        const leftColumn = container.querySelector('.col-6:first-child');
+        const rightColumn = container.querySelector('.col-6:last-child');
+        
+        if (!leftColumn || !rightColumn) return;
+
+        // Clear existing content
+        leftColumn.innerHTML = '';
+        rightColumn.innerHTML = '';
+
+        // Calculate heights and distribute
+        let leftHeight = 0;
+        let rightHeight = 0;
+
+        entries.forEach(entry => {
+            const card = entry instanceof Element ? entry : this.formatODFDataColumn([entry]);
+            const height = entry instanceof Element ? 
+                (60 + 42 + (entry.querySelectorAll('tbody tr:not(.d-none)').length * 42)) :
+                (60 + 42 + (Object.keys(entry[1]).length * 42));
+
+            if (leftHeight <= rightHeight) {
+                leftColumn.appendChild(typeof card === 'string' ? 
+                    new DOMParser().parseFromString(card, 'text/html').body.firstChild : 
+                    card.cloneNode(true));
+                leftHeight += height;
+            } else {
+                rightColumn.appendChild(typeof card === 'string' ? 
+                    new DOMParser().parseFromString(card, 'text/html').body.firstChild : 
+                    card.cloneNode(true));
+                rightHeight += height;
+            }
+        });
     }
 }
 
