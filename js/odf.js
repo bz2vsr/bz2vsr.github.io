@@ -1,4 +1,3 @@
-// Fuzzy search function
 function fuzzySearch(needle, haystack) {
     needle = needle.toLowerCase();
     haystack = haystack.toLowerCase();
@@ -25,7 +24,6 @@ function fuzzySearch(needle, haystack) {
     return true;
 }
 
-// Debounce function for search input
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -46,42 +44,34 @@ class ODFBrowser {
         this.selectedODF = null;
         this.currentAudio = null;
         
-        // Cache DOM elements
         this.sidebar = document.getElementById('odfSidebarContent');
         this.content = document.getElementById('odfContentContent');
         
-        // Show initial message
         this.showDefaultContent();
         
-        // Initialize
         this.loadData().then(() => {
-            // Check for ODF parameter after data is loaded
             const urlParams = new URLSearchParams(window.location.search);
             const odfToLoad = urlParams.get('odf');
+            const categoryToShow = urlParams.get('cat');
             
             if (odfToLoad) {
-                this.selectODFByName(odfToLoad);
+                this.selectODFByName(odfToLoad, categoryToShow);
             }
         });
         
-        // Add tab change listener
         document.addEventListener('shown.bs.tab', (event) => {
             this.updateBadgeStyles();
         });
         
-        // Add last escape press timestamp
         this.lastEscapePress = 0;
         
-        // Add keyboard navigation
         document.addEventListener('keydown', (e) => {
-            // Special handling for arrow keys - allow them even in search input
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
                 this.cycleODFs(e.key === 'ArrowDown' ? 1 : -1);
                 return;
             }
             
-            // Don't handle other keyboard shortcuts if user is typing in an input
             if (e.target.tagName === 'INPUT' && !['Escape', 'Enter'].includes(e.key)) {
                 return;
             }
@@ -102,7 +92,6 @@ class ODFBrowser {
                         console.log('ODF data:', {filename, category});
                         browser.displayODFData(category, filename);
                         
-                        // Add active state
                         document.querySelectorAll('.odf-item').forEach(item => {
                             item.classList.remove('active');
                         });
@@ -122,14 +111,11 @@ class ODFBrowser {
                     e.preventDefault();
                     const now = Date.now();
                     
-                    // Check if this is a double-press (within 750ms)
                     if (now - this.lastEscapePress < 750) {
-                        // Double escape - trigger reset
                         const resetButton = document.getElementById('resetView');
                         this.flashButton(resetButton);
                         resetButton.click();
                     } else {
-                        // Single escape - trigger clear
                         const clearButton = document.getElementById('clearSearch');
                         this.flashButton(clearButton);
                         clearButton.click();
@@ -141,7 +127,6 @@ class ODFBrowser {
             }
         });
         
-        // Add flash button helper method
         this.flashButton = (button) => {
             const originalClasses = button.className;
             button.className = 'btn text-bg-primary';
@@ -173,7 +158,6 @@ class ODFBrowser {
     }
     
     initializeSidebar() {
-        // Create search bar with clear and reset buttons
         const searchHTML = `
             <div class="mb-3 d-flex gap-2 position-relative">
                 <input type="text" class="form-control" id="odfSearch" 
@@ -190,13 +174,12 @@ class ODFBrowser {
             </div>
         `;
         
-        // Create category pills
         const tabsHTML = `
             <ul class="nav nav-pills mb-3" id="categoryTabs" role="tablist">
                 ${Object.keys(this.data).map((category, idx) => `
             <li class="nav-item" role="presentation">
                         <button class="nav-link ${idx === 0 ? 'active' : ''}" 
-                                id="tab-${category}" 
+                                id="sidebar-tab-${category}" 
                                 data-bs-toggle="pill" 
                                 data-bs-target="#list-${category}" 
                                 type="button" role="tab">
@@ -207,7 +190,6 @@ class ODFBrowser {
         </ul>
         `;
         
-        // Create content area for ODF lists with flex-grow-1 to fill height
         const contentHTML = `
             <div class="tab-content flex-grow-1 overflow-auto" id="categoryContent">
                 ${Object.entries(this.data).map(([category, odfs], idx) => `
@@ -221,7 +203,6 @@ class ODFBrowser {
         </div>
     `;
 
-        // Wrap everything in a d-flex flex-column container
         this.sidebar.innerHTML = `
             <div class="d-flex flex-column h-100">
                 ${searchHTML}
@@ -230,39 +211,32 @@ class ODFBrowser {
             </div>
         `;
         
-        // Add event listeners
         const searchInput = document.getElementById('odfSearch');
         searchInput.addEventListener('input', 
             debounce(e => this.handleSearch(e.target.value), 300));
         
-        // Add clear button handler - only clears search
         document.getElementById('clearSearch').addEventListener('click', () => {
             searchInput.value = '';
             this.handleSearch('');
         });
         
-        // Add reset button handler - clears search, content, and resets category
         document.getElementById('resetView').addEventListener('click', () => {
             searchInput.value = '';
             this.handleSearch('');
             this.showDefaultContent();
             
-            // Remove active state from all ODF items
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Switch back to Vehicle category
-            const vehicleTab = document.querySelector('#tab-Vehicle');
+            const vehicleTab = document.querySelector('#sidebar-tab-Vehicle');
             if (vehicleTab) {
                 vehicleTab.click();
             }
         });
         
-        // Initialize first category
         this.currentCategory = Object.keys(this.data)[0];
-
-        // Add event listener to hide shortcut when typing
+        
         const searchShortcut = document.getElementById('searchShortcut');
 
         searchInput.addEventListener('input', () => {
@@ -271,7 +245,6 @@ class ODFBrowser {
     }
     
     generateODFList(category, odfs) {
-        // Split entries into named and unnamed arrays
         const entries = Object.entries(odfs);
         const [namedOdfs, unnamedOdfs] = entries.reduce((result, [filename, data]) => {
             const displayName = data.GameObjectClass?.unitName || data.WeaponClass?.wpnName;
@@ -279,17 +252,14 @@ class ODFBrowser {
             return result;
         }, [[], []]);
         
-        // Sort named ODFs by display name
         const sortedNamedOdfs = namedOdfs.sort(([, a], [, b]) => {
             const nameA = a.GameObjectClass?.unitName || a.WeaponClass?.wpnName || '';
             const nameB = b.GameObjectClass?.unitName || b.WeaponClass?.wpnName || '';
             return nameA.localeCompare(nameB);
         });
         
-        // Sort unnamed ODFs by filename
         const sortedUnnamedOdfs = unnamedOdfs.sort(([a], [b]) => a.localeCompare(b));
         
-        // Combine the arrays and generate HTML
         return [...sortedNamedOdfs, ...sortedUnnamedOdfs]
             .map(([filename, data]) => {
                 const displayName = data.GameObjectClass?.unitName || data.WeaponClass?.wpnName;
@@ -306,7 +276,6 @@ class ODFBrowser {
     }
     
     updateBadgeStyles() {
-        // Update all badge styles based on current active tab
         document.querySelectorAll('#categoryTabs .nav-link').forEach(tab => {
             const badge = tab.querySelector('.badge');
             if (badge) {
@@ -318,7 +287,6 @@ class ODFBrowser {
     
     handleSearch(term) {
         if (!term) {
-            // Show all items and remove any "no matches" alerts
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.style.display = '';
                 item.classList.remove('active');
@@ -327,9 +295,8 @@ class ODFBrowser {
                 alert.remove();
             });
             
-            // Reset tab labels
             Object.keys(this.data).forEach(category => {
-                const tab = document.getElementById(`tab-${category}`);
+                const tab = document.getElementById(`sidebar-tab-${category}`);
                 tab.textContent = category;
             });
             return;
@@ -341,7 +308,6 @@ class ODFBrowser {
         let firstMatch = null;
         let exactMatchCategory = null;  // Track category of exact match
         
-        // Get all ODF items
         document.querySelectorAll('.odf-item').forEach(item => {
             item.classList.remove('active');
             
@@ -358,7 +324,6 @@ class ODFBrowser {
                 odfData?.WeaponClass?.wpnName?.toLowerCase()
             ].filter(Boolean);
             
-            // Check for exact match first
             const isExactMatch = searchableNames.some(name => name === term);
             if (isExactMatch) {
                 hasExactMatch = true;
@@ -369,13 +334,11 @@ class ODFBrowser {
                 return;
             }
             
-            // If we have exact matches, hide non-exact matches
             if (hasExactMatch) {
                 item.style.display = 'none';
                 return;
             }
             
-            // Otherwise do fuzzy search
             const isMatch = searchableNames.some(name => fuzzySearch(term, name));
             item.style.display = isMatch ? '' : 'none';
             
@@ -385,35 +348,29 @@ class ODFBrowser {
             }
         });
         
-        // Make first match active and switch to its category
         if (firstMatch) {
             firstMatch.classList.add('active');
             firstMatch.scrollIntoView({ block: 'nearest' });
             
-            // If we have an exact match, switch to its category and display data
             if (hasExactMatch && exactMatchCategory) {
-                const targetTab = document.querySelector(`#tab-${exactMatchCategory}`);
+                const targetTab = document.querySelector(`#sidebar-tab-${exactMatchCategory}`);
                 if (targetTab && !targetTab.classList.contains('active')) {
                     targetTab.click();
                 }
-                // Display data for exact match
                 const {filename, category} = firstMatch.dataset;
                 this.displayODFData(category, filename);
             }
         }
         
-        // Update category badges with counts
         Object.entries(categoryCounts).forEach(([category, count]) => {
-            const tab = document.getElementById(`tab-${category}`);
+            const tab = document.getElementById(`sidebar-tab-${category}`);
             const isActiveCategory = tab.classList.contains('active');
             
-            // Update tab label with badge
             tab.innerHTML = count > 0 ? 
                 `${category} <span class="badge ${isActiveCategory ? 'bg-dark' : 'bg-secondary'} ms-1">${count}</span>` : 
                 category;
         });
         
-        // Switch to category with most matches if not showing exact matches
         if (!hasExactMatch) {
             const bestCategory = Object.entries(categoryCounts)
                 .reduce((best, [category, count]) => 
@@ -421,22 +378,19 @@ class ODFBrowser {
                 , {category: this.currentCategory, count: categoryCounts[this.currentCategory] || 0});
                 
             if (bestCategory.count > 0 && bestCategory.category !== this.currentCategory) {
-                document.querySelector(`#tab-${bestCategory.category}`).click();
+                document.querySelector(`#sidebar-tab-${bestCategory.category}`).click();
             }
         }
 
-        // After processing all items, check each category for matches
         Object.keys(this.data).forEach(category => {
             const categoryPane = document.querySelector(`#list-${category}`);
             const existingAlert = categoryPane.querySelector('.no-matches-alert');
             
             if (categoryCounts[category] === 0) {
-                // Remove existing alert if it exists
                 if (existingAlert) {
                     existingAlert.remove();
                 }
                 
-                // Add new alert at the top of the category pane
                 const alertHtml = `
                     <div class="alert alert-secondary no-matches-alert">
                         No matches for "${term}" found in ${category}
@@ -444,32 +398,25 @@ class ODFBrowser {
                 `;
                 categoryPane.querySelector('.list-group').insertAdjacentHTML('beforebegin', alertHtml);
             } else if (existingAlert) {
-                // Remove alert if we have matches
                 existingAlert.remove();
             }
         });
     }
     
-    // New helper method to recursively get all searchable terms from an object
     getAllSearchableTerms(obj, terms = []) {
         if (!obj || typeof obj !== 'object') return terms;
         
-        // Process each key/value pair
         Object.entries(obj).forEach(([key, value]) => {
-            // Add the key itself
             terms.push(key.toLowerCase());
             
             if (value === null) return;
             
             if (typeof value === 'object') {
-                // Recursively process nested objects
                 this.getAllSearchableTerms(value, terms);
             } else {
-                // Convert value to string and add to terms
                 const strValue = String(value).toLowerCase();
                 terms.push(strValue);
                 
-                // If the value was quoted, also add unquoted version
                 if (strValue.startsWith('"') && strValue.endsWith('"')) {
                     terms.push(strValue.slice(1, -1));
                 }
@@ -483,12 +430,10 @@ class ODFBrowser {
         const odfData = this.data[category][filename];
         this.selectedODF = {category, filename};
         
-        // Get display name based on ODF type
         const displayName = category === 'Weapon' ? 
             odfData.WeaponClass?.wpnName || filename :
             odfData.GameObjectClass?.unitName || filename;
         
-        // Get inheritance chain if it exists
         const inheritanceHtml = odfData.inheritanceChain?.length ? `
             <div class="mt-1">
                 <small class="text-info">
@@ -497,36 +442,28 @@ class ODFBrowser {
             </div>
         ` : '';
         
-        // Group entries by prefix
         const groupedEntries = Object.entries(odfData).reduce((acc, [key, value]) => {
             if (typeof value !== 'object' || value === null) return acc;
             
             const prefix = key.split('.')[0];
             if (key.includes('.')) {
-                // Handle prefixed entries (Ordnance., Powerup., etc)
                 if (!acc[prefix]) acc[prefix] = [];
                 acc[prefix].push([key, value]);
             } else {
-                // Handle regular entries
                 if (!acc['Base']) acc['Base'] = [];
                 acc['Base'].push([key, value]);
             }
             return acc;
         }, {});
         
-        // Only show tabs if there are multiple groups
         const hasMultipleGroups = Object.keys(groupedEntries).length > 1;
         
-        // Helper function to estimate table height
         const estimateHeight = (entries) => {
             const [className, classData] = entries;
-            // Card header + table header + (rows * row height)
             return 60 + 42 + (Object.keys(classData).length * 42);
         };
 
-        // For content HTML generation with balanced columns:
         const distributeEntries = (entries) => {
-            // Sort entries by height (largest first)
             const sortedEntries = [...entries].sort((a, b) => 
                 estimateHeight(b) - estimateHeight(a)
             );
@@ -536,11 +473,9 @@ class ODFBrowser {
             let leftHeight = 0;
             let rightHeight = 0;
 
-            // Handle largest tables first
             sortedEntries.forEach(entry => {
                 const entryHeight = estimateHeight(entry);
                 
-                // If one column is significantly taller, force entry into shorter column
                 if (Math.abs(leftHeight - rightHeight) > entryHeight * 0.7) {
                     if (leftHeight < rightHeight) {
                         leftColumn.push(entry);
@@ -550,7 +485,6 @@ class ODFBrowser {
                         rightHeight += entryHeight;
                     }
                 } else {
-                    // Otherwise use standard balancing
                     if (leftHeight <= rightHeight) {
                         leftColumn.push(entry);
                         leftHeight += entryHeight;
@@ -564,7 +498,6 @@ class ODFBrowser {
             return [leftColumn, rightColumn];
         };
 
-        // Generate content HTML with balanced columns
         const contentHtml = hasMultipleGroups ? `
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="content-All" role="tabpanel">
@@ -615,7 +548,6 @@ class ODFBrowser {
             `;
         })();
         
-        // Create the entire card structure
         this.content.innerHTML = `
             <div class="card">
                 <div class="card-header bg-secondary-subtle">
@@ -628,7 +560,7 @@ class ODFBrowser {
                         <ul class="nav nav-pills mb-3" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" 
-                                        id="tab-All" 
+                                        id="content-tab-All" 
                                         data-bs-toggle="pill"
                                         data-bs-target="#content-All"
                                         type="button"
@@ -639,7 +571,7 @@ class ODFBrowser {
                             ${Object.keys(groupedEntries).map((group) => `
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" 
-                                            id="tab-${group}" 
+                                            id="content-tab-${group}" 
                                             data-bs-toggle="pill"
                                             data-bs-target="#content-${group}"
                                             type="button"
@@ -657,7 +589,6 @@ class ODFBrowser {
     }
     
     formatODFDataColumn(classEntries) {
-        // SVG icons
         const powerupIcon = `<svg class="me-2" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.004-.001.274-.11a.75.75 0 0 1 .558 0l.274.11.004.001zm-1.374.527L8 5.962 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339Z"/>
         </svg>`;
@@ -668,7 +599,6 @@ class ODFBrowser {
         </svg>`;
 
         return classEntries.map(([className, classData]) => {
-            // Determine which icon to use based on prefix
             let icon = '';
             if (className.startsWith('Ordnance.')) {
                 icon = ordnanceIcon;
@@ -718,13 +648,11 @@ class ODFBrowser {
             return `<pre class="mb-0"><code>${JSON.stringify(value, null, 2)}</code></pre>`;
         }
         
-        // Remove quotes from string values that were originally quoted in the ODF
         if (typeof value === 'string') {
             if (value.startsWith('"') && value.endsWith('"')) {
                 value = value.slice(1, -1);
             }
             
-            // Check if value is a WAV file reference
             if (value.toLowerCase().endsWith('.wav')) {
                 return `
                     <div class="d-flex align-items-center gap-2">
@@ -739,7 +667,6 @@ class ODFBrowser {
                     </div>`;
             }
             
-            // Check for different number formats
             if (
                 /^-?\d*\.?\d+f?$/.test(value) ||
                 /^-?\d*\.?\d+(?:f?\s+-?\d*\.?\d+f?)+$/.test(value)
@@ -751,7 +678,6 @@ class ODFBrowser {
         return value;
     }
     
-    // Add these new methods to handle keyboard navigation
     cycleTabs(forward = true) {
         const tabs = Array.from(document.querySelectorAll('#categoryTabs .nav-link'));
         const currentTab = document.querySelector('#categoryTabs .nav-link.active');
@@ -779,7 +705,6 @@ class ODFBrowser {
         const currentODF = document.querySelector('.odf-item.active');
         let currentIndex = currentODF ? visibleODFs.indexOf(currentODF) : -1;
         
-        // Calculate next index
         let nextIndex;
         if (currentIndex === -1) {
             nextIndex = direction > 0 ? 0 : visibleODFs.length - 1;
@@ -789,70 +714,62 @@ class ODFBrowser {
             if (nextIndex < 0) nextIndex = visibleODFs.length - 1;
         }
         
-        // Remove active class from all ODFs
         document.querySelectorAll('.odf-item').forEach(item => {
             item.classList.remove('active');
         });
         
-        // Add active class to next ODF and scroll it into view
         const nextODF = visibleODFs[nextIndex];
         nextODF.classList.add('active');
         nextODF.scrollIntoView({ block: 'nearest' });
         
-        // If this was triggered by arrow keys, make sure we're in the right category tab
         const category = nextODF.dataset.category;
-        const targetTab = document.querySelector(`#tab-${category}`);
+        const targetTab = document.querySelector(`#sidebar-tab-${category}`);
         if (targetTab && !targetTab.classList.contains('active')) {
             targetTab.click();
         }
     }
 
     playAudio(url, buttonElement) {
-        // Create and play new audio
         const audio = new Audio(url);
         const errorSpan = buttonElement.nextElementSibling;
         
-        // Clear any previous error message
         errorSpan.textContent = '';
         
-        // Handle loading errors
         audio.addEventListener('error', () => {
             errorSpan.textContent = 'Sound file not found.';
         });
         
-        // Stop any currently playing audio
         if (this.currentAudio) {
             this.currentAudio.pause();
             this.currentAudio.currentTime = 0;
         }
         
-        // Play the audio
         this.currentAudio = audio;
         audio.play().catch(error => {
             errorSpan.textContent = 'Sound file not found.';
         });
     }
 
-    // Add this new method to find and select an ODF by name
-    selectODFByName(odfName) {
-        // Normalize the name (add .odf if not present)
+    selectODFByName(odfName, targetCategory = null) {
         const normalizedName = odfName.toLowerCase().endsWith('.odf') ? 
             odfName.toLowerCase() : 
             `${odfName.toLowerCase()}.odf`;
         
-        // Search through categories to find the ODF
         for (const [category, odfs] of Object.entries(this.data)) {
             if (normalizedName in odfs) {
-                // Found the ODF - activate its category tab
-                const tab = document.querySelector(`#tab-${category}`);
+                const tab = document.querySelector(`#sidebar-tab-${category}`);
                 if (tab) {
                     tab.click();
                 }
                 
-                // Find and click the ODF item
                 const odfItem = document.querySelector(`.odf-item[data-filename="${normalizedName}"]`);
                 if (odfItem) {
                     odfItem.click();
+                    
+                    if (targetCategory) {
+                        this.selectODFCategory(targetCategory);
+                    }
+                    
                     odfItem.scrollIntoView({ block: 'center' });
                 }
                 
@@ -863,22 +780,38 @@ class ODFBrowser {
         console.warn(`ODF '${odfName}' not found`);
         return false;
     }
+
+    selectODFCategory(category) {
+        const normalizedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+        
+        const targetTab = document.querySelector(`#content-tab-${normalizedCategory}`);
+        
+        if (targetTab && !targetTab.classList.contains('active')) {
+            targetTab.click();
+            return true;
+        }
+        
+        if (!targetTab) {
+            const allTab = document.querySelector('#content-tab-All');
+            if (allTab && !allTab.classList.contains('active')) {
+                allTab.click();
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
 
-// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Make browser instance globally accessible
     window.browser = new ODFBrowser();
     
-    // Add click handler for ODF items
     document.addEventListener('click', (e) => {
-        // Find closest .odf-item parent if we clicked on a child element
         const target = e.target.closest('.odf-item');
         if (target) {
             const {filename, category} = target.dataset;
             browser.displayODFData(category, filename);
             
-            // Add active state
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.classList.remove('active');
             });
