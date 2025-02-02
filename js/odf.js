@@ -439,11 +439,9 @@ class ODFBrowser {
     
     displayODFData(category, filename) {
         const odfData = this.data[category][filename];
-        this.selectedODF = {category, filename};
-        
-        const displayName = odfData.GameObjectClass?.unitName || filename;
+        const displayName = odfData.GameObjectClass?.unitName || odfData.WeaponClass?.wpnName || filename;
         const inheritanceHtml = odfData.inheritanceChain ? 
-            `<div class="text-secondary">Inherits: ${odfData.inheritanceChain.join(' → ')}</div>` : '';
+            `<div class="text-info small">Inherits: ${odfData.inheritanceChain.join(' → ')}</div>` : '';
 
         // Group entries based on common patterns
         const groupedEntries = {};
@@ -619,9 +617,18 @@ class ODFBrowser {
         this.content.innerHTML = `
             <div class="card">
                 <div class="card-header bg-secondary-subtle">
-                    <h3 class="mb-0">${displayName}</h3>
-                    <small class="text-secondary">${filename}</small>
-                    ${inheritanceHtml}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0">${displayName}</h3>
+                            <small class="text-secondary">${filename}</small>
+                            ${inheritanceHtml}
+                        </div>
+                        <div class="position-relative" style="width: 200px;">
+                            <input type="text" class="form-control form-control-sm" 
+                                   id="odfPropertySearch" placeholder="Filter properties..."
+                                   aria-label="Filter properties">
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     ${hasMultipleGroups ? `
@@ -668,6 +675,18 @@ class ODFBrowser {
                 </div>
             </div>
         `;
+
+        // Add property search handler
+        const propertySearch = document.getElementById('odfPropertySearch');
+        propertySearch.addEventListener('input', 
+            debounce(e => this.handlePropertySearch(e.target.value), 300));
+
+        // Add tab change handler to reapply search
+        document.querySelectorAll('[data-bs-toggle="pill"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', () => {
+                this.handlePropertySearch(propertySearch.value);
+            });
+        });
     }
     
     formatODFDataColumn(classEntries) {
@@ -1018,6 +1037,37 @@ class ODFBrowser {
                 // Finally, display the ODF data
                 this.displayODFData(category, filename);
             }
+        });
+    }
+
+    handlePropertySearch(term) {
+        // Get the active tab content, or the main content if no tabs
+        const activeTabContent = document.querySelector('#odfContentContent .tab-pane.active') || 
+                                document.querySelector('#odfContentContent .card-body');
+        
+        if (!activeTabContent) return;
+        
+        const cards = activeTabContent.querySelectorAll('.card');
+        term = term.toLowerCase();
+
+        cards.forEach(card => {
+            const rows = card.querySelectorAll('tbody tr');
+            let hasVisibleRows = false;
+
+            rows.forEach(row => {
+                const propertyName = row.querySelector('td:first-child').textContent.toLowerCase();
+                const propertyValue = row.querySelector('td:last-child').textContent.toLowerCase();
+                
+                const isMatch = !term || 
+                    propertyName.includes(term) || 
+                    propertyValue.includes(term);
+                
+                row.style.display = isMatch ? '' : 'none';
+                if (isMatch) hasVisibleRows = true;
+            });
+
+            // Show/hide the entire card based on whether it has any matching properties
+            card.style.display = hasVisibleRows ? '' : 'none';
         });
     }
 }
