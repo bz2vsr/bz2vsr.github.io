@@ -123,7 +123,7 @@ class ODFBrowser {
                     const now = Date.now();
                     
                     // Check if this is a double-press (within 500ms)
-                    if (now - this.lastEscapePress < 500) {
+                    if (now - this.lastEscapePress < 750) {
                         // Double escape - trigger reset
                         document.getElementById('resetView').click();
                     } else {
@@ -304,10 +304,13 @@ class ODFBrowser {
     
     handleSearch(term) {
         if (!term) {
-            // Show all items if search is empty
+            // Show all items and remove any "no matches" alerts
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.style.display = '';
-                item.classList.remove('active'); // Remove active state when clearing
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.no-matches-alert').forEach(alert => {
+                alert.remove();
             });
             
             // Reset tab labels
@@ -407,6 +410,30 @@ class ODFBrowser {
                 document.querySelector(`#tab-${bestCategory.category}`).click();
             }
         }
+
+        // After processing all items, check each category for matches
+        Object.keys(this.data).forEach(category => {
+            const categoryPane = document.querySelector(`#list-${category}`);
+            const existingAlert = categoryPane.querySelector('.no-matches-alert');
+            
+            if (categoryCounts[category] === 0) {
+                // Remove existing alert if it exists
+                if (existingAlert) {
+                    existingAlert.remove();
+                }
+                
+                // Add new alert at the top of the category pane
+                const alertHtml = `
+                    <div class="alert alert-secondary no-matches-alert">
+                        No matches for "${term}" found in ${category}
+                    </div>
+                `;
+                categoryPane.querySelector('.list-group').insertAdjacentHTML('beforebegin', alertHtml);
+            } else if (existingAlert) {
+                // Remove alert if we have matches
+                existingAlert.remove();
+            }
+        });
     }
     
     // New helper method to recursively get all searchable terms from an object
