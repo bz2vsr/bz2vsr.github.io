@@ -787,7 +787,8 @@ class ODFBrowser {
                 /^requireName\d*$/   // requireName, requireName1, etc.
             ],
             'Weapon': [
-                'altName'
+                'altName',
+                'ordName'
             ],
             'Pilot': [
                 /^weaponName\d*$/
