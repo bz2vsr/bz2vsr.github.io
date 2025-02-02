@@ -308,7 +308,8 @@ class ODFBrowser {
         const categoryCounts = {};
         let hasExactMatch = false;
         let firstMatch = null;
-        let exactMatchCategory = null;  // Track category of exact match
+        let firstExactMatch = null;  // Track the first exact match found
+        let exactMatchCategory = null;
         
         document.querySelectorAll('.odf-item').forEach(item => {
             item.classList.remove('active');
@@ -329,10 +330,14 @@ class ODFBrowser {
             const isExactMatch = searchableNames.some(name => name === term);
             if (isExactMatch) {
                 hasExactMatch = true;
-                exactMatchCategory = category;  // Store category of exact match
                 item.style.display = '';
                 categoryCounts[category]++;
-                firstMatch = item;
+                
+                // Only store first exact match found
+                if (!firstExactMatch) {
+                    firstExactMatch = item;
+                    exactMatchCategory = category;
+                }
                 return;
             }
             
@@ -344,22 +349,26 @@ class ODFBrowser {
             const isMatch = searchableNames.some(name => fuzzySearch(term, name));
             item.style.display = isMatch ? '' : 'none';
             
+            if (isMatch && !firstMatch) {
+                firstMatch = item;
+            }
             if (isMatch) {
                 categoryCounts[category]++;
-                firstMatch = item;
             }
         });
         
-        if (firstMatch) {
-            firstMatch.classList.add('active');
-            firstMatch.scrollIntoView({ block: 'nearest' });
+        // Use firstExactMatch if available, otherwise use firstMatch
+        const matchToSelect = firstExactMatch || firstMatch;
+        if (matchToSelect) {
+            matchToSelect.classList.add('active');
+            matchToSelect.scrollIntoView({ block: 'nearest' });
             
             if (hasExactMatch && exactMatchCategory) {
                 const targetTab = document.querySelector(`#sidebar-tab-${exactMatchCategory}`);
                 if (targetTab && !targetTab.classList.contains('active')) {
                     targetTab.click();
                 }
-                const {filename, category} = firstMatch.dataset;
+                const {filename, category} = matchToSelect.dataset;
                 this.displayODFData(category, filename);
             }
         }
