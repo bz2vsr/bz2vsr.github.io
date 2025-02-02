@@ -734,6 +734,11 @@ class ODFBrowser {
         }
         
         if (typeof value === 'string') {
+            // Handle wpnReticle special case
+            if (propertyName === 'wpnReticle' && value.includes('" / "')) {
+                value = value.replace(/"/g, '').replace(' / ', ', ');
+            }
+            
             // Remove quotes if present
             if (value.startsWith('"') && value.endsWith('"')) {
                 value = value.slice(1, -1);
