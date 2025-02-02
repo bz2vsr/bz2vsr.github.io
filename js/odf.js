@@ -251,99 +251,82 @@ class ODFBrowser {
             // Show all items if search is empty
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.style.display = '';
-                item.classList.remove('active');
             });
+            
             // Reset tab labels
             Object.keys(this.data).forEach(category => {
                 const tab = document.getElementById(`tab-${category}`);
                 tab.textContent = category;
             });
-            // Remove all "no matches" alerts
-            document.querySelectorAll('.no-matches-alert').forEach(alert => {
-                alert.remove();
-            });
-            // Show default content when clearing search
-            this.showDefaultContent();
-            this.selectedODF = null;
             return;
         }
 
         term = term.toLowerCase();
-        
-        // Track counts for each category
         const categoryCounts = {};
+        let hasExactMatch = false;
         
         // Get all ODF items
         document.querySelectorAll('.odf-item').forEach(item => {
-            const filename = item.dataset.filename;
+            const filename = item.dataset.filename.toLowerCase();
             const category = item.dataset.category;
             const odfData = this.data[category][filename];
             
-            // Initialize counter for this category if needed
+            // Initialize counter for this category
             categoryCounts[category] = categoryCounts[category] || 0;
             
-            // Create searchable text from all data
-            const searchableTerms = [
-                filename.toLowerCase(),
-                ...this.getAllSearchableTerms(odfData)
-            ];
+            // Get searchable names
+            const searchableNames = [
+                filename,
+                filename.replace('.odf', ''),
+                odfData?.GameObjectClass?.unitName?.toLowerCase(),
+                odfData?.WeaponClass?.wpnName?.toLowerCase()
+            ].filter(Boolean);
             
-            // Search through each term
-            const isMatch = searchableTerms.some(text => 
-                fuzzySearch(term, text)
-            );
+            // Check for exact match first
+            const isExactMatch = searchableNames.some(name => name === term);
+            if (isExactMatch) {
+                hasExactMatch = true;
+                item.style.display = '';
+                categoryCounts[category]++;
+                return;
+            }
             
+            // If we have exact matches, hide non-exact matches
+            if (hasExactMatch) {
+                item.style.display = 'none';
+                return;
+            }
+            
+            // Otherwise do fuzzy search
+            const isMatch = searchableNames.some(name => fuzzySearch(term, name));
             item.style.display = isMatch ? '' : 'none';
             
-            // Increment counter if there's a match
             if (isMatch) {
                 categoryCounts[category]++;
             }
         });
         
-        // Update tab labels with counts and show/hide no matches alert
+        // Update category badges with counts
         Object.entries(categoryCounts).forEach(([category, count]) => {
             const tab = document.getElementById(`tab-${category}`);
             const isActiveCategory = tab.classList.contains('active');
-            const tabPane = document.getElementById(`list-${category}`);
-            const odfList = tabPane.querySelector('.odf-list');
             
-            // Update tab label
+            // Update tab label with badge
             tab.innerHTML = count > 0 ? 
                 `${category} <span class="badge ${isActiveCategory ? 'bg-dark' : 'bg-secondary'} ms-1">${count}</span>` : 
                 category;
-            
-            // Show/hide no matches alert
-            if (count === 0) {
-                // Remove existing alert if any
-                const existingAlert = tabPane.querySelector('.no-matches-alert');
-                if (existingAlert) existingAlert.remove();
-                
-                // Add new alert before the list
-                const alert = document.createElement('div');
-                alert.className = 'alert alert-secondary no-matches-alert mb-3';
-                alert.textContent = `No matches for "${term}" found in ${category}`;
-                odfList.insertAdjacentElement('beforebegin', alert);
-            } else {
-                // Remove alert if exists
-                const existingAlert = tabPane.querySelector('.no-matches-alert');
-                if (existingAlert) existingAlert.remove();
-            }
         });
         
-        // Get currently active category
-        const activeTab = document.querySelector('#categoryTabs .nav-link.active');
-        const currentCategory = activeTab.id.replace('tab-', '');
-        
-        // Find category with most matches
-        const bestCategory = Object.entries(categoryCounts)
-            .reduce((best, [category, count]) => 
-                count > best.count ? {category, count} : best
-            , {category: currentCategory, count: categoryCounts[currentCategory]});
-        
-        // Switch to category with most matches if it's different from current
-        if (bestCategory.category !== currentCategory) {
-            document.querySelector(`#tab-${bestCategory.category}`).click();
+        // Switch to category with most matches if not showing exact matches
+        if (!hasExactMatch) {
+            const bestCategory = Object.entries(categoryCounts)
+                .reduce((best, [category, count]) => 
+                    count > best.count ? {category, count} : best
+                , {category: this.currentCategory, count: categoryCounts[this.currentCategory] || 0});
+                
+            if (bestCategory.count > 0 && bestCategory.category !== this.currentCategory) {
+                document.querySelector(`#tab-${bestCategory.category}`).click();
+            }
         }
     }
     
