@@ -227,7 +227,7 @@ class ODFBrowser {
             this.handleSearch('');
         });
         
-        // Add reset button handler - clears search and content
+        // Add reset button handler - clears search, content, and resets category
         document.getElementById('resetView').addEventListener('click', () => {
             searchInput.value = '';
             this.handleSearch('');
@@ -237,6 +237,12 @@ class ODFBrowser {
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.classList.remove('active');
             });
+            
+            // Switch back to Vehicle category
+            const vehicleTab = document.querySelector('#tab-Vehicle');
+            if (vehicleTab) {
+                vehicleTab.click();
+            }
         });
         
         // Initialize first category
