@@ -874,8 +874,12 @@ class ODFBrowser {
                 /^requireName\d*$/,
                 'powerName',
                 /^buildItem\d*$/    // buildItem, buildItem1, etc.
+            ],
+            'Powerup': [
+                'weaponName'
             ]
         };
+
 
         // Check if property matches any patterns for the current category
         const patterns = categoryProperties[category] || [];
