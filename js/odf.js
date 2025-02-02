@@ -1047,10 +1047,11 @@ class ODFBrowser {
         
         if (!activeTabContent) return;
         
-        const cards = activeTabContent.querySelectorAll('.card');
+        const cards = Array.from(activeTabContent.querySelectorAll('.card'));
         term = term.toLowerCase();
 
-        cards.forEach(card => {
+        // First pass: determine visibility of rows and cards
+        const visibleCards = cards.filter(card => {
             const rows = card.querySelectorAll('tbody tr');
             let hasVisibleRows = false;
 
@@ -1066,9 +1067,66 @@ class ODFBrowser {
                 if (isMatch) hasVisibleRows = true;
             });
 
-            // Show/hide the entire card based on whether it has any matching properties
             card.style.display = hasVisibleRows ? '' : 'none';
+            return hasVisibleRows;
         });
+
+        // Get current tab name
+        const activeTabButton = document.querySelector('#odfContentContent [data-bs-toggle="pill"].active');
+        const tabName = activeTabButton ? activeTabButton.textContent.trim() : 'All';
+
+        // Remove any existing alert
+        const existingAlert = activeTabContent.querySelector('.alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+
+        if (visibleCards.length === 0 && term) {
+            // Show "no matches" alert
+            const alertHtml = `
+                <div class="alert alert-primary mb-3" role="alert">
+                    No matches for "${term}" found in ${tabName}
+                </div>
+            `;
+            
+            // Insert alert at the top of the content area
+            const contentArea = activeTabContent.querySelector('.row') || activeTabContent;
+            contentArea.insertAdjacentHTML('beforebegin', alertHtml);
+        } else if (visibleCards.length > 0) {
+            // Redistribute cards between columns
+            const leftColumn = activeTabContent.querySelector('.col-6:first-child');
+            const rightColumn = activeTabContent.querySelector('.col-6:last-child');
+            
+            if (leftColumn && rightColumn) {
+                // Clear existing content
+                leftColumn.innerHTML = '';
+                rightColumn.innerHTML = '';
+                
+                // Helper function to estimate card height
+                const estimateHeight = (card) => {
+                    const visibleRows = Array.from(card.querySelectorAll('tbody tr'))
+                        .filter(row => row.style.display !== 'none');
+                    return 60 + 42 + (visibleRows.length * 42);
+                };
+
+                // Calculate heights and distribute
+                let leftHeight = 0;
+                let rightHeight = 0;
+
+                visibleCards.forEach(card => {
+                    const height = estimateHeight(card);
+                    const clone = card.cloneNode(true);
+                    
+                    if (leftHeight <= rightHeight) {
+                        leftColumn.appendChild(clone);
+                        leftHeight += height;
+                    } else {
+                        rightColumn.appendChild(clone);
+                        rightHeight += height;
+                    }
+                });
+            }
+        }
     }
 }
 
