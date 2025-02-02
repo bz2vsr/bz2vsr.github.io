@@ -430,36 +430,83 @@ class ODFBrowser {
         const odfData = this.data[category][filename];
         this.selectedODF = {category, filename};
         
-        const displayName = category === 'Weapon' ? 
-            odfData.WeaponClass?.wpnName || filename :
-            odfData.GameObjectClass?.unitName || filename;
+        const displayName = odfData.GameObjectClass?.unitName || filename;
+        const inheritanceHtml = odfData.inheritanceChain ? 
+            `<div class="text-secondary">Inherits: ${odfData.inheritanceChain.join(' → ')}</div>` : '';
+
+        // Group entries based on category type
+        const groupedEntries = {};
         
-        const inheritanceHtml = odfData.inheritanceChain?.length ? `
-            <div class="mt-1">
-                <small class="text-info">
-                    Inherits: ${odfData.inheritanceChain.join(' → ')}
-                </small>
-            </div>
-        ` : '';
-        
-        const groupedEntries = Object.entries(odfData).reduce((acc, [key, value]) => {
-            if (typeof value !== 'object' || value === null) return acc;
+        if (category === 'Weapon') {
+            // Existing weapon grouping logic
+            Object.entries(odfData).forEach(([className, classData]) => {
+                if (className === 'inheritanceChain') return;
+                
+                const group = className.split('.')[0];
+                groupedEntries[group] = groupedEntries[group] || [];
+                groupedEntries[group].push([className, classData]);
+            });
+        } else {
+            // First, collect all class names to analyze patterns
+            const classNames = Object.keys(odfData).filter(name => name !== 'inheritanceChain');
             
-            const prefix = key.split('.')[0];
-            if (key.includes('.')) {
-                if (!acc[prefix]) acc[prefix] = [];
-                acc[prefix].push([key, value]);
-            } else {
-                if (!acc['Base']) acc['Base'] = [];
-                acc['Base'].push([key, value]);
-            }
-            return acc;
-        }, {});
-        
+            // Find groups of similar names (e.g., ArmoryGroup1, ArmoryGroup2)
+            const patterns = new Map(); // Store pattern -> array of class names
+            
+            classNames.forEach(name => {
+                const data = odfData[name];
+                const isEmpty = Object.keys(data).length === 0;
+                
+                if (name.endsWith('Class')) {
+                    if (isEmpty) {
+                        // Move empty Class entries to Other
+                        groupedEntries['Other'] = groupedEntries['Other'] || [];
+                        groupedEntries['Other'].push([name, data]);
+                    } else {
+                        // Handle non-empty Class entries
+                        const group = name.replace('Class', '');
+                        groupedEntries[group] = groupedEntries[group] || [];
+                        groupedEntries[group].push([name, data]);
+                    }
+                } else {
+                    // Look for numbered patterns
+                    const match = name.match(/^(.+?)(\d+)?$/);
+                    if (match) {
+                        const [, base] = match;
+                        if (!patterns.has(base)) {
+                            patterns.set(base, []);
+                        }
+                        patterns.get(base).push(name);
+                    } else {
+                        // Handle entries without numbers or 'Class' suffix
+                        groupedEntries['Other'] = groupedEntries['Other'] || [];
+                        groupedEntries['Other'].push([name, data]);
+                    }
+                }
+            });
+            
+            // Process the patterns we found
+            patterns.forEach((names, base) => {
+                if (names.length > 1) {
+                    // If we found multiple entries with the same base name,
+                    // group them together under the base name
+                    groupedEntries[base] = names.map(name => [name, odfData[name]]);
+                } else {
+                    // Single entry - put in Other
+                    groupedEntries['Other'] = groupedEntries['Other'] || [];
+                    names.forEach(name => {
+                        groupedEntries['Other'].push([name, odfData[name]]);
+                    });
+                }
+            });
+        }
+
         const hasMultipleGroups = Object.keys(groupedEntries).length > 1;
-        
-        const estimateHeight = (entries) => {
-            const [className, classData] = entries;
+
+        // Helper function to estimate table height
+        const estimateHeight = (entry) => {
+            const [className, classData] = entry;
+            // Card header + table header + (rows * row height)
             return 60 + 42 + (Object.keys(classData).length * 42);
         };
 
@@ -507,6 +554,7 @@ class ODFBrowser {
             return [leftColumn, rightColumn];
         };
 
+        // Fix the tab content HTML generation to not duplicate tabs
         const contentHtml = hasMultipleGroups ? `
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="content-All" role="tabpanel">
@@ -526,21 +574,23 @@ class ODFBrowser {
                         })()}
                     </div>
                 </div>
-                ${Object.entries(groupedEntries).map(([group, entries]) => {
-                    const [leftCol, rightCol] = distributeEntries(entries);
-                    return `
-                        <div class="tab-pane fade" id="content-${group}" role="tabpanel">
-                            <div class="row">
-                                <div class="col-6 ps-0">
-                                    ${this.formatODFDataColumn(leftCol)}
-                                </div>
-                                <div class="col-6 pe-0">
-                                    ${this.formatODFDataColumn(rightCol)}
-                                </div>
-                            </div>
+                ${Object.entries(groupedEntries).map(([group, entries]) => `
+                    <div class="tab-pane fade" id="content-${group}" role="tabpanel">
+                        <div class="row">
+                            ${(() => {
+                                const [leftCol, rightCol] = distributeEntries(entries);
+                                return `
+                                    <div class="col-6 ps-0">
+                                        ${this.formatODFDataColumn(leftCol)}
+                                    </div>
+                                    <div class="col-6 pe-0">
+                                        ${this.formatODFDataColumn(rightCol)}
+                                    </div>
+                                `;
+                            })()}
                         </div>
-                    `;
-                }).join('')}
+                    </div>
+                `).join('')}
             </div>
         ` : (() => {
             const entries = groupedEntries[Object.keys(groupedEntries)[0]];
@@ -557,6 +607,7 @@ class ODFBrowser {
             `;
         })();
         
+        // Update the tab selection HTML
         this.content.innerHTML = `
             <div class="card">
                 <div class="card-header bg-secondary-subtle">
@@ -577,18 +628,32 @@ class ODFBrowser {
                                     All
                                 </button>
                             </li>
-                            ${Object.keys(groupedEntries).map((group) => `
+                            ${Object.entries(groupedEntries)
+                                .filter(([group]) => group !== 'Other')
+                                .map(([group]) => `
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" 
+                                                id="content-tab-${group}" 
+                                                data-bs-toggle="pill"
+                                                data-bs-target="#content-${group}"
+                                                type="button"
+                                                role="tab">
+                                            ${group}
+                                        </button>
+                                    </li>
+                                `).join('')}
+                            ${groupedEntries['Other'] ? `
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" 
-                                            id="content-tab-${group}" 
+                                            id="content-tab-Other" 
                                             data-bs-toggle="pill"
-                                            data-bs-target="#content-${group}"
+                                            data-bs-target="#content-Other"
                                             type="button"
                                             role="tab">
-                                        ${group}
+                                        Other
                                     </button>
                                 </li>
-                            `).join('')}
+                            ` : ''}
                         </ul>
                     ` : ''}
                     ${contentHtml}
@@ -760,6 +825,8 @@ class ODFBrowser {
     }
 
     selectODFByName(odfName, targetCategory = null) {
+        console.log('Selecting ODF:', odfName, 'with target category:', targetCategory);
+        
         const normalizedName = odfName.toLowerCase().endsWith('.odf') ? 
             odfName.toLowerCase() : 
             `${odfName.toLowerCase()}.odf`;
@@ -773,10 +840,15 @@ class ODFBrowser {
                 
                 const odfItem = document.querySelector(`.odf-item[data-filename="${normalizedName}"]`);
                 if (odfItem) {
+                    console.log('Found ODF item, clicking it');
                     odfItem.click();
                     
                     if (targetCategory) {
-                        this.selectODFCategory(targetCategory);
+                        console.log('Attempting to select target category after ODF display');
+                        // Add small delay to ensure tabs are rendered
+                        setTimeout(() => {
+                            this.selectODFCategory(targetCategory);
+                        }, 100);
                     }
                     
                     odfItem.scrollIntoView({ block: 'center' });
@@ -791,23 +863,42 @@ class ODFBrowser {
     }
 
     selectODFCategory(category) {
-        const normalizedCategory = category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+        console.log('Selecting category:', category);
         
-        const targetTab = document.querySelector(`#content-tab-${normalizedCategory}`);
+        // Convert category to lowercase for comparison
+        const targetCategory = category.toLowerCase();
+        console.log('Target category (lowercase):', targetCategory);
+        
+        // Get all available tabs and find one that matches (case-insensitive)
+        const tabs = Array.from(document.querySelectorAll('[id^="content-tab-"]'));
+        console.log('Available tabs:', tabs.map(tab => tab.id));
+        
+        const targetTab = tabs.find(tab => {
+            // Extract the category part from the tab ID and compare lowercase
+            const tabCategory = tab.id.replace('content-tab-', '').toLowerCase();
+            return tabCategory === targetCategory;
+        });
+        
+        console.log('Found matching tab:', targetTab);
         
         if (targetTab && !targetTab.classList.contains('active')) {
+            console.log('Clicking target tab');
             targetTab.click();
             return true;
         }
         
         if (!targetTab) {
+            console.log('Target tab not found, looking for All tab');
             const allTab = document.querySelector('#content-tab-All');
+            console.log('Found All tab:', allTab);
             if (allTab && !allTab.classList.contains('active')) {
+                console.log('Clicking All tab');
                 allTab.click();
                 return true;
             }
         }
         
+        console.log('No tab selection performed');
         return false;
     }
 }
