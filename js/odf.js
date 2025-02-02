@@ -464,37 +464,46 @@ class ODFBrowser {
         };
 
         const distributeEntries = (entries) => {
-            const sortedEntries = [...entries].sort((a, b) => 
-                estimateHeight(b) - estimateHeight(a)
-            );
-
+            // First, calculate heights for all entries
+            const entriesWithHeight = entries.map((entry, index) => ({
+                entry,
+                height: estimateHeight(entry),
+                originalIndex: index
+            }));
+            
             const leftColumn = [];
             const rightColumn = [];
             let leftHeight = 0;
             let rightHeight = 0;
-
-            sortedEntries.forEach(entry => {
-                const entryHeight = estimateHeight(entry);
-                
-                if (Math.abs(leftHeight - rightHeight) > entryHeight * 0.7) {
+            
+            // Process entries in original order
+            entriesWithHeight.forEach(({ entry, height }) => {
+                // If one column is significantly taller (>70% of current entry height),
+                // force entry into shorter column
+                if (Math.abs(leftHeight - rightHeight) > height * 0.7) {
                     if (leftHeight < rightHeight) {
                         leftColumn.push(entry);
-                        leftHeight += entryHeight;
+                        leftHeight += height;
                     } else {
                         rightColumn.push(entry);
-                        rightHeight += entryHeight;
+                        rightHeight += height;
                     }
                 } else {
-                    if (leftHeight <= rightHeight) {
+                    // Otherwise, try to maintain original order by preferring left column
+                    // unless it would create significant imbalance
+                    const projectedLeftHeight = leftHeight + height;
+                    const heightDiff = Math.abs(projectedLeftHeight - rightHeight);
+                    
+                    if (heightDiff < height * 1.2) { // Allow some imbalance to maintain order
                         leftColumn.push(entry);
-                        leftHeight += entryHeight;
+                        leftHeight += height;
                     } else {
                         rightColumn.push(entry);
-                        rightHeight += entryHeight;
+                        rightHeight += height;
                     }
                 }
             });
-
+            
             return [leftColumn, rightColumn];
         };
 
