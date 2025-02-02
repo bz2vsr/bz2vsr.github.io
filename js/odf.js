@@ -69,6 +69,9 @@ class ODFBrowser {
             this.updateBadgeStyles();
         });
         
+        // Add last escape press timestamp
+        this.lastEscapePress = 0;
+        
         // Add keyboard navigation
         document.addEventListener('keydown', (e) => {
             // Special handling for arrow keys - allow them even in search input
@@ -79,7 +82,7 @@ class ODFBrowser {
             }
             
             // Don't handle other keyboard shortcuts if user is typing in an input
-            if (e.target.tagName === 'INPUT' && e.key !== 'Escape') {
+            if (e.target.tagName === 'INPUT' && !['Escape', 'Enter'].includes(e.key)) {
                 return;
             }
             
@@ -91,9 +94,20 @@ class ODFBrowser {
                     
                 case 'Enter':
                     e.preventDefault();
+                    console.log('Enter key pressed');
                     const activeODF = document.querySelector('.odf-item.active');
+                    console.log('Active ODF found:', activeODF);
                     if (activeODF) {
-                        activeODF.click();
+                        const {filename, category} = activeODF.dataset;
+                        console.log('ODF data:', {filename, category});
+                        browser.displayODFData(category, filename);
+                        
+                        // Add active state
+                        document.querySelectorAll('.odf-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        activeODF.classList.add('active');
+                        console.log('Active state updated');
                     }
                     break;
                     
@@ -106,7 +120,18 @@ class ODFBrowser {
                     
                 case 'Escape':
                     e.preventDefault();
-                    document.getElementById('clearSearch').click();
+                    const now = Date.now();
+                    
+                    // Check if this is a double-press (within 500ms)
+                    if (now - this.lastEscapePress < 500) {
+                        // Double escape - trigger reset
+                        document.getElementById('resetView').click();
+                    } else {
+                        // Single escape - trigger clear
+                        document.getElementById('clearSearch').click();
+                    }
+                    
+                    this.lastEscapePress = now;
                     document.getElementById('odfSearch').focus();
                     break;
             }
@@ -134,14 +159,20 @@ class ODFBrowser {
     }
     
     initializeSidebar() {
-        // Create search bar with clear button
+        // Create search bar with clear and reset buttons
         const searchHTML = `
-            <div class="mb-3 d-flex gap-2">
+            <div class="mb-3 d-flex gap-2 position-relative">
                 <input type="text" class="form-control" id="odfSearch" 
                        placeholder="Type here to filter..." aria-label="Search ODFs">
+                <span class="search-shortcut" id="searchShortcut">
+                    <kbd class="text-secondary">Ctrl</kbd><kbd class="text-secondary">K</kbd>
+                </span>
                 <button class="btn btn-outline-secondary" id="clearSearch" type="button">
                     Clear
-            </button>
+                </button>
+                <button class="btn btn-outline-secondary" id="resetView" type="button">
+                    Reset
+                </button>
             </div>
         `;
         
@@ -149,17 +180,17 @@ class ODFBrowser {
         const tabsHTML = `
             <ul class="nav nav-pills mb-3" id="categoryTabs" role="tablist">
                 ${Object.keys(this.data).map((category, idx) => `
-                    <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation">
                         <button class="nav-link ${idx === 0 ? 'active' : ''}" 
                                 id="tab-${category}" 
                                 data-bs-toggle="pill" 
                                 data-bs-target="#list-${category}" 
                                 type="button" role="tab">
                             ${category}
-                        </button>
-                    </li>
+                </button>
+            </li>
                 `).join('')}
-            </ul>
+        </ul>
         `;
         
         // Create content area for ODF lists with flex-grow-1 to fill height
@@ -170,12 +201,12 @@ class ODFBrowser {
                          id="list-${category}" role="tabpanel">
                         <div class="list-group odf-list">
                             ${this.generateODFList(category, odfs)}
-                        </div>
-                    </div>
+            </div>
+            </div>
                 `).join('')}
         </div>
     `;
-    
+
         // Wrap everything in a d-flex flex-column container
         this.sidebar.innerHTML = `
             <div class="d-flex flex-column h-100">
@@ -190,14 +221,33 @@ class ODFBrowser {
         searchInput.addEventListener('input', 
             debounce(e => this.handleSearch(e.target.value), 300));
         
-        // Add clear button handler
+        // Add clear button handler - only clears search
         document.getElementById('clearSearch').addEventListener('click', () => {
             searchInput.value = '';
             this.handleSearch('');
         });
         
+        // Add reset button handler - clears search and content
+        document.getElementById('resetView').addEventListener('click', () => {
+            searchInput.value = '';
+            this.handleSearch('');
+            this.showDefaultContent();
+            
+            // Remove active state from all ODF items
+            document.querySelectorAll('.odf-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        });
+        
         // Initialize first category
         this.currentCategory = Object.keys(this.data)[0];
+
+        // Add event listener to hide shortcut when typing
+        const searchShortcut = document.getElementById('searchShortcut');
+
+        searchInput.addEventListener('input', () => {
+            searchShortcut.style.display = searchInput.value ? 'none' : '';
+        });
     }
     
     generateODFList(category, odfs) {
@@ -251,6 +301,7 @@ class ODFBrowser {
             // Show all items if search is empty
             document.querySelectorAll('.odf-item').forEach(item => {
                 item.style.display = '';
+                item.classList.remove('active'); // Remove active state when clearing
             });
             
             // Reset tab labels
@@ -264,17 +315,19 @@ class ODFBrowser {
         term = term.toLowerCase();
         const categoryCounts = {};
         let hasExactMatch = false;
+        let firstMatch = null;
+        let exactMatchCategory = null;  // Track category of exact match
         
         // Get all ODF items
         document.querySelectorAll('.odf-item').forEach(item => {
+            item.classList.remove('active');
+            
             const filename = item.dataset.filename.toLowerCase();
             const category = item.dataset.category;
             const odfData = this.data[category][filename];
             
-            // Initialize counter for this category
             categoryCounts[category] = categoryCounts[category] || 0;
             
-            // Get searchable names
             const searchableNames = [
                 filename,
                 filename.replace('.odf', ''),
@@ -286,8 +339,10 @@ class ODFBrowser {
             const isExactMatch = searchableNames.some(name => name === term);
             if (isExactMatch) {
                 hasExactMatch = true;
+                exactMatchCategory = category;  // Store category of exact match
                 item.style.display = '';
                 categoryCounts[category]++;
+                firstMatch = item;
                 return;
             }
             
@@ -303,8 +358,26 @@ class ODFBrowser {
             
             if (isMatch) {
                 categoryCounts[category]++;
+                firstMatch = item;
             }
         });
+        
+        // Make first match active and switch to its category
+        if (firstMatch) {
+            firstMatch.classList.add('active');
+            firstMatch.scrollIntoView({ block: 'nearest' });
+            
+            // If we have an exact match, switch to its category and display data
+            if (hasExactMatch && exactMatchCategory) {
+                const targetTab = document.querySelector(`#tab-${exactMatchCategory}`);
+                if (targetTab && !targetTab.classList.contains('active')) {
+                    targetTab.click();
+                }
+                // Display data for exact match
+                const {filename, category} = firstMatch.dataset;
+                this.displayODFData(category, filename);
+            }
+        }
         
         // Update category badges with counts
         Object.entries(categoryCounts).forEach(([category, count]) => {
@@ -509,29 +582,29 @@ class ODFBrowser {
             }
             
             return `
-                <div class="card mb-3">
-                    <div class="card-header bg-secondary-subtle">
+            <div class="card mb-3">
+                <div class="card-header bg-secondary-subtle">
                         <h5 class="mb-0 d-flex align-items-center">
                             ${icon}${className}
                         </h5>
-                    </div>
-                    <div class="card-body p-0">
+                </div>
+                <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-hover table-striped mb-0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="width: 30%">Property</th>
-                                        <th scope="col">Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 30%">Property</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                                     ${this.formatClassProperties(classData)}
-                                </tbody>
-                            </table>
+                        </tbody>
+                    </table>
                         </div>
-                    </div>
                 </div>
-            `;
+            </div>
+        `;
         }).join('');
     }
     
@@ -603,7 +676,7 @@ class ODFBrowser {
         const activeTab = document.querySelector('#categoryTabs .nav-link.active');
         const categoryId = activeTab.getAttribute('data-bs-target').slice(1);
         const visibleODFs = Array.from(
-            document.querySelectorAll(`#${categoryId} .odf-item`)
+            document.querySelectorAll(`.odf-item`)  // Remove category filter to search all items
         ).filter(item => item.style.display !== 'none');
         
         if (!visibleODFs.length) return;
@@ -630,6 +703,13 @@ class ODFBrowser {
         const nextODF = visibleODFs[nextIndex];
         nextODF.classList.add('active');
         nextODF.scrollIntoView({ block: 'nearest' });
+        
+        // If this was triggered by arrow keys, make sure we're in the right category tab
+        const category = nextODF.dataset.category;
+        const targetTab = document.querySelector(`#tab-${category}`);
+        if (targetTab && !targetTab.classList.contains('active')) {
+            targetTab.click();
+        }
     }
 
     playAudio(url, buttonElement) {
