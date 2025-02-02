@@ -79,7 +79,7 @@ class ODFBrowser {
                 }
             }
 
-            // Up/Down arrows always control ODF list regardless of focus or input state
+            // Up/Down arrows always control ODF list regardless of focus
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
                 this.cycleODFs(e.key === 'ArrowDown' ? 1 : -1);
@@ -95,10 +95,8 @@ class ODFBrowser {
                     // Cycle through ODF content tabs when property search is focused
                     this.cycleContentTabs(e.key === 'ArrowRight');
                 } else {
-                    // Default behavior - cycle through sidebar tabs and reset ODF selection
+                    // Default behavior - cycle through sidebar tabs
                     this.cycleTabs(e.key === 'ArrowRight');
-                    // After tab change, select first visible ODF in the new tab
-                    this.selectFirstVisibleODF();
                 }
                 return;
             }
@@ -117,10 +115,9 @@ class ODFBrowser {
                         browser.displayODFData(category, filename);
                         
                         document.querySelectorAll('.odf-item').forEach(item => {
-                            item.classList.remove('active', 'selected');
+                            item.classList.remove('active');
                         });
-                        activeODF.classList.add('active', 'selected');
-                        activeODF.focus();
+                        activeODF.classList.add('active');
                     }
                     break;
                     
@@ -291,16 +288,13 @@ class ODFBrowser {
             .map(([filename, data]) => {
                 const displayName = data.GameObjectClass?.unitName || data.WeaponClass?.wpnName;
                 return `
-                    <button class="list-group-item list-group-item-action odf-item d-flex align-items-center justify-content-between" 
+                    <button class="list-group-item list-group-item-action odf-item" 
                             data-filename="${filename}" 
                             data-category="${category}"
                             tabindex="-1">
-                        <div class="text-truncate">
-                            ${displayName ? 
-                                `<span class="odf-name">${displayName}</span> <span class="ms-2 text-secondary">${filename.replace('.odf', '')}</span>` : 
-                                filename.replace('.odf', '')}
-                        </div>
-                        <span class="odf-dot ms-2"></span>
+                        ${displayName ? 
+                            `<span class="odf-name">${displayName}</span> <span class="ms-2 text-secondary">${filename.replace('.odf', '')}</span>` : 
+                            filename.replace('.odf', '')}
                     </button>
                 `;
             }).join('');
@@ -741,7 +735,7 @@ class ODFBrowser {
         </svg>`;
         
         const ordnanceIcon = `<svg class="me-2" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M12.17 9.53c2.307-2.592 3.278-4.684 3.641-6.218.21-.887.214-1.58.16-2.065a3.6 3.6 0 0 0-.108-.563 2 2 0 0 0-.078-.23V.453c-.073-.164-.168-.234-.352-.295a2 2 0 0 0-.16-.045 4 4 0 0 0-.57-.093c-.49-.044-1.19-.03-2.08.188-1.536.374-3.618 1.343-6.161 3.604l-2.4.238h-.006a2.55 2.55 0 0 0-1.524.734L.15 7.17a.512.512 0 0 0 .433.868l1.896-.271c.28-.04.592.013.955.132.232.076.437.16.655.248l.203.083c.196.816.66 1.58 1.275.613.614 1.376 1.08 2.191 1.277l.082.202c.089.218.173.424.249.657.118.363.172.676.132.956l-.271 1.9a.512.512 0 0 0 .867.433l2.382-2.386c.41-.41.668-.949.732-1.526zm.11-3.699c-.797.8-1.93.961-2.528.362-.598-.6-.436-1.733.361-2.532.798-.799 1.93-.96 2.528-.361s.437 1.732-.36 2.531Z"/>
+            <path d="M12.17 9.53c2.307-2.592 3.278-4.684 3.641-6.218.21-.887.214-1.58.16-2.065a3.6 3.6 0 0 0-.108-.563 2 2 0 0 0-.078-.23V.453c-.073-.164-.168-.234-.352-.295a2 2 0 0 0-.16-.045 4 4 0 0 0-.57-.093c-.49-.044-1.19-.03-2.08.188-1.536.374-3.618 1.343-6.161 3.604l-2.4.238h-.006a2.55 2.55 0 0 0-1.524.734L.15 7.17a.512.512 0 0 0 .433.868l1.896-.271c.28-.04.592.013.955.132.232.076.437.16.655.248l.203.083c.196.816.66 1.58 1.275 2.195.613.614 1.376 1.08 2.191 1.277l.082.202c.089.218.173.424.249.657.118.363.172.676.132.956l-.271 1.9a.512.512 0 0 0 .867.433l2.382-2.386c.41-.41.668-.949.732-1.526zm.11-3.699c-.797.8-1.93.961-2.528.362-.598-.6-.436-1.733.361-2.532.798-.799 1.93-.96 2.528-.361s.437 1.732-.36 2.531Z"/>
             <path d="M5.205 10.787a7.6 7.6 0 0 0 1.804 1.352c-1.118 1.007-4.929 2.028-5.054 1.903-.126-.127.737-4.189 1.839-5.18.346.69.837 1.35 1.411 1.925"/>
         </svg>`;
 
@@ -1051,17 +1045,34 @@ class ODFBrowser {
     initializeEventListeners() {
         // Add click handler for ODF links
         document.addEventListener('click', (e) => {
-            const target = e.target.closest('.odf-item');
-            if (target) {
-                const {filename, category} = target.dataset;
-                browser.displayODFData(category, filename);
+            if (e.target.matches('a[data-category][data-filename]')) {
+                e.preventDefault();
+                const category = e.target.dataset.category;
+                const filename = e.target.dataset.filename;
                 
-                document.querySelectorAll('.odf-item').forEach(item => {
-                    item.classList.remove('active', 'selected');
-                });
+                // First, switch to the correct category tab in sidebar
+                const categoryTab = document.querySelector(`#sidebar-tab-${category}`);
+                if (categoryTab && !categoryTab.classList.contains('active')) {
+                    categoryTab.click();
+                }
                 
-                target.classList.add('active', 'selected');
-                target.focus();
+                // Then find and select the ODF item in the list
+                const odfItem = document.querySelector(`.odf-item[data-filename="${filename}"]`);
+                if (odfItem) {
+                    // Remove active class from all items
+                    document.querySelectorAll('.odf-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to target item
+                    odfItem.classList.add('active');
+                    
+                    // Scroll the item into view
+                    odfItem.scrollIntoView({ block: 'nearest' });
+                }
+                
+                // Finally, display the ODF data
+                this.displayODFData(category, filename);
             }
         });
     }
@@ -1188,27 +1199,6 @@ class ODFBrowser {
         
         tabs[nextIndex].click();
     }
-
-    selectFirstVisibleODF() {
-        const activeTabPane = document.querySelector('#categoryContent .tab-pane.active');
-        if (!activeTabPane) return;
-
-        // Get first visible ODF in the current tab
-        const firstVisibleODF = Array.from(
-            activeTabPane.querySelectorAll('.odf-item')
-        ).find(item => item.style.display !== 'none');
-
-        if (firstVisibleODF) {
-            // Remove active class from all items
-            document.querySelectorAll('.odf-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Add active class to first item
-            firstVisibleODF.classList.add('active');
-            firstVisibleODF.scrollIntoView({ block: 'nearest' });
-        }
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1221,10 +1211,9 @@ document.addEventListener('DOMContentLoaded', () => {
             browser.displayODFData(category, filename);
             
             document.querySelectorAll('.odf-item').forEach(item => {
-                item.classList.remove('active', 'selected');
+                item.classList.remove('active');
             });
-            target.classList.add('active', 'selected');
-            target.focus();
+            target.classList.add('active');
         }
     });
 });
