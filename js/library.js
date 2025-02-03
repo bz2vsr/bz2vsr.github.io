@@ -4,7 +4,7 @@ let currentlyPlaying = null;
 // Function to create an audio player card
 function createAudioCard(soundData) {
     const column = document.createElement('div');
-    column.className = 'col-4 mb-3';
+    column.className = 'col-12 col-md-4 mb-3';
     
     const card = document.createElement('div');
     card.className = 'card';
@@ -101,7 +101,7 @@ function createSearchBar() {
 
 // Function to filter audio cards
 function filterCards(searchTerm) {
-    const cards = document.querySelectorAll('.col-4');
+    const cards = document.querySelectorAll('.col-md-4');
     const normalizedSearch = searchTerm.toLowerCase();
     
     cards.forEach(card => {
