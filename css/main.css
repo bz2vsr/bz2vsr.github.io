@@ -633,3 +633,137 @@ table.table.dataTable>tbody>tr.selected>* {
 .input-group:has(#odfPropertySearch):focus-within #clearPropertySearch {
     border-color: #86b7fe; /* Match input focus border color */
 }
+
+/* ODF Reference */
+#ODFGuide #sidebar-wrapper {
+    height: calc(100vh - 60px);
+    position: sticky;
+    top: 0;
+}
+
+#ODFGuide #toc-container {
+    height: calc(100vh - 130px);
+    overflow-y: auto;
+}
+
+#ODFGuide #content {
+    height: calc(100vh - 60px);
+}
+
+#ODFGuide .content-scroll {
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+}
+
+/* Move scrollbar styles from #content to .content-scroll */
+#ODFGuide .content-scroll::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+}
+
+#ODFGuide .content-scroll::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 4px;
+}
+
+#ODFGuide .content-scroll::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#ODFGuide .content-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
+}
+
+/* Firefox scrollbar for content-scroll */
+#ODFGuide .content-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(13, 110, 253, 0.8) rgba(173, 181, 189, 0.08);
+}
+
+#ODFGuide .code-snippet {
+    position: relative;
+    margin: 1rem 0;
+    border: 1px solid #495057;
+    border-radius: var(--bs-border-radius);
+}
+
+#ODFGuide .code-snippet pre {
+    max-height: none;
+    margin: 0;
+}
+
+#ODFGuide .code-snippet code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 1rem;
+}
+
+#ODFGuide .search-highlight {
+    background-color: rgba(255, 193, 7, 0.3);
+    border-radius: 2px;
+}
+
+#ODFGuide a.text-info:hover {
+    color: #8be3ff !important;
+    text-decoration: underline !important;
+}
+
+#ODFGuide #section-toc {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+}
+
+#ODFGuide .section-toc-item {
+    color: var(--bs-secondary);
+    font-size: 0.875rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid transparent;
+}
+
+#ODFGuide .section-toc-item:hover {
+    color: var(--bs-emphasis-color);
+    border-left-color: var(--bs-secondary);
+}
+
+#ODFGuide .section-toc-item.active {
+    color: var(--bs-emphasis-color);
+    border-left-color: var(--bs-primary);
+}
+
+/* ODF Guide content headers */
+#ODFGuide .card-body > h3:not(:first-of-type) {
+    margin-top: 2rem;
+}
+
+/* Scrollbar styles for TOC */
+#ODFGuide #toc-container::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+}
+
+#ODFGuide #toc-container::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 4px;
+}
+
+#ODFGuide #toc-container::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#ODFGuide #toc-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
+}
+
+/* Firefox scrollbar for TOC */
+#ODFGuide #toc-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(13, 110, 253, 0.8) rgba(173, 181, 189, 0.08);
+}
+
+

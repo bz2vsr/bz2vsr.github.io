@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html class="h-100" data-bs-theme="dark" lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>
+      RadarPopperClass - Battlezone II: ODF Guide
+    </title>
+    <meta content="ODF reference guide for Battlezone II: Combat Commander" property="description"/>
+    <meta content="bz2vsr.com/odf/guide/radarpopperclass" property="og:site_name">
+      <meta content="https://bz2vsr.com/img/default_pfp.png" property="og:image">
+        <meta content="ODF reference guide for Battlezone II: Combat Commander" property="og:description">
+          <meta content="RadarPopperClass - Battlezone II: ODF Guide" property="og:title"/>
+          <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+          <link href="/css/main.css" rel="stylesheet"/>
+        </meta>
+      </meta>
+    </meta>
+  </head>
+  <body class="d-flex flex-column h-100" id="ODFGuide">
+    <nav class="navbar navbar-expand navbar-dark">
+      <div class="container">
+        <a class="navbar-brand">
+          <img class="img-fluid ms-2 me-1" height="32" src="/img/logo.png" width="32"/>
+          <span class="d-none d-lg-inline">
+            ODF Guide
+          </span>
+        </a>
+        <div class="d-none d-lg-block">
+          <a class="btn btn-success" href="/">
+            Return Home
+            <svg class="bi bi-house-door-fill mb-1" fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5">
+              </path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div class="container pb-3">
+      <div class="row">
+        <div class="alert alert-warning" role="alert">
+          This is a raw verbatim copy of GBD's
+          <a class="alert-link mt-2" href="https://steamcommunity.com/sharedfiles/filedetails/?id=1423355866" style="display:inline-block;">
+            ODF Guide
+          </a>
+          on Steam.
+                                        I have plans to improve it over time with better formatting, smart search, etc.
+        </div>
+        <!-- Left sidebar -->
+        <div class="col-3 p-3">
+          <div id="sidebar-wrapper">
+            <h6 class="text-secondary mb-2 fw-bold">
+              Table of Contents
+            </h6>
+            <div id="toc-container">
+              <div class="list-group list-group-flush small">
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/introduction/">
+                  Introduction
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/common-terms/">
+                  Common Terms
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/classlabel-list/">
+                  Classlabel List
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/ai-process-info/">
+                  AI Process Info
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/ai-task-info/">
+                  AI Task Info
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/ai-command-list/">
+                  AI Command List
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/configuration-odfs/">
+                  Configuration ODFs
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/entityclass/">
+                  EntityClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/gameobjectclass-p1-general-settings/">
+                  GameObjectClass P1: General Settings
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/gameobjectclass-p2-general-settings-2/">
+                  GameObjectClass P2: General Settings 2
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/gameobjectclass-p3-combat-settings/">
+                  GameObjectClass P3: Combat Settings
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/gameobjectclass-p4-build-settings/">
+                  GameObjectClass P4: Build Settings
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/gameobjectclass-p5-model-settings/">
+                  GameObjectClass P5: Model Settings
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/buildingclass/">
+                  BuildingClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/craftclass-p1-general-settings/">
+                  CraftClass P1: General Settings
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/craftclass-p2-general-settings-2/">
+                  CraftClass P2: General Settings 2
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/craftclass-p3-general-settings-3/">
+                  CraftClass P3: General Settings 3
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/craftclass-p4-ai-settings/">
+                  CraftClass P4: AI Settings
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/aircraftclass/">
+                  AircraftClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/apcclass/">
+                  APCClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/armoryclass/">
+                  ArmoryClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/artifactclass/">
+                  ArtifactClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/artilleryclass/">
+                  ArtilleryClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/assaulthoverclass/">
+                  AssaultHoverClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/assaulttankclass/">
+                  AssaultTankClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/barracksclass/">
+                  BarracksClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/boidclass/">
+                  BoidClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/bomberclass/">
+                  BomberClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/bomberbayclass/">
+                  BomberBayClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/camerapodclass/">
+                  CameraPodClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/commbunkerclass/">
+                  CommBunkerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/commtowerclass/">
+                  CommTowerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/commvehicleclass/">
+                  CommVehicleClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/commvehiclehclass/">
+                  CommVehicleHClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/constructionrigclass/">
+                  ConstructionRigClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/constructionrigtclass/">
+                  ConstructionRigTClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/daywreckerclass/">
+                  DayWreckerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/deployableclass/">
+                  DeployableClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/deploybuildingclass/">
+                  DeployBuildingClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/deploybuildinghclass/">
+                  DeployBuildingHClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/depositclass/">
+                  DepositClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/dummyclass/">
+                  DummyClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/extractorclass/">
+                  ExtractorClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/factoryclass/">
+                  FactoryClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/flagobjectclass/">
+                  FlagObjectClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/hovercraftclass/">
+                  HoverCraftClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/howitzerclass/">
+                  HowitzerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/jammerclass/">
+                  JammerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/kingofhillclass/">
+                  KingOfHillClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/landcreatureclass/">
+                  LandCreatureClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/lightclass/">
+                  LightClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/mineclass/">
+                  MineClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/flaremineclass/">
+                  FlareMineClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/magnetmineclass/">
+                  MagnetMineClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/proximitymineclass/">
+                  ProximityMineClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/tripmineclass/">
+                  TripMineClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/weaponmineclass/">
+                  WeaponMineClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/seekerclass/">
+                  SeekerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/satchelchargeclass/">
+                  SatchelChargeClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/minelayerclass/">
+                  MinelayerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/moneypowerupclass/">
+                  MoneyPowerupClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/morphtankclass/">
+                  MorphTankClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/motionsensorclass/">
+                  MotionSensorClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/navbeaconclass/">
+                  NavBeaconClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/objectspawnclass/">
+                  ObjectSpawnClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/personclass/">
+                  PersonClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/plantclass/">
+                  PlantClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/poweredbuildingclass/">
+                  PoweredBuildingClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/powerplantclass/">
+                  PowerPlantClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/powerupclass/">
+                  PowerUpClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/recyclerclass/">
+                  RecyclerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/recyclervehicleclass/">
+                  RecyclerVehicleClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/recyclervehiclehclass/">
+                  RecyclerVehicleHClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/savclass/">
+                  SAVClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/scavengerclass/">
+                  ScavengerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/scavengerhclass/">
+                  ScavengerHClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/scrapclass/">
+                  ScrapClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/servicepowerup/">
+                  ServicePowerup
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/servicetruckclass/">
+                  ServiceTruckClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/servicetruckhclass/">
+                  ServiceTruckHClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/shieldtowerclass/">
+                  ShieldTowerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/siloclass/">
+                  SiloClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/spawnbuoyclass/">
+                  SpawnBuoyClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/spraybuildingclass/">
+                  SprayBuildingClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/supplydepotclass/">
+                  SupplyDepotClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/techcenterclass/">
+                  TechCenterClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/teleportalclass/">
+                  TelePortalClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/trackeddeployableclass/">
+                  TrackedDeployableClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/trackedvehicleclass/">
+                  TrackedVehicleClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/torpedoclass/">
+                  TorpedoClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/tugclass/">
+                  TugClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/turretcraftclass/">
+                  TurretCraftClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/turrettankclass/">
+                  TurretTankClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/walkerclass/">
+                  WalkerClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/weaponpowerupclass/">
+                  WeaponPowerupClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/wingmanclass/">
+                  WingmanClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/weaponclass/">
+                  WeaponClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/arccannonclass/">
+                  ArcCannonClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/blinkdeviceclass/">
+                  BlinkDeviceClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/cannonclass/">
+                  CannonClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/chargegunclass/">
+                  ChargeGunClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/damagefieldclass/">
+                  DamageFieldClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/dispenserclass/">
+                  DispenserClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/forcefieldclass/">
+                  ForceFieldClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/imagelauncherclass/">
+                  ImageLauncherClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/imagerefract/">
+                  ImageRefract
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/jetpackclass/">
+                  JetPackClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/launcherclass/">
+                  LauncherClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/machinegunclass/">
+                  MachineGunClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/magnetgunclass/">
+                  MagnetGunClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/mortarclass/">
+                  MortarClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/multilauncherclass/">
+                  MultiLauncherClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/radardamperclass/">
+                  RadarDamperClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/radarlauncherclass/">
+                  RadarLauncherClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/remotedetonatorclass/">
+                  RemoteDetonatorClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/salvolauncherclass/">
+                  SalvoLauncherClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/satchelpackclass/">
+                  SatchelPackClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/shieldupgradeclass/">
+                  ShieldUpgradeClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/specialitemclass/">
+                  SpecialItemClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/targetinggunclass/">
+                  TargetingGunClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/terrainexposeclass/">
+                  TerrainExposeClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/thermallauncherclass/">
+                  ThermalLauncherClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/torpedolauncherclass/">
+                  TorpedoLauncherClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/ordnanceclass/">
+                  OrdnanceClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/anchorrocketclass/">
+                  AnchorRocketClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/beamclass/">
+                  BeamClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/bouncebombclass/">
+                  BounceBombClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/bulletclass/">
+                  BulletClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/grenadeclass/">
+                  GrenadeClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/imagemissileclass/">
+                  ImageMissileClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/lasermissileclass/">
+                  LaserMissileClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/laserpopperclass/">
+                  LaserPopperClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/leaderroundclass/">
+                  LeaderRoundClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/lockshellclass/">
+                  LockShellClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/magnetshellclass/">
+                  MagnetShellClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/missileclass/">
+                  MissileClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/popperclass/">
+                  PopperClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/pulseshellclass/">
+                  PulseShellClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/radarmissileclass/">
+                  RadarMissileClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active text-bg-primary" href="/odf/guide/radarpopperclass/">
+                  RadarPopperClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/seismicwaveclass/">
+                  SeismicWaveClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/snipershellclass/">
+                  SniperShellClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/spraybombclass/">
+                  SprayBombClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/thermalmissileclass/">
+                  ThermalMissileClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/explosionclass/">
+                  ExplosionClass
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/odf/guide/quakeblastclass/">
+                  QuakeBlastClass
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Main content -->
+        <div class="col-7 p-3">
+          <div id="content">
+            <div class="card">
+              <div class="card-header bg-secondary-subtle sticky-top">
+                <h3 class="mb-0 fw-500">
+                  RadarPopperClass
+                </h3>
+              </div>
+              <div class="card-body content-scroll">
+                Classlabel: "radarpopper"
+                <br/>
+                <br/>
+                Class Tree:
+                <b>
+                  Entity-&gt;Ordnance-&gt;Bullet-&gt;Grande-&gt;RadarPopper
+                </b>
+                <br/>
+                <br/>
+                <b>
+                  Description:
+                </b>
+                <br/>
+                Radar Popper
+      is a Grenade that launches an Ordnance towards the owner's current Target as soon as it begins
+      falling.
+                <br/>
+                <br/>
+                <b>
+                  Default ODF Properties:
+                </b>
+                <br/>
+                <div class="code-snippet w-100">
+                  <pre class="mb-0"><code class="text-light bg-secondary-subtle p-2 rounded d-block"><span class="text-warning">[OrdnanceClass]</span>
+<span class="text-info">ammoCost</span> = <span class="text-light">10</span></code></pre>
+                </div>
+                <br/>
+                <b>
+                  ODF Properties:
+                </b>
+                <br/>
+                <ul class="mb-3">
+                  <li>
+                    <b>
+                      [RadarPopperClass]
+                    </b>
+                    <br/>
+                    <br/>
+                    <div class="code-snippet w-100">
+                      <pre class="mb-0"><code class="text-light bg-secondary-subtle p-2 rounded d-block"><span class="text-info">launchOrd</span> = <span class="text-light">""</span></code></pre>
+                    </div>
+                    ODF name of the Ordnance Class launched by this Popper.
+                    <br/>
+                    <br/>
+                    <div class="code-snippet w-100">
+                      <pre class="mb-0"><code class="text-light bg-secondary-subtle p-2 rounded d-block"><span class="text-info">launchXpl</span> = <span class="text-light">""</span></code></pre>
+                    </div>
+                    ODF name of the Explosion Class used when this ordnance launches it's launchOrd.
+                  </li>
+                </ul>
+                <div style="clear: both">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right sidebar -->
+        <div class="col-2 p-3">
+          <div class="sticky-top pt-3" id="section-toc">
+            <h6 class="text-secondary mb-2 fw-bold">
+              On this page
+            </h6>
+            <hr class="mt-0"/>
+            <div id="current-section-toc">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="/js/odf_guide.js">
+    </script>
+  </body>
+</html>
