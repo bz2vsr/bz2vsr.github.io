@@ -63,7 +63,7 @@
                         </li>
 
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" href="/vid">
+                            <a class="nav-link" href="/vid">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video-fill mb-1 me-1" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2z"/>
                                 </svg>
@@ -96,87 +96,16 @@
                 </div>
             </div>
         </nav>
-        <main class="container-fluid mt-4">
-            <div class="row">
-                <!-- Left Column -->
-                <div class="col-md-8">
-                    <div id="api-error-alert" class="alert alert-danger d-none" role="alert">
-                        <strong>API Error:</strong> <span id="api-error-message"></span>
-                    </div>
-                    
-                    <div id="latest-video" class="ratio ratio-16x9 mb-4"></div>
-
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="input-group">
-                                <input type="text" id="search-input" class="form-control rounded" placeholder="Filter results...">
-                                <button class="btn btn-outline-secondary d-none rounded-end" id="clear-filter-button" type="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <input type="text" id="global-search-input" class="form-control" placeholder="Search all channel videos...">
-                                <button class="btn btn-primary" id="global-search-button" type="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-secondary w-100" id="reset-search-button" type="button">
-                                Reset
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-                                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="search-results" class="d-none">
-                        <h2>Search Results</h2>
-                        <div id="search-results-container" class="row g-3"></div>
-                    </div>
-
-                    <div id="regular-content" class="row mb-5">
-                        <div class="col-6">
-                            <h2>F9bomber</h2>
-                            <div id="f9bomber-videos" class="row g-3"></div>
-                            <div class="text-center mt-3">
-                                <button class="btn btn-primary view-more" data-channel="f9bomber">View More</button>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <h2>HerpMcDerperson</h2>
-                            <div id="herp-videos" class="row g-3"></div>
-                            <div class="text-center mt-3">
-                                <button class="btn btn-primary view-more" data-channel="herp">View More</button>
-                            </div>
-                        </div>
-                    </div>
+        <main class="container mt-4">
+            <div class="row" id="LibrarySounds">
+                <!-- <div id="LibrarySounds" class="col-12">
                 </div>
 
-                <!-- Right Column -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-broadcast mb-1 me-1" viewBox="0 0 16 16">
-                                    <path d="M3.05 3.05a7 7 0 0 0 0 9.9.5.5 0 0 1-.707.707 8 8 0 0 1 0-11.314.5.5 0 0 1 .707.707zm2.122 2.122a4 4 0 0 0 0 5.656.5.5 0 1 1-.708.708 5 5 0 0 1 0-7.072.5.5 0 0 1 .708.708zm5.656-.708a.5.5 0 0 1 .708 0 5 5 0 0 1 0 7.072.5.5 0 1 1-.708-.708 4 4 0 0 0 0-5.656.5.5 0 0 1 0-.708zm2.122-2.12a.5.5 0 0 1 .707 0 8 8 0 0 1 0 11.313.5.5 0 0 1-.707-.707 7 7 0 0 0 0-9.9.5.5 0 0 1 0-.707zM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
-                                </svg>
-                                Live Streams
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div id="twitchEmbeds"></div>
-                        </div>
-                    </div>
+                <div id="LibraryVideos" class="col-md-4">
                 </div>
+
+                <div id="LibraryQuotes" class="col-md-4">
+                </div> -->
             </div>
         </main>
 
@@ -209,8 +138,7 @@
         </div>
 
         <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="https://embed.twitch.tv/embed/v1.js"></script>
-        <script src="/js/vid.js"></script>
+        <script src="/js/library.js"></script>
         <script async data-id="101466371" src="//static.getclicky.com/js"></script> 
     </body>
 </html>
