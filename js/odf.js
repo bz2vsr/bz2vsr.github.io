@@ -587,18 +587,18 @@ class ODFBrowser {
 
         // Fix the tab content HTML generation to not duplicate tabs
         const contentHtml = hasMultipleGroups ? `
-            <div class="tab-content">
+            <div class="tab-content px-0">
                 <div class="tab-pane fade show active" id="content-All" role="tabpanel">
-                    <div class="row">
+                    <div class="row gx-3">
                         ${(() => {
                             const allEntries = Object.entries(groupedEntries)
                                 .flatMap(([, entries]) => entries);
                             const [leftCol, rightCol] = distributeEntries(allEntries);
                             return `
-                                <div class="col-12 col-md-6 ps-0">
+                                <div class="col-12 col-md-6">
                                     ${this.formatODFDataColumn(leftCol)}
                                 </div>
-                                <div class="col-12 col-md-6 pe-0">
+                                <div class="col-12 col-md-6">
                                     ${this.formatODFDataColumn(rightCol)}
                                 </div>
                             `;
@@ -611,10 +611,10 @@ class ODFBrowser {
                             ${(() => {
                                 const [leftCol, rightCol] = distributeEntries(entries);
                                 return `
-                                    <div class="col-6 ps-0">
+                                    <div class="col-12 col-md-6">
                                         ${this.formatODFDataColumn(leftCol)}
                                     </div>
-                                    <div class="col-6 pe-0">
+                                    <div class="col-12 col-md-6">
                                         ${this.formatODFDataColumn(rightCol)}
                                     </div>
                                 `;
@@ -628,10 +628,10 @@ class ODFBrowser {
             const [leftCol, rightCol] = distributeEntries(entries);
             return `
                 <div class="row">
-                    <div class="col-6 ps-0">
+                    <div class="col-12 col-md-6">
                         ${this.formatODFDataColumn(leftCol)}
                     </div>
-                    <div class="col-6 pe-0">
+                    <div class="col-12 col-md-6">
                         ${this.formatODFDataColumn(rightCol)}
                     </div>
                 </div>
