@@ -595,10 +595,10 @@ class ODFBrowser {
                                 .flatMap(([, entries]) => entries);
                             const [leftCol, rightCol] = distributeEntries(allEntries);
                             return `
-                                <div class="col-6 ps-0">
+                                <div class="col-12 col-md-6 ps-0">
                                     ${this.formatODFDataColumn(leftCol)}
                                 </div>
-                                <div class="col-6 pe-0">
+                                <div class="col-12 col-md-6 pe-0">
                                     ${this.formatODFDataColumn(rightCol)}
                                 </div>
                             `;
