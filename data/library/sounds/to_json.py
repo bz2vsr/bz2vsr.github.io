@@ -27,8 +27,8 @@ def get_transcript(file_name):
     
     if os.path.exists(transcript_path):
         with open(transcript_path, 'r', encoding='utf-8') as f:
-            # Read the content and replace new lines with "\n"
-            return f.read().replace('\n', '\\n')
+            # Read the content and remove newlines
+            return ' '.join(f.read().splitlines())
     else:
         return "Not available"
 
