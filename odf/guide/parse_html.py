@@ -214,9 +214,9 @@ def generate_page_html(section, all_sections):
         </nav>
         <div class="container pb-3">
             <div class="row">
-                <div class="alert alert-warning" role="alert">
+                <div class="alert alert-warning mt-2" role="alert">
                     This is a raw verbatim copy of GBD's
-                    <a class="alert-link mt-2" style="display:inline-block;"href="https://steamcommunity.com/sharedfiles/filedetails/?id=1423355866">ODF Guide</a> on Steam.
+                    <a class="alert-link" style="display:inline-block;"href="https://steamcommunity.com/sharedfiles/filedetails/?id=1423355866">ODF Guide</a> on Steam.
                     I have plans to improve it over time with better formatting, smart search, etc.
                 </div>
                 <!-- Left sidebar -->
@@ -295,6 +295,24 @@ def main():
         with open(index_path, 'w', encoding='utf-8') as f:
             f.write(generate_page_html(section, converted))
         file_count += 1
+    
+    # Generate root index.html with redirect
+    root_index = f'''<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="0; url=/odf/guide/introduction/">
+        <title>Redirecting...</title>
+    </head>
+    <body>
+        Redirecting to <a href="/odf/guide/introduction/">introduction</a>...
+    </body>
+</html>'''
+    
+    root_index_path = os.path.join(script_dir, 'index.html')
+    with open(root_index_path, 'w', encoding='utf-8') as f:
+        f.write(root_index)
+    file_count += 1
     
     print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Generated {folder_count} folders and {file_count} files\n")
 
