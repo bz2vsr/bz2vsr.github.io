@@ -56,6 +56,9 @@ class ODFBrowser {
             
             if (odfToLoad) {
                 this.selectODFByName(odfToLoad, categoryToShow);
+            } else {
+                // Load first Vehicle ODF if no specific ODF is provided
+                this.loadFirstVehicleODF();
             }
         });
         
@@ -1204,6 +1207,47 @@ class ODFBrowser {
         }
         
         tabs[nextIndex].click();
+    }
+
+    loadFirstVehicleODF() {
+        if (!this.data || !this.data.Vehicle) return;
+        
+        // Get all Vehicle ODFs and sort them like generateODFList does
+        const entries = Object.entries(this.data.Vehicle);
+        const [namedOdfs, unnamedOdfs] = entries.reduce((result, [filename, data]) => {
+            const displayName = data.GameObjectClass?.unitName || data.WeaponClass?.wpnName;
+            result[displayName ? 0 : 1].push([filename, data]);
+            return result;
+        }, [[], []]);
+        
+        // Sort named ODFs by display name
+        const sortedNamedOdfs = namedOdfs.sort(([, a], [, b]) => {
+            const nameA = a.GameObjectClass?.unitName || a.WeaponClass?.wpnName || '';
+            const nameB = b.GameObjectClass?.unitName || b.WeaponClass?.wpnName || '';
+            return nameA.localeCompare(nameB);
+        });
+        
+        // Sort unnamed ODFs by filename
+        const sortedUnnamedOdfs = unnamedOdfs.sort(([a], [b]) => a.localeCompare(b));
+        
+        // Get the first ODF filename after sorting
+        const firstVehicleODF = [...sortedNamedOdfs, ...sortedUnnamedOdfs][0]?.[0];
+        
+        if (firstVehicleODF) {
+            // Switch to Vehicle tab
+            const vehicleTab = document.querySelector('#sidebar-tab-Vehicle');
+            if (vehicleTab) {
+                vehicleTab.click();
+            }
+            
+            // Select and display the first Vehicle ODF
+            const odfItem = document.querySelector(`.odf-item[data-filename="${firstVehicleODF}"]`);
+            if (odfItem) {
+                odfItem.classList.add('active');
+                odfItem.scrollIntoView({ block: 'nearest' });
+                this.displayODFData('Vehicle', firstVehicleODF);
+            }
+        }
     }
 }
 
