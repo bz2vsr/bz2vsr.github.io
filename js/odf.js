@@ -809,7 +809,7 @@ class ODFBrowser {
             if (value.toLowerCase().endsWith('.wav')) {
                 return `
                     <div class="d-flex align-items-center gap-2">
-                        <code style="color: rgba(255, 107, 74, 0.85)">${value}</code>
+                        <code style="color: rgba(255, 165, 0, 0.85)">${value}</code>
                         <button class="btn btn-sm btn-outline-secondary d-flex align-items-center p-1 rounded-circle" 
                                 onclick="browser.playAudio('../data/audio/${value}', this)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
@@ -1209,7 +1209,6 @@ class ODFBrowser {
 
 document.addEventListener('DOMContentLoaded', () => {
     window.browser = new ODFBrowser();
-    browser.initialize();  // Call initialize after creating the instance
     
     document.addEventListener('click', (e) => {
         const target = e.target.closest('.odf-item');
