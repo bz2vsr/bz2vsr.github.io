@@ -88,11 +88,14 @@ function createSearchBar() {
     searchContainer.className = 'row mb-4';
     
     searchContainer.innerHTML = `
-        <div class="col-6 mx-auto">
+        <div class="col-6 mx-auto d-flex gap-2">
             <input type="text" 
                    class="form-control" 
                    id="soundSearch" 
                    placeholder="Type here to filter...">
+            <button class="btn btn-outline-secondary" onclick="resetSearch()">
+                Reset
+            </button>
         </div>
     `;
     
@@ -112,6 +115,22 @@ function filterCards(searchTerm) {
             card.style.display = '';
         } else {
             card.style.display = 'none';
+        }
+    });
+}
+
+// Function to reset search and close toggles
+function resetSearch() {
+    // Clear search input and show all cards
+    const searchInput = document.getElementById('soundSearch');
+    searchInput.value = '';
+    filterCards('');
+    
+    // Close all open transcripts
+    document.querySelectorAll('.transcript').forEach(transcript => {
+        if (transcript.style.display === 'block') {
+            const button = transcript.closest('.card-footer').querySelector('a');
+            toggleTranscript(button);
         }
     });
 }
