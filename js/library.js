@@ -21,7 +21,7 @@ function createAudioCard(soundData) {
                 </svg>
              </a>
              <div class="transcript mt-2" style="display: none;">
-                 <p class="mb-0 small">${soundData.transcript}</p>
+                 <p class="mb-0 small text-muted">${soundData.transcript}</p>
              </div>
            </div>`
         : `<div class="card-footer bg-secondary-subtle p-2">
