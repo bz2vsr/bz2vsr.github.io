@@ -664,9 +664,9 @@ class ODFBrowser {
                 </div>
                 <div class="card-body">
                     ${hasMultipleGroups ? `
-                        <ul class="nav nav-pills mb-3" role="tablist">
+                        <ul class="nav nav-pills mb-3 small ps-2" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" 
+                                <button class="nav-link active py-1" 
                                         id="content-tab-All" 
                                         data-bs-toggle="pill"
                                         data-bs-target="#content-All"
@@ -679,7 +679,7 @@ class ODFBrowser {
                                 .filter(([group]) => group !== 'Other')
                                 .map(([group]) => `
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" 
+                                        <button class="nav-link py-1" 
                                                 id="content-tab-${group}" 
                                                 data-bs-toggle="pill"
                                                 data-bs-target="#content-${group}"
@@ -691,7 +691,7 @@ class ODFBrowser {
                                 `).join('')}
                             ${groupedEntries['Other'] ? `
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" 
+                                    <button class="nav-link py-1" 
                                             id="content-tab-Other" 
                                             data-bs-toggle="pill"
                                             data-bs-target="#content-Other"
@@ -1209,6 +1209,7 @@ class ODFBrowser {
 
 document.addEventListener('DOMContentLoaded', () => {
     window.browser = new ODFBrowser();
+    browser.initialize();  // Call initialize after creating the instance
     
     document.addEventListener('click', (e) => {
         const target = e.target.closest('.odf-item');
