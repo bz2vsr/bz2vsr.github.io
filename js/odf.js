@@ -173,7 +173,7 @@ class ODFBrowser {
     
     initializeSidebar() {
         const searchHTML = `
-            <div class="mb-3 d-flex gap-2 position-relative">
+            <div class="mb-2 d-flex gap-2 position-relative">
                 <input type="text" class="form-control" id="odfSearch" 
                        placeholder="Type here to filter..." aria-label="Search ODFs">
                 <span class="search-shortcut" id="searchShortcut">
@@ -189,7 +189,7 @@ class ODFBrowser {
         `;
         
         const tabsHTML = `
-            <ul class="nav nav-underline mb-3 small nav-justified" id="categoryTabs" role="tablist">
+            <ul class="nav nav-underline small nav-justified" id="categoryTabs" role="tablist">
                 ${Object.keys(this.data).map((category, idx) => `
                     <li class="nav-item" role="presentation">
                         <button class="nav-link ${idx === 0 ? 'active' : ''}" 
@@ -548,111 +548,7 @@ class ODFBrowser {
 
         const hasMultipleGroups = Object.keys(groupedEntries).length > 1;
 
-        // Helper function to estimate table height
-        const estimateHeight = (entry) => {
-            const [className, classData] = entry;
-            // Card header + table header + (rows * row height)
-            return 60 + 42 + (Object.keys(classData).length * 42);
-        };
-
-        const distributeEntries = (entries) => {
-            // First, calculate heights for all entries
-            const entriesWithHeight = entries.map((entry, index) => ({
-                entry,
-                height: estimateHeight(entry),
-                originalIndex: index
-            }));
-            
-            const leftColumn = [];
-            const rightColumn = [];
-            let leftHeight = 0;
-            let rightHeight = 0;
-            
-            // Process entries in original order
-            entriesWithHeight.forEach(({ entry, height }) => {
-                // If one column is significantly taller (>70% of current entry height),
-                // force entry into shorter column
-                if (Math.abs(leftHeight - rightHeight) > height * 0.7) {
-                    if (leftHeight < rightHeight) {
-                        leftColumn.push(entry);
-                        leftHeight += height;
-                    } else {
-                        rightColumn.push(entry);
-                        rightHeight += height;
-                    }
-                } else {
-                    // Otherwise, try to maintain original order by preferring left column
-                    // unless it would create significant imbalance
-                    const projectedLeftHeight = leftHeight + height;
-                    const heightDiff = Math.abs(projectedLeftHeight - rightHeight);
-                    
-                    if (heightDiff < height * 1.2) { // Allow some imbalance to maintain order
-                        leftColumn.push(entry);
-                        leftHeight += height;
-                    } else {
-                        rightColumn.push(entry);
-                        rightHeight += height;
-                    }
-                }
-            });
-            
-            return [leftColumn, rightColumn];
-        };
-
-        // Fix the tab content HTML generation to not duplicate tabs
-        const contentHtml = hasMultipleGroups ? `
-            <div class="tab-content px-0">
-                <div class="tab-pane fade show active" id="content-All" role="tabpanel">
-                    <div class="row gx-3">
-                        ${(() => {
-                            const allEntries = Object.entries(groupedEntries)
-                                .flatMap(([, entries]) => entries);
-                            const [leftCol, rightCol] = distributeEntries(allEntries);
-                            return `
-                                <div class="col-12 col-md-6">
-                                    ${this.formatODFDataColumn(leftCol)}
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    ${this.formatODFDataColumn(rightCol)}
-                                </div>
-                            `;
-                        })()}
-                    </div>
-                </div>
-                ${Object.entries(groupedEntries).map(([group, entries]) => `
-                    <div class="tab-pane fade" id="content-${group}" role="tabpanel">
-                        <div class="row">
-                            ${(() => {
-                                const [leftCol, rightCol] = distributeEntries(entries);
-                                return `
-                                    <div class="col-12 col-md-6">
-                                        ${this.formatODFDataColumn(leftCol)}
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        ${this.formatODFDataColumn(rightCol)}
-                                    </div>
-                                `;
-                            })()}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        ` : (() => {
-            const entries = groupedEntries[Object.keys(groupedEntries)[0]];
-            const [leftCol, rightCol] = distributeEntries(entries);
-            return `
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        ${this.formatODFDataColumn(leftCol)}
-                    </div>
-                    <div class="col-12 col-md-6">
-                        ${this.formatODFDataColumn(rightCol)}
-                    </div>
-                </div>
-            `;
-        })();
-        
-        // Update the tab selection HTML
+        // Create the base HTML structure first
         this.content.innerHTML = `
             <div class="card">
                 <div class="card-header bg-secondary-subtle">
@@ -689,9 +585,9 @@ class ODFBrowser {
                                     All
                                 </button>
                             </li>
-                            ${Object.entries(groupedEntries)
-                                .filter(([group]) => group !== 'Other')
-                                .map(([group]) => `
+                            ${Object.keys(groupedEntries)
+                                .filter(group => group !== 'Other')
+                                .map(group => `
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link py-1" 
                                                 id="content-tab-${group}" 
@@ -703,24 +599,51 @@ class ODFBrowser {
                                         </button>
                                     </li>
                                 `).join('')}
-                            ${groupedEntries['Other'] ? `
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link py-1" 
-                                            id="content-tab-Other" 
-                                            data-bs-toggle="pill"
-                                            data-bs-target="#content-Other"
-                                            type="button"
-                                            role="tab">
-                                        Other
-                                    </button>
-                                </li>
-                            ` : ''}
                         </ul>
                     ` : ''}
-                    ${contentHtml}
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="content-All" role="tabpanel">
+                            <div class="row">
+                                <div class="col-4 odf-content-left"></div>
+                                <div class="col-4 odf-content-middle"></div>
+                                <div class="col-4 odf-content-right"></div>
+                            </div>
+                        </div>
+                        ${hasMultipleGroups ? Object.keys(groupedEntries)
+                            .map(group => `
+                                <div class="tab-pane fade" id="content-${group}" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-4 odf-content-left"></div>
+                                        <div class="col-4 odf-content-middle"></div>
+                                        <div class="col-4 odf-content-right"></div>
+                                    </div>
+                                </div>
+                            `).join('') : ''}
+                    </div>
                 </div>
             </div>
         `;
+
+        // Now that the structure is created, distribute the content
+        if (hasMultipleGroups) {
+            // Handle All tab content
+            const allEntries = Object.values(groupedEntries).flat();
+            const allContainer = document.querySelector('#content-All');
+            this.renderColumnContent(allContainer, allEntries);
+
+            // Handle individual category tabs
+            Object.entries(groupedEntries).forEach(([group, entries]) => {
+                const tabPane = document.querySelector(`#content-${group}`);
+                if (tabPane) {
+                    this.renderColumnContent(tabPane, entries);
+                }
+            });
+        } else {
+            // Single category - just render in the main container
+            const allEntries = Object.values(groupedEntries).flat();
+            const container = document.querySelector('#content-All');
+            this.renderColumnContent(container, allEntries);
+        }
 
         // Update the property search handler setup:
         const propertySearch = document.getElementById('odfPropertySearch');
@@ -1125,52 +1048,53 @@ class ODFBrowser {
             existingAlert.remove();
         }
 
-        // If clearing search, re-render the active tab's content
+        // Get the entries for the current tab
+        const activeTabId = activeTabContent.id;
+        let entries;
+        if (activeTabId === 'content-All') {
+            entries = Object.values(this.groupedEntries).flat();
+        } else {
+            const groupName = activeTabId.replace('content-', '');
+            entries = this.groupedEntries[groupName] || [];
+        }
+
+        // If no search term, show all entries
         if (!term) {
-            const activeTabId = activeTabContent.id;
-            if (activeTabId === 'content-All') {
-                // Re-render all entries
-                const allEntries = [];
-                Object.values(this.groupedEntries).forEach(entries => {
-                    allEntries.push(...entries);
-                });
-                this.renderColumnContent(activeTabContent, allEntries);
-            } else {
-                // Re-render specific tab content
-                const groupName = activeTabId.replace('content-', '');
-                const entries = this.groupedEntries[groupName] || [];
-                this.renderColumnContent(activeTabContent, entries);
-            }
+            this.renderColumnContent(activeTabContent, entries);
             return;
         }
 
-        // Rest of the existing search logic...
-        const cards = Array.from(activeTabContent.querySelectorAll('.card'));
         term = term.toLowerCase();
 
-        // First pass: determine visibility of rows and cards
-        const visibleCards = cards.filter(card => {
-            const rows = card.querySelectorAll('tbody tr');
-            let hasVisibleRows = false;
+        // Filter entries and their properties based on the search term
+        const filteredEntries = entries.map(entry => {
+            const [className, classData] = entry;
+            
+            // Check if class name matches
+            const classNameMatches = className.toLowerCase().includes(term);
+            
+            // Filter properties that match
+            const filteredProperties = Object.entries(classData).reduce((acc, [key, value]) => {
+                const keyMatch = key.toLowerCase().includes(term);
+                const valueMatch = String(value).toLowerCase().includes(term);
+                if (keyMatch || valueMatch) {
+                    acc[key] = value;
+                }
+                return acc;
+            }, {});
 
-            rows.forEach(row => {
-                const propertyName = row.querySelector('td:first-child').textContent.toLowerCase();
-                const propertyValue = row.querySelector('td:last-child').textContent.toLowerCase();
-                
-                const isMatch = propertyName.includes(term) || propertyValue.includes(term);
-                row.classList.toggle('d-none', !isMatch);
-                if (isMatch) hasVisibleRows = true;
-            });
+            // Return the entry only if class name matches or there are matching properties
+            if (classNameMatches || Object.keys(filteredProperties).length > 0) {
+                return [className, filteredProperties];
+            }
+            return null;
+        }).filter(Boolean); // Remove null entries
 
-            card.classList.toggle('d-none', !hasVisibleRows);
-            return hasVisibleRows;
-        });
-
-        // Get current tab name and show alert if no matches
+        // Show alert if no matches found
         const activeTabButton = document.querySelector('#odfContentContent [data-bs-toggle="pill"].active');
         const tabName = activeTabButton ? activeTabButton.textContent.trim() : 'All';
 
-        if (visibleCards.length === 0) {
+        if (filteredEntries.length === 0) {
             const alertHtml = `
                 <div class="alert alert-primary mb-3" role="alert">
                     No matches for "${term}" found in ${tabName}
@@ -1180,22 +1104,25 @@ class ODFBrowser {
             contentArea.insertAdjacentHTML('beforebegin', alertHtml);
         }
 
-        // Redistribute visible cards
-        this.renderColumnContent(activeTabContent, visibleCards);
+        // Render the filtered entries
+        this.renderColumnContent(activeTabContent, filteredEntries);
     }
 
     renderColumnContent(container, entries) {
-        const leftColumn = container.querySelector('.col-6:first-child');
-        const rightColumn = container.querySelector('.col-6:last-child');
+        const leftColumn = container.querySelector('.col-4:nth-child(1)');
+        const middleColumn = container.querySelector('.col-4:nth-child(2)');
+        const rightColumn = container.querySelector('.col-4:nth-child(3)');
         
-        if (!leftColumn || !rightColumn) return;
+        if (!leftColumn || !middleColumn || !rightColumn) return;
 
         // Clear existing content
         leftColumn.innerHTML = '';
+        middleColumn.innerHTML = '';
         rightColumn.innerHTML = '';
 
         // Calculate heights and distribute
         let leftHeight = 0;
+        let middleHeight = 0;
         let rightHeight = 0;
 
         entries.forEach(entry => {
@@ -1204,11 +1131,19 @@ class ODFBrowser {
                 (60 + 42 + (entry.querySelectorAll('tbody tr:not(.d-none)').length * 42)) :
                 (60 + 42 + (Object.keys(entry[1]).length * 42));
 
-            if (leftHeight <= rightHeight) {
+            // Find the column with the smallest height
+            const minHeight = Math.min(leftHeight, middleHeight, rightHeight);
+            
+            if (minHeight === leftHeight) {
                 leftColumn.appendChild(typeof card === 'string' ? 
                     new DOMParser().parseFromString(card, 'text/html').body.firstChild : 
                     card.cloneNode(true));
                 leftHeight += height;
+            } else if (minHeight === middleHeight) {
+                middleColumn.appendChild(typeof card === 'string' ? 
+                    new DOMParser().parseFromString(card, 'text/html').body.firstChild : 
+                    card.cloneNode(true));
+                middleHeight += height;
             } else {
                 rightColumn.appendChild(typeof card === 'string' ? 
                     new DOMParser().parseFromString(card, 'text/html').body.firstChild : 
