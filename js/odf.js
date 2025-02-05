@@ -64,10 +64,6 @@ class ODFBrowser {
         
         this.initializeEventListeners();
         
-        document.addEventListener('shown.bs.tab', (event) => {
-            this.updateBadgeStyles();
-        });
-        
         this.lastEscapePress = 0;
         
         document.addEventListener('keydown', (e) => {
@@ -84,23 +80,31 @@ class ODFBrowser {
 
             // Up/Down arrows always control ODF list regardless of focus
             if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                // Always prevent default behavior
                 e.preventDefault();
+                e.stopPropagation();
+                
+                // Force blur on any focused nav elements
+                if (document.activeElement.classList.contains('nav-link')) {
+                    document.activeElement.blur();
+                }
+                
+                // Handle ODF navigation through the browser instance
                 this.cycleODFs(e.key === 'ArrowDown' ? 1 : -1);
                 return;
             }
             
-            // Left/Right arrows - handle differently based on focus
+            // Left/Right arrows - only work when not in an input and handle nav elements
             if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                e.preventDefault();
-                const propertySearch = document.getElementById('odfPropertySearch');
-                
-                if (document.activeElement === propertySearch) {
-                    // Cycle through ODF content tabs when property search is focused
-                    this.cycleContentTabs(e.key === 'ArrowRight');
-                } else {
-                    // Default behavior - cycle through sidebar tabs
-                    this.cycleTabs(e.key === 'ArrowRight');
+                // Allow default behavior in input fields
+                if (e.target.tagName === 'INPUT') {
+                    return;
                 }
+                
+                // Prevent default for all other elements
+                e.preventDefault();
+                e.stopPropagation();
+                this.cycleTabs(e.key === 'ArrowRight');
                 return;
             }
             
@@ -185,13 +189,11 @@ class ODFBrowser {
         `;
         
         const tabsHTML = `
-            <ul class="nav nav-pills mb-3" id="categoryTabs" role="tablist">
+            <ul class="nav nav-underline mb-3 small nav-justified" id="categoryTabs" role="tablist">
                 ${Object.keys(this.data).map((category, idx) => `
                     <li class="nav-item" role="presentation">
                         <button class="nav-link ${idx === 0 ? 'active' : ''}" 
                                 id="sidebar-tab-${category}" 
-                                data-bs-toggle="pill" 
-                                data-bs-target="#list-${category}" 
                                 type="button" role="tab"
                                 tabindex="-1">
                             ${category}
@@ -255,6 +257,29 @@ class ODFBrowser {
         searchInput.addEventListener('input', () => {
             searchShortcut.style.display = searchInput.value ? 'none' : '';
         });
+
+        // Add click handlers for the nav buttons instead of using Bootstrap tabs
+        document.querySelectorAll('#categoryTabs .nav-link').forEach(navLink => {
+            navLink.addEventListener('click', () => {
+                // Remove active class from all nav links
+                document.querySelectorAll('#categoryTabs .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to clicked nav link
+                navLink.classList.add('active');
+                
+                // Show corresponding tab pane
+                const category = navLink.id.replace('sidebar-tab-', '');
+                document.querySelectorAll('#categoryContent .tab-pane').forEach(pane => {
+                    pane.classList.remove('show', 'active');
+                });
+                document.querySelector(`#list-${category}`).classList.add('show', 'active');
+                
+                // Update badge styles after changing tabs
+                this.updateBadgeStyles();
+            });
+        });
     }
     
     generateODFList(category, odfs) {
@@ -293,8 +318,8 @@ class ODFBrowser {
         document.querySelectorAll('#categoryTabs .nav-link').forEach(tab => {
             const badge = tab.querySelector('.badge');
             if (badge) {
-                badge.classList.remove('bg-dark', 'bg-secondary');
-                badge.classList.add(tab.classList.contains('active') ? 'bg-dark' : 'bg-secondary');
+                badge.classList.remove('bg-primary', 'bg-dark');
+                badge.classList.add(tab.classList.contains('active') ? 'bg-primary' : 'bg-dark');
             }
         });
     }
@@ -390,7 +415,7 @@ class ODFBrowser {
             const isActiveCategory = tab.classList.contains('active');
             
             tab.innerHTML = count > 0 ? 
-                `${category} <span class="badge ${isActiveCategory ? 'bg-dark' : 'bg-secondary'} ms-1">${count}</span>` : 
+                `${category} <div><span class="badge ${isActiveCategory ? 'bg-primary rounded-0 px-2' : 'bg-dark rounded-0 px-2'}">${count}</span></div>` : 
                 category;
         });
         
@@ -653,7 +678,7 @@ class ODFBrowser {
                 </div>
                 <div class="card-body">
                     ${hasMultipleGroups ? `
-                        <ul class="nav nav-pills mb-3 small ps-2" role="tablist">
+                        <ul class="nav nav-pills mb-3 small ps-2" role="tablist" data-bs-keyboard="false">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active py-1" 
                                         id="content-tab-All" 
@@ -718,6 +743,16 @@ class ODFBrowser {
 
         // Store grouped entries for later use
         this.groupedEntries = groupedEntries;
+
+        // Prevent arrow key navigation on content nav elements
+        document.querySelectorAll('#odfContentContent [data-bs-toggle="pill"]').forEach(navLink => {
+            navLink.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
+        });
     }
     
     formatODFDataColumn(classEntries) {
