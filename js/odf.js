@@ -1478,27 +1478,30 @@ class ODFBrowser {
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6" id="odf1-column">
                             <div class="alert alert-dark py-2">
                                 <span class="text-light fw-bold">${odf1.filename}</span>
                                 <small class="d-block text-secondary">${displayName1}</small>
                             </div>
-                            ${this.formatComparisonColumn(data1, data2, displayName1)}
+                            ${this.formatComparisonColumn(data1, data2, displayName1, 'odf1')}
                         </div>
-                        <div class="col-6">
+                        <div class="col-6" id="odf2-column">
                             <div class="alert alert-dark py-2">
                                 <span class="text-light fw-bold">${odf2.filename}</span>
                                 <small class="d-block text-secondary">${displayName2}</small>
                             </div>
-                            ${this.formatComparisonColumn(data2, data1, displayName2)}
+                            ${this.formatComparisonColumn(data2, data1, displayName2, 'odf2')}
                         </div>
                     </div>
                 </div>
             </div>
         `;
+
+        // Add hover synchronization
+        this.initializeComparisonHovers();
     }
 
-    formatComparisonColumn(data, otherData, displayName) {
+    formatComparisonColumn(data, otherData, displayName, columnId) {
         // Collect all class types from both ODFs
         const classTypes = new Set([
             ...Object.keys(data),
@@ -1527,7 +1530,7 @@ class ODFBrowser {
                 const value = classData[prop];
                 const otherValue = otherClassData[prop];
                 
-                if (value === undefined) continue; // Skip properties this ODF doesn't have
+                if (value === undefined) continue;
                 
                 // Normalize values for comparison
                 const normalizedValue = String(value).toLowerCase().trim();
@@ -1535,7 +1538,7 @@ class ODFBrowser {
                 const isDifferent = normalizedValue !== normalizedOtherValue;
                 
                 rows.push(`
-                    <tr>
+                    <tr data-property="${prop}" data-class="${classType}" data-column="${columnId}">
                         <td class="property-name ${isDifferent ? 'text-warning bg-warning bg-opacity-10' : ''}">${prop}</td>
                         <td class="${isDifferent ? 'text-warning bg-warning bg-opacity-10' : ''}">${this.formatValue(value, prop)}</td>
                     </tr>
@@ -1561,6 +1564,37 @@ class ODFBrowser {
         }
 
         return html.join('') || '<div class="alert alert-info">No data to display</div>';
+    }
+
+    initializeComparisonHovers() {
+        const rows = document.querySelectorAll('tr[data-property]');
+        
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const property = row.dataset.property;
+                const classType = row.dataset.class;
+                const columnId = row.dataset.column;
+                const otherColumnId = columnId === 'odf1' ? 'odf2' : 'odf1';
+                
+                // Add highlight to current row
+                row.classList.add('table-active');
+                
+                // Find and highlight matching row in other column
+                const matchingRow = document.querySelector(
+                    `tr[data-property="${property}"][data-class="${classType}"][data-column="${otherColumnId}"]`
+                );
+                if (matchingRow) {
+                    matchingRow.classList.add('table-active');
+                }
+            });
+            
+            row.addEventListener('mouseleave', () => {
+                // Remove highlight from all rows
+                document.querySelectorAll('tr.table-active').forEach(highlightedRow => {
+                    highlightedRow.classList.remove('table-active');
+                });
+            });
+        });
     }
 
     // New method to update URL and push state
