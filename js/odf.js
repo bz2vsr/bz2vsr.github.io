@@ -105,25 +105,11 @@ class ODFBrowser {
             }
             
             // Don't handle other keyboard shortcuts if user is typing in an input
-            if (e.target.tagName === 'INPUT' && !['Escape', 'Enter'].includes(e.key)) {
+            if (e.target.tagName === 'INPUT' && e.key !== 'Escape') {
                 return;
             }
             
             switch (e.key) {
-                case 'Enter':
-                    e.preventDefault();
-                    const activeODF = document.querySelector('.odf-item.active');
-                    if (activeODF) {
-                        const {filename, category} = activeODF.dataset;
-                        browser.displayODFData(category, filename);
-                        
-                        document.querySelectorAll('.odf-item').forEach(item => {
-                            item.classList.remove('active');
-                        });
-                        activeODF.classList.add('active');
-                    }
-                    break;
-                    
                 case 'k':
                     if (e.ctrlKey) {
                         e.preventDefault();
@@ -945,11 +931,17 @@ class ODFBrowser {
         
         document.querySelectorAll('.odf-item').forEach(item => {
             item.classList.remove('active');
+            item.blur(); // Remove focus from any previously focused item
         });
         
         const nextODF = visibleODFs[nextIndex];
         nextODF.classList.add('active');
+        nextODF.focus(); // Set focus on the newly selected item
         nextODF.scrollIntoView({ block: 'nearest' });
+        
+        // Load the data for the selected ODF
+        const {filename, category} = nextODF.dataset;
+        this.displayODFData(category, filename);
     }
 
     playAudio(url, buttonElement) {

@@ -384,7 +384,9 @@ table.table.dataTable>tbody>tr.selected>* {
 .odf-item.active {
     background-color: rgba(var(--bs-secondary-rgb), 0.6) !important;
     border-color: var(--bs-secondary-border-subtle) !important;
+    border-left: 6px solid rgb(13, 110, 253) !important;
 }
+
 
 .odf-item.active .text-secondary {
     color: rgba(255, 255, 255, 0.8) !important;
@@ -764,6 +766,11 @@ table.table.dataTable>tbody>tr.selected>* {
 #ODFGuide #toc-container {
     scrollbar-width: thin;
     scrollbar-color: rgba(13, 110, 253, 0.8) rgba(173, 181, 189, 0.08);
+}
+
+.odf-item:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 
