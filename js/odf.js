@@ -51,11 +51,64 @@ class ODFBrowser {
         
         this.loadData().then(() => {
             const urlParams = new URLSearchParams(window.location.search);
+            const compareParam = urlParams.get('compare');
             const odfToLoad = urlParams.get('odf');
             const categoryToShow = urlParams.get('cat');
             
+            if (compareParam) {
+                const [odf1, odf2] = compareParam.split(',').map(odf => odf.trim());
+                if (odf1 && odf2) {
+                    // Find exact matches for both ODFs
+                    let odf1Match = null;
+                    let odf2Match = null;
+
+                    // Search through all categories for exact matches
+                    for (const [category, odfs] of Object.entries(this.data)) {
+                        // Look for exact matches (case-insensitive)
+                        const odf1Exact = Object.keys(odfs).find(filename => 
+                            filename.toLowerCase() === `${odf1.toLowerCase()}.odf`);
+                        const odf2Exact = Object.keys(odfs).find(filename => 
+                            filename.toLowerCase() === `${odf2.toLowerCase()}.odf`);
+
+                        if (odf1Exact) {
+                            odf1Match = { category, filename: odf1Exact };
+                        }
+                        if (odf2Exact) {
+                            odf2Match = { category, filename: odf2Exact };
+                        }
+                    }
+
+                    // Show error if either ODF doesn't have an exact match
+                    if (!odf1Match || !odf2Match) {
+                        this.showError(`Could not find exact matches for ODFs to compare:
+                            ${odf1}${!odf1Match ? ' (not found)' : ''}, 
+                            ${odf2}${!odf2Match ? ' (not found)' : ''}`);
+                        return;
+                    }
+
+                    // Both ODFs found, show comparison
+                    this.compareODFs(odf1Match, odf2Match);
+                    
+                    // Update sidebar selection for first ODF
+                    const odfItem = document.querySelector(`.odf-item[data-filename="${odf1Match.filename}"]`);
+                    if (odfItem) {
+                        const categoryTab = document.querySelector(`#sidebar-tab-${odf1Match.category}`);
+                        if (categoryTab) {
+                            categoryTab.click();
+                        }
+                        odfItem.classList.add('active');
+                        odfItem.scrollIntoView({ block: 'nearest' });
+                    }
+                    return;
+                }
+            }
+            
+            // Handle single ODF loading
             if (odfToLoad) {
-                this.selectODFByName(odfToLoad, categoryToShow);
+                if (!this.selectODFByName(odfToLoad)) {
+                    this.showError(`Could not find ODF: ${odfToLoad}`);
+                    return;
+                }
             } else {
                 // Load first Vehicle ODF if no specific ODF is provided
                 this.loadFirstVehicleODF();
@@ -149,8 +202,28 @@ class ODFBrowser {
                 button.className = originalClasses;
             }, 150);
         };
+
+        // Add popstate handler for browser back/forward
+        window.addEventListener('popstate', (event) => {
+            if (event.state) {
+                if (event.state.compare) {
+                    const [odf1, odf2] = event.state.compare.split(',');
+                    this.handleCompareState(odf1, odf2);
+                } else if (event.state.odf) {
+                    this.handleODFState(event.state.odf);
+                }
+            }
+        });
     }
     
+    showError(message) {
+        this.content.innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                ${message}
+            </div>
+        `;
+    }
+
     showDefaultContent() {
         this.content.innerHTML = `
             <div class="alert alert-primary" role="alert">
@@ -475,6 +548,10 @@ class ODFBrowser {
     }
     
     displayODFData(category, filename) {
+        // Update URL before displaying ODF
+        const odfName = filename.replace('.odf', '');
+        this.updateURL({ odf: odfName });
+        
         const odfData = this.data[category][filename];
         this.selectedODF = {category, filename};
 
@@ -558,16 +635,23 @@ class ODFBrowser {
                             <small class="text-secondary">${filename}</small>
                             ${inheritanceHtml}
                         </div>
-                        <div class="position-relative" style="width: 200px;">
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" 
-                                       id="odfPropertySearch" placeholder="Filter properties..."
-                                       aria-label="Filter properties">
-                                <button class="btn btn-outline-secondary" type="button" id="clearPropertySearch">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                    </svg>
-                                </button>
+                        <div class="d-flex gap-2">
+                            <div class="position-relative" style="width: 200px;">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" 
+                                           id="odfPropertySearch" placeholder="Filter properties..."
+                                           aria-label="Filter properties">
+                                    <button class="btn btn-outline-secondary" type="button" id="clearPropertySearch">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                            <button class="btn btn-sm btn-primary" id="compareButton" type="button">
+                                Compare
+                            </button>
                             </div>
                         </div>
                     </div>
@@ -676,6 +760,38 @@ class ODFBrowser {
                 }
             }, true);
         });
+
+        // Add the comparison modal to the document if it doesn't exist
+        if (!document.getElementById('compareModal')) {
+            document.body.insertAdjacentHTML('beforeend', `
+                <div class="modal fade" id="compareModal" tabindex="-1" aria-labelledby="compareModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="compareModalLabel">Compare ODF</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-secondary mb-2">Choose an ODF to compare <strong class="text-light fw-bold">${filename}</strong> with:</p>
+                                <div class="mt-4 mb-2">
+                                    <input type="text" class="form-control bg-secondary-subtle" id="compareSearch" 
+                                           placeholder="Search for ODF to compare..." 
+                                           autocomplete="off">
+                                    <div class="dropdown-menu w-100" id="compareSearchResults"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="confirmCompare" disabled>Compare</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Initialize the comparison modal functionality
+        this.initializeCompareModal(category, filename);
     }
     
     formatODFDataColumn(classEntries) {
@@ -1210,6 +1326,274 @@ class ODFBrowser {
                 this.displayODFData('Vehicle', firstVehicleODF);
             }
         }
+    }
+
+    initializeCompareModal(originalCategory, originalFilename) {
+        const modal = new bootstrap.Modal(document.getElementById('compareModal'));
+        const compareButton = document.getElementById('compareButton');
+        const searchInput = document.getElementById('compareSearch');
+        const resultsContainer = document.getElementById('compareSearchResults');
+        const confirmButton = document.getElementById('confirmCompare');
+        
+        let selectedODF = null;
+
+        // Show modal when Compare button is clicked
+        compareButton.addEventListener('click', () => {
+            searchInput.value = '';
+            confirmButton.disabled = true;
+            selectedODF = null;
+            resultsContainer.innerHTML = '';
+            modal.show();
+        });
+
+        // Handle search input
+        searchInput.addEventListener('input', debounce((e) => {
+            const term = e.target.value.toLowerCase();
+            if (!term) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            const matches = [];
+            for (const [category, odfs] of Object.entries(this.data)) {
+                for (const [filename, data] of Object.entries(odfs)) {
+                    const displayName = data.GameObjectClass?.unitName || data.WeaponClass?.wpnName;
+                    const searchableText = [
+                        filename.toLowerCase(),
+                        filename.toLowerCase().replace('.odf', ''),
+                        (displayName || '').toLowerCase()
+                    ].join(' ');
+
+                    if (searchableText.includes(term)) {
+                        matches.push({ category, filename, displayName });
+                    }
+                }
+            }
+
+            // Sort matches by relevance
+            matches.sort((a, b) => {
+                const aName = a.displayName || a.filename;
+                const bName = b.displayName || b.filename;
+                return aName.localeCompare(bName);
+            });
+
+            // Show results dropdown
+            resultsContainer.innerHTML = matches.map(match => `
+                <button class="dropdown-item d-flex justify-content-between align-items-center" 
+                        data-category="${match.category}" 
+                        data-filename="${match.filename}">
+                    <span>
+                        ${match.displayName ? 
+                            `<strong>${match.displayName}</strong> <small class="text-secondary">${match.filename}</small>` : 
+                            match.filename}
+                    </span>
+                    <small class="text-secondary">${match.category}</small>
+                </button>
+            `).join('');
+
+            resultsContainer.classList.add('show');
+        }, 300));
+
+        // Handle result selection
+        resultsContainer.addEventListener('click', (e) => {
+            const item = e.target.closest('.dropdown-item');
+            if (!item) return;
+
+            selectedODF = {
+                category: item.dataset.category,
+                filename: item.dataset.filename
+            };
+
+            searchInput.value = item.dataset.filename.replace('.odf', '');
+            resultsContainer.classList.remove('show');
+            confirmButton.disabled = false;
+        });
+
+        // Handle compare confirmation
+        confirmButton.addEventListener('click', () => {
+            if (!selectedODF) return;
+            
+            this.compareODFs(
+                { category: originalCategory, filename: originalFilename },
+                selectedODF
+            );
+            
+            modal.hide();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !resultsContainer.contains(e.target)) {
+                resultsContainer.classList.remove('show');
+            }
+        });
+    }
+
+    compareODFs(odf1, odf2) {
+        // Update URL before showing comparison
+        const odf1Name = odf1.filename.replace('.odf', '');
+        const odf2Name = odf2.filename.replace('.odf', '');
+        this.updateURL({ compare: `${odf1Name},${odf2Name}` });
+        
+        const data1 = this.data[odf1.category][odf1.filename];
+        const data2 = this.data[odf2.category][odf2.filename];
+        
+        // Get display names for both ODFs
+        const displayName1 = data1.GameObjectClass?.unitName || data1.WeaponClass?.wpnName || odf1.filename;
+        const displayName2 = data2.GameObjectClass?.unitName || data2.WeaponClass?.wpnName || odf2.filename;
+
+        // Update the content header to show comparison
+        this.content.innerHTML = `
+            <div class="card">
+                <div class="card-header bg-secondary-subtle">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0">Comparing ODFs</h3>
+                            <div class="text-secondary">
+                                ${displayName1} (${odf1.filename}) vs ${displayName2} (${odf2.filename})
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="
+                                window.browser.updateURL({ odf: '${odf1.filename.replace('.odf', '')}' });
+                                window.browser.displayODFData('${odf1.category}', '${odf1.filename}')
+                            ">
+                                Exit Comparison
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="alert alert-dark py-2">
+                                <span class="text-light fw-bold">${odf1.filename}</span>
+                                <small class="d-block text-secondary">${displayName1}</small>
+                            </div>
+                            ${this.formatComparisonColumn(data1, data2, displayName1)}
+                        </div>
+                        <div class="col-6">
+                            <div class="alert alert-dark py-2">
+                                <span class="text-light fw-bold">${odf2.filename}</span>
+                                <small class="d-block text-secondary">${displayName2}</small>
+                            </div>
+                            ${this.formatComparisonColumn(data2, data1, displayName2)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    formatComparisonColumn(data, otherData, displayName) {
+        // Collect all class types from both ODFs
+        const classTypes = new Set([
+            ...Object.keys(data),
+            ...Object.keys(otherData)
+        ].filter(key => key !== 'inheritanceChain'));
+
+        const html = [];
+        
+        for (const classType of classTypes) {
+            const classData = data[classType] || {};
+            const otherClassData = otherData[classType] || {};
+            
+            // Skip empty classes
+            if (!Object.keys(classData).length && !Object.keys(otherClassData).length) continue;
+
+            // Get all properties from both ODFs for this class
+            const allProperties = new Set([
+                ...Object.keys(classData),
+                ...Object.keys(otherClassData)
+            ]);
+
+            const rows = [];
+            
+            // Add properties in sorted order
+            for (const prop of Array.from(allProperties).sort()) {
+                const value = classData[prop];
+                const otherValue = otherClassData[prop];
+                
+                if (value === undefined) continue; // Skip properties this ODF doesn't have
+                
+                // Normalize values for comparison
+                const normalizedValue = String(value).toLowerCase().trim();
+                const normalizedOtherValue = String(otherValue).toLowerCase().trim();
+                const isDifferent = normalizedValue !== normalizedOtherValue;
+                
+                rows.push(`
+                    <tr>
+                        <td class="property-name ${isDifferent ? 'text-warning bg-warning bg-opacity-10' : ''}">${prop}</td>
+                        <td class="${isDifferent ? 'text-warning bg-warning bg-opacity-10' : ''}">${this.formatValue(value, prop)}</td>
+                    </tr>
+                `);
+            }
+
+            if (rows.length) {
+                html.push(`
+                    <div class="card mb-3">
+                        <div class="card-header py-2 bg-secondary-subtle">
+                            <h5 class="card-title mb-0">${classType}</h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover mb-0">
+                                <tbody>
+                                    ${rows.join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `);
+            }
+        }
+
+        return html.join('') || '<div class="alert alert-info">No data to display</div>';
+    }
+
+    // New method to update URL and push state
+    updateURL(params) {
+        const url = new URL(window.location);
+        
+        // Clear existing parameters
+        url.searchParams.delete('odf');
+        url.searchParams.delete('compare');
+        url.searchParams.delete('cat');
+        
+        // Add new parameters
+        Object.entries(params).forEach(([key, value]) => {
+            url.searchParams.set(key, value);
+        });
+        
+        // Get the URL string and replace encoded comma with actual comma
+        let urlString = url.toString().replaceAll('%2C', ',');
+        
+        // Push new state to history
+        window.history.pushState(params, '', urlString);
+    }
+
+    // New methods to handle state changes
+    handleCompareState(odf1, odf2) {
+        // Find categories for both ODFs
+        let odf1Match = null;
+        let odf2Match = null;
+
+        for (const [category, odfs] of Object.entries(this.data)) {
+            const odf1Exact = Object.keys(odfs).find(filename => 
+                filename.toLowerCase() === `${odf1.toLowerCase()}.odf`);
+            const odf2Exact = Object.keys(odfs).find(filename => 
+                filename.toLowerCase() === `${odf2.toLowerCase()}.odf`);
+
+            if (odf1Exact) odf1Match = { category, filename: odf1Exact };
+            if (odf2Exact) odf2Match = { category, filename: odf2Exact };
+        }
+
+        if (odf1Match && odf2Match) {
+            this.compareODFs(odf1Match, odf2Match);
+        }
+    }
+
+    handleODFState(odfName) {
+        this.selectODFByName(odfName);
     }
 }
 
