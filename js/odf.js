@@ -47,6 +47,33 @@ class ODFBrowser {
         this.sidebar = document.getElementById('odfSidebarContent');
         this.content = document.getElementById('odfContentContent');
         
+        // Add the comparison modal to the document
+        document.body.insertAdjacentHTML('beforeend', `
+            <div class="modal fade" id="compareModal" tabindex="-1" aria-labelledby="compareModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="compareModalLabel">Compare ODF</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-secondary mb-2">Choose an ODF to compare with:</p>
+                            <div class="mt-4 mb-2">
+                                <input type="text" class="form-control bg-secondary-subtle" id="compareSearch" 
+                                       placeholder="Search for ODF to compare..." 
+                                       autocomplete="off">
+                                <div class="dropdown-menu w-100" id="compareSearchResults"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="confirmCompare" disabled>Compare</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+        
         this.showDefaultContent();
         
         this.loadData().then(() => {
@@ -761,33 +788,19 @@ class ODFBrowser {
             }, true);
         });
 
-        // Add the comparison modal to the document if it doesn't exist
-        if (!document.getElementById('compareModal')) {
-            document.body.insertAdjacentHTML('beforeend', `
-                <div class="modal fade" id="compareModal" tabindex="-1" aria-labelledby="compareModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="compareModalLabel">Compare ODF</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-secondary mb-2">Choose an ODF to compare <strong class="text-light fw-bold">${filename}</strong> with:</p>
-                                <div class="mt-4 mb-2">
-                                    <input type="text" class="form-control bg-secondary-subtle" id="compareSearch" 
-                                           placeholder="Search for ODF to compare..." 
-                                           autocomplete="off">
-                                    <div class="dropdown-menu w-100" id="compareSearchResults"></div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary" id="confirmCompare" disabled>Compare</button>
-                            </div>
-                        </div>
-                    </div>
+        // Update the compare modal content with the new ODF
+        const compareModal = document.getElementById('compareModal');
+        if (compareModal) {
+            const modalBody = compareModal.querySelector('.modal-body');
+            modalBody.innerHTML = `
+                <p class="text-secondary mb-2">Choose an ODF to compare <strong class="text-light fw-bold">${filename}</strong> with:</p>
+                <div class="mt-4 mb-2">
+                    <input type="text" class="form-control bg-secondary-subtle" id="compareSearch" 
+                           placeholder="Search for ODF to compare..." 
+                           autocomplete="off">
+                    <div class="dropdown-menu w-100" id="compareSearchResults"></div>
                 </div>
-            `);
+            `;
         }
 
         // Initialize the comparison modal functionality
