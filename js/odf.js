@@ -1476,21 +1476,25 @@ class ODFBrowser {
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
+                <div class="card-body p-0">
+                    <div class="row g-0">
                         <div class="col-6" id="odf1-column">
-                            <div class="alert alert-dark py-2">
+                            <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
                                 <span class="text-light fw-bold">${odf1.filename}</span>
                                 <small class="d-block text-secondary">${displayName1}</small>
                             </div>
-                            ${this.formatComparisonColumn(data1, data2, displayName1, 'odf1')}
+                            <div class="p-3">
+                                ${this.formatComparisonColumn(data1, data2, displayName1, 'odf1')}
+                            </div>
                         </div>
                         <div class="col-6" id="odf2-column">
-                            <div class="alert alert-dark py-2">
+                            <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
                                 <span class="text-light fw-bold">${odf2.filename}</span>
                                 <small class="d-block text-secondary">${displayName2}</small>
                             </div>
-                            ${this.formatComparisonColumn(data2, data1, displayName2, 'odf2')}
+                            <div class="p-3">
+                                ${this.formatComparisonColumn(data2, data1, displayName2, 'odf2')}
+                            </div>
                         </div>
                     </div>
                 </div>
