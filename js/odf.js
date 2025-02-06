@@ -805,6 +805,10 @@ class ODFBrowser {
 
         // Initialize the comparison modal functionality
         this.initializeCompareModal(category, filename);
+
+        // After rendering content
+        this.initializeComparisonHovers();
+        this.equalizeCardHeights();
     }
     
     formatODFDataColumn(classEntries) {
@@ -1467,6 +1471,18 @@ class ODFBrowser {
                             </div>
                         </div>
                         <div class="d-flex gap-2">
+                            <div class="position-relative" style="width: 200px;">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" 
+                                           id="odfPropertySearch" placeholder="Filter properties..."
+                                           aria-label="Filter properties">
+                                    <button class="btn btn-outline-secondary" type="button" id="clearPropertySearch">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                             <button class="btn btn-sm btn-outline-secondary" onclick="
                                 window.browser.updateURL({ odf: '${odf1.filename.replace('.odf', '')}' });
                                 window.browser.displayODFData('${odf1.category}', '${odf1.filename}')
@@ -1476,11 +1492,11 @@ class ODFBrowser {
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body p-0" id="comparisonContent">
                     <div class="row g-0">
                         <div class="col-6" id="odf1-column">
                             <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
-                                <span class="text-light fw-bold">${odf1.filename}</span>
+                                <span class="text-light">${odf1.filename}</span>
                                 <small class="d-block text-secondary">${displayName1}</small>
                             </div>
                             <div class="p-3">
@@ -1489,7 +1505,7 @@ class ODFBrowser {
                         </div>
                         <div class="col-6" id="odf2-column">
                             <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
-                                <span class="text-light fw-bold">${odf2.filename}</span>
+                                <span class="text-light">${odf2.filename}</span>
                                 <small class="d-block text-secondary">${displayName2}</small>
                             </div>
                             <div class="p-3">
@@ -1501,8 +1517,156 @@ class ODFBrowser {
             </div>
         `;
 
+        // Store comparison data for filtering
+        this.comparisonData = { odf1, odf2, data1, data2, displayName1, displayName2 };
+
+        // Initialize search functionality
+        const searchInput = document.getElementById('odfPropertySearch');
+        const clearButton = document.getElementById('clearPropertySearch');
+
+        searchInput.addEventListener('input', (e) => {
+            this.filterComparisonProperties(e.target.value);
+        });
+
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            this.filterComparisonProperties('');
+        });
+
         // Add hover synchronization
         this.initializeComparisonHovers();
+
+        // After rendering content
+        this.equalizeCardHeights();
+    }
+
+    filterComparisonProperties(term) {
+        const { odf1, odf2, data1, data2, displayName1, displayName2 } = this.comparisonData;
+        const comparisonContent = document.getElementById('comparisonContent');
+        
+        if (!comparisonContent) return;
+
+        // Remove any existing "no matches" alert, but not the column headers
+        const existingAlert = comparisonContent.querySelector('.alert-primary:not(.position-sticky)');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+
+        // Function to update content and ensure height equalization
+        const updateContent = (content) => {
+            comparisonContent.innerHTML = content;
+            this.initializeComparisonHovers();
+            
+            // Use requestAnimationFrame to ensure DOM is painted
+            requestAnimationFrame(() => {
+                // Double RAF to ensure a full render cycle
+                requestAnimationFrame(() => {
+                    this.equalizeCardHeights();
+                });
+            });
+        };
+
+        if (!term) {
+            // Reset the comparison view
+            updateContent(`
+                <div class="row g-0">
+                    <div class="col-6" id="odf1-column">
+                        <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
+                            <span class="text-light">${odf1.filename}</span>
+                            <small class="d-block text-secondary">${displayName1}</small>
+                        </div>
+                        <div class="p-3">
+                            ${this.formatComparisonColumn(data1, data2, displayName1, 'odf1')}
+                        </div>
+                    </div>
+                    <div class="col-6" id="odf2-column">
+                        <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
+                            <span class="text-light">${odf2.filename}</span>
+                            <small class="d-block text-secondary">${displayName2}</small>
+                        </div>
+                        <div class="p-3">
+                            ${this.formatComparisonColumn(data2, data1, displayName2, 'odf2')}
+                        </div>
+                    </div>
+                </div>
+            `);
+            return;
+        }
+
+        term = term.toLowerCase();
+
+        // Filter the data for both ODFs
+        const filteredData1 = this.filterODFData(data1, term);
+        const filteredData2 = this.filterODFData(data2, term);
+
+        let content = '';
+        
+        // Show alert if no matches found
+        if (Object.keys(filteredData1).length === 0 && Object.keys(filteredData2).length === 0) {
+            content = `
+                <div class="alert alert-primary m-3" role="alert">
+                    No matches for "${term}" found in either ODF
+                </div>
+            `;
+        }
+
+        // Update the comparison view with filtered data
+        content += `
+            <div class="row g-0">
+                <div class="col-6" id="odf1-column">
+                    <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
+                        <span class="text-light">${odf1.filename}</span>
+                        <small class="d-block text-secondary">${displayName1}</small>
+                    </div>
+                    <div class="p-3">
+                        ${this.formatComparisonColumn(filteredData1, filteredData2, displayName1, 'odf1')}
+                    </div>
+                </div>
+                <div class="col-6" id="odf2-column">
+                    <div class="alert alert-primary py-2 rounded-0 position-sticky top-0 mb-0 z-1">
+                        <span class="text-light">${odf2.filename}</span>
+                        <small class="d-block text-secondary">${displayName2}</small>
+                    </div>
+                    <div class="p-3">
+                        ${this.formatComparisonColumn(filteredData2, filteredData1, displayName2, 'odf2')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        updateContent(content);
+    }
+
+    filterODFData(data, term) {
+        const filtered = {};
+        
+        for (const [className, classData] of Object.entries(data)) {
+            if (className === 'inheritanceChain') continue;
+            
+            const filteredProperties = {};
+            let hasMatch = false;
+
+            // Check if class name matches
+            if (className.toLowerCase().includes(term)) {
+                filteredProperties = {...classData};
+                hasMatch = true;
+            } else {
+                // Check properties
+                for (const [key, value] of Object.entries(classData)) {
+                    if (key.toLowerCase().includes(term) || 
+                        String(value).toLowerCase().includes(term)) {
+                        filteredProperties[key] = value;
+                        hasMatch = true;
+                    }
+                }
+            }
+
+            if (hasMatch) {
+                filtered[className] = filteredProperties;
+            }
+        }
+
+        return filtered;
     }
 
     formatComparisonColumn(data, otherData, displayName, columnId) {
@@ -1518,40 +1682,83 @@ class ODFBrowser {
             const classData = data[classType] || {};
             const otherClassData = otherData[classType] || {};
             
-            // Skip empty classes
             if (!Object.keys(classData).length && !Object.keys(otherClassData).length) continue;
 
-            // Get all properties from both ODFs for this class
             const allProperties = new Set([
                 ...Object.keys(classData),
                 ...Object.keys(otherClassData)
             ]);
 
-            const rows = [];
-            
-            // Add properties in sorted order
-            for (const prop of Array.from(allProperties).sort()) {
+            const propertyGroups = {
+                different: [],
+                same: [],
+                unique: []
+            };
+
+            // Categorize properties
+            for (const prop of allProperties) {
                 const value = classData[prop];
                 const otherValue = otherClassData[prop];
                 
                 if (value === undefined) continue;
-                
-                // Normalize values for comparison
-                const normalizedValue = String(value).toLowerCase().trim();
-                const normalizedOtherValue = String(otherValue).toLowerCase().trim();
-                const isDifferent = normalizedValue !== normalizedOtherValue;
-                
-                rows.push(`
-                    <tr data-property="${prop}" data-class="${classType}" data-column="${columnId}">
-                        <td class="property-name ${isDifferent ? 'text-warning bg-warning bg-opacity-10' : ''}">${prop}</td>
-                        <td class="${isDifferent ? 'text-warning bg-warning bg-opacity-10' : ''}">${this.formatValue(value, prop)}</td>
-                    </tr>
-                `);
+
+                if (otherValue === undefined) {
+                    propertyGroups.unique.push({
+                        prop,
+                        value,
+                        type: 'unique'
+                    });
+                } else {
+                    const normalizedValue = String(value).toLowerCase().trim();
+                    const normalizedOtherValue = String(otherValue).toLowerCase().trim();
+                    
+                    if (normalizedValue !== normalizedOtherValue) {
+                        propertyGroups.different.push({
+                            prop,
+                            value,
+                            type: 'different'
+                        });
+                    } else {
+                        propertyGroups.same.push({
+                            prop,
+                            value,
+                            type: 'same'
+                        });
+                    }
+                }
             }
+
+            // Sort each group
+            for (const group of Object.values(propertyGroups)) {
+                group.sort((a, b) => a.prop.localeCompare(b.prop));
+            }
+
+            const rows = [];
+            
+            // Helper to create a row (simplified without placeholder handling)
+            const createRow = (prop, value, type) => {
+                const classes = {
+                    different: 'text-warning bg-warning bg-opacity-10',
+                    unique: 'text-info bg-info bg-opacity-10',
+                    same: ''
+                };
+                
+                return `
+                    <tr data-property="${prop}" data-class="${classType}" data-column="${columnId}">
+                        <td class="property-name ${classes[type]}">${prop}</td>
+                        <td class="${classes[type]}">${this.formatValue(value, prop)}</td>
+                    </tr>
+                `;
+            };
+
+            // Add rows in order: different, same, unique
+            propertyGroups.different.forEach(item => rows.push(createRow(item.prop, item.value, item.type)));
+            propertyGroups.same.forEach(item => rows.push(createRow(item.prop, item.value, item.type)));
+            propertyGroups.unique.forEach(item => rows.push(createRow(item.prop, item.value, item.type)));
 
             if (rows.length) {
                 html.push(`
-                    <div class="card mb-3">
+                    <div class="card mb-3" data-class-type="${classType}">
                         <div class="card-header py-2 bg-secondary-subtle">
                             <h5 class="card-title mb-0">${classType}</h5>
                         </div>
@@ -1645,6 +1852,36 @@ class ODFBrowser {
 
     handleODFState(odfName) {
         this.selectODFByName(odfName);
+    }
+
+    // Add this new method to handle card height equalization
+    equalizeCardHeights() {
+        // Get all class types that exist in either column
+        const classTypes = new Set([
+            ...Array.from(document.querySelectorAll('#odf1-column .card')).map(card => card.dataset.classType),
+            ...Array.from(document.querySelectorAll('#odf2-column .card')).map(card => card.dataset.classType)
+        ]);
+
+        // For each class type, equalize the card heights
+        classTypes.forEach(classType => {
+            const card1 = document.querySelector(`#odf1-column .card[data-class-type="${classType}"]`);
+            const card2 = document.querySelector(`#odf2-column .card[data-class-type="${classType}"]`);
+            
+            if (card1 && card2) {
+                // Reset heights first
+                card1.style.height = '';
+                card2.style.height = '';
+                
+                // Get natural heights
+                const height1 = card1.offsetHeight;
+                const height2 = card2.offsetHeight;
+                
+                // Set both cards to the larger height
+                const maxHeight = Math.max(height1, height2);
+                card1.style.height = `${maxHeight}px`;
+                card2.style.height = `${maxHeight}px`;
+            }
+        });
     }
 }
 
