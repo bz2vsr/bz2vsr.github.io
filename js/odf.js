@@ -73,6 +73,14 @@ class ODFBrowser {
                 </div>
             </div>
         `);
+
+        // Initialize build tree
+        this.initializeBuildTree();
+        
+        // Add build tree button handler
+        document.getElementById('showBuildTree').addEventListener('click', () => {
+            this.showBuildTree();
+        });
         
         this.showDefaultContent();
         
@@ -1883,6 +1891,332 @@ class ODFBrowser {
                 card2.style.height = `${maxHeight}px`;
             }
         });
+    }
+
+    // Add new method to ODFBrowser class
+    initializeBuildTree() {
+        // Create and add the modal
+        document.body.insertAdjacentHTML('beforeend', `
+            <div class="modal fade" id="buildTreeModal" tabindex="-1" data-bs-backdrop="static">
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content bg-dark">
+                        <div class="modal-header bg-secondary-subtle border-secondary">
+                            <h5 class="modal-title">Faction Build Trees</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body bg-secondary-subtle p-4" style="height: calc(100vh - 70px); overflow: hidden;">
+                            <div class="container-fluid h-100">
+                                <div class="row h-100">
+                                    <div class="col-md-4 h-100 border-end border-secondary">
+                                        <div class="d-flex flex-column h-100">
+                                            <h4 class="mb-3">ISDF</h4>
+                                            <div class="flex-grow-1 overflow-auto" id="isdfBuildTree"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 h-100 border-end border-secondary">
+                                        <div class="d-flex flex-column h-100">
+                                            <h4 class="mb-3">Hadean</h4>
+                                            <div class="flex-grow-1 overflow-auto" id="hadeanBuildTree"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 h-100">
+                                        <div class="d-flex flex-column h-100">
+                                            <h4 class="mb-3">Scion</h4>
+                                            <div class="flex-grow-1 overflow-auto" id="scionBuildTree"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+
+        // Initialize the modal
+        const modalElement = document.getElementById('buildTreeModal');
+        this.buildTreeModal = new bootstrap.Modal(modalElement);
+
+        // Load all faction trees when modal is shown
+        modalElement.addEventListener('shown.bs.modal', () => {
+            this.generateBuildTree('ibrecy_vsr', document.getElementById('isdfBuildTree'));
+            this.generateBuildTree('ebrecym_vsr', document.getElementById('hadeanBuildTree'));
+            this.generateBuildTree('fbrecy_vsr', document.getElementById('scionBuildTree'));
+        });
+    }
+
+    showBuildTree() {
+        this.buildTreeModal.show();
+    }
+
+    generateBuildTree(odfName, container) {
+        // Find the ODF data
+        let odfData = null;
+        let category = null;
+        let filename = null;
+
+        // Search through categories to find the ODF
+        for (const [cat, odfs] of Object.entries(this.data)) {
+            const exactMatch = Object.keys(odfs).find(fname => 
+                fname.toLowerCase() === `${odfName.toLowerCase()}.odf` ||
+                fname.toLowerCase() === odfName.toLowerCase());
+            if (exactMatch) {
+                odfData = odfs[exactMatch];
+                category = cat;
+                filename = exactMatch;
+                break;
+            }
+        }
+
+        if (!odfData) {
+            container.innerHTML = `<div class="alert alert-danger d-inline-block py-2">Could not find ODF: ${odfName}</div>`;
+            return;
+        }
+
+        // Extract relevant properties
+        const properties = this.extractODFProperties(odfData, category);
+        
+        // Find all child ODFs
+        const children = this.findChildODFs(odfData, category, filename);
+
+        // Create the tree node
+        const node = document.createElement('div');
+        node.className = 'build-tree-node mb-3';
+        
+        // Check if this ODF should have collapsible children
+        const isBaseODF = filename.toLowerCase().includes('brecy');  // This will match ibrecy, ebrecy, fbrecy
+        const hasCollapsibleChildren = (
+            (odfData.ConstructionRigClass || odfData.FactoryClass || odfData.ArmoryClass || isBaseODF) && 
+            children.length > 0
+        );
+
+        // Generate unique ID for both collapses
+        const collapseId = `collapse-${filename.replace(/\W/g, '')}`;
+        const childrenCollapseId = `children-${filename.replace(/\W/g, '')}`;
+        
+        node.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+                <div class="alert alert-${this.getCategoryColor(category, odfData)} d-inline-block ${category === 'Weapon' ? 'p-0 px-2' : 'py-2'}" 
+                     data-category="${category}" 
+                     data-filename="${filename}"
+                     data-bs-toggle="collapse" 
+                     data-bs-target="#${collapseId}" 
+                     aria-expanded="false"
+                     role="alert"
+                     style="cursor: pointer; margin-bottom: 0.5rem;">
+                    <div class="d-flex align-items-center gap-2">
+                        ${properties.unitName ? `<span class="fw-bold">${properties.unitName}</span>` : ''}
+                        <small class="opacity-75">${filename.replace('.odf', '')}</small>
+                    </div>
+                    <div class="collapse" id="${collapseId}"
+                         data-bs-parent="#${childrenCollapseId}">
+                        <div class="pt-2 border-top border-opacity-25 mt-2 pb-2">
+                            <div class="build-tree-properties small mb-2">
+                                ${this.formatTreeProperties(properties)}
+                            </div>
+                            <button class="btn btn-sm btn-${this.getCategoryColor(category, odfData)}" onclick="
+                                window.browser.buildTreeModal.hide();
+                                window.browser.displayODFData('${category}', '${filename}');
+                                
+                                // Update sidebar selection
+                                document.querySelectorAll('.odf-item').forEach(item => {
+                                    item.classList.remove('active');
+                                });
+                                const categoryTab = document.querySelector('#sidebar-tab-${category}');
+                                if (categoryTab) {
+                                    categoryTab.click();
+                                }
+                                const odfItem = document.querySelector('.odf-item[data-filename=\\'${filename}\\']');
+                                if (odfItem) {
+                                    odfItem.classList.add('active');
+                                    odfItem.scrollIntoView({ block: 'nearest' });
+                                }
+                            ">
+                                View Full Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                ${hasCollapsibleChildren ? `
+                    <button class="btn btn-link btn-sm text-decoration-none p-0 ${isBaseODF ? '' : 'collapsed'}" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#${childrenCollapseId}" 
+                            aria-expanded="${isBaseODF ? 'true' : 'false'}"
+                            style="margin-top: -9px">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </button>
+                ` : ''}
+            </div>
+            ${children.length ? `<div class="build-tree-children ps-4 mt-2 border-start border-secondary collapse ${!hasCollapsibleChildren || isBaseODF ? 'show' : ''}" id="${childrenCollapseId}"></div>` : ''}
+        `;
+
+        // Add to container
+        container.innerHTML = '';
+        container.appendChild(node);
+
+        // Process children (same as before)
+        if (children.length) {
+            const childContainer = node.querySelector('.build-tree-children');
+            const processedODFs = new Set();
+            
+            const processChildren = (childList, container) => {
+                childList.forEach(child => {
+                    if (processedODFs.has(child)) return;
+                    processedODFs.add(child);
+                    
+                    // Skip processing if this is a weapon child of a vehicle
+                    let childCategory = null;
+                    for (const [cat, odfs] of Object.entries(this.data)) {
+                        if (Object.keys(odfs).find(fname => 
+                            fname.toLowerCase() === `${child.toLowerCase()}.odf` ||
+                            fname.toLowerCase() === child.toLowerCase())) {
+                            childCategory = cat;
+                            break;
+                        }
+                    }
+                    
+                    // Skip if parent is vehicle and child is weapon
+                    if (!(category === 'Vehicle' && childCategory === 'Weapon')) {
+                        const childDiv = document.createElement('div');
+                        container.appendChild(childDiv);
+                        this.generateBuildTree(child, childDiv);
+                    }
+                });
+            };
+
+            processChildren(children, childContainer);
+        }
+    }
+
+    extractODFProperties(odfData, category) {
+        const properties = {};
+        
+        // Extract common properties
+        const gameObj = odfData.GameObjectClass || {};
+        properties.unitName = gameObj.unitName;
+        properties.maxHealth = gameObj.maxHealth;
+        properties.scrapValue = gameObj.scrapValue;
+        properties.scrapCost = gameObj.scrapCost;
+        properties.armorClass = gameObj.armorClass;
+
+        // Category-specific properties
+        if (category === 'Vehicle') {
+            const craftClass = odfData.CraftClass || {};
+            properties.customCost = gameObj.customCost;
+            properties.buildTime = gameObj.buildTime;
+            properties.customTime = gameObj.customTime;
+            properties.maxAmmo = gameObj.maxAmmo;
+            properties.isAssault = gameObj.isAssault;
+            properties.engageRange = craftClass.engageRange;
+            properties.topSpeed = craftClass.topSpeed;
+            
+            // Collect weapon names
+            const weapons = [];
+            for (let i = 1; i <= 10; i++) {
+                const weapon = gameObj[`weaponName${i}`];
+                if (weapon) weapons.push(weapon);
+            }
+            if (weapons.length) properties.weapons = weapons;
+        }
+        else if (category === 'Building') {
+            properties.powerCost = gameObj.powerCost;
+            properties.buildSupport = gameObj.buildSupport;
+            properties.buildRequire = gameObj.buildRequire;
+            if (odfData.PoweredBuildingClass) {
+                properties.powerName = odfData.PoweredBuildingClass.powerName;
+            }
+        }
+
+        return properties;
+    }
+
+    findChildODFs(odfData, category, filename) {
+        const children = new Set();
+        
+        // Helper to add child if it exists
+        const addChild = (name) => {
+            if (!name) return;
+            children.add(name);  // Use exact name as-is
+        };
+
+        // Check FactoryClass buildItems
+        if (odfData.FactoryClass) {
+            for (let i = 1; i <= 10; i++) {
+                addChild(odfData.FactoryClass[`buildItem${i}`]);
+            }
+        }
+
+        // Check ConstructionRigClass buildItems
+        if (odfData.ConstructionRigClass) {
+            for (let i = 1; i <= 10; i++) {
+                addChild(odfData.ConstructionRigClass[`buildItem${i}`]);
+            }
+        }
+
+        // Check weapon references
+        const gameObj = odfData.GameObjectClass || {};
+        for (let i = 1; i <= 10; i++) {
+            addChild(gameObj[`weaponName${i}`]);
+        }
+
+        // Check ArmoryGroup buildItems
+        for (let group = 1; group <= 5; group++) {
+            const groupClass = odfData[`ArmoryGroup${group}`];
+            if (groupClass) {
+                for (let i = 1; i <= 10; i++) {
+                    addChild(groupClass[`buildItem${i}`]);
+                }
+            }
+        }
+
+        // Check for factory upgrades
+        if (gameObj.upgradeName) {
+            // Special handling for Xenomator and Kiln upgrades
+            if (gameObj.baseName?.toLowerCase() === 'ebfact' || // Hadean Xenomator
+                gameObj.baseName?.toLowerCase() === 'fbkiln' || // Scion Kiln
+                filename.toLowerCase().includes('fbkiln_vsr')) { // Additional check for Scion Kiln
+                addChild(gameObj.upgradeName);
+            }
+        }
+
+        return Array.from(children);
+    }
+
+    getCategoryColor(category, odfData) {
+        const colors = {
+            'Vehicle': 'primary',
+            'Building': 'warning',
+            'Weapon': 'secondary',
+            'Powerup': 'success',
+            'Pilot': 'info'
+        };
+        return colors[category] || 'secondary';
+    }
+
+    formatTreeProperties(properties) {
+        const html = [];
+        
+        for (const [key, value] of Object.entries(properties)) {
+            if (!value || key === 'unitName') continue;
+            
+            if (key === 'weapons') {
+                html.push(`
+                    <div class="weapons-list mt-2">
+                        ${value.map(weapon => `
+                            <div class="alert alert-secondary d-inline-block p-0 px-2 me-1 mb-1">
+                                ${weapon.replace('.odf', '')}
+                            </div>
+                        `).join('')}
+                    </div>
+                `);
+            } else {
+                html.push(`<div><span class="opacity-75">${key}:</span> ${value}</div>`);
+            }
+        }
+        
+        return html.join('');
     }
 }
 

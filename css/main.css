@@ -121,24 +121,36 @@ body {
   background: #633aaf;
 }
 
-.dt-scroll-body::-webkit-scrollbar {
-  width: 10px;
-  cursor: pointer;
+.dt-scroll-body::-webkit-scrollbar,
+#isdfBuildTree::-webkit-scrollbar,
+#hadeanBuildTree::-webkit-scrollbar,
+#scionBuildTree::-webkit-scrollbar {
+    width: 10px;
+    cursor: pointer;
 }
 
-.dt-scroll-body::-webkit-scrollbar-track {
-  background: rgba(173, 181, 189, 0.08);
-  border-radius: 4px;
+.dt-scroll-body::-webkit-scrollbar-track,
+#isdfBuildTree::-webkit-scrollbar-track,
+#hadeanBuildTree::-webkit-scrollbar-track,
+#scionBuildTree::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 4px;
 }
 
-.dt-scroll-body::-webkit-scrollbar-thumb {
-  background: rgba(13, 110, 253, 0.8);
-  border-radius: 4px;
-  cursor: pointer;
+.dt-scroll-body::-webkit-scrollbar-thumb,
+#isdfBuildTree::-webkit-scrollbar-thumb,
+#hadeanBuildTree::-webkit-scrollbar-thumb,
+#scionBuildTree::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.dt-scroll-body::-webkit-scrollbar-thumb:hover {
-  background: rgba(13, 110, 253, 1.0);
+.dt-scroll-body::-webkit-scrollbar-thumb:hover,
+#isdfBuildTree::-webkit-scrollbar-thumb:hover,
+#hadeanBuildTree::-webkit-scrollbar-thumb:hover,
+#scionBuildTree::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
 }
 
 /***********************************/
@@ -771,6 +783,101 @@ table.table.dataTable>tbody>tr.selected>* {
 .odf-item:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+/* Build Tree Styles */
+.build-tree-card {
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.build-tree-card:hover {
+    border-color: var(--bs-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.build-tree-children {
+    position: relative;
+}
+
+.build-tree-children::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.build-tree-node {
+    position: relative;
+}
+
+.build-tree-node::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 20px;
+    width: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Build Tree Scrolling */
+#buildTreeContainer {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(13, 110, 253, 0.8) rgba(173, 181, 189, 0.08);
+}
+
+#buildTreeContainer::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+}
+
+#buildTreeContainer::-webkit-scrollbar-track {
+    background: rgba(173, 181, 189, 0.08);
+    border-radius: 4px;
+}
+
+#buildTreeContainer::-webkit-scrollbar-thumb {
+    background: rgba(13, 110, 253, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#buildTreeContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 110, 253, 1.0);
+}
+
+/* Build Tree Node Collapse */
+.build-tree-card .btn-link svg {
+    transition: transform 0.2s;
+}
+
+.build-tree-card .btn-link.collapsed svg {
+    transform: rotate(0deg);
+}
+
+.build-tree-card .btn-link:not(.collapsed) svg {
+    transform: rotate(180deg);
+}
+
+.build-tree-card .collapse {
+    transition: all 0.2s;
+}
+
+/* Build Tree Node Children Collapse */
+.build-tree-node .btn-link svg {
+    transition: transform 0.2s;
+}
+
+.build-tree-node .btn-link.collapsed svg {
+    transform: rotate(-90deg);
+}
+
+.build-tree-node .btn-link:not(.collapsed) svg {
+    transform: rotate(0deg);
 }
 
 
