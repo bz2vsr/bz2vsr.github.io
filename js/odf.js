@@ -940,7 +940,8 @@ class ODFBrowser {
         const categoryProperties = {
             'Vehicle': [
                 /^weaponName\d*$/,  // weaponName, weaponName1, etc.
-                /^requireName\d*$/   // requireName, requireName1, etc.
+                /^requireName\d*$/,   // requireName, requireName1, etc.
+                /^buildItem\d*$/    // buildItem, buildItem1, etc.
             ],
             'Weapon': [
                 'altName',
