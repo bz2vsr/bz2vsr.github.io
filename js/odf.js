@@ -1899,21 +1899,21 @@ class ODFBrowser {
         document.body.insertAdjacentHTML('beforeend', `
             <div class="modal fade" id="buildTreeModal" tabindex="-1" data-bs-backdrop="static">
                 <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content bg-dark">
-                        <div class="modal-header bg-secondary-subtle border-secondary">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background: rgb(2, 4, 12); border-color: rgba(255,255,255,0.1)">
                             <h5 class="modal-title">Faction Build Trees</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
-                        <div class="modal-body bg-secondary-subtle p-4" style="height: calc(100vh - 70px); overflow: hidden;">
+                        <div class="modal-body p-4" style="background: rgb(2, 4, 12); height: calc(100vh - 70px); overflow: hidden;">
                             <div class="container-fluid h-100">
                                 <div class="row h-100">
-                                    <div class="col-md-4 h-100 border-end border-secondary">
+                                    <div class="col-md-4 h-100">
                                         <div class="d-flex flex-column h-100">
                                             <h4 class="mb-3">ISDF</h4>
                                             <div class="flex-grow-1 overflow-auto" id="isdfBuildTree"></div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 h-100 border-end border-secondary">
+                                    <div class="col-md-4 h-100">
                                         <div class="d-flex flex-column h-100">
                                             <h4 class="mb-3">Hadean</h4>
                                             <div class="flex-grow-1 overflow-auto" id="hadeanBuildTree"></div>
@@ -1969,7 +1969,7 @@ class ODFBrowser {
         }
 
         if (!odfData) {
-            container.innerHTML = `<div class="alert alert-danger d-inline-block py-2">Could not find ODF: ${odfName}</div>`;
+            container.innerHTML = `<div class="alert alert-danger d-inline-block py-2 mb-4">Could not find ODF: ${odfName}</div>`;
             return;
         }
 
