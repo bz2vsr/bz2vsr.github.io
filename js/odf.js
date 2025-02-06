@@ -89,6 +89,7 @@ class ODFBrowser {
             const compareParam = urlParams.get('compare');
             const odfToLoad = urlParams.get('odf');
             const categoryToShow = urlParams.get('cat');
+            const buildTreeParam = urlParams.get('buildtree');
             
             if (compareParam) {
                 const [odf1, odf2] = compareParam.split(',').map(odf => odf.trim());
@@ -147,6 +148,14 @@ class ODFBrowser {
             } else {
                 // Load first Vehicle ODF if no specific ODF is provided
                 this.loadFirstVehicleODF();
+            }
+
+            // Handle buildtree parameter
+            if (buildTreeParam === 'true') {
+                // Show build tree modal after a short delay to ensure everything is loaded
+                setTimeout(() => {
+                    this.buildTreeModal.show();
+                }, 100);
             }
         });
         
