@@ -2125,7 +2125,7 @@ class ODFBrowser {
                     // Add assault/combat indicator
                     if (weaponData?.WeaponClass) {
                         const isAssault = weaponData.WeaponClass.isAssault === "1";
-                        displayName = `[${isAssault ? 'A' : 'C'}] ${displayName}`;
+                        displayName = `<span class="text-warning fw-bold">${isAssault ? 'A' : 'C'}</span> | ${displayName}`;
                     }
                     
                     // Count occurrences of each weapon
