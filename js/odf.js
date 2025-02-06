@@ -2112,12 +2112,32 @@ class ODFBrowser {
             properties.engageRange = craftClass.engageRange;
             properties.topSpeed = craftClass.topSpeed;
             
-            // Collect weapon names
-            const weapons = [];
+            // Collect weapon names with display names and count duplicates
+            const weaponCounts = new Map();
             for (let i = 1; i <= 10; i++) {
-                const weapon = gameObj[`weaponName${i}`];
-                if (weapon) weapons.push(weapon);
+                const weaponFile = gameObj[`weaponName${i}`];
+                if (weaponFile) {
+                    // Add .odf extension if not present when looking up weapon data
+                    const fullWeaponName = weaponFile.endsWith('.odf') ? weaponFile : `${weaponFile}.odf`;
+                    const weaponData = this.data['Weapon']?.[fullWeaponName];
+                    let displayName = weaponData?.WeaponClass?.wpnName || weaponFile.replace('.odf', '');
+                    
+                    // Add assault/combat indicator
+                    if (weaponData?.WeaponClass) {
+                        const isAssault = weaponData.WeaponClass.isAssault === "1";
+                        displayName = `[${isAssault ? 'A' : 'C'}] ${displayName}`;
+                    }
+                    
+                    // Count occurrences of each weapon
+                    weaponCounts.set(displayName, (weaponCounts.get(displayName) || 0) + 1);
+                }
             }
+
+            // Convert counts to formatted strings
+            const weapons = Array.from(weaponCounts.entries()).map(([name, count]) => 
+                count > 1 ? `${name} ×${count}` : name
+            );
+
             if (weapons.length) properties.weapons = weapons;
         }
         else if (category === 'Building') {
@@ -2204,9 +2224,9 @@ class ODFBrowser {
             if (key === 'weapons') {
                 html.push(`
                     <div class="weapons-list mt-2">
-                        ${value.map(weapon => `
+                        ${value.map(weaponName => `
                             <div class="alert alert-secondary d-inline-block p-0 px-2 me-1 mb-1">
-                                ${weapon.replace('.odf', '')}
+                                ${weaponName}
                             </div>
                         `).join('')}
                     </div>
