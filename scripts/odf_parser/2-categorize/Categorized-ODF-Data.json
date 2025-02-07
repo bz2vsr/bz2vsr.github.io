@@ -25309,10 +25309,10 @@
                 "baseName": "apartl",
                 "classLabel": "apmortar",
                 "scrapCost": "1",
+                "unitName": "Artillery",
                 "requireCount": "1",
                 "requireName1": "ibarmo",
-                "requireText1": "Build Armory",
-                "unitName": "Artillery"
+                "requireText1": "Build Armory"
             },
             "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
@@ -25468,6 +25468,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "beam"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apbolt",
+                "classLabel": "apcannon",
+                "scrapCost": "8",
+                "unitName": "Lightning",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gbolt_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gcoretur.odf": {
@@ -25536,6 +25552,22 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apdbmb",
+                "classLabel": "apspecial",
+                "scrapCost": "100",
+                "unitName": "Da Bomb",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gdabomb"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gdumguard.odf": {
@@ -25682,10 +25714,10 @@
                 "baseName": "apffld",
                 "classLabel": "apspecial",
                 "scrapCost": "20",
+                "unitName": "Force Field",
                 "requireCount": "1",
-                "requireName1": "fbstroin",
-                "requiretext1": "Build Stronghold",
-                "unitName": "Force Field"
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
             "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
@@ -25710,6 +25742,22 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apfntn",
+                "classLabel": "apspecial",
+                "scrapCost": "1",
+                "unitName": "Fountain",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gfountain"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "ggauss_a.odf": {
@@ -25907,6 +25955,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "BULLET"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "spguard",
+                "classLabel": "apcannon",
+                "scrapCost": "5",
+                "unitName": "Guard Gun",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gguardgn"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gguardgn_a.odf": {
@@ -26105,6 +26169,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "spguard",
+                "classLabel": "apcannon",
+                "scrapCost": "5",
+                "unitName": "Guard Cannon",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gguardgn_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "ghartill.odf": {
@@ -26200,6 +26280,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "grenade"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aphartl",
+                "classLabel": "apmortar",
+                "scrapCost": "20",
+                "unitName": "Howitzer",
+                "requireCount": "1",
+                "requireName1": "ibtcen",
+                "requireText1": "Build Tech Center"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "ghartill"
+            },
+            "Powerup.inheritanceChain": [
+                "apmortar"
             ]
         },
         "ghornet.odf": {
@@ -26382,7 +26478,20 @@
                 "emitVelocity": "0.0 0.0 0.0",
                 "emitVariance": "3.0 3.0 2.0",
                 "emitLife": "0.2"
-            }
+            },
+            "Powerup.GameObjectClass": {
+                "baseName": "aphorn",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "Mini-Hornet"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "ghornet"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
+            ]
         },
         "giceball.odf": {
             "WeaponClass": {
@@ -26546,6 +26655,22 @@
             "Ordnance.Render": {},
             "Ordnance.inheritanceChain": [
                 "bouncebomb"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apjax",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Jax",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gjax"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "glock_a.odf": {
@@ -26796,6 +26921,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "anchor"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aplock",
+                "classLabel": "apgun",
+                "scrapCost": "30",
+                "unitName": "EMP Lockdown",
+                "requireCount": "1",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "glock_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apgun"
             ]
         },
         "gmaggun_a.odf": {
@@ -26931,6 +27072,26 @@
             },
             "inheritanceChain": [
                 "chargegun"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apmagg",
+                "classLabel": "apcannon",
+                "scrapCost": "30",
+                "unitName": "MAG",
+                "requireCount": "3",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibcbun",
+                "requireText2": "Build Relay Bunker",
+                "requireName3": "ibtcen",
+                "requireText3": "Build Tech Center"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gmaggun_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gmbolt.odf": {
@@ -27006,6 +27167,22 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apmcur",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "M-Curtain",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gmcurmin"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gminidm.odf": {
@@ -27040,6 +27217,19 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apmini",
+                "classLabel": "apgun",
+                "scrapCost": "10",
+                "unitName": "Minigun"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gminidm"
+            },
+            "Powerup.inheritanceChain": [
+                "apgun"
             ]
         },
         "gmitsmin.odf": {
@@ -27056,6 +27246,22 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apmits",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "MITS Mine",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gmitsmin"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gphantom.odf": {
@@ -27075,6 +27281,22 @@
             },
             "inheritanceChain": [
                 "imagerefract"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apphan",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Phantom VIR",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gphantom"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gquill_c.odf": {
@@ -27176,16 +27398,23 @@
                 "bullet"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apquil",
                 "classLabel": "apquil",
+                "scrapCost": "20",
+                "unitName": "Quill",
+                "requireCount": "2",
+                "requireName1": "fbdowe",
+                "requireText1": "Build Dower",
                 "requireName2": "fbkiln",
-                "requireText2": "Build Kiln",
-                "unitName": "Quill"
+                "requireText2": "Build Kiln"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gquill_c"
             },
             "Powerup.inheritanceChain": [
-                "apquil"
+                "apquil",
+                "apcannon"
             ]
         },
         "gredfld.odf": {
@@ -27205,6 +27434,22 @@
             },
             "inheritanceChain": [
                 "radardamper"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apredf",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "RED Field",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gredfld"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "grktbomb_a.odf": {
@@ -27469,6 +27714,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aprktb",
+                "classLabel": "aprocket",
+                "scrapCost": "3",
+                "unitName": "Rocket Bomb",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "grktbomb_c"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
             ]
         },
         "gsandbag.odf": {
@@ -27538,6 +27799,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "anchor"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apsand",
+                "classLabel": "aprocket",
+                "scrapCost": "1",
+                "unitName": "Sandbag",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gsandbag"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
             ]
         },
         "gsavrkt.odf": {
@@ -27719,7 +27996,11 @@
             "Powerup.GameObjectClass": {
                 "baseName": "apshdw",
                 "classLabel": "aprocket",
-                "unitName": "Shadower Msl"
+                "scrapCost": "20",
+                "unitName": "Shadower Missile",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
             "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
@@ -27746,6 +28027,22 @@
             },
             "inheritanceChain": [
                 "terrainexpose"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apsite",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "SITE Camera",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gsitecam"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gsonic_c.odf": {
@@ -27867,6 +28164,24 @@
             },
             "Ordnance.inheritanceChain": [
                 "MagnetShell"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apsonic",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Sonic Cannon",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gsonic_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gsplasma_a.odf": {
@@ -28047,6 +28362,23 @@
             },
             "Ordnance.inheritanceChain": [
                 "BULLET"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apsplasma",
+                "classLabel": "apsplasma",
+                "scrapCost": "20",
+                "unitName": "Plasma Cannon",
+                "requireCount": "0",
+                "requireName1": "fbkiln",
+                "requireText1": "Build Kiln"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gsplasma_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apsplasma",
+                "apcannon"
             ]
         },
         "gstabcin.odf": {
@@ -28192,6 +28524,24 @@
             },
             "inheritanceChain": [
                 "damagefield"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apstatic",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Static Charge",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbstro",
+                "requireText2": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gstatic"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gsting_a.odf": {
@@ -28459,6 +28809,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "thermalmissile"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apsting",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "Stinger Missile",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requiretext1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gsting_c"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
             ]
         },
         "gtaggun_a.odf": {
@@ -28524,6 +28890,22 @@
             "Ordnance.TrailB": {},
             "Ordnance.inheritanceChain": [
                 "BULLET"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aptech",
+                "classLabel": "apcannon",
+                "scrapCost": "1",
+                "unitName": "Rave!",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gtechno"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "holder.odf": {
@@ -28686,6 +29068,22 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apbltm",
+                "classLabel": "apspecial",
+                "scrapCost": "1",
+                "unitName": "Arc Mine",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gboltmin"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gmboltmn.odf": {
@@ -28865,6 +29263,22 @@
             "Ordnance.inheritanceChain": [
                 "splintbm",
                 "spraybomb"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apgas",
+                "classLabel": "apmortar",
+                "scrapCost": "30",
+                "unitName": "Acid Cloud",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "ggasmort"
+            },
+            "Powerup.inheritanceChain": [
+                "apmortar"
             ]
         },
         "gsartill.odf": {
@@ -28976,6 +29390,22 @@
             "Ordnance.inheritanceChain": [
                 "mortar_c",
                 "grenade"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apsartl",
+                "classLabel": "apmortar",
+                "scrapCost": "20",
+                "unitName": "Howitzer",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gsartill"
+            },
+            "Powerup.inheritanceChain": [
+                "apmortar"
             ]
         },
         "gpopgun.odf": {
@@ -29063,6 +29493,24 @@
             },
             "Ordnance.inheritanceChain": [
                 "radarpopper"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "appopg",
+                "classLabel": "apmortar",
+                "scrapCost": "20",
+                "unitName": "Popper",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gpopgun"
+            },
+            "Powerup.inheritanceChain": [
+                "apmortar"
             ]
         },
         "gresin.odf": {
@@ -29118,6 +29566,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "grenade"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apresn",
+                "classLabel": "apmortar",
+                "scrapCost": "30",
+                "unitName": "Resin",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gresin"
+            },
+            "Powerup.inheritanceChain": [
+                "apmortar"
             ]
         },
         "gblink.odf": {
@@ -29138,6 +29602,22 @@
             },
             "inheritanceChain": [
                 "blink"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apblnk",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Blink",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gblink"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "garc_a.odf": {
@@ -29257,6 +29737,24 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aparcc",
+                "classLabel": "apcannon",
+                "scrapCost": "30",
+                "unitName": "Arc Cannon",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "garc_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gquill_a.odf": {
@@ -29566,6 +30064,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apiong",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Ion Gun",
+                "requireCount": "1",
+                "requireName1": "fbkiln",
+                "requireText1": "Build Kiln"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "giongn_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apgun"
             ]
         },
         "fgsnip_a.odf": {
@@ -29861,6 +30375,24 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "fpsnip",
+                "classLabel": "aphand",
+                "scrapCost": "30",
+                "unitName": "Scion Pulse Rifle",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "fgsnip_c"
+            },
+            "Powerup.inheritanceChain": [
+                "aphand"
             ]
         },
         "fgbzka_a.odf": {
@@ -30292,6 +30824,48 @@
             },
             "Ordnance.inheritanceChain": [
                 "imagemissile"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apmlock",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "Multi-Lock",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requiretext1": "Build Stronghold"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gmlock_c"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apwrck.odf": {
+            "GameObjectClass": {
+                "geometryName": "daywrecker00.fbx",
+                "classLabel": "daywrecker",
+                "scrapCost": "20",
+                "scrapValue": "0",
+                "maxHealth": "500",
+                "maxAmmo": "0",
+                "unitName": "Day Wrecker",
+                "aiName": "PowerUpProcess",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requiretext1": "Build Armory",
+                "ClearBuildZone": "0"
+            },
+            "PowerUpClass": {
+                "SlowFall": "false",
+                "FallSpeed": "12"
+            },
+            "DayWreckerClass": {
+                "xplBlast": "xbmbxpl"
+            },
+            "inheritanceChain": [
+                "daywrecker"
             ]
         },
         "igbzka_c.odf": {
@@ -31045,6 +31619,19 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "approx",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Prox Mine"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gproxmin"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gmdmgun.odf": {
@@ -31151,15 +31738,21 @@
                 "bouncebomb"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apmdmg",
                 "classLabel": "apmdmg",
                 "scrapCost": "25",
-                "unitName": "MDM Mortar"
+                "unitName": "MDM Mortar",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gmdmgun"
             },
             "Powerup.inheritanceChain": [
-                "apmdmg"
+                "apmdmg",
+                "apmortar"
             ]
         },
         "gsplint.odf": {
@@ -31257,6 +31850,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "spraybomb"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apspln",
+                "classLabel": "apmortar",
+                "scrapCost": "40",
+                "unitName": "Splinter",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gsplint"
+            },
+            "Powerup.inheritanceChain": [
+                "apmortar"
             ]
         },
         "gatstab_a.odf": {
@@ -31526,6 +32135,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apstab",
+                "classLabel": "apcannon",
+                "scrapCost": "10",
+                "unitName": "AT-Stab",
+                "requireCount": "1",
+                "requireName1": "ibfact",
+                "requireText1": "Build Factory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gatstab_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gblast_a.odf": {
@@ -31717,6 +32342,26 @@
             },
             "Ordnance.inheritanceChain": [
                 "beam"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apblst",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Blast",
+                "requireCount": "3",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibsbay",
+                "requireText2": "Build Service Bay",
+                "requireName3": "ibtcen",
+                "requireText3": "Build Tech Center"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gblast_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gflamer_a.odf": {
@@ -32075,10 +32720,10 @@
                 "baseName": "apflsh",
                 "classLabel": "apcannon",
                 "scrapCost": "5",
+                "unitName": "Flash Beam",
                 "requireCount": "1",
                 "requireName1": "ibarmo",
-                "requireText1": "Build Armory",
-                "unitName": "Flash Beam"
+                "requireText1": "Build Armory"
             },
             "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
@@ -32340,6 +32985,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "pulse"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "appstb",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Pulse Stab",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gplstab_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gplasma_a.odf": {
@@ -32923,6 +33584,24 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "applas",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Plasma",
+                "requireCount": "2",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibsbay",
+                "requireText2": "Build Service Bay"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gplasma_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gtower.odf": {
@@ -33391,6 +34070,24 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apsstb",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "SP-Stab",
+                "requireCount": "2",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibcbun",
+                "requireText2": "Build Relay Bunker"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gspstab_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apcannon"
             ]
         },
         "gchain_a.odf": {
@@ -33549,6 +34246,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apchain",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Chain Gun",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gchain_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apgun"
             ]
         },
         "glaser_a.odf": {
@@ -33719,6 +34432,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "beam"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aplase",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Laser",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "glaser_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apgun"
             ]
         },
         "gminigun_a.odf": {
@@ -33881,6 +34610,7 @@
             "Powerup.GameObjectClass": {
                 "baseName": "apmini",
                 "classLabel": "apgun",
+                "scrapCost": "10",
                 "unitName": "Minigun"
             },
             "Powerup.PowerUpClass": {},
@@ -34042,6 +34772,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "appumm",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Pummel",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gpummel_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apgun"
             ]
         },
         "gtrainer_a.odf": {
@@ -34146,6 +34892,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "bullet"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aptrain",
+                "classLabel": "apgun",
+                "scrapCost": "1",
+                "unitName": "Trainer",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gtrainer_c"
+            },
+            "Powerup.inheritanceChain": [
+                "apgun"
             ]
         },
         "gfafmsl_a.odf": {
@@ -34636,6 +35398,19 @@
             },
             "Ordnance.inheritanceChain": [
                 "thermalmissile"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apfafm",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "FAF Missile"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gfafmsl_c"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
             ]
         },
         "gcomet_a.odf": {
@@ -34818,6 +35593,22 @@
             },
             "Ordnance.inheritanceChain": [
                 "radarmissile"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apcmet",
+                "classLabel": "aprocket",
+                "scrapCost": "3",
+                "unitName": "Mini-Comet",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gcomet_c"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
             ]
         },
         "gcseeker.odf": {
@@ -34834,6 +35625,20 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apcseek",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "maxHealth": "200",
+                "unitName": "Guardian Mines"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gcseeker"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gseeker.odf": {
@@ -34850,6 +35655,22 @@
             },
             "inheritanceChain": [
                 "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apseek",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Seeker",
+                "requireCount": "1",
+                "requireName1": "fbdowe",
+                "requireText1": "Build Dower"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gseeker"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "gfountn.odf": {
@@ -35160,6 +35981,23 @@
             },
             "Ordnance.inheritanceChain": [
                 "grenade"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apmort",
+                "classLabel": "apmort",
+                "scrapCost": "25",
+                "unitName": "Mortar",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gmortar"
+            },
+            "Powerup.inheritanceChain": [
+                "apmort",
+                "apmortar"
             ]
         },
         "gthumper.odf": {
@@ -35720,6 +36558,262 @@
             },
             "Ordnance.inheritanceChain": [
                 "missile"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "aptagg",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "TAG Gun"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gtaggun_c"
+            },
+            "Powerup.inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "gpoprocketgun.odf": {
+            "WeaponClass": {
+                "classLabel": "cannon",
+                "ordName": "poprocketshell",
+                "wpnName": "Pop Rocket",
+                "fireSound": "gpopp00.wav",
+                "wpnReticle": "glockm",
+                "wpnLadder": "gpopgun.L0",
+                "wpnCategory": "MORT",
+                "aiRange": "200"
+            },
+            "CannonClass": {
+                "shotDelay": "2.0",
+                "shotPitch": "1.0",
+                "shotLead": "0"
+            },
+            "inheritanceChain": [
+                "cannon"
+            ],
+            "Ordnance.OrdnanceClass": {
+                "classLabel": "popshell",
+                "shotGeometry": "NULL",
+                "shotSound": "Ordin_c.wav",
+                "xplGround": "xmslgnd",
+                "xplVehicle": "xmslcar",
+                "xplBuilding": "xmslbld",
+                "renderName": "popshell.render",
+                "ammoCost": "20",
+                "lifeSpan": "1e30",
+                "shotSpeed": "20.0",
+                "damageValue(N)": "70",
+                "damageValue(L)": "60",
+                "damageValue(H)": "50",
+                "damageValue(S)": "60",
+                "damageValue(D)": "50",
+                "damageValue(A)": "70"
+            },
+            "Ordnance.RadarPopperClass": {
+                "launchXpl": "xpopfir",
+                "launchOrd": "poprocket"
+            },
+            "Ordnance.Render": {
+                "renderBase": "draw_multi",
+                "renderCount": "3",
+                "renderName1": "popshell.Core",
+                "renderName2": "popshell.burst",
+                "renderName3": "popshell.wispyTrail"
+            },
+            "Ordnance.Core": {
+                "renderBase": "draw_twirl",
+                "textureName": "particle.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "227 43 69 255",
+                "finishColor": "227 43 69 255",
+                "startRadius": "0.4",
+                "finishRadius": "0.4",
+                "rotationRate": "10.0"
+            },
+            "Ordnance.burst": {
+                "renderBase": "draw_twirl_trail",
+                "textureName": "sonicboom.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "255 35 82 255",
+                "finishColor": "184 48 96 0",
+                "startRadius": "0.3",
+                "finishRadius": "5.5",
+                "rotationRate": "2.0",
+                "animateTime": "0.1",
+                "emitDelay": "0.1",
+                "emitLife": "0.1",
+                "emitinherit": "1.0 1.0 1.0"
+            },
+            "Ordnance.wispyTrail": {
+                "renderBase": "draw_trail",
+                "textureName": "sonictrail.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "227 43 109 100",
+                "finishColor": "227 43 129 0",
+                "textureRate": "0.3",
+                "startRadius": "0.5",
+                "finishRadius": "2.0",
+                "segmentLength": "2.4",
+                "segmentTime": "3.0"
+            },
+            "Ordnance.inheritanceChain": [
+                "popshell",
+                "radarpopper"
+            ]
+        },
+        "igbzka_a.odf": {
+            "WeaponClass": {
+                "classLabel": "cannon",
+                "ordName": "bazooka_a",
+                "wpnName": "Bazooka",
+                "fireSound": "baz01.wav",
+                "wpnReticle": "gbazooka",
+                "wpnCategory": "HAND",
+                "isAssault": "1",
+                "isFlying": "1",
+                "altName": "igbzka_c"
+            },
+            "CannonClass": {
+                "shotDelay": "5.0"
+            },
+            "inheritanceChain": [
+                "cannon"
+            ],
+            "Ordnance.OrdnanceClass": {
+                "classLabel": "bazooka_c",
+                "shotGeometry": "iomslv00.fbx",
+                "shotScale": "0.25",
+                "shotSound": "baz03.wav",
+                "renderName": "bazooka_a.render",
+                "xplGround": "xbazgnd_a",
+                "xplVehicle": "xbazxpl_a",
+                "xplBuilding": "xbazxpl_a",
+                "ammoCost": "100",
+                "lifeSpan": "4.0",
+                "shotSpeed": "50.0",
+                "damageValue(N)": "700",
+                "damageValue(L)": "600",
+                "damageValue(H)": "500",
+                "damageValue(S)": "600",
+                "damageValue(D)": "500",
+                "damageValue(A)": "700"
+            },
+            "Ordnance.Render": {
+                "renderBase": "draw_multi",
+                "renderCount": "3",
+                "renderName1": "bazooka_a.flare",
+                "renderName2": "bazooka_a.smoke",
+                "renderName3": "bazooka_a.flame"
+            },
+            "Ordnance.Flare": {
+                "renderBase": "draw_sprite",
+                "textureName": "lightflare.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "255 255 255 200",
+                "finishColor": "255 255 255 200",
+                "startRadius": "1.5",
+                "finishRadius": "1.5"
+            },
+            "Ordnance.Smoke": {
+                "renderBase": "draw_twirl_trail",
+                "textureName": "smoke.tga",
+                "textureBlend": "srcalpha invsrcalpha modulatealpha",
+                "startColor": "70 70 70 31",
+                "finishColor": "70 70 70 0",
+                "startRadius": "0.3",
+                "finishRadius": "0.8",
+                "animateTime": "1.0",
+                "emitDelay": "0.01",
+                "emitVelocity": "0.0 0.0 -2.0",
+                "emitVariance": "1.0 1.0 0.5",
+                "emitLife": "1.0",
+                "maxCount": "64"
+            },
+            "Ordnance.Flame": {
+                "renderBase": "draw_twirl_trail",
+                "textureName": "flame.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "255 255 63 255",
+                "finishColor": "255 0 0 0",
+                "startRadius": "0.2",
+                "finishRadius": "0.02",
+                "animateTime": "0.2",
+                "emitDelay": "0.004",
+                "emitVelocity": "0.0 0.0 0.0",
+                "emitVariance": "1.0 1.0 0.5",
+                "emitLife": "0.2",
+                "maxCount": "64"
+            },
+            "Ordnance.inheritanceChain": [
+                "bazooka_c",
+                "bullet"
+            ]
+        },
+        "igshot_a.odf": {
+            "WeaponClass": {
+                "classLabel": "cannon",
+                "ordName": "shotgun_a",
+                "wpnName": "Asslt Shotgun",
+                "fireSound": "mgun01.wav",
+                "wpnReticle": "grifle",
+                "wpnCategory": "HAND",
+                "isAssault": "1",
+                "isFlying": "0",
+                "altName": "igshot_c",
+                "flashName": "igsnip_c.flash"
+            },
+            "CannonClass": {
+                "shotDelay": "0.1",
+                "salvoCount": "1",
+                "salvoDelay": "0.0",
+                "shotVariance": "0.05"
+            },
+            "inheritanceChain": [
+                "cannon"
+            ],
+            "Ordnance.OrdnanceClass": {
+                "classLabel": "bullet",
+                "shotGeometry": "NULL",
+                "xplGround": "xbulgnd",
+                "xplVehicle": "xbulcar",
+                "xplBuilding": "xbulbld",
+                "ammoCost": "5",
+                "lifeSpan": "2.0",
+                "shotSpeed": "150.0"
+            },
+            "Ordnance.Render": {},
+            "Ordnance.inheritanceChain": [
+                "bullet"
+            ]
+        },
+        "gcamr.odf": {
+            "WeaponClass": {
+                "classLabel": "dispenser",
+                "wpnName": "Camera Pod",
+                "fireSound": "mmine01.wav",
+                "wpnReticle": "gseek",
+                "wpnCategory": "SPEC"
+            },
+            "DispenserClass": {
+                "shotDelay": "5.0",
+                "objectClass": "apcamr"
+            },
+            "inheritanceChain": [
+                "dispenser"
+            ],
+            "Powerup.GameObjectClass": {
+                "baseName": "apcamd",
+                "classLabel": "apspecial",
+                "scrapCost": "30",
+                "unitName": "Camera Pod"
+            },
+            "Powerup.PowerUpClass": {},
+            "Powerup.WeaponPowerupClass": {
+                "weaponName": "gcamr"
+            },
+            "Powerup.inheritanceChain": [
+                "apspecial"
             ]
         },
         "garcvsr_a.odf": {
@@ -35844,14 +36938,23 @@
                 "bullet"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "aparcc",
                 "classLabel": "aparcc",
-                "unitName": "Arc Cannon"
+                "scrapCost": "30",
+                "unitName": "Arc Cannon",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "garcvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "aparcc"
+                "aparcc",
+                "apcannon"
             ]
         },
         "gsonicvsr_a.odf": {
@@ -36025,18 +37128,23 @@
                 "MagnetShell"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apsonic",
                 "classLabel": "apsonic",
                 "scrapCost": "20",
+                "unitName": "Sonic Cannon",
                 "requireCount": "1",
                 "requireName1": "fbforg",
                 "requireText1": "Build Forge",
-                "unitName": "Sonic Blast"
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gsonicvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "apsonic"
+                "apsonic",
+                "apcannon"
             ]
         },
         "glockvsr_a.odf": {
@@ -36295,16 +37403,22 @@
                 "anchor"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "aplock",
                 "classLabel": "aplock",
-                "infoName": "aplockvsr.inf",
                 "scrapCost": "20",
-                "unitName": "EMP Lockdown"
+                "unitName": "EMP Lockdown",
+                "requireCount": "1",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "infoName": "aplockvsr.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "glockvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "aplock"
+                "aplock",
+                "apgun"
             ]
         },
         "fgsnipvsr_a.odf": {
@@ -36493,18 +37607,24 @@
                 "bullet"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "fpsnip",
                 "classLabel": "fpsnip",
-                "infoName": "fpsnipvsr.inf",
+                "scrapCost": "30",
+                "unitName": "Scion Pulse Rifle",
                 "requireCount": "1",
                 "requireName1": "fbantm_vsr",
                 "requireText1": "Build Antenna Mound",
-                "unitName": "Pulse"
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound",
+                "infoName": "fpsnipvsr.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "fgsnipvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "fpsnip"
+                "fpsnip",
+                "aphand"
             ]
         },
         "gseekervsr.odf": {
@@ -36524,15 +37644,22 @@
                 "dispenser"
             ],
             "Powerup.GameObjectClass": {
-                "infoName": "apseekvsr.inf",
+                "baseName": "apseek",
                 "classLabel": "apseek",
-                "unitName": "Seeker"
+                "scrapCost": "20",
+                "unitName": "Seeker",
+                "requireCount": "1",
+                "requireName1": "fbdowe",
+                "requireText1": "Build Dower",
+                "infoName": "apseekvsr.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gseekervsr"
             },
             "Powerup.inheritanceChain": [
-                "apseek"
+                "apseek",
+                "apspecial"
             ]
         },
         "gflare_svsr.odf": {
@@ -36730,17 +37857,21 @@
                 "imagemissile"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apmlock",
                 "classLabel": "apmlock",
+                "scrapCost": "20",
+                "unitName": "Multi-Lock",
                 "requireCount": "1",
                 "requireName1": "fbantm",
-                "requiretext1": "Build Antenna Mound",
-                "unitName": "Multi Lock"
+                "requiretext1": "Build Antenna Mound"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gmlockvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "apmlock"
+                "apmlock",
+                "aprocket"
             ]
         },
         "gstingvsr_a.odf": {
@@ -37017,17 +38148,21 @@
                 "thermalmissile"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apsting",
                 "classLabel": "apsting",
+                "scrapCost": "20",
+                "unitName": "Stinger Missile",
                 "requireCount": "1",
                 "requireName1": "fbantm",
-                "requiretext1": "Build Antenna Mound",
-                "unitName": "Stinger Msl"
+                "requiretext1": "Build Antenna Mound"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gstingvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "apsting"
+                "apsting",
+                "aprocket"
             ]
         },
         "ggasmortvsr.odf": {
@@ -37144,14 +38279,21 @@
                 "spraybomb"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apgas",
                 "classLabel": "apgas",
-                "unitName": "Acid Cloud"
+                "scrapCost": "30",
+                "unitName": "Acid Cloud",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "ggasmortvsr"
             },
             "Powerup.inheritanceChain": [
-                "apgas"
+                "apgas",
+                "apmortar"
             ]
         },
         "gpopgunvsr.odf": {
@@ -37245,15 +38387,24 @@
                 "radarpopper"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "appopg",
                 "classLabel": "appopg",
-                "infoName": "appopgvsr.inf",
-                "unitName": "Popper"
+                "scrapCost": "20",
+                "unitName": "Popper",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound",
+                "infoName": "appopgvsr.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gpopgunvsr"
             },
             "Powerup.inheritanceChain": [
-                "appopg"
+                "appopg",
+                "apmortar"
             ]
         },
         "fgjetpvsr.odf": {
@@ -37371,7 +38522,10 @@
                 "blink"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apblnk",
                 "classLabel": "apblnk",
+                "scrapCost": "20",
+                "unitName": "Blink",
                 "requireCount": "4",
                 "requireName1": "fbstro",
                 "requireText1": "Build Stronghold",
@@ -37380,14 +38534,15 @@
                 "requireName3": "fbantm",
                 "requireText3": "Build Antenna Mound",
                 "requireName4": "fbover",
-                "requireText4": "Upgrade Antenna Mound",
-                "unitName": "Blink"
+                "requireText4": "Upgrade Antenna Mound"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gblinkvsr"
             },
             "Powerup.inheritanceChain": [
-                "apblnk"
+                "apblnk",
+                "apspecial"
             ]
         },
         "gatstabvsr_a.odf": {
@@ -37987,15 +39142,25 @@
                 "chargegun"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apmagg",
                 "classLabel": "apmagg",
                 "scrapCost": "20",
-                "unitName": "MAG"
+                "unitName": "MAG",
+                "requireCount": "3",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibcbun",
+                "requireText2": "Build Relay Bunker",
+                "requireName3": "ibtcen",
+                "requireText3": "Build Tech Center"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gmaggunvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "apmagg"
+                "apmagg",
+                "apcannon"
             ]
         },
         "gplasmavsr_a.odf": {
@@ -38585,14 +39750,23 @@
                 "bullet"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "applas",
                 "classLabel": "applas",
-                "unitName": "Plasma"
+                "scrapCost": "20",
+                "unitName": "Plasma",
+                "requireCount": "2",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibsbay",
+                "requireText2": "Build Service Bay"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gplasmavsr_c"
             },
             "Powerup.inheritanceChain": [
-                "applas"
+                "applas",
+                "apcannon"
             ]
         },
         "gplstabvsr_a.odf": {
@@ -38854,15 +40028,22 @@
                 "pulse"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "appstb",
                 "classLabel": "appstb",
-                "infoName": "appstbvsr.inf",
-                "unitName": "Pulse Stab"
+                "scrapCost": "20",
+                "unitName": "Pulse Stab",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay",
+                "infoName": "appstbvsr.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gplstabvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "appstb"
+                "appstb",
+                "apcannon"
             ]
         },
         "gchainvsr_a.odf": {
@@ -39027,16 +40208,22 @@
                 "bullet"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apchain",
                 "classLabel": "apchain",
-                "infoName": "apchain.inf",
                 "scrapCost": "20",
-                "unitName": "Chain Gun"
+                "unitName": "Chain Gun",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "infoName": "apchain.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gchainvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "apchain"
+                "apchain",
+                "apgun"
             ]
         },
         "glaservsr_a.odf": {
@@ -39213,15 +40400,22 @@
                 "beam"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "aplase",
                 "classLabel": "aplase",
-                "infoName": "aplasevsr.inf",
-                "unitName": "Laser"
+                "scrapCost": "20",
+                "unitName": "Laser",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay",
+                "infoName": "aplasevsr.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "glaservsr_c"
             },
             "Powerup.inheritanceChain": [
-                "aplase"
+                "aplase",
+                "apgun"
             ]
         },
         "gpummelvsr_a.odf": {
@@ -39381,16 +40575,22 @@
                 "bullet"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "appumm",
                 "classLabel": "appumm",
-                "infoName": "apchain.inf",
                 "scrapCost": "20",
-                "unitName": "Pummel"
+                "unitName": "Pummel",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay",
+                "infoName": "apchain.inf"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gpummelvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "appumm"
+                "appumm",
+                "apgun"
             ]
         },
         "igsnipvsr_a.odf": {
@@ -39590,14 +40790,21 @@
                 "dispenser"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apmcur",
                 "classLabel": "apmcur",
-                "unitName": "M-Curtain"
+                "scrapCost": "20",
+                "unitName": "M-Curtain",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gmcurminvsr"
             },
             "Powerup.inheritanceChain": [
-                "apmcur"
+                "apmcur",
+                "apspecial"
             ]
         },
         "gmitsminvsr.odf": {
@@ -39617,14 +40824,21 @@
                 "dispenser"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apmits",
                 "classLabel": "apmits",
-                "unitName": "MITS Mine"
+                "scrapCost": "20",
+                "unitName": "MITS Mine",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gmitsminvsr"
             },
             "Powerup.inheritanceChain": [
-                "apmits"
+                "apmits",
+                "apspecial"
             ]
         },
         "gproxminvsr.odf": {
@@ -39644,14 +40858,18 @@
                 "dispenser"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "approx",
                 "classLabel": "approx",
+                "scrapCost": "20",
                 "unitName": "Prox Mine"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gproxminvsr"
             },
             "Powerup.inheritanceChain": [
-                "approx"
+                "approx",
+                "apspecial"
             ]
         },
         "gflarevsr.odf": {
@@ -40033,14 +41251,18 @@
                 "thermalmissile"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apfafm",
                 "classLabel": "apfafm",
-                "unitName": "FAF Msl"
+                "scrapCost": "20",
+                "unitName": "FAF Missile"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gfafmslvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "apfafm"
+                "apfafm",
+                "aprocket"
             ]
         },
         "gshadowvsr_a.odf": {
@@ -40361,14 +41583,21 @@
                 "imagemissile"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apshdw",
                 "classLabel": "apshdw",
-                "unitName": "Shadower Msl"
+                "scrapCost": "20",
+                "unitName": "Shadower Missile",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gshadowvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "apshdw"
+                "apshdw",
+                "aprocket"
             ]
         },
         "gtaggunvsr_a.odf": {
@@ -40516,14 +41745,18 @@
                 "missile"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "aptagg",
                 "classLabel": "aptagg",
-                "unitName": "TAG Cannon"
+                "scrapCost": "20",
+                "unitName": "TAG Gun"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gtaggunvsr_c"
             },
             "Powerup.inheritanceChain": [
-                "aptagg"
+                "aptagg",
+                "aprocket"
             ]
         },
         "gsplintvsr.odf": {
@@ -40625,15 +41858,21 @@
                 "spraybomb"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apspln",
                 "classLabel": "apspln",
                 "scrapCost": "25",
-                "unitName": "Splinter"
+                "unitName": "Splinter",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gsplintvsr"
             },
             "Powerup.inheritanceChain": [
-                "apspln"
+                "apspln",
+                "apmortar"
             ]
         },
         "igjetpvsr.odf": {
@@ -40748,14 +41987,21 @@
                 "imagerefract"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apphan",
                 "classLabel": "apphan",
-                "unitName": "Phantom VIR"
+                "scrapCost": "20",
+                "unitName": "Phantom VIR",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gphantomvsr"
             },
             "Powerup.inheritanceChain": [
-                "apphan"
+                "apphan",
+                "apspecial"
             ]
         },
         "gredfldvsr.odf": {
@@ -40778,14 +42024,21 @@
                 "radardamper"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apredf",
                 "classLabel": "apredf",
-                "unitName": "RED Field"
+                "scrapCost": "20",
+                "unitName": "RED Field",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gredfldvsr"
             },
             "Powerup.inheritanceChain": [
-                "apredf"
+                "apredf",
+                "apspecial"
             ]
         },
         "gsitecamvsr.odf": {
@@ -40808,14 +42061,21 @@
                 "terrainexpose"
             ],
             "Powerup.GameObjectClass": {
+                "baseName": "apsite",
                 "classLabel": "apsite",
-                "unitName": "SITE Camera"
+                "scrapCost": "20",
+                "unitName": "SITE Camera",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "Powerup.PowerUpClass": {},
             "Powerup.WeaponPowerupClass": {
                 "weaponName": "gsitecamvsr"
             },
             "Powerup.inheritanceChain": [
-                "apsite"
+                "apsite",
+                "apspecial"
             ]
         },
         "gcphlas_c.odf": {
@@ -66434,6 +67694,77 @@
                 "grenade"
             ]
         },
+        "poprocketshell.odf": {
+            "OrdnanceClass": {
+                "classLabel": "popshell",
+                "shotGeometry": "NULL",
+                "shotSound": "Ordin_c.wav",
+                "xplGround": "xmslgnd",
+                "xplVehicle": "xmslcar",
+                "xplBuilding": "xmslbld",
+                "renderName": "popshell.render",
+                "ammoCost": "20",
+                "lifeSpan": "1e30",
+                "shotSpeed": "20.0",
+                "damageValue(N)": "70",
+                "damageValue(L)": "60",
+                "damageValue(H)": "50",
+                "damageValue(S)": "60",
+                "damageValue(D)": "50",
+                "damageValue(A)": "70"
+            },
+            "RadarPopperClass": {
+                "launchXpl": "xpopfir",
+                "launchOrd": "poprocket"
+            },
+            "Render": {
+                "renderBase": "draw_multi",
+                "renderCount": "3",
+                "renderName1": "popshell.Core",
+                "renderName2": "popshell.burst",
+                "renderName3": "popshell.wispyTrail"
+            },
+            "Core": {
+                "renderBase": "draw_twirl",
+                "textureName": "particle.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "227 43 69 255",
+                "finishColor": "227 43 69 255",
+                "startRadius": "0.4",
+                "finishRadius": "0.4",
+                "rotationRate": "10.0"
+            },
+            "burst": {
+                "renderBase": "draw_twirl_trail",
+                "textureName": "sonicboom.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "255 35 82 255",
+                "finishColor": "184 48 96 0",
+                "startRadius": "0.3",
+                "finishRadius": "5.5",
+                "rotationRate": "2.0",
+                "animateTime": "0.1",
+                "emitDelay": "0.1",
+                "emitLife": "0.1",
+                "emitinherit": "1.0 1.0 1.0"
+            },
+            "wispyTrail": {
+                "renderBase": "draw_trail",
+                "textureName": "sonictrail.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "227 43 109 100",
+                "finishColor": "227 43 129 0",
+                "textureRate": "0.3",
+                "startRadius": "0.5",
+                "finishRadius": "2.0",
+                "segmentLength": "2.4",
+                "segmentTime": "3.0"
+            },
+            "inheritanceChain": [
+                "popshell",
+                "radarpopper"
+            ]
+        },
         "arcboltvsr.odf": {
             "OrdnanceClass": {
                 "classLabel": "arcbolt",
@@ -73558,89 +74889,1245 @@
                 "apshield"
             ]
         },
-        "aparccvsr.odf": {
+        "aparcc.odf": {
             "GameObjectClass": {
-                "classLabel": "aparcc",
-                "unitName": "Arc Cannon"
+                "baseName": "aparcc",
+                "classLabel": "apcannon",
+                "scrapCost": "30",
+                "unitName": "Arc Cannon",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
-                "weaponName": "garcvsr_c"
+                "weaponName": "garc_c"
             },
             "inheritanceChain": [
-                "aparcc"
+                "apcannon"
             ]
         },
-        "apquilvsr.odf": {
+        "apartl.odf": {
             "GameObjectClass": {
-                "classLabel": "apquil",
-                "requireName2": "fbkiln",
-                "requireText2": "Build Kiln",
-                "unitName": "Quill"
+                "baseName": "apartl",
+                "classLabel": "apmortar",
+                "scrapCost": "1",
+                "unitName": "Artillery",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gartill"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "apblnk.odf": {
+            "GameObjectClass": {
+                "baseName": "apblnk",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Blink",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gblink"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apblst.odf": {
+            "GameObjectClass": {
+                "baseName": "apblst",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Blast",
+                "requireCount": "3",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibsbay",
+                "requireText2": "Build Service Bay",
+                "requireName3": "ibtcen",
+                "requireText3": "Build Tech Center"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gblast_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apbltm.odf": {
+            "GameObjectClass": {
+                "baseName": "apbltm",
+                "classLabel": "apspecial",
+                "scrapCost": "1",
+                "unitName": "Arc Mine",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gboltmin"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apbolt.odf": {
+            "GameObjectClass": {
+                "baseName": "apbolt",
+                "classLabel": "apcannon",
+                "scrapCost": "8",
+                "unitName": "Lightning",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gbolt_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apchain.odf": {
+            "GameObjectClass": {
+                "baseName": "apchain",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Chain Gun",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gchain_c"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "apcmet.odf": {
+            "GameObjectClass": {
+                "baseName": "apcmet",
+                "classLabel": "aprocket",
+                "scrapCost": "3",
+                "unitName": "Mini-Comet",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gcomet_c"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apcseek.odf": {
+            "GameObjectClass": {
+                "baseName": "apcseek",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "maxHealth": "200",
+                "unitName": "Guardian Mines"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gcseeker"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apdbmb.odf": {
+            "GameObjectClass": {
+                "baseName": "apdbmb",
+                "classLabel": "apspecial",
+                "scrapCost": "100",
+                "unitName": "Da Bomb",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gdabomb"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apfafm.odf": {
+            "GameObjectClass": {
+                "baseName": "apfafm",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "FAF Missile"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gfafmsl_c"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apffld.odf": {
+            "GameObjectClass": {
+                "baseName": "apffld",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Force Field",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gforce"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apflsh.odf": {
+            "GameObjectClass": {
+                "baseName": "apflsh",
+                "classLabel": "apcannon",
+                "scrapCost": "5",
+                "unitName": "Flash Beam",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gflash_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apfntn.odf": {
+            "GameObjectClass": {
+                "baseName": "apfntn",
+                "classLabel": "apspecial",
+                "scrapCost": "1",
+                "unitName": "Fountain",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gfountain"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apgas.odf": {
+            "GameObjectClass": {
+                "baseName": "apgas",
+                "classLabel": "apmortar",
+                "scrapCost": "30",
+                "unitName": "Acid Cloud",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "ggasmort"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "apguard.odf": {
+            "GameObjectClass": {
+                "baseName": "spguard",
+                "classLabel": "apcannon",
+                "scrapCost": "5",
+                "unitName": "Guard Cannon",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gguardgn_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "aphartl.odf": {
+            "GameObjectClass": {
+                "baseName": "aphartl",
+                "classLabel": "apmortar",
+                "scrapCost": "20",
+                "unitName": "Howitzer",
+                "requireCount": "1",
+                "requireName1": "ibtcen",
+                "requireText1": "Build Tech Center"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "ghartill"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "aphorn.odf": {
+            "GameObjectClass": {
+                "baseName": "aphorn",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "Mini-Hornet"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "ghornet"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apiong.odf": {
+            "GameObjectClass": {
+                "baseName": "apiong",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Ion Gun",
+                "requireCount": "1",
+                "requireName1": "fbkiln",
+                "requireText1": "Build Kiln"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "giongn_c"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "apjax.odf": {
+            "GameObjectClass": {
+                "baseName": "apjax",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Jax",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gjax"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "aplase.odf": {
+            "GameObjectClass": {
+                "baseName": "aplase",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Laser",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "glaser_c"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "aplock.odf": {
+            "GameObjectClass": {
+                "baseName": "aplock",
+                "classLabel": "apgun",
+                "scrapCost": "30",
+                "unitName": "EMP Lockdown",
+                "requireCount": "1",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "glock_c"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "apmagg.odf": {
+            "GameObjectClass": {
+                "baseName": "apmagg",
+                "classLabel": "apcannon",
+                "scrapCost": "30",
+                "unitName": "MAG",
+                "requireCount": "3",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibcbun",
+                "requireText2": "Build Relay Bunker",
+                "requireName3": "ibtcen",
+                "requireText3": "Build Tech Center"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmaggun_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apmcur.odf": {
+            "GameObjectClass": {
+                "baseName": "apmcur",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "M-Curtain",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmcurmin"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apmdmg.odf": {
+            "GameObjectClass": {
+                "baseName": "apmdmg",
+                "classLabel": "apmortar",
+                "scrapCost": "40",
+                "unitName": "MDM Mortar",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmdmgun"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "apmini.odf": {
+            "GameObjectClass": {
+                "baseName": "apmini",
+                "classLabel": "apgun",
+                "scrapCost": "10",
+                "unitName": "Minigun"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gminigun_c"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "apminidm.odf": {
+            "GameObjectClass": {
+                "baseName": "apmini",
+                "classLabel": "apgun",
+                "scrapCost": "10",
+                "unitName": "Minigun"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gminidm"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "apmits.odf": {
+            "GameObjectClass": {
+                "baseName": "apmits",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "MITS Mine",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmitsmin"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apmlock.odf": {
+            "GameObjectClass": {
+                "baseName": "apmlock",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "Multi-Lock",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requiretext1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmlock_c"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apmort.odf": {
+            "GameObjectClass": {
+                "baseName": "apmort",
+                "classLabel": "apmortar",
+                "scrapCost": "40",
+                "unitName": "Mortar",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmortar"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "apmort3.odf": {
+            "GameObjectClass": {
+                "baseName": "apmort",
+                "classLabel": "apmortar",
+                "unitName": "Mortar"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmortar"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "apphan.odf": {
+            "GameObjectClass": {
+                "baseName": "apphan",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Phantom VIR",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gphantom"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "applas.odf": {
+            "GameObjectClass": {
+                "baseName": "applas",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Plasma",
+                "requireCount": "2",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibsbay",
+                "requireText2": "Build Service Bay"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gplasma_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "appopg.odf": {
+            "GameObjectClass": {
+                "baseName": "appopg",
+                "classLabel": "apmortar",
+                "scrapCost": "20",
+                "unitName": "Popper",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gpopgun"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "approx.odf": {
+            "GameObjectClass": {
+                "baseName": "approx",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Prox Mine"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gproxmin"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "appstb.odf": {
+            "GameObjectClass": {
+                "baseName": "appstb",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Pulse Stab",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gplstab_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "appumm.odf": {
+            "GameObjectClass": {
+                "baseName": "appumm",
+                "classLabel": "apgun",
+                "scrapCost": "20",
+                "unitName": "Pummel",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gpummel_c"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "apquil.odf": {
+            "GameObjectClass": {
+                "baseName": "apquil",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Quill",
+                "requireCount": "2",
+                "requireName1": "fbdowe",
+                "requireText1": "Build Dower",
+                "requireName2": "fbantm",
+                "requireText2": "Build Antenna Mound"
+            },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gquill_c"
             },
             "inheritanceChain": [
-                "apquil"
+                "apcannon"
+            ]
+        },
+        "apredf.odf": {
+            "GameObjectClass": {
+                "baseName": "apredf",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "RED Field",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gredfld"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apresn.odf": {
+            "GameObjectClass": {
+                "baseName": "apresn",
+                "classLabel": "apmortar",
+                "scrapCost": "30",
+                "unitName": "Resin",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gresin"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "aprktb.odf": {
+            "GameObjectClass": {
+                "baseName": "aprktb",
+                "classLabel": "aprocket",
+                "scrapCost": "3",
+                "unitName": "Rocket Bomb",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "grktbomb_c"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apsand.odf": {
+            "GameObjectClass": {
+                "baseName": "apsand",
+                "classLabel": "aprocket",
+                "scrapCost": "1",
+                "unitName": "Sandbag",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsandbag"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apsartl.odf": {
+            "GameObjectClass": {
+                "baseName": "apsartl",
+                "classLabel": "apmortar",
+                "scrapCost": "20",
+                "unitName": "Howitzer",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsartill"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "apseek.odf": {
+            "GameObjectClass": {
+                "baseName": "apseek",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Seeker",
+                "requireCount": "1",
+                "requireName1": "fbdowe",
+                "requireText1": "Build Dower"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gseeker"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apshdw.odf": {
+            "GameObjectClass": {
+                "baseName": "apshdw",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "Shadower Missile",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gshadow_c"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "apsite.odf": {
+            "GameObjectClass": {
+                "baseName": "apsite",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "SITE Camera",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsitecam"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apsonic.odf": {
+            "GameObjectClass": {
+                "baseName": "apsonic",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Sonic Cannon",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsonic_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apsplasma.odf": {
+            "GameObjectClass": {
+                "baseName": "apsplasma",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "Plasma Cannon",
+                "requireCount": "1",
+                "requireName1": "fbkiln",
+                "requireText1": "Build Kiln"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsplasma_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apspln.odf": {
+            "GameObjectClass": {
+                "baseName": "apspln",
+                "classLabel": "apmortar",
+                "scrapCost": "40",
+                "unitName": "Splinter",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsplint"
+            },
+            "inheritanceChain": [
+                "apmortar"
+            ]
+        },
+        "apsstb.odf": {
+            "GameObjectClass": {
+                "baseName": "apsstb",
+                "classLabel": "apcannon",
+                "scrapCost": "20",
+                "unitName": "SP-Stab",
+                "requireCount": "2",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibcbun",
+                "requireText2": "Build Relay Bunker"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gspstab_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apstab.odf": {
+            "GameObjectClass": {
+                "baseName": "apstab",
+                "classLabel": "apcannon",
+                "scrapCost": "10",
+                "unitName": "AT-Stab",
+                "requireCount": "1",
+                "requireName1": "ibfact",
+                "requireText1": "Build Factory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gatstab_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apstatic.odf": {
+            "GameObjectClass": {
+                "baseName": "apstatic",
+                "classLabel": "apspecial",
+                "scrapCost": "20",
+                "unitName": "Static Charge",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbstro",
+                "requireText2": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gstatic"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "apsting.odf": {
+            "GameObjectClass": {
+                "baseName": "apsting",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "Stinger Missile",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requiretext1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsting_c"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "aptagg.odf": {
+            "GameObjectClass": {
+                "baseName": "aptagg",
+                "classLabel": "aprocket",
+                "scrapCost": "20",
+                "unitName": "TAG Gun"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gtaggun_c"
+            },
+            "inheritanceChain": [
+                "aprocket"
+            ]
+        },
+        "aptech.odf": {
+            "GameObjectClass": {
+                "baseName": "aptech",
+                "classLabel": "apcannon",
+                "scrapCost": "1",
+                "unitName": "Rave!",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gtechno"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "aptrain.odf": {
+            "GameObjectClass": {
+                "baseName": "aptrain",
+                "classLabel": "apgun",
+                "scrapCost": "1",
+                "unitName": "Trainer",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gtrainer_c"
+            },
+            "inheritanceChain": [
+                "apgun"
+            ]
+        },
+        "fpjetp.odf": {
+            "GameObjectClass": {
+                "baseName": "fpjetp",
+                "classLabel": "appack",
+                "scrapCost": "30",
+                "unitName": "Scion Jetpack",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "fgjetp"
+            },
+            "inheritanceChain": [
+                "appack"
+            ]
+        },
+        "fpsnip.odf": {
+            "GameObjectClass": {
+                "baseName": "fpsnip",
+                "classLabel": "aphand",
+                "scrapCost": "30",
+                "unitName": "Scion Pulse Rifle",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "fgsnip_c"
+            },
+            "inheritanceChain": [
+                "aphand"
+            ]
+        },
+        "spbolt.odf": {
+            "GameObjectClass": {
+                "baseName": "apbolt",
+                "classLabel": "apcannon",
+                "scrapCost": "8",
+                "unitName": "Lightning",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gbolt_c"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "spguard.odf": {
+            "GameObjectClass": {
+                "baseName": "spguard",
+                "classLabel": "apcannon",
+                "scrapCost": "5",
+                "unitName": "Guard Gun",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gguardgn"
+            },
+            "inheritanceChain": [
+                "apcannon"
+            ]
+        },
+        "apcamd.odf": {
+            "GameObjectClass": {
+                "baseName": "apcamd",
+                "classLabel": "apspecial",
+                "scrapCost": "30",
+                "unitName": "Camera Pod"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gcamr"
+            },
+            "inheritanceChain": [
+                "apspecial"
+            ]
+        },
+        "aparccvsr.odf": {
+            "GameObjectClass": {
+                "baseName": "aparcc",
+                "classLabel": "aparcc",
+                "scrapCost": "30",
+                "unitName": "Arc Cannon",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "garcvsr_c"
+            },
+            "inheritanceChain": [
+                "aparcc",
+                "apcannon"
+            ]
+        },
+        "apsplasmavsr.odf": {
+            "GameObjectClass": {
+                "baseName": "apsplasma",
+                "classLabel": "apsplasma",
+                "scrapCost": "20",
+                "unitName": "Plasma Cannon",
+                "requireCount": "0",
+                "requireName1": "fbkiln",
+                "requireText1": "Build Kiln"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gsplasma_c"
+            },
+            "inheritanceChain": [
+                "apsplasma",
+                "apcannon"
+            ]
+        },
+        "apquilvsr.odf": {
+            "GameObjectClass": {
+                "baseName": "apquil",
+                "classLabel": "apquil",
+                "scrapCost": "20",
+                "unitName": "Quill",
+                "requireCount": "2",
+                "requireName1": "fbdowe",
+                "requireText1": "Build Dower",
+                "requireName2": "fbkiln",
+                "requireText2": "Build Kiln"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gquill_c"
+            },
+            "inheritanceChain": [
+                "apquil",
+                "apcannon"
             ]
         },
         "apsonicvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apsonic",
                 "classLabel": "apsonic",
                 "scrapCost": "20",
+                "unitName": "Sonic Cannon",
                 "requireCount": "1",
                 "requireName1": "fbforg",
                 "requireText1": "Build Forge",
-                "unitName": "Sonic Blast"
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gsonicvsr_c"
             },
             "inheritanceChain": [
-                "apsonic"
+                "apsonic",
+                "apcannon"
             ]
         },
         "aplockvsr.odf": {
             "GameObjectClass": {
+                "baseName": "aplock",
                 "classLabel": "aplock",
-                "infoName": "aplockvsr.inf",
                 "scrapCost": "20",
-                "unitName": "EMP Lockdown"
+                "unitName": "EMP Lockdown",
+                "requireCount": "1",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "infoName": "aplockvsr.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "glockvsr_c"
             },
             "inheritanceChain": [
-                "aplock"
+                "aplock",
+                "apgun"
             ]
         },
         "fpsnipvsr.odf": {
             "GameObjectClass": {
+                "baseName": "fpsnip",
                 "classLabel": "fpsnip",
-                "infoName": "fpsnipvsr.inf",
+                "scrapCost": "30",
+                "unitName": "Scion Pulse Rifle",
                 "requireCount": "1",
                 "requireName1": "fbantm_vsr",
                 "requireText1": "Build Antenna Mound",
-                "unitName": "Pulse"
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound",
+                "infoName": "fpsnipvsr.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "fgsnipvsr_c"
             },
             "inheritanceChain": [
-                "fpsnip"
+                "fpsnip",
+                "aphand"
             ]
         },
         "apseekvsr.odf": {
             "GameObjectClass": {
-                "infoName": "apseekvsr.inf",
+                "baseName": "apseek",
                 "classLabel": "apseek",
-                "unitName": "Seeker"
+                "scrapCost": "20",
+                "unitName": "Seeker",
+                "requireCount": "1",
+                "requireName1": "fbdowe",
+                "requireText1": "Build Dower",
+                "infoName": "apseekvsr.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gseekervsr"
             },
             "inheritanceChain": [
-                "apseek"
+                "apseek",
+                "apspecial"
             ]
         },
         "apflar_svsr.odf": {
@@ -73661,57 +76148,81 @@
         },
         "apmlockvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apmlock",
                 "classLabel": "apmlock",
+                "scrapCost": "20",
+                "unitName": "Multi-Lock",
                 "requireCount": "1",
                 "requireName1": "fbantm",
-                "requiretext1": "Build Antenna Mound",
-                "unitName": "Multi Lock"
+                "requiretext1": "Build Antenna Mound"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gmlockvsr_c"
             },
             "inheritanceChain": [
-                "apmlock"
+                "apmlock",
+                "aprocket"
             ]
         },
         "apstingvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apsting",
                 "classLabel": "apsting",
+                "scrapCost": "20",
+                "unitName": "Stinger Missile",
                 "requireCount": "1",
                 "requireName1": "fbantm",
-                "requiretext1": "Build Antenna Mound",
-                "unitName": "Stinger Msl"
+                "requiretext1": "Build Antenna Mound"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gstingvsr_c"
             },
             "inheritanceChain": [
-                "apsting"
+                "apsting",
+                "aprocket"
             ]
         },
         "apgasvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apgas",
                 "classLabel": "apgas",
-                "unitName": "Acid Cloud"
+                "scrapCost": "30",
+                "unitName": "Acid Cloud",
+                "requireCount": "1",
+                "requireName1": "fbstro",
+                "requireText1": "Build Stronghold"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "ggasmortvsr"
             },
             "inheritanceChain": [
-                "apgas"
+                "apgas",
+                "apmortar"
             ]
         },
         "appopgvsr.odf": {
             "GameObjectClass": {
+                "baseName": "appopg",
                 "classLabel": "appopg",
-                "infoName": "appopgvsr.inf",
-                "unitName": "Popper"
+                "scrapCost": "20",
+                "unitName": "Popper",
+                "requireCount": "2",
+                "requireName1": "fbantm",
+                "requireText1": "Build Antenna Mound",
+                "requireName2": "fbover",
+                "requireText2": "Upgrade Antenna Mound",
+                "infoName": "appopgvsr.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gpopgunvsr"
             },
             "inheritanceChain": [
-                "appopg"
+                "appopg",
+                "apmortar"
             ]
         },
         "fpjetpvsr.odf": {
@@ -73736,7 +76247,10 @@
         },
         "apblnkvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apblnk",
                 "classLabel": "apblnk",
+                "scrapCost": "20",
+                "unitName": "Blink",
                 "requireCount": "4",
                 "requireName1": "fbstro",
                 "requireText1": "Build Stronghold",
@@ -73745,14 +76259,15 @@
                 "requireName3": "fbantm",
                 "requireText3": "Build Antenna Mound",
                 "requireName4": "fbover",
-                "requireText4": "Upgrade Antenna Mound",
-                "unitName": "Blink"
+                "requireText4": "Upgrade Antenna Mound"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gblinkvsr"
             },
             "inheritanceChain": [
-                "apblnk"
+                "apblnk",
+                "apspecial"
             ]
         },
         "apstabvsr.odf": {
@@ -73776,81 +76291,126 @@
         },
         "apmaggvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apmagg",
                 "classLabel": "apmagg",
                 "scrapCost": "20",
-                "unitName": "MAG"
+                "unitName": "MAG",
+                "requireCount": "3",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibcbun",
+                "requireText2": "Build Relay Bunker",
+                "requireName3": "ibtcen",
+                "requireText3": "Build Tech Center"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gmaggunvsr_c"
             },
             "inheritanceChain": [
-                "apmagg"
+                "apmagg",
+                "apcannon"
             ]
         },
         "applasvsr.odf": {
             "GameObjectClass": {
+                "baseName": "applas",
                 "classLabel": "applas",
-                "unitName": "Plasma"
+                "scrapCost": "20",
+                "unitName": "Plasma",
+                "requireCount": "2",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "requireName2": "ibsbay",
+                "requireText2": "Build Service Bay"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gplasmavsr_c"
             },
             "inheritanceChain": [
-                "applas"
+                "applas",
+                "apcannon"
             ]
         },
         "appstbvsr.odf": {
             "GameObjectClass": {
+                "baseName": "appstb",
                 "classLabel": "appstb",
-                "infoName": "appstbvsr.inf",
-                "unitName": "Pulse Stab"
+                "scrapCost": "20",
+                "unitName": "Pulse Stab",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay",
+                "infoName": "appstbvsr.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gplstabvsr_c"
             },
             "inheritanceChain": [
-                "appstb"
+                "appstb",
+                "apcannon"
             ]
         },
         "apchainvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apchain",
                 "classLabel": "apchain",
-                "infoName": "apchain.inf",
                 "scrapCost": "20",
-                "unitName": "Chain Gun"
+                "unitName": "Chain Gun",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory",
+                "infoName": "apchain.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gchainvsr_c"
             },
             "inheritanceChain": [
-                "apchain"
+                "apchain",
+                "apgun"
             ]
         },
         "aplasevsr.odf": {
             "GameObjectClass": {
+                "baseName": "aplase",
                 "classLabel": "aplase",
-                "infoName": "aplasevsr.inf",
-                "unitName": "Laser"
+                "scrapCost": "20",
+                "unitName": "Laser",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay",
+                "infoName": "aplasevsr.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "glaservsr_c"
             },
             "inheritanceChain": [
-                "aplase"
+                "aplase",
+                "apgun"
             ]
         },
         "appummvsr.odf": {
             "GameObjectClass": {
+                "baseName": "appumm",
                 "classLabel": "appumm",
-                "infoName": "apchain.inf",
                 "scrapCost": "20",
-                "unitName": "Pummel"
+                "unitName": "Pummel",
+                "requireCount": "1",
+                "requireName1": "ibsbay",
+                "requireText1": "Build Service Bay",
+                "infoName": "apchain.inf"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gpummelvsr_c"
             },
             "inheritanceChain": [
-                "appumm"
+                "appumm",
+                "apgun"
             ]
         },
         "apsnipvsr.odf": {
@@ -73875,38 +76435,56 @@
         },
         "apmcurvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apmcur",
                 "classLabel": "apmcur",
-                "unitName": "M-Curtain"
+                "scrapCost": "20",
+                "unitName": "M-Curtain",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gmcurminvsr"
             },
             "inheritanceChain": [
-                "apmcur"
+                "apmcur",
+                "apspecial"
             ]
         },
         "apmitsvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apmits",
                 "classLabel": "apmits",
-                "unitName": "MITS Mine"
+                "scrapCost": "20",
+                "unitName": "MITS Mine",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gmitsminvsr"
             },
             "inheritanceChain": [
-                "apmits"
+                "apmits",
+                "apspecial"
             ]
         },
         "approxvsr.odf": {
             "GameObjectClass": {
+                "baseName": "approx",
                 "classLabel": "approx",
+                "scrapCost": "20",
                 "unitName": "Prox Mine"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gproxminvsr"
             },
             "inheritanceChain": [
-                "approx"
+                "approx",
+                "apspecial"
             ]
         },
         "apflarvsr.odf": {
@@ -73930,64 +76508,110 @@
         },
         "apfafmvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apfafm",
                 "classLabel": "apfafm",
-                "unitName": "FAF Msl"
+                "scrapCost": "20",
+                "unitName": "FAF Missile"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gfafmslvsr_c"
             },
             "inheritanceChain": [
-                "apfafm"
+                "apfafm",
+                "aprocket"
             ]
         },
         "apshdwvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apshdw",
                 "classLabel": "apshdw",
-                "unitName": "Shadower Msl"
+                "scrapCost": "20",
+                "unitName": "Shadower Missile",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gshadowvsr_c"
             },
             "inheritanceChain": [
-                "apshdw"
+                "apshdw",
+                "aprocket"
             ]
         },
         "aptaggvsr.odf": {
             "GameObjectClass": {
+                "baseName": "aptagg",
                 "classLabel": "aptagg",
-                "unitName": "TAG Cannon"
+                "scrapCost": "20",
+                "unitName": "TAG Gun"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gtaggunvsr_c"
             },
             "inheritanceChain": [
-                "aptagg"
+                "aptagg",
+                "aprocket"
             ]
         },
         "apmdmgvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apmdmg",
                 "classLabel": "apmdmg",
                 "scrapCost": "25",
-                "unitName": "MDM Mortar"
+                "unitName": "MDM Mortar",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gmdmgun"
             },
             "inheritanceChain": [
-                "apmdmg"
+                "apmdmg",
+                "apmortar"
+            ]
+        },
+        "apmortvsr.odf": {
+            "GameObjectClass": {
+                "baseName": "apmort",
+                "classLabel": "apmort",
+                "scrapCost": "25",
+                "unitName": "Mortar",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
+            },
+            "PowerUpClass": {},
+            "WeaponPowerupClass": {
+                "weaponName": "gmortar"
+            },
+            "inheritanceChain": [
+                "apmort",
+                "apmortar"
             ]
         },
         "apsplnvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apspln",
                 "classLabel": "apspln",
                 "scrapCost": "25",
-                "unitName": "Splinter"
+                "unitName": "Splinter",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gsplintvsr"
             },
             "inheritanceChain": [
-                "apspln"
+                "apspln",
+                "apmortar"
             ]
         },
         "apjetpvsr.odf": {
@@ -74010,38 +76634,59 @@
         },
         "apphanvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apphan",
                 "classLabel": "apphan",
-                "unitName": "Phantom VIR"
+                "scrapCost": "20",
+                "unitName": "Phantom VIR",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gphantomvsr"
             },
             "inheritanceChain": [
-                "apphan"
+                "apphan",
+                "apspecial"
             ]
         },
         "apredfvsr.odf": {
             "GameObjectClass": {
+                "baseName": "apredf",
                 "classLabel": "apredf",
-                "unitName": "RED Field"
+                "scrapCost": "20",
+                "unitName": "RED Field",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gredfldvsr"
             },
             "inheritanceChain": [
-                "apredf"
+                "apredf",
+                "apspecial"
             ]
         },
         "apsitevsr.odf": {
             "GameObjectClass": {
+                "baseName": "apsite",
                 "classLabel": "apsite",
-                "unitName": "SITE Camera"
+                "scrapCost": "20",
+                "unitName": "SITE Camera",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "requireText1": "Build Armory"
             },
+            "PowerUpClass": {},
             "WeaponPowerupClass": {
                 "weaponName": "gsitecamvsr"
             },
             "inheritanceChain": [
-                "apsite"
+                "apsite",
+                "apspecial"
             ]
         },
         "epbazo_vsr.odf": {

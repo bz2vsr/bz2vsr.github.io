@@ -278,7 +278,7 @@ class ODFBrowser {
     
     async loadData() {
         try {
-            const response = await fetch('/data/odf/odf.json');
+            const response = await fetch('/data/odf/odf.min.json');
             this.data = await response.json();
             this.initializeSidebar();
             return true;

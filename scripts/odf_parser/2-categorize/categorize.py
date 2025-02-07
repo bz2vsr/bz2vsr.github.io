@@ -16,6 +16,11 @@ def categorize_objects(data):
     categorized = {category: {} for category in CATEGORIES}
     
     for odf_name, odf_data in data.items():
+        # Special case for Day Wrecker
+        if odf_name == "apwrck.odf":
+            categorized["Weapon"][odf_name] = odf_data
+            continue
+            
         # Check each object against category identifiers
         for category, class_key in CATEGORIES.items():
             if class_key in odf_data:
@@ -35,10 +40,15 @@ def main():
     # Categorize the data
     categorized_data = categorize_objects(merged_data)
     
-    # Write output
+    # Write pretty output
     output_path = root_dir / 'Categorized-ODF-Data.json'
     with open(output_path, 'w') as f:
         json.dump(categorized_data, f, indent=4)
+    
+    # Write minified output
+    minified_path = root_dir / 'odf.min.json'
+    with open(minified_path, 'w') as f:
+        json.dump(categorized_data, f, separators=(',', ':'))
     
     # Print summary
     print("\nCategorized objects summary:")
@@ -46,7 +56,9 @@ def main():
     for category, objects in categorized_data.items():
         print(f"{category}: {len(objects)} objects")
     print("-" * 30)
-    print(f"\nOutput written to: {output_path}")
+    print(f"\nOutput written to:")
+    print(f"Pretty: {output_path}")
+    print(f"Minified: {minified_path}")
 
 if __name__ == "__main__":
     main()
