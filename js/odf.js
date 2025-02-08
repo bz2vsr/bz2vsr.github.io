@@ -590,12 +590,18 @@ class ODFBrowser {
     }
     
     displayODFData(category, filename) {
+        // Add this at the beginning of the method
+        this.selectedODF = {
+            category: category,
+            filename: filename,
+            data: this.data[category][filename]  // Store the full ODF data
+        };
+
         // Update URL before displaying ODF
         const odfName = filename.replace('.odf', '');
         this.updateURL({ odf: odfName });
         
         const odfData = this.data[category][filename];
-        this.selectedODF = {category, filename};
 
         const displayName = odfData.GameObjectClass?.unitName || odfData.WeaponClass?.wpnName || filename;
         const inheritanceHtml = odfData.inheritanceChain ? 
@@ -824,6 +830,11 @@ class ODFBrowser {
         // After rendering content
         this.initializeComparisonHovers();
         this.equalizeCardHeights();
+        
+        // After content is rendered, initialize popovers
+        document.querySelectorAll('[data-bs-toggle="popover"]').forEach(popoverTriggerEl => {
+            new bootstrap.Popover(popoverTriggerEl);
+        });
     }
     
     formatODFDataColumn(classEntries) {
@@ -872,21 +883,103 @@ class ODFBrowser {
     }
     
     formatClassProperties(classData) {
-        // Get the current category and class name from the selected ODF
+        // Add debug logging
+        console.log('formatClassProperties:', {
+            selectedODF: this.selectedODF,
+            category: this.selectedODF?.category,
+            data: this.selectedODF?.data
+        });
+        
         const category = this.selectedODF?.category;
         
         return Object.entries(classData)
-            .map(([key, value]) => `
-                <tr>
-                    <td><code>${key}</code></td>
-                    <td>${this.formatValue(value, key, category)}</td>
-                </tr>
-            `).join('');
+            .map(([key, value]) => {
+                // Add debug logging for each property
+                console.log('Processing property:', key, value);
+                return `
+                    <tr>
+                        <td><code>${key}</code></td>
+                        <td>${this.formatValue(value, key, category, this.selectedODF?.data)}</td>
+                    </tr>
+                `;
+            }).join('');
     }
     
-    formatValue(value, propertyName = '', category = '') {
+    formatValue(value, propertyName = '', category = '', odfData = null) {
         if (typeof value === 'object' && value !== null) {
             return `<pre class="mb-0"><code>${JSON.stringify(value, null, 2)}</code></pre>`;
+        }
+        
+        // Handle subAttackClass property
+        if (propertyName === 'subAttackClass' && category === 'Vehicle') {
+            const popoverContent = `This property contains 3 letters to specify how the AI behaves when attacking:
+                <br><br>
+                <strong>First letter:</strong><br>
+                N = Attack ground targets only.<br>
+                A = Attack ground and flying targets.
+                <br><br>
+                <strong>Second letter:</strong><br>
+                N = Attack when undeployed<br>
+                D = Attack when deployed.
+
+                <br><br>
+                <strong>Third letter:</strong><br>
+                N = Use <code>engageRange</code> for attacking.<br>
+                S = Use <code>Weapon.aiRange</code> for attacking.`;
+                
+
+            return `
+                <div class="d-flex align-items-center gap-2">
+                    <span>${value}</span>
+                    <button class="btn btn-sm btn-link p-0 text-muted" 
+                            data-bs-toggle="popover" 
+                            data-bs-html="true"
+                            data-bs-placement="right"
+                            data-bs-content="${popoverContent}"
+                            data-bs-trigger="hover focus">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                        </svg>
+                    </button>
+                </div>`;
+        }
+        
+        // Handle engageRange property for Vehicles
+        if (propertyName === 'engageRange' && category === 'Vehicle') {
+            // Get the CraftClass data directly from the current class
+            const craftClass = Object.entries(odfData).find(([className]) => 
+                className === 'CraftClass')?.[1];
+                
+            if (craftClass) {
+                const subAttackClass = craftClass.subAttackClass || '';
+                const thirdLetter = subAttackClass.charAt(2)?.toUpperCase();
+                
+                let popoverContent = '';
+                if (thirdLetter === 'S') {
+                    popoverContent = "Per the <code>subAttackClass</code>, this unit uses its <code>Weapon.aiRange</code> property value instead of <code>engageRange</code>";
+                } else if (thirdLetter === 'N') {
+                    popoverContent = "Per the <code&lt;subAttackClass</code&lt;, this unit uses this engageRange value instead of its Weapon aiRange";
+                }
+                
+                if (popoverContent) {
+                    return `
+                        <div class="d-flex align-items-center gap-2">
+                            <code style="color: rgba(255, 107, 74, 0.85)">${value}</code>
+                            <button class="btn btn-sm btn-link p-0 text-muted" 
+                                    data-bs-toggle="popover" 
+                                    data-bs-html="true"
+                                    data-bs-placement="right"
+                                    data-bs-content="${popoverContent}"
+                                    data-bs-trigger="hover focus">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                </svg>
+                            </button>
+                        </div>`;
+                }
+            }
         }
         
         if (typeof value === 'string') {
@@ -923,15 +1016,16 @@ class ODFBrowser {
                     return `<a href="#" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-category="${targetCategory}" data-filename="${value}.odf">${value}</a>`;
                 }
             }
-            
-            // Handle numeric values including scientific notation
-            if (
+        }
+        
+        // Handle numeric values including scientific notation
+        if (typeof value === 'number' || 
+            (typeof value === 'string' && (
                 /^-?\d*\.?\d+f?$/.test(value) ||  // Regular numbers with optional decimal and 'f' suffix
                 /^-?\d*\.?\d+(?:f?\s+-?\d*\.?\d+f?)+$/.test(value) ||  // Space-separated numbers
                 /^-?\d*\.?\d+e[+-]?\d+f?$/i.test(value)  // Scientific notation with optional 'f' suffix
-            ) {
-                return `<code style="color: rgba(255, 107, 74, 0.85)">${value}</code>`;
-            }
+            ))) {
+            return `<code style="color: rgba(255, 107, 74, 0.85)">${value}</code>`;
         }
         
         return value;
@@ -1908,7 +2002,7 @@ class ODFBrowser {
                 <div class="modal-dialog modal-fullscreen">
                     <div class="modal-content">
                         <div class="modal-header" style="background: rgb(2, 4, 12); border-color: rgba(255,255,255,0.1)">
-                            <h5 class="modal-title">Faction Build Trees</h5>
+                            <h5 class="modal-title">VSR Faction Build Trees</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body p-4" style="background: rgb(2, 4, 12); height: calc(100vh - 70px); overflow: hidden;">
