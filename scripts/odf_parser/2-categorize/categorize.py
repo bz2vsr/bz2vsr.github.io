@@ -17,12 +17,18 @@ def categorize_objects(data):
     
     for odf_name, odf_data in data.items():
         # Special case for Day Wrecker
-        if odf_name == "apwrck.odf":
+        if odf_name == "apwrck.odf" or odf_name == "apwrckvsr.odf":
             categorized["Weapon"][odf_name] = odf_data
+            continue
+
+        # Special case for Service Pod
+        if odf_name == "apserv.odf":
+            categorized["Powerup"][odf_name] = odf_data
             continue
             
         # Check each object against category identifiers
         for category, class_key in CATEGORIES.items():
+
             if class_key in odf_data:
                 categorized[category][odf_name] = odf_data
                 break

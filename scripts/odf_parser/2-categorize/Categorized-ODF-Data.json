@@ -38545,6 +38545,31 @@
                 "apspecial"
             ]
         },
+        "apwrckvsr.odf": {
+            "GameObjectClass": {
+                "geometryName": "daywrecker00.fbx",
+                "classLabel": "daywrecker",
+                "scrapCost": "20",
+                "scrapValue": "0",
+                "maxHealth": "1000",
+                "maxAmmo": "0",
+                "unitName": "Day Wrecker",
+                "aiName": "PowerUpProcess",
+                "requireCount": "1",
+                "requireName1": "ibarmo",
+                "ClearBuildZone": "0"
+            },
+            "PowerUpClass": {
+                "SlowFall": "false",
+                "FallSpeed": "36"
+            },
+            "DayWreckerClass": {
+                "xplBlast": "xbmbxpl"
+            },
+            "inheritanceChain": [
+                "daywrecker"
+            ]
+        },
         "gatstabvsr_a.odf": {
             "WeaponClass": {
                 "classLabel": "gatstab_a",
@@ -74475,6 +74500,45 @@
             },
             "inheritanceChain": [
                 "apcannon"
+            ]
+        },
+        "apserv.odf": {
+            "GameObjectClass": {
+                "geometryName": "apammo00.fbx",
+                "classLabel": "servicepod",
+                "scrapCost": "2",
+                "scrapValue": "0",
+                "maxHealth": "150",
+                "maxAmmo": "0",
+                "unitName": "Service Pod",
+                "aiName": "PowerUpProcess",
+                "lightHard1": "hp_light_1",
+                "lightName1": "omniblue-ap",
+                "effectHard1": "hp_emit_1",
+                "effectName1": "apserv.blue",
+                "effectHard2": "hp_emit_2",
+                "effectName2": "emit_sprtjetblu",
+                "effectMinAltitude2": "4.0",
+                "effectMaxAltitude2": "500.0"
+            },
+            "blue": {
+                "renderBase": "draw_sprite",
+                "textureName": "lightflare.tga",
+                "textureBlend": "one one modulate",
+                "startColor": "0 150 255 255",
+                "finishColor": "0 150 255 255",
+                "startRadius": "4.0",
+                "finishRadius": "4.0"
+            },
+            "PowerUpClass": {
+                "soundPickup": "pickup01.wav",
+                "soundReject": "reject.wav"
+            },
+            "ServicePowerupClass": {
+                "serviceUp": "1500"
+            },
+            "inheritanceChain": [
+                "servicepod"
             ]
         },
         "apflam.odf": {
