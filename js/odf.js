@@ -353,18 +353,7 @@ class ODFBrowser {
         });
         
         document.getElementById('resetView').addEventListener('click', () => {
-            searchInput.value = '';
-            this.handleSearch('');
-            this.showDefaultContent();
-            
-            document.querySelectorAll('.odf-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            const vehicleTab = document.querySelector('#sidebar-tab-Vehicle');
-            if (vehicleTab) {
-                vehicleTab.click();
-            }
+            this.resetView();
         });
         
         this.currentCategory = Object.keys(this.data)[0];
@@ -460,11 +449,11 @@ class ODFBrowser {
 
         term = term.toLowerCase();
         const categoryCounts = {};
-        let hasExactMatch = false;
         let firstMatch = null;
-        let firstExactMatch = null;  // Track the first exact match found
+        let firstExactMatch = null;
         let exactMatchCategory = null;
         
+        // First pass - identify exact matches and count all matches
         document.querySelectorAll('.odf-item').forEach(item => {
             item.classList.remove('active');
             
@@ -481,13 +470,13 @@ class ODFBrowser {
                 odfData?.WeaponClass?.wpnName?.toLowerCase()
             ].filter(Boolean);
             
+            // Check for exact match
             const isExactMatch = searchableNames.some(name => name === term);
             if (isExactMatch) {
-                hasExactMatch = true;
                 item.style.display = '';
+                item.classList.add('exact-match'); // Add class for exact matches
                 categoryCounts[category]++;
                 
-                // Only store first exact match found
                 if (!firstExactMatch) {
                     firstExactMatch = item;
                     exactMatchCategory = category;
@@ -495,29 +484,35 @@ class ODFBrowser {
                 return;
             }
             
-            if (hasExactMatch) {
-                item.style.display = 'none';
-                return;
-            }
-            
+            // Check for partial match
             const isMatch = searchableNames.some(name => fuzzySearch(term, name));
-            item.style.display = isMatch ? '' : 'none';
-            
-            if (isMatch && !firstMatch) {
-                firstMatch = item;
-            }
             if (isMatch) {
+                item.style.display = '';
+                item.classList.remove('exact-match');
                 categoryCounts[category]++;
+                
+                if (!firstMatch) {
+                    firstMatch = item;
+                }
+            } else {
+                item.style.display = 'none';
             }
         });
         
-        // Use firstExactMatch if available, otherwise use firstMatch
+        // Select the best match
         const matchToSelect = firstExactMatch || firstMatch;
         if (matchToSelect) {
             matchToSelect.classList.add('active');
-            matchToSelect.scrollIntoView({ block: 'nearest' });
             
-            if (hasExactMatch && exactMatchCategory) {
+            // Use setTimeout to ensure DOM has updated before scrolling
+            setTimeout(() => {
+                matchToSelect.scrollIntoView({ 
+                    block: 'nearest',
+                    behavior: 'smooth' // Optional: adds smooth scrolling
+                });
+            }, 0);
+            
+            if (firstExactMatch && exactMatchCategory) {
                 const targetTab = document.querySelector(`#sidebar-tab-${exactMatchCategory}`);
                 if (targetTab && !targetTab.classList.contains('active')) {
                     targetTab.click();
@@ -527,6 +522,7 @@ class ODFBrowser {
             }
         }
         
+        // Update category tabs with counts
         Object.entries(categoryCounts).forEach(([category, count]) => {
             const tab = document.getElementById(`sidebar-tab-${category}`);
             const isActiveCategory = tab.classList.contains('active');
@@ -536,7 +532,8 @@ class ODFBrowser {
                 category;
         });
         
-        if (!hasExactMatch) {
+        // Switch to best category if needed
+        if (!firstExactMatch) {
             const bestCategory = Object.entries(categoryCounts)
                 .reduce((best, [category, count]) => 
                     count > best.count ? {category, count} : best
@@ -547,6 +544,7 @@ class ODFBrowser {
             }
         }
 
+        // Update no-matches alerts
         Object.keys(this.data).forEach(category => {
             const categoryPane = document.querySelector(`#list-${category}`);
             const existingAlert = categoryPane.querySelector('.no-matches-alert');
@@ -2246,6 +2244,25 @@ class ODFBrowser {
         }
         
         return html.join('');
+    }
+
+    resetView() {
+        // Clear search
+        document.getElementById('odfSearch').value = '';
+        this.handleSearch('');
+        
+        // Clear URL parameters and update history
+        const baseUrl = window.location.pathname;
+        window.history.pushState({}, '', baseUrl);
+        
+        // Reset to first Vehicle ODF
+        this.loadFirstVehicleODF();
+        
+        // Switch to Vehicle tab if not already active
+        const vehicleTab = document.querySelector('#sidebar-tab-Vehicle');
+        if (vehicleTab && !vehicleTab.classList.contains('active')) {
+            vehicleTab.click();
+        }
     }
 }
 
