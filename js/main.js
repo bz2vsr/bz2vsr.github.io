@@ -71,6 +71,16 @@ const truncate = (str, len, end = "...") => {
     return (str.length <= len ? str : str.substring(0, len) + end)
 }
 
+function escapeHtml(unsafe) {
+    if (!unsafe) return '';
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 // convert single char into hexidecimal with 2 digit padding
 function charToHex(char) {
     return char.toString(16).padStart(2, '0');
@@ -1454,14 +1464,3 @@ window.addEventListener('DOMContentLoaded', (event) => {
         getRandomMaps();
     });
 });
-
-// Add this helper function at the top of your file
-function escapeHtml(unsafe) {
-    if (!unsafe) return '';
-    return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
