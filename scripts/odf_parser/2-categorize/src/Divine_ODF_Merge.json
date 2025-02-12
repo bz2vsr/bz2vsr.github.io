@@ -8373,12 +8373,12 @@
             "ammoCost": "9",
             "lifeSpan": "1.2",
             "shotSpeed": "500.0",
-            "damageValue(N)": "130",
+            "damageValue(N)": "120",
             "damageValue(L)": "120",
-            "damageValue(H)": "100",
+            "damageValue(H)": "80",
             "damageValue(S)": "120",
-            "damageValue(D)": "100",
-            "damageValue(A)": "130"
+            "damageValue(D)": "120",
+            "damageValue(A)": "120"
         },
         "Render": {
             "renderBase": "draw_multi",
@@ -8698,7 +8698,13 @@
             "xplBuilding": "xlasebld",
             "ammoCost": "20",
             "lifeSpan": "120e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "30",
+            "damageValue(L)": "15",
+            "damageValue(H)": "4",
+            "damageValue(S)": "30",
+            "damageValue(D)": "50",
+            "damageValue(A)": "8"
         },
         "Render": {},
         "Core": {
@@ -9009,7 +9015,14 @@
             "particleClass2": "xmslbld.FlameEmitter",
             "particleCount2": "1",
             "particleVeloc2": "0.0 1.0 0.0",
-            "explSound": "xms2.wav"
+            "explSound": "xms2.wav",
+            "damageRadius": "5.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "50",
+            "damageValue(H)": "50",
+            "damageValue(S)": "50",
+            "damageValue(D)": "50",
+            "damageValue(A)": "50"
         },
         "SmokeEmitter": {},
         "SmokePuff": {},
@@ -9506,7 +9519,13 @@
             "xplBuilding": "xgaussbld",
             "ammoCost": "75",
             "lifeSpan": "179e-3",
-            "shotSpeed": "1e3"
+            "shotSpeed": "1e3",
+            "damageValue(N)": "200",
+            "damageValue(L)": "190",
+            "damageValue(H)": "160",
+            "damageValue(S)": "180",
+            "damageValue(D)": "140",
+            "damageValue(A)": "200"
         },
         "Render": {},
         "Beam": {
@@ -9527,7 +9546,13 @@
             "xplBuilding": "xgaussbld",
             "ammoCost": "18",
             "lifeSpan": "139e-3",
-            "shotSpeed": "1e3"
+            "shotSpeed": "1e3",
+            "damageValue(N)": "75",
+            "damageValue(L)": "55",
+            "damageValue(H)": "35",
+            "damageValue(S)": "55",
+            "damageValue(D)": "30",
+            "damageValue(A)": "75"
         },
         "Render": {},
         "Beam": {
@@ -9738,7 +9763,13 @@
             "xplBuilding": "xlasebld",
             "ammoCost": "20",
             "lifeSpan": "120e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "30",
+            "damageValue(L)": "15",
+            "damageValue(H)": "4",
+            "damageValue(S)": "30",
+            "damageValue(D)": "50",
+            "damageValue(A)": "8"
         },
         "Ordnance.Render": {},
         "Ordnance.Core": {
@@ -10055,7 +10086,13 @@
             "xplBuilding": "xgaussbld",
             "ammoCost": "75",
             "lifeSpan": "179e-3",
-            "shotSpeed": "1e3"
+            "shotSpeed": "1e3",
+            "damageValue(N)": "200",
+            "damageValue(L)": "190",
+            "damageValue(H)": "160",
+            "damageValue(S)": "180",
+            "damageValue(D)": "140",
+            "damageValue(A)": "200"
         },
         "Ordnance.Render": {},
         "Ordnance.Beam": {
@@ -10094,7 +10131,13 @@
             "xplBuilding": "xgaussbld",
             "ammoCost": "18",
             "lifeSpan": "139e-3",
-            "shotSpeed": "1e3"
+            "shotSpeed": "1e3",
+            "damageValue(N)": "75",
+            "damageValue(L)": "55",
+            "damageValue(H)": "35",
+            "damageValue(S)": "55",
+            "damageValue(D)": "30",
+            "damageValue(A)": "75"
         },
         "Ordnance.Render": {},
         "Ordnance.Beam": {
@@ -10781,7 +10824,13 @@
             "xplBuilding": "xmslbld",
             "ammoCost": "9",
             "lifeSpan": "4.0",
-            "shotSpeed": "100.0"
+            "shotSpeed": "100.0",
+            "damageValue(N)": "120",
+            "damageValue(L)": "120",
+            "damageValue(H)": "80",
+            "damageValue(S)": "120",
+            "damageValue(D)": "120",
+            "damageValue(A)": "120"
         },
         "Ordnance.Render": {},
         "Ordnance.Smoke": {},
@@ -10817,12 +10866,12 @@
             "ammoCost": "3",
             "lifeSpan": "1.0",
             "shotSpeed": "100.0",
-            "damageValue(N)": "20",
-            "damageValue(L)": "10",
-            "damageValue(H)": "1",
-            "damageValue(S)": "10",
-            "damageValue(D)": "20",
-            "damageValue(A)": "1",
+            "damageValue(N)": "10",
+            "damageValue(L)": "7",
+            "damageValue(H)": "5",
+            "damageValue(S)": "7",
+            "damageValue(D)": "10",
+            "damageValue(A)": "5",
             "renderName": "ionize_c.render",
             "shotRadius": "0.5"
         },
@@ -10914,7 +10963,13 @@
             "xplExpire": "xplascar_c",
             "ammoCost": "5",
             "lifeSpan": "3.0",
-            "shotSpeed": "20.0"
+            "shotSpeed": "20.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "75",
+            "damageValue(H)": "50",
+            "damageValue(S)": "75",
+            "damageValue(D)": "100",
+            "damageValue(A)": "50"
         },
         "Ordnance.BounceBombClass": {
             "bounceRatio": "0.9",
@@ -11481,7 +11536,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "1.25",
             "lifeSpan": "0.6",
-            "shotSpeed": "300.0"
+            "shotSpeed": "300.0",
+            "damageValue(N)": "10",
+            "damageValue(L)": "8",
+            "damageValue(H)": "5",
+            "damageValue(S)": "8",
+            "damageValue(D)": "5",
+            "damageValue(A)": "11"
         },
         "Ordnance.inheritanceChain": [
             "bullet"
@@ -12681,12 +12742,12 @@
             "ammoCost": "9",
             "lifeSpan": "1.2",
             "shotSpeed": "500.0",
-            "damageValue(N)": "130",
+            "damageValue(N)": "120",
             "damageValue(L)": "120",
-            "damageValue(H)": "100",
+            "damageValue(H)": "80",
             "damageValue(S)": "120",
-            "damageValue(D)": "100",
-            "damageValue(A)": "130"
+            "damageValue(D)": "120",
+            "damageValue(A)": "120"
         },
         "Ordnance.Render": {
             "renderBase": "draw_multi",
@@ -12787,6 +12848,13 @@
         },
         "DamageFieldClass": {
             "ammoCost": "200.0",
+            "damageRadius": "20.0",
+            "damageValue(N)": "400.0",
+            "damageValue(L)": "300.0",
+            "damageValue(H)": "100.0",
+            "damageValue(S)": "300.0",
+            "damageValue(D)": "400.0",
+            "damageValue(A)": "100.0",
             "activeSound": "sgtow01.wav"
         },
         "Render": {
@@ -13154,7 +13222,13 @@
             "xplBuilding": "xtechit",
             "ammoCost": "40",
             "lifeSpan": "3.0",
-            "shotSpeed": "50.0"
+            "shotSpeed": "50.0",
+            "damageValue(N)": "200",
+            "damageValue(L)": "150",
+            "damageValue(H)": "100",
+            "damageValue(S)": "150",
+            "damageValue(D)": "200",
+            "damageValue(A)": "100"
         },
         "Ordnance.Render": {},
         "Ordnance.Light": {},
@@ -13315,7 +13389,13 @@
             "xplBuilding": "xflabld",
             "ammoCost": "0",
             "lifeSpan": "300e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "200",
+            "damageValue(L)": "200",
+            "damageValue(H)": "200",
+            "damageValue(S)": "200",
+            "damageValue(D)": "200",
+            "damageValue(A)": "200"
         },
         "Render": {
             "segmentLength": "5.0",
@@ -13353,7 +13433,13 @@
             "xplBuilding": "xmslbld",
             "ammoCost": "3",
             "lifeSpan": "1.5",
-            "shotSpeed": "100.0"
+            "shotSpeed": "100.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "50",
+            "damageValue(H)": "50",
+            "damageValue(S)": "50",
+            "damageValue(D)": "50",
+            "damageValue(A)": "50"
         },
         "Render": {},
         "Smoke": {},
@@ -13612,7 +13698,13 @@
             "xplBuilding": "xmslbld",
             "ammoCost": "9",
             "lifeSpan": "4.0",
-            "shotSpeed": "100.0"
+            "shotSpeed": "100.0",
+            "damageValue(N)": "120",
+            "damageValue(L)": "120",
+            "damageValue(H)": "80",
+            "damageValue(S)": "120",
+            "damageValue(D)": "120",
+            "damageValue(A)": "120"
         },
         "Render": {},
         "Smoke": {},
@@ -13642,12 +13734,12 @@
             "ammoCost": "3",
             "lifeSpan": "1.0",
             "shotSpeed": "100.0",
-            "damageValue(N)": "20",
-            "damageValue(L)": "10",
-            "damageValue(H)": "1",
-            "damageValue(S)": "10",
-            "damageValue(D)": "20",
-            "damageValue(A)": "1",
+            "damageValue(N)": "10",
+            "damageValue(L)": "7",
+            "damageValue(H)": "5",
+            "damageValue(S)": "7",
+            "damageValue(D)": "10",
+            "damageValue(A)": "5",
             "renderName": "ionize_c.render",
             "shotRadius": "0.5"
         },
@@ -14585,7 +14677,13 @@
             "xplExpire": "xplascar_c",
             "ammoCost": "5",
             "lifeSpan": "3.0",
-            "shotSpeed": "20.0"
+            "shotSpeed": "20.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "75",
+            "damageValue(H)": "50",
+            "damageValue(S)": "75",
+            "damageValue(D)": "100",
+            "damageValue(A)": "50"
         },
         "BounceBombClass": {
             "bounceRatio": "0.9",
@@ -14606,7 +14704,13 @@
             "xplBuilding": "xkick",
             "ammoCost": "1",
             "lifeSpan": "100.0",
-            "shotSpeed": "10.0"
+            "shotSpeed": "10.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Puff": {
             "spriteCenter.x": "0.0",
@@ -14626,7 +14730,13 @@
             "xplBuilding": "xkick",
             "ammoCost": "1",
             "lifeSpan": "100.0",
-            "shotSpeed": "10.0"
+            "shotSpeed": "10.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Puff": {
             "spriteCenter.x": "0.0",
@@ -14759,7 +14869,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "1.25",
             "lifeSpan": "0.6",
-            "shotSpeed": "300.0"
+            "shotSpeed": "300.0",
+            "damageValue(N)": "10",
+            "damageValue(L)": "8",
+            "damageValue(H)": "5",
+            "damageValue(S)": "8",
+            "damageValue(D)": "5",
+            "damageValue(A)": "11"
         },
         "inheritanceChain": [
             "bullet"
@@ -15989,7 +16105,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "5",
             "lifeSpan": "2.0",
-            "shotSpeed": "150.0"
+            "shotSpeed": "150.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "25",
+            "damageValue(H)": "10",
+            "damageValue(S)": "50",
+            "damageValue(D)": "25",
+            "damageValue(A)": "10"
         },
         "Render": {},
         "inheritanceChain": [
@@ -16005,7 +16127,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "1",
             "lifeSpan": "1.0",
-            "shotSpeed": "150.0"
+            "shotSpeed": "150.0",
+            "damageValue(N)": "10",
+            "damageValue(L)": "5",
+            "damageValue(H)": "2",
+            "damageValue(S)": "5",
+            "damageValue(D)": "2",
+            "damageValue(A)": "10"
         },
         "Render": {},
         "inheritanceChain": [
@@ -16102,7 +16230,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "100",
             "lifeSpan": "300e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "SniperShellClass": {
             "killRadius": "0.5",
@@ -16151,7 +16285,13 @@
             "xplBuilding": "xlgtbld",
             "ammoCost": "100",
             "lifeSpan": "300e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "SniperShellClass": {
             "killRadius": "0.5",
@@ -16597,7 +16737,13 @@
             "xplBuilding": "xtechit",
             "ammoCost": "40",
             "lifeSpan": "3.0",
-            "shotSpeed": "50.0"
+            "shotSpeed": "50.0",
+            "damageValue(N)": "200",
+            "damageValue(L)": "150",
+            "damageValue(H)": "100",
+            "damageValue(S)": "150",
+            "damageValue(D)": "200",
+            "damageValue(A)": "100"
         },
         "Render": {},
         "Light": {},
@@ -16673,7 +16819,14 @@
             "particleCount2": "1",
             "particleVeloc2": "0.0 0.0 0.0",
             "particleBias2": "0.0 0.0 0.0",
-            "explSound": "xms2.wav"
+            "explSound": "xms2.wav",
+            "damageRadius": "5.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "50",
+            "damageValue(H)": "50",
+            "damageValue(S)": "50",
+            "damageValue(D)": "50",
+            "damageValue(A)": "50"
         },
         "Smoke": {},
         "Flame": {},
@@ -16805,7 +16958,14 @@
             "particleClass6": "xbazgnd_c.posroll",
             "particleCount6": "8",
             "particleVeloc6": "3.0 0.0 3.0",
-            "explSound": "mort02.wav"
+            "explSound": "mort02.wav",
+            "damageRadius": "10.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "25",
+            "damageValue(H)": "5",
+            "damageValue(S)": "25",
+            "damageValue(D)": "50",
+            "damageValue(A)": "5"
         },
         "Shock": {
             "latitudeBands": "8",
@@ -16856,7 +17016,14 @@
             "particleCount6": "1",
             "particleVeloc6": "0.0 0.0 0.0",
             "particleInherit6": "0.5 0.5 0.5",
-            "explSound": "xmv1.wav"
+            "explSound": "xmv1.wav",
+            "damageRadius": "10.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "25",
+            "damageValue(H)": "5",
+            "damageValue(S)": "25",
+            "damageValue(D)": "50",
+            "damageValue(A)": "5"
         },
         "Core": {},
         "Flame": {},
@@ -16879,6 +17046,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "",
+            "damageRadius": "20.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "70",
+            "damageValue(H)": "40",
+            "damageValue(S)": "70",
+            "damageValue(D)": "100",
+            "damageValue(A)": "40",
             "kickRadius": "25.0",
             "kickOmega": "10.0",
             "kickVeloc": "20.0",
@@ -16920,6 +17094,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "",
+            "damageRadius": "10.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "70",
+            "damageValue(H)": "40",
+            "damageValue(S)": "70",
+            "damageValue(D)": "100",
+            "damageValue(A)": "40",
             "kickRadius": "15.0",
             "kickOmega": "1.0",
             "kickVeloc": "-10.0",
@@ -16961,6 +17142,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "lhit.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0",
             "particleTypes": "3",
             "particleClass1": "xboltgnd.core",
             "particleCount1": "1",
@@ -16991,6 +17179,13 @@
             "particleCount1": "1",
             "particleVeloc1": "0.0 0.0 0.0",
             "explSound": "xemt1.wav",
+            "damageRadius": "1e5",
+            "damageValue(N)": "1e6",
+            "damageValue(L)": "1e6",
+            "damageValue(H)": "1e6",
+            "damageValue(S)": "1e6",
+            "damageValue(D)": "1e6",
+            "damageValue(A)": "1e6",
             "kickRadius": "1e3",
             "kickOmega": "10.0",
             "kickVeloc": "100.0"
@@ -17058,7 +17253,14 @@
             "particleVeloc14": "110.0 90.0 110.0",
             "particleBias14": "0.0 1.0 0.0",
             "particlePosVar14": "3.0 0.0 3.0",
-            "explSound": "mort02.wav"
+            "explSound": "mort02.wav",
+            "damageRadius": "50.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "5",
+            "damageValue(S)": "50",
+            "damageValue(D)": "100",
+            "damageValue(A)": "5"
         },
         "Planar": {},
         "ShockPlanar": {},
@@ -17154,7 +17356,14 @@
             "particleVeloc9": "110.0 90.0 110.0",
             "particleBias9": "0.0 1.0 0.0",
             "particleInherit9": "0.5 0.5 0.5",
-            "explSound": "xmv1.wav"
+            "explSound": "xmv1.wav",
+            "damageRadius": "50.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "5",
+            "damageValue(S)": "50",
+            "damageValue(D)": "100",
+            "damageValue(A)": "5"
         },
         "Secondary": {},
         "SecondaryRender": {},
@@ -17175,6 +17384,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "xms2.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0",
             "particleTypes": "3",
             "particleClass1": "xgaussbld.puff",
             "particleCount1": "5",
@@ -17208,6 +17424,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "xsv2.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0",
             "particleTypes": "3",
             "particleClass1": "xgausscar.puff",
             "particleCount1": "5",
@@ -17240,6 +17463,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "xemt2.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0",
             "particleTypes": "5",
             "particleClass1": "xgaussgnd.core",
             "particleCount1": "1",
@@ -17274,6 +17504,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "xfire1.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0",
             "particleTypes": "4",
             "particleClass1": "xguardcar.core",
             "particleCount1": "1",
@@ -17310,6 +17547,13 @@
         "ExplosionClass": {
             "classLabel": "explosion",
             "explSound": "xfire1.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0",
             "particleTypes": "5",
             "particleClass1": "xguardgnd.core",
             "particleCount1": "1",
@@ -17362,7 +17606,14 @@
             "particleVeloc3": "10.0 10.0 10.0",
             "particleBias3": "0.0 1.0 0.0",
             "particlePosVar3": "2.0 2.0 2.0",
-            "explSound": "xms2.wav"
+            "explSound": "xms2.wav",
+            "damageRadius": "10.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "10",
+            "damageValue(S)": "50",
+            "damageValue(D)": "100",
+            "damageValue(A)": "10"
         },
         "Smoke": {},
         "Flame": {},
@@ -17388,7 +17639,14 @@
             "particleCount3": "1",
             "particleVeloc3": "0.0 0.0 0.0",
             "particleInherit3": "0.5 0.5 0.5",
-            "explSound": "xsv2.wav"
+            "explSound": "xsv2.wav",
+            "damageRadius": "10.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "10",
+            "damageValue(S)": "50",
+            "damageValue(D)": "100",
+            "damageValue(A)": "10"
         },
         "Core": {},
         "Puff": {},
@@ -17418,7 +17676,14 @@
             "particleCount3": "1",
             "particleVeloc3": "0.0 0.0 0.0",
             "particleBias3": "0.0 1.0 0.0",
-            "explSound": "xms2.wav"
+            "explSound": "xms2.wav",
+            "damageRadius": "10.0",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "10",
+            "damageValue(S)": "50",
+            "damageValue(D)": "100",
+            "damageValue(A)": "10"
         },
         "Ring": {},
         "Chunks": {},
@@ -17436,7 +17701,14 @@
             "particleClass1": "xkick.core",
             "particleCount1": "1",
             "particleVeloc1": "1.0 0.0 1.0",
-            "explSound": "NULL"
+            "explSound": "NULL",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Core": {},
         "inheritanceChain": [
@@ -17460,7 +17732,14 @@
             "particleVeloc3": "10.0 10.0 10.0",
             "particleBias3": "0.0 1.0 0.0",
             "particlePosVar3": "2.0 2.0 2.0",
-            "explSound": "xms2.wav"
+            "explSound": "xms2.wav",
+            "damageRadius": "5.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Smoke": {},
         "Flame": {},
@@ -17486,7 +17765,14 @@
             "particleCount3": "1",
             "particleVeloc3": "0.0 0.0 0.0",
             "particleInherit3": "0.5 0.5 0.5",
-            "explSound": "xsv2.wav"
+            "explSound": "xsv2.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Core": {},
         "Puff": {},
@@ -17516,7 +17802,14 @@
             "particleCount3": "1",
             "particleVeloc3": "0.0 0.0 0.0",
             "particleBias3": "0.0 1.0 0.0",
-            "explSound": "xms2.wav"
+            "explSound": "xms2.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Ring": {},
         "Chunks": {},
@@ -17544,7 +17837,14 @@
             "particleCount3": "1",
             "particleVeloc3": "0.0 0.0 0.0",
             "particleInherit3": "0.5 0.5 0.5",
-            "explSound": "xfire1.wav"
+            "explSound": "xfire1.wav",
+            "damageRadius": "20.0",
+            "damageValue(N)": "75",
+            "damageValue(L)": "60",
+            "damageValue(H)": "50",
+            "damageValue(S)": "60",
+            "damageValue(D)": "75",
+            "damageValue(A)": "50"
         },
         "Core": {},
         "Puff": {},
@@ -17569,7 +17869,14 @@
             "particleCount2": "20",
             "particleVeloc2": "20.0 20.0 20.0",
             "particlePosVar2": "2.0 2.0 2.0",
-            "explSound": "xfire1.wav"
+            "explSound": "xfire1.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Core": {},
         "Spatter": {},
@@ -17589,7 +17896,14 @@
             "particleCount2": "5",
             "particleVeloc2": "10.0 10.0 10.0",
             "particleInherit2": "0.5 0.5 0.5",
-            "explSound": "xbuild.wav"
+            "explSound": "xbuild.wav",
+            "damageRadius": "10.0",
+            "damageValue(N)": "20",
+            "damageValue(L)": "20",
+            "damageValue(H)": "20",
+            "damageValue(S)": "20",
+            "damageValue(D)": "20",
+            "damageValue(A)": "20"
         },
         "Core": {},
         "Puff": {},
@@ -17607,7 +17921,14 @@
             "particleClass2": "xsgnxpl.puff",
             "particleCount2": "5",
             "particleVeloc2": "10.0 10.0 10.0",
-            "explSound": "xbuild.wav"
+            "explSound": "xbuild.wav",
+            "damageRadius": "10.0",
+            "damageValue(N)": "20",
+            "damageValue(L)": "20",
+            "damageValue(H)": "20",
+            "damageValue(S)": "20",
+            "damageValue(D)": "20",
+            "damageValue(A)": "20"
         },
         "Core": {},
         "Puff": {},
@@ -17630,7 +17951,14 @@
             "particleBias2": "0.0 2.0 0.0",
             "particlePosVar2": "2.0 2.0 2.0",
             "particleInherit2": "0.8 0.8 0.8",
-            "explSound": "squish.wav"
+            "explSound": "squish.wav",
+            "damageRadius": "0.0",
+            "damageValue(N)": "0",
+            "damageValue(L)": "0",
+            "damageValue(H)": "0",
+            "damageValue(S)": "0",
+            "damageValue(D)": "0",
+            "damageValue(A)": "0"
         },
         "Core": {},
         "Glass": {
@@ -19202,7 +19530,13 @@
             "xplBuilding": "xlgtbld",
             "ammoCost": "100",
             "lifeSpan": "200e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "SniperShellClass": {
             "killRadius": "0.5",
@@ -48677,7 +49011,13 @@
             "xplBuilding": "xlgtbld",
             "ammoCost": "100",
             "lifeSpan": "300e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "Ordnance.SniperShellClass": {
             "killRadius": "0.5",
@@ -52069,7 +52409,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "1",
             "lifeSpan": "1.0",
-            "shotSpeed": "150.0"
+            "shotSpeed": "150.0",
+            "damageValue(N)": "10",
+            "damageValue(L)": "5",
+            "damageValue(H)": "2",
+            "damageValue(S)": "5",
+            "damageValue(D)": "2",
+            "damageValue(A)": "10"
         },
         "Ordnance.Render": {},
         "Ordnance.inheritanceChain": [
@@ -52258,7 +52604,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "100",
             "lifeSpan": "300e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "Ordnance.SniperShellClass": {
             "killRadius": "0.5",
@@ -76025,7 +76377,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "5",
             "lifeSpan": "2.0",
-            "shotSpeed": "150.0"
+            "shotSpeed": "150.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "25",
+            "damageValue(H)": "10",
+            "damageValue(S)": "50",
+            "damageValue(D)": "25",
+            "damageValue(A)": "10"
         },
         "Ordnance.Render": {},
         "Ordnance.inheritanceChain": [
@@ -77681,7 +78039,13 @@
             "xplBuilding": "xlgtbld",
             "ammoCost": "100",
             "lifeSpan": "200e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "Ordnance.SniperShellClass": {
             "killRadius": "0.5",
@@ -78745,9 +79109,9 @@
             "damageValue(N)": "200",
             "damageValue(L)": "200",
             "damageValue(H)": "175",
-            "damageValue(A)": "200",
+            "damageValue(S)": "160",
             "damageValue(D)": "100",
-            "damageValue(S)": "160"
+            "damageValue(A)": "200"
         },
         "Core": {},
         "Puff": {},
@@ -80269,6 +80633,13 @@
         "ExplosionClass": {
             "classLabel": "xblinkin",
             "explSound": "",
+            "damageRadius": "20.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "35",
+            "damageValue(H)": "20",
+            "damageValue(S)": "35",
+            "damageValue(D)": "50",
+            "damageValue(A)": "20",
             "kickRadius": "5.0",
             "kickOmega": "10.0",
             "kickVeloc": "-10.0",
@@ -80288,13 +80659,7 @@
             "particleClass4": "xblinkin.core",
             "particleCount4": "1",
             "particleVeloc4": "0.0 0.0 0.0",
-            "particleInherit4": "0.5 0.5 0.5",
-            "damageValue(N)": "50",
-            "damageValue(L)": "35",
-            "damageValue(H)": "20",
-            "damageValue(S)": "35",
-            "damageValue(D)": "50",
-            "damageValue(A)": "20"
+            "particleInherit4": "0.5 0.5 0.5"
         },
         "Ring": {},
         "Light": {
@@ -80317,6 +80682,13 @@
         "ExplosionClass": {
             "classLabel": "xblinkout",
             "explSound": "",
+            "damageRadius": "10.0",
+            "damageValue(N)": "50",
+            "damageValue(L)": "35",
+            "damageValue(H)": "20",
+            "damageValue(S)": "35",
+            "damageValue(D)": "50",
+            "damageValue(A)": "20",
             "kickRadius": "15.0",
             "kickOmega": "1.0",
             "kickVeloc": "-10.0",
@@ -80336,13 +80708,7 @@
             "particleClass4": "xblinkout.core",
             "particleCount4": "1",
             "particleVeloc4": "0.0 0.0 0.0",
-            "particleInherit4": "0.5 0.5 0.5",
-            "damageValue(N)": "50",
-            "damageValue(L)": "35",
-            "damageValue(H)": "20",
-            "damageValue(S)": "35",
-            "damageValue(D)": "50",
-            "damageValue(A)": "20"
+            "particleInherit4": "0.5 0.5 0.5"
         },
         "Ring": {},
         "Light": {
@@ -84088,7 +84454,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "100",
             "lifeSpan": "200e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "Ordnance.SniperShellClass": {
             "killRadius": "0.5",
@@ -84237,7 +84609,13 @@
             "xplBuilding": "xbulbld",
             "ammoCost": "100",
             "lifeSpan": "200e-6",
-            "shotSpeed": "1e6"
+            "shotSpeed": "1e6",
+            "damageValue(N)": "100",
+            "damageValue(L)": "50",
+            "damageValue(H)": "0",
+            "damageValue(S)": "50",
+            "damageValue(D)": "0",
+            "damageValue(A)": "100"
         },
         "SniperShellClass": {
             "killRadius": "0.5",
