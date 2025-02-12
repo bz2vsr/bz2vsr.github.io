@@ -74,6 +74,18 @@ class ODFBrowser {
             </div>
         `);
 
+        // Add this after the compareModal HTML in the constructor
+        document.body.insertAdjacentHTML('beforeend', `
+            <div class="dropdown-menu" id="odfContextMenu">
+                <a class="dropdown-item d-flex align-items-center gap-2" href="#" id="openInNewTab">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                    </svg>
+                    Open in new tab
+                </a>
+            </div>
+        `);
+
         // Initialize build tree
         this.initializeBuildTree();
         
@@ -258,6 +270,29 @@ class ODFBrowser {
                 }
             }
         });
+
+        // Add this to the constructor after initializing other event listeners
+        this.initializeContextMenu();
+
+        // Add this to the constructor after the context menu HTML
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            #odfContextMenu {
+                position: fixed;
+                z-index: 1000;
+                display: none;
+            }
+            
+            #odfContextMenu .dropdown-item:hover {
+                background-color: var(--bs-primary);
+                color: white;
+            }
+            
+            #odfContextMenu .dropdown-item:hover svg {
+                fill: white;
+            }
+        `;
+        document.head.appendChild(styleSheet);
     }
     
     showError(message) {
@@ -2357,6 +2392,66 @@ class ODFBrowser {
         if (vehicleTab && !vehicleTab.classList.contains('active')) {
             vehicleTab.click();
         }
+    }
+
+    // Add this new method to the ODFBrowser class
+    initializeContextMenu() {
+        const contextMenu = document.getElementById('odfContextMenu');
+        const openInNewTab = document.getElementById('openInNewTab');
+        
+        // Store the current target ODF
+        let currentTarget = null;
+        
+        // Handle right-click on ODF items
+        document.addEventListener('contextmenu', (e) => {
+            const odfItem = e.target.closest('.odf-item');
+            if (odfItem) {
+                e.preventDefault();
+                
+                // Store the current target
+                currentTarget = odfItem;
+                
+                // Position the context menu
+                contextMenu.style.display = 'block';
+                
+                // Adjust menu position to stay within viewport
+                const menuRect = contextMenu.getBoundingClientRect();
+                const x = Math.min(e.clientX, window.innerWidth - menuRect.width);
+                const y = Math.min(e.clientY, window.innerHeight - menuRect.height);
+                
+                contextMenu.style.left = `${x}px`;
+                contextMenu.style.top = `${y}px`;
+            }
+        });
+        
+        // Handle clicking "Open in new tab"
+        openInNewTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentTarget) {
+                const {filename, category} = currentTarget.dataset;
+                const odfName = filename.replace('.odf', '');
+                const url = `${window.location.pathname}?odf=${odfName}`;
+                window.open(url, '_blank');
+            }
+            contextMenu.style.display = 'none';
+        });
+        
+        // Hide context menu when clicking elsewhere
+        document.addEventListener('click', () => {
+            contextMenu.style.display = 'none';
+        });
+        
+        // Hide context menu when scrolling
+        document.addEventListener('scroll', () => {
+            contextMenu.style.display = 'none';
+        });
+        
+        // Hide context menu when pressing Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                contextMenu.style.display = 'none';
+            }
+        });
     }
 }
 
