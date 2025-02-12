@@ -216,8 +216,8 @@ def generate_page_html(section, all_sections):
             <div class="row">
                 <div class="alert alert-warning mt-2" role="alert">
                     This is a raw, verbatim copy of GBD's
-                    <a class="alert-link" style="display:inline-block;"href="https://steamcommunity.com/sharedfiles/filedetails/?id=1423355866">ODF Guide</a> on Steam.
-                    Plan is to improve it over time with <a class="alert-link" style="display:inline-block;"href="https://jekyllrb.com/">Jekyll</a> and <a class="alert-link" style="display:inline-block;"href="https://www.algolia.com/">Algolia</a>.
+                    <a class="alert-link" style="display:inline-block;"href="https://steamcommunity.com/sharedfiles/filedetails/?id=1423355866">ODF Guide</a> on Steam, which is not very usable in its current state.
+                    The plan is to improve it over time with better navigation and search functionality.
                 </div>
                 <!-- Left sidebar -->
                 <div class="col-3 p-3">
