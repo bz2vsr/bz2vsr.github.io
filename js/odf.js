@@ -1048,7 +1048,18 @@ class ODFBrowser {
                 // Try to find the ODF in our data
                 const targetCategory = this.findODFCategory(value);
                 if (targetCategory) {
-                    return `<a href="#" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-category="${targetCategory}" data-filename="${value}.odf">${value}</a>`;
+                    // Create a proper URL for the href
+                    const odfName = value.replace('.odf', '');
+                    const href = `${window.location.pathname}?odf=${odfName}`;
+                    
+                    return `<a href="${href}" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" 
+                              data-category="${targetCategory}" 
+                              data-filename="${value}.odf"
+                              onclick="event.preventDefault(); 
+                                      const {category, filename} = this.dataset;
+                                      window.browser.displayODFData(category, filename);">
+                              ${value}
+                           </a>`;
                 }
             }
         }
