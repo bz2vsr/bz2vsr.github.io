@@ -19,20 +19,26 @@ const useCORSProxy = false;
 // in a vsr community game; others who often join other lobbies are excluded to avoid
 // potential duplicates
 const ActivePlayerList = [
-    'vtrider', // 76561197974548434
-    'sev', // 76561199653748651
-    'domakus', // 76561198006115793
-    'cyber',
-    'xohm', // 76561198846500539
-    'herp mcderperson', // 76561197962996353
-    'the best there is',
-    // 'happyotter', // 76561198064801924
-    'lamper', // 76561198825004088
-    'graves', // 76561197970538803
-    'econchump',
-    'm.s',
-    'vivify', // 76561198345909972
-    // 'blue',
+    "76561198006115793",  // Domakus
+    "76561198846500539",  // Xohm
+    "bz2Cyber",           // Cyber
+    "herpmcderperson",    // Herp
+    "bzlolol",            // blue_banana
+    "running-roxas",      // Sly
+    "76561198820311491",  // m.s 
+    "76561197974548434",  // VTrider
+    "76561198068133931",  // Econchump
+    "76561198825004088",  // Lamper
+    "76561198026325621",  // F9Bomber
+    "76561197970538803",  // Graves
+    // "76561198088036138",  // dd
+    // "76561198058690608",  // JudgeGuns
+    // "76561199732480793",  // XPi
+    // "76561198088149233",  // Muffin
+    // "76561198064801924",  // HappyOtter
+    // "76561198045619216",  // Zack
+    // "76561198345909972",  // Vivify
+    // "76561199653748651",  // Sev
 ];
 
 // refresh rate in milliseconds, for live updates
@@ -248,7 +254,7 @@ async function getLobbyData()
 
                         if((PlayerSteamID).toString() === SteamID.toString()) 
                         {
-                            if(ActivePlayerList.includes(SteamNick.toLowerCase())) 
+                            if(ActivePlayerList.includes(SteamID.toString())) 
                             {
                                 console.log('%cFound: ' + SteamNick, "color:#bada55;font-weight:700;");
                                 hasActivePlayers = true;
