@@ -6,6 +6,10 @@ function createAudioCard(soundData) {
     const column = document.createElement('div');
     column.className = 'col-12 col-md-4 mb-3';
     
+    // Get base name without extension for the URL
+    const baseName = soundData.file.split('.')[0];
+    const shareUrl = `${window.location.origin}/library/s/${baseName}`;
+    
     const card = document.createElement('div');
     card.className = 'card';
     
@@ -30,7 +34,18 @@ function createAudioCard(soundData) {
     
     card.innerHTML = `
         <div class="card-header bg-secondary-subtle d-flex justify-content-between align-items-center">
-            <h6 class="mb-0">${soundData.file}</h6>
+            <div class="d-flex align-items-center">
+                <h6 class="mb-0">${soundData.file}</h6>
+                <button class="btn btn-link btn-sm p-0 ms-2 position-relative" onclick="copyShareLink(this, '${shareUrl}')" title="Copy link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                    </svg>
+                    <div class="copy-tooltip" style="display: none; position: absolute; top: -30px; left: 50%; transform: translateX(-50%); 
+                         background: rgba(25,135,84,.9); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; white-space: nowrap;">
+                        Copied to clipboard
+                    </div>
+                </button>
+            </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-up text-primary" viewBox="0 0 16 16" style="display: none;">
                 <path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>
                 <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"/>
@@ -181,6 +196,32 @@ function toggleTranscript(button) {
         transcript.style.display = 'none';
         chevron.style.transform = 'rotate(0)';
     }
+}
+
+// Add this new function to handle copying the link
+function copyShareLink(button, url) {
+    const icon = button.querySelector('.bi-copy');
+    const tooltip = button.querySelector('.copy-tooltip');
+    
+    navigator.clipboard.writeText(url).then(() => {
+        // Show success state
+        icon.innerHTML = `<path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>`;
+        icon.classList.remove('bi-copy');
+        icon.classList.add('bi-check2', 'text-success');
+        
+        // Show tooltip
+        tooltip.style.display = 'block';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+            icon.innerHTML = `<path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>`;
+            icon.classList.remove('bi-check2', 'text-success');
+            icon.classList.add('bi-copy');
+            tooltip.style.display = 'none';
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy link:', err);
+    });
 }
 
 // Initialize when the document is ready
