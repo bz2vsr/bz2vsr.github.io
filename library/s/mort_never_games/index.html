@@ -46,10 +46,10 @@
                             </svg>
                         </div>
                         <div class="card-body p-3 d-flex align-items-center">
-                            <video class="w-100" controls>
-                                <source src="video.mp4" type="video/mp4">
-                                Your browser does not support the video element.
-                            </video>
+                            <audio class="w-100" controls>
+                                <source src="/data/library/sounds/mort_never_games.ogg" type="audio/ogg">
+                                Your browser does not support the audio element.
+                            </audio>
                         </div>
                         <div class="card-footer bg-secondary-subtle p-2">
                             <div class="transcript">
@@ -72,23 +72,23 @@
         <script src="/js/bootstrap.bundle.min.js"></script>
         <script>
             
-        // Video player functionality
+        // Audio player functionality
         document.addEventListener('DOMContentLoaded', () => {{
-            const video = document.querySelector('video');
+            const audio = document.querySelector('audio');
             const volumeIcon = document.querySelector('.bi-volume-up');
             const card = document.querySelector('.card');
             
-            video.addEventListener('play', () => {{
+            audio.addEventListener('play', () => {{
                 volumeIcon.style.display = 'block';
                 card.classList.add('border-primary', 'shadow-sm');
             }});
             
-            video.addEventListener('pause', () => {{
+            audio.addEventListener('pause', () => {{
                 volumeIcon.style.display = 'none';
                 card.classList.remove('border-primary', 'shadow-sm');
             }});
             
-            video.addEventListener('ended', () => {{
+            audio.addEventListener('ended', () => {{
                 volumeIcon.style.display = 'none';
                 card.classList.remove('border-primary', 'shadow-sm');
             }});
