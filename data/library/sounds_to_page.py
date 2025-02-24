@@ -111,23 +111,23 @@ def create_sound_page(sound_data, template_dir):
     
     # JavaScript code needs escaped curly braces
     js_code = """
-        // Audio player functionality
+        // Video player functionality
         document.addEventListener('DOMContentLoaded', () => {{
-            const audio = document.querySelector('audio');
+            const video = document.querySelector('video');
             const volumeIcon = document.querySelector('.bi-volume-up');
             const card = document.querySelector('.card');
             
-            audio.addEventListener('play', () => {{
+            video.addEventListener('play', () => {{
                 volumeIcon.style.display = 'block';
                 card.classList.add('border-primary', 'shadow-sm');
             }});
             
-            audio.addEventListener('pause', () => {{
+            video.addEventListener('pause', () => {{
                 volumeIcon.style.display = 'none';
                 card.classList.remove('border-primary', 'shadow-sm');
             }});
             
-            audio.addEventListener('ended', () => {{
+            video.addEventListener('ended', () => {{
                 volumeIcon.style.display = 'none';
                 card.classList.remove('border-primary', 'shadow-sm');
             }});
@@ -176,10 +176,10 @@ def create_sound_page(sound_data, template_dir):
                             </svg>
                         </div>
                         <div class="card-body p-3 d-flex align-items-center">
-                            <audio class="w-100" controls>
-                                <source src="/data/library/sounds/{file_name}" type="audio/{file_name.split('.')[-1]}">
-                                Your browser does not support the audio element.
-                            </audio>
+                            <video class="w-100" controls>
+                                <source src="video.mp4" type="video/mp4">
+                                Your browser does not support the video element.
+                            </video>
                         </div>
                         <div class="card-footer bg-secondary-subtle p-2">
                             <div class="transcript">
