@@ -203,12 +203,15 @@ function copyShareLink(button, url) {
     const icon = button.querySelector('.bi-copy');
     const tooltip = button.querySelector('.copy-tooltip');
     
-    // Create both URLs
-    const pageUrl = url;
+    // Get the transcript text from the card
+    const card = button.closest('.card');
+    const transcript = card.querySelector('.transcript p')?.textContent || 'No transcript available';
+    
+    // Create video URL and format transcript with quote
     const videoUrl = `${url}/video.mp4`;
     
-    // Combine URLs with video URL first
-    const textToCopy = `${videoUrl}\n${pageUrl}`;
+    // Combine video URL and quoted transcript (with space after >)
+    const textToCopy = `${videoUrl}\n> ${transcript}`;
     
     navigator.clipboard.writeText(textToCopy).then(() => {
         // Show success state
