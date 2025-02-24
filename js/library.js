@@ -198,18 +198,26 @@ function toggleTranscript(button) {
     }
 }
 
-// Add this new function to handle copying the link
+// Update the copyShareLink function
 function copyShareLink(button, url) {
     const icon = button.querySelector('.bi-copy');
     const tooltip = button.querySelector('.copy-tooltip');
     
-    navigator.clipboard.writeText(url).then(() => {
+    // Create both URLs
+    const pageUrl = url;
+    const videoUrl = `${url}/video.mp4`;
+    
+    // Combine URLs with video URL first
+    const textToCopy = `${videoUrl}\n${pageUrl}`;
+    
+    navigator.clipboard.writeText(textToCopy).then(() => {
         // Show success state
         icon.innerHTML = `<path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>`;
         icon.classList.remove('bi-copy');
         icon.classList.add('bi-check2', 'text-success');
         
-        // Show tooltip
+        // Update tooltip text
+        tooltip.textContent = 'Copied Discord-friendly share links to your clipboard';
         tooltip.style.display = 'block';
         
         // Reset after 2 seconds
@@ -218,9 +226,10 @@ function copyShareLink(button, url) {
             icon.classList.remove('bi-check2', 'text-success');
             icon.classList.add('bi-copy');
             tooltip.style.display = 'none';
+            tooltip.textContent = 'Copied to clipboard';
         }, 2000);
     }).catch(err => {
-        console.error('Failed to copy link:', err);
+        console.error('Failed to copy links:', err);
     });
 }
 

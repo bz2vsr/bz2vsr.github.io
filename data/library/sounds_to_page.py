@@ -32,15 +32,24 @@ def create_video_for_sound(sound_file, output_dir):
     try:
         # Setup paths
         script_dir = Path(__file__).parent.parent.parent  # Go up to root directory
-        cover_image = script_dir / 'img' / 'opengraph-library.png'
+        assets_dir = script_dir / 'img'
+        cover_image = assets_dir / 'video-cover.jpg'
         
         print(f"Using cover image: {cover_image}")
         print(f"Output directory: {output_dir}")
         
-        # Verify cover image exists
+        # If video-cover.jpg doesn't exist, create it using ffmpeg
         if not cover_image.exists():
-            print(f"Cover image not found: {cover_image}")
-            return False
+            print("Creating video cover image...")
+            create_cover_cmd = [
+                'ffmpeg',
+                '-f', 'lavfi',
+                '-i', 'color=c=black:s=250x100',
+                '-frames:v', '1',
+                str(cover_image)
+            ]
+            subprocess.run(create_cover_cmd, check=True, capture_output=True)
+            print("Created video cover image")
         
         video_output = output_dir / 'video.mp4'
         audio_input = Path(__file__).parent / 'sounds' / sound_file
