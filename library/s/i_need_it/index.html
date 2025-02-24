@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" class="h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>I Need It</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <meta property="description" content="Lamper, please, I need it, deep and hard.">
+        <meta property="og:site_name" content="bz2vsr.com/library/s/i_need_it"/>
+        <meta property="og:image" content="https://bz2vsr.com/img/opengraph-library.png" />
+        <meta property="og:title" content="I Need It" />
+        <meta property="og:description" content="Lamper, please, I need it, deep and hard." />
+        <meta property="og:audio" content="https://bz2vsr.com/data/library/sounds/i_need_it.mp3" />
+        <meta property="og:audio:type" content="audio/mp3" />
+    </head>
+    <body class="d-flex flex-column h-100">
+        <nav class="navbar navbar-expand navbar-dark">
+            <div class="container-fluid">
+                <div class="d-inline m-0 p-0">
+                    <a class="navbar-brand me-2" href="/library">
+                        <img src="/img/logo.png" class="img-fluid ms-2 me-1" height="30" width="30">
+                        <span class="d-none d-lg-inline" style="position:relative;top:1px;">Library Browser</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <main class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-secondary-subtle d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">I Need It</h6>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                                class="bi bi-volume-up text-primary" viewBox="0 0 16 16" style="display: none;">
+                                <path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>
+                                <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"/>
+                                <path d="M10.025 8a4.5 4.5 0 0 1-1.318 3.182L8 10.475A3.5 3.5 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.5 4.5 0 0 1 10.025 8M7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11"/>
+                            </svg>
+                        </div>
+                        <div class="card-body p-3 d-flex align-items-center">
+                            <audio class="w-100" controls>
+                                <source src="/data/library/sounds/i_need_it.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                        <div class="card-footer bg-secondary-subtle p-2">
+                            <div class="transcript">
+                                <p class="mb-0 small text-muted">Lamper, please, I need it, deep and hard.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/library" class="text-decoration-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection-play me-1 mb-1" viewBox="0 0 16 16">
+                                <path d="M2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3m2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1m2.765 5.576A.5.5 0 0 0 6 7v5a.5.5 0 0 0 .765.424l4-2.5a.5.5 0 0 0 0-.848z"/>
+                                <path d="M1.5 14.5A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5zm13-1a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-13A.5.5 0 0 0 1 6v7a.5.5 0 0 0 .5.5z"/>
+                            </svg>
+                            Back to Library
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script>
+            
+        // Audio player functionality
+        document.addEventListener('DOMContentLoaded', () => {{
+            const audio = document.querySelector('audio');
+            const volumeIcon = document.querySelector('.bi-volume-up');
+            const card = document.querySelector('.card');
+            
+            audio.addEventListener('play', () => {{
+                volumeIcon.style.display = 'block';
+                card.classList.add('border-primary', 'shadow-sm');
+            }});
+            
+            audio.addEventListener('pause', () => {{
+                volumeIcon.style.display = 'none';
+                card.classList.remove('border-primary', 'shadow-sm');
+            }});
+            
+            audio.addEventListener('ended', () => {{
+                volumeIcon.style.display = 'none';
+                card.classList.remove('border-primary', 'shadow-sm');
+            }});
+        }});
+    
+        </script>
+        <script async data-id="101466371" src="//static.getclicky.com/js"></script>
+    </body>
+</html>
