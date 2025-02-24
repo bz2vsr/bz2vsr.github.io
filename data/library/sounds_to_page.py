@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 from pathlib import Path
 
 def format_title(filename):
@@ -9,6 +10,76 @@ def format_title(filename):
     words = base_name.split('_')
     # Capitalize each word and join with spaces
     return ' '.join(word.capitalize() for word in words)
+
+def check_ffmpeg():
+    """Check if ffmpeg is available"""
+    try:
+        subprocess.run(['ffmpeg', '-version'], capture_output=True, check=True)
+        return True
+    except FileNotFoundError:
+        print("Error: ffmpeg not found. Please install ffmpeg and ensure it's in your system PATH")
+        return False
+    except subprocess.CalledProcessError:
+        print("Error: ffmpeg check failed")
+        return False
+
+def create_video_for_sound(sound_file, output_dir):
+    """Create a video file from audio and static image"""
+    # First check if ffmpeg is available
+    if not check_ffmpeg():
+        return False
+        
+    try:
+        # Setup paths
+        script_dir = Path(__file__).parent.parent.parent  # Go up to root directory
+        cover_image = script_dir / 'img' / 'opengraph-library.png'
+        
+        print(f"Using cover image: {cover_image}")
+        print(f"Output directory: {output_dir}")
+        
+        # Verify cover image exists
+        if not cover_image.exists():
+            print(f"Cover image not found: {cover_image}")
+            return False
+        
+        video_output = output_dir / 'video.mp4'
+        audio_input = Path(__file__).parent / 'sounds' / sound_file
+        
+        print(f"Audio input: {audio_input}")
+        
+        # Verify audio file exists
+        if not audio_input.exists():
+            print(f"Audio file not found: {audio_input}")
+            return False
+            
+        # FFmpeg command to create video
+        cmd = [
+            'ffmpeg',
+            '-y',  # Overwrite output file if it exists
+            '-loop', '1',
+            '-i', str(cover_image),
+            '-i', str(audio_input),
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
+            '-strict', 'experimental',
+            '-b:a', '192k',
+            '-shortest',
+            '-s', '250x100',
+            str(video_output)
+        ]
+        
+        print(f"Running command: {' '.join(cmd)}")
+        result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+        print(f"Created video for {sound_file}")
+        return True
+        
+    except subprocess.CalledProcessError as e:
+        print(f"FFmpeg error for {sound_file}: {e.stderr}")
+        return False
+    except Exception as e:
+        print(f"Unexpected error creating video for {sound_file}: {e}")
+        print(f"Current working directory: {os.getcwd()}")
+        return False
 
 def create_sound_page(sound_data, template_dir):
     """Create an individual HTML page for a sound file"""
@@ -22,6 +93,21 @@ def create_sound_page(sound_data, template_dir):
     # Create directory structure
     sound_dir = Path(template_dir) / 's' / base_name
     sound_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Create video file
+    video_created = create_video_for_sound(file_name, sound_dir)
+    
+    # Add video meta tags if video was created successfully
+    video_meta_tags = ''
+    if video_created:
+        video_url = f"https://bz2vsr.com/library/s/{base_name}/video.mp4"
+        video_meta_tags = f"""
+        <meta property="og:video" content="{video_url}">
+        <meta property="og:video:secure_url" content="{video_url}">
+        <meta property="og:video:type" content="video/mp4">
+        <meta property="og:video:width" content="250">
+        <meta property="og:video:height" content="100">
+        """
     
     # JavaScript code needs escaped curly braces
     js_code = """
@@ -63,6 +149,7 @@ def create_sound_page(sound_data, template_dir):
         <meta property="og:description" content="{transcript}" />
         <meta property="og:audio" content="https://bz2vsr.com/data/library/sounds/{file_name}" />
         <meta property="og:audio:type" content="audio/{file_name.split('.')[-1]}" />
+        {video_meta_tags}
     </head>
     <body class="d-flex flex-column h-100">
         <nav class="navbar navbar-expand navbar-dark">
