@@ -1,3 +1,8 @@
+// Register the plugin immediately at the top of the file
+if (window.Chart && window.ChartDataLabels) {
+    Chart.register(ChartDataLabels);
+}
+
 const legendConfig = {
     labels: {
         usePointStyle: true, 
@@ -11,7 +16,8 @@ const datalabelsConfig = {
     align: 'center',
     clamp: true,
     font: {
-        weight: 'bold'
+        weight: 'bold',
+        family: 'monospace'
     },
     color: (context) => {
         const playerFilter = getPlayerParam();
@@ -24,32 +30,18 @@ const datalabelsConfig = {
             return 'rgba(255, 255, 255, 0.65)';
         }
         
-        // Top 3 get 65% opacity
-        if (context.dataIndex < 3) {
-            return 'rgba(255, 255, 255, 0.65)';
-        }
-        
-        // Others get 25% opacity
-        return 'rgba(255, 255, 255, 0.25)';
+        // All rows get 65% opacity
+        return 'rgba(255, 255, 255, 0.65)';
     },
     display: (context) => {
         if (context.chart.canvas.id === 'mapsChart') {
             return false;  // No labels for maps chart
         }
         
-        const playerFilter = getPlayerParam();
-        const label = context.dataset.labels ? 
-            context.dataset.labels[context.dataIndex] : 
-            context.chart.data.labels[context.dataIndex];
-            
-        // Show label if it's target player or in top 3
-        return (playerFilter && label.toLowerCase() === playerFilter.toLowerCase()) || 
-               context.dataIndex < 3;
+        // Show all labels
+        return true;
     }
 };
-
-// Register the plugin
-Chart.register(ChartDataLabels);
 
 // Add this helper function at the top
 function getPlayerParam() {
@@ -210,10 +202,29 @@ function handlePlayerClick(playerName) {
 let currentData = null;
 
 // Load stats data
-fetch('/data/stats/stats.json')
+fetch('https://raw.githubusercontent.com/HerndonE/battlezone-combat-commander-strategy-statistics/refs/heads/main/data/data.json')
     .then(response => response.json())
-    .then(data => {
+    .then(rawData => {
+        // Use processed_data instead of the raw data
+        const data = {
+            all_maps_played: rawData.processed_data.processed_map_counts,
+            all_players_commanded: rawData.processed_data.processed_commander_list.reduce((acc, [name, count]) => {
+                acc[name] = count;
+                return acc;
+            }, {}),
+            most_played_factions: rawData.processed_data.processed_most_played_factions,
+            player_winrate_by_commanding: rawData.processed_data.processed_commander_win_percentages,
+            // Transform the faction choice data into the expected format
+            player_faction_choice: Object.entries(rawData.processed_data.processed_commander_faction_counts).reduce((acc, [player, factions]) => {
+                acc[player] = Object.entries(factions).map(([faction, count]) => [faction, count]);
+                return acc;
+            }, {})
+        };
+
+        // Store processed data globally
         currentData = data;
+        
+        // Initialize charts and UI
         populatePlayerDropdown(data);
         createMapsChart(data.all_maps_played);
         createPlayersChart(data.all_players_commanded);
@@ -221,6 +232,10 @@ fetch('/data/stats/stats.json')
         createWinrateChart(data.player_winrate_by_commanding);
         createFactionChoiceChart(data.player_faction_choice);
         addExpandListeners(data);
+    })
+    .catch(error => {
+        console.error('Error loading data:', error);
+        // Add error handling UI feedback here if needed
     });
 
 // Add this at the top to store chart instances
@@ -242,7 +257,6 @@ function handleResize() {
 }
 
 // Add the resize event listener after chart registration
-Chart.register(ChartDataLabels);
 window.addEventListener('resize', handleResize);
 
 // Add this shared grid configuration
@@ -480,8 +494,8 @@ function createWinrateChart(winrateData) {
     
     // Filter and sort all data first
     let filteredData = winrateData
-        .filter(player => player[1] >= 5)
-        .sort((a, b) => b[3] - a[3]);
+        .filter(player => player[2] >= 5)  // Check index 2 (third value) for minimum games
+        .sort((a, b) => b[1] - a[1]);     // Still sort by win percentage at index 1
 
     // If chart is collapsed and player is selected
     if (!expandedCharts.winrateChart && playerFilter) {
@@ -502,7 +516,7 @@ function createWinrateChart(winrateData) {
         filteredData = filteredData.slice(0, 15);
     }
 
-    const maxValue = Math.max(...filteredData.map(player => player[3]));
+    const maxValue = Math.max(...filteredData.map(player => player[1]));
 
     charts.winrateChart = new Chart(ctx, {
         type: 'bar',
@@ -510,7 +524,7 @@ function createWinrateChart(winrateData) {
             labels: filteredData.map(player => player[0]),
             datasets: [{
                 label: 'Winrate %',
-                data: filteredData.map(player => player[3]),
+                data: filteredData.map(player => player[1]),
                 backgroundColor: playerFilter
                     ? filteredData.map(player => 
                         player[0].toLowerCase() === playerFilter.toLowerCase()
@@ -540,9 +554,28 @@ function createWinrateChart(winrateData) {
                 legend: {
                     display: false
                 },
+                tooltip: {
+                    callbacks: {
+                        label: (context) => {
+                            const player = filteredData[context.dataIndex];
+                            const winrate = player[1].toFixed(1);
+                            const totalGames = player[2];
+                            const wins = player[3];
+                            return `Winrate: ${winrate}% (${totalGames} games/${wins} wins)`;
+                        }
+                    }
+                },
                 datalabels: {
                     ...datalabelsConfig,
-                    formatter: (value) => value.toFixed(1) + '%'
+                    formatter: (value, context) => {
+                        const player = filteredData[context.dataIndex];
+                        const winrate = player[1].toFixed(1);
+                        const totalGames = player[2];
+                        const wins = player[3];
+                        
+                        // Show detailed stats for all bars
+                        return `${winrate}% (${totalGames}/${wins})`;
+                    }
                 }
             },
             onClick: (event, elements) => {
@@ -618,9 +651,11 @@ function createFactionChoiceChart(factionChoiceData) {
                             'rgba(255, 206, 86, ';
             // If no player is filtered, use 0.75 opacity for all
             // If player is filtered, use 0.75 for selected player and 0.35 for others
-            return baseColor + (playerFilter ? 
-                (player.toLowerCase() === playerFilter.toLowerCase() ? '0.75)' : '0.35)') : 
-                '0.75)');
+            return playerFilter 
+                ? (player.toLowerCase() === playerFilter.toLowerCase() 
+                    ? baseColor + '0.75)'
+                    : baseColor + '0.35)')
+                : baseColor + '0.75)';
         }),
         borderColor: faction === 'I.S.D.F' ? 'rgba(54, 162, 235, 1)' :
                     faction === 'Hadean' ? 'rgba(255, 99, 132, 1)' :
