@@ -429,7 +429,7 @@ function createFactionsChart(factionsData) {
     }
     const ctx = document.getElementById('factionsChart').getContext('2d');
     
-    // Calculate total games for max x-axis value
+    // Calculate total games for max x-axis value and title
     const totalGames = Object.values(factionsData).reduce((sum, count) => sum + count, 0);
     
     // Create a single data point with all factions stacked
@@ -460,7 +460,7 @@ function createFactionsChart(factionsData) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Faction Distribution Totals'
+                    text: `Faction Distribution Totals (${totalGames} total games)`
                 },
                 legend: legendConfig,
                 datalabels: datalabelsConfig
