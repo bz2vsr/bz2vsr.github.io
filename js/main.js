@@ -13,7 +13,7 @@ const baseSteamProtocol = 'steam://rungame/624970/76561198955218468/-connect-mp%
 
 // used to prepend cors proxy url in ajax request url (for dev environement only)
 // !!! IGNORE this line in Git commits (must be FALSE for production) !!!
-const useCORSProxy = false;
+const useCORSProxy = true;
 
 // player list for better game identification - these are players most likely to be
 // in a vsr community game; others who often join other lobbies are excluded to avoid
@@ -21,10 +21,10 @@ const useCORSProxy = false;
 const ActivePlayerList = [
     "76561198006115793",  // Domakus
     "76561198846500539",  // Xohm
-    "bz2Cyber",           // Cyber
+    "76561198824607769",  // Cyber
     "herpmcderperson",    // Herp
-    "bzlolol",            // blue_banana
-    "running-roxas",      // Sly
+    "76561198043392032",  // blue_banana
+    "76561198076339639",  // Sly
     "76561198820311491",  // m.s 
     "76561197974548434",  // VTrider
     "76561198068133931",  // Econchump
