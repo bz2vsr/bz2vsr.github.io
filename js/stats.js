@@ -205,6 +205,39 @@ let currentData = null;
 fetch('https://raw.githubusercontent.com/HerndonE/battlezone-combat-commander-strategy-statistics/refs/heads/main/data/data.json')
     .then(response => response.json())
     .then(rawData => {
+        // Parse UTC timestamp (format: "2025/03/05 01:57AM UTC")
+        const [datePart, timePart] = rawData.last_updated.split(' ');
+        const [year, month, day] = datePart.split('/');
+        const [time, ampm] = timePart.split(/(?=[AP]M)/);
+        const [hours, minutes] = time.split(':');
+        
+        // Convert to 24-hour format if needed
+        let hour24 = parseInt(hours);
+        if (ampm === 'PM' && hour24 < 12) hour24 += 12;
+        if (ampm === 'AM' && hour24 === 12) hour24 = 0;
+        
+        // Create UTC date object
+        const utcDate = new Date(Date.UTC(
+            parseInt(year),
+            parseInt(month) - 1, // months are 0-based
+            parseInt(day),
+            hour24,
+            parseInt(minutes)
+        ));
+        
+        // Format in local time
+        const localTimeStr = utcDate.toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+            timeZoneName: 'short'
+        });
+        
+        document.getElementById('lastUpdated').textContent = `Last Updated: ${localTimeStr}`;
+
         // Use processed_data instead of the raw data
         const data = {
             all_maps_played: rawData.processed_data.processed_map_counts,
