@@ -303,7 +303,7 @@ async function getLobbyData()
             let gameModName     = (gameMod !== undefined ? (Mods[gameMod] !== undefined ? Mods[gameMod].Name : "Unknown Mod") : "Stock");
             let gameTime        = (game.Time.Seconds/60);
             let gameMessage     = (game.Message !== undefined ? clean(game.Message): "No game message");
-            let gameState       = (game.Status.State === "pre_game" ? "In-Lobby" : (game.Status.State === "in_game" ? "In-Game" : "N/A"));
+            let gameState       = (game.Status.State === "PreGame" ? "In-Lobby" : (game.Status.State === "InGame" ? "In-Game" : "N/A"));
             let hasPassword     = game.Status.HasPassword;
             let isLocked        = game.Status.IsLocked;
             let netType         = clean(game.Address.NAT_TYPE);
