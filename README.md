@@ -1,6 +1,6 @@
 # Battlezone II GameWatch
 
-Website to pull multiplayer game data from [Battlezone II: Combat Commander](https://store.steampowered.com/app/624970/Battlezone_Combat_Commander/), prioritizing VSR games hosted by the [BZ2 Vet Strat](https://discord.gg/FQnXFhnp) Discord community.
+Website to pull multiplayer game data for [Battlezone II: Combat Commander](https://store.steampowered.com/app/624970/Battlezone_Combat_Commander/), prioritizing VSR strategy matches hosted by the [Battlezone](https://discord.gg/battlezonecommunity) and [BZ2 Vet Strat](https://discord.gg/FQnXFhnp) Discord Communities.
 
 Credits:
 
@@ -10,7 +10,9 @@ Credits:
 - Map size data provided by [VTrider](https://github.com/VTrider) ([Github](https://github.com/VTrider) | [Steam](https://steamcommunity.com/id/vtrider/)).
 - Map scrap loose data provided by [Blue Banana](https://www.twitch.tv/blue_banana_bz2).
 
-Styled using [Bootstrap v5.3](https://getbootstrap.com/docs/5.3/).
+Styled using [Bootstrap](http://getbootstrap.com/docs/).
 
 Generates Discord-friendly URLs using the [Short.IO](https://short.io/) API.
+
+Complemented by the [BZ2 WatchBot](https://github.com/bz2vsr/bz2-watchbot).
 
