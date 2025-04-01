@@ -880,4 +880,16 @@ table.table.dataTable>tbody>tr.selected>* {
     transform: rotate(0deg);
 }
 
+.list-group-item:hover,
+a:hover .list-group-item {
+    border-color: var(--bs-primary) !important;
+    background-color: rgba(13, 110, 253, 0.1) !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.no-hover:hover {
+    background-color: transparent !important;
+    border-color: var(--bs-border-color) !important;
+}
+
 
