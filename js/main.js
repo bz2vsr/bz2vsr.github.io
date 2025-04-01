@@ -153,7 +153,7 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
     if (player.Name === "Empty" || player.Name === "Open") {
         const warningClass = isCommanderSlot ? "text-warning text-decoration-underline" : "text-secondary";
         return `
-        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom border-dotted ${warningClass} no-hover">
+        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom border-dotted ${warningClass} no-hover player-card">
             <div class="d-flex align-items-center">
                 ${!compactPlayerCards ? `<div class="me-2" style="width: 1px; height: 48px;"></div>` : ''}
                 <div>
@@ -189,16 +189,16 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
     }
 
     let cardContent = `
-        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom border-dotted${player.Name === "Computer" ? ' no-hover' : ''}">
+        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom border-dotted${player.Name === "Computer" ? ' no-hover' : ''} player-card">
             <div class="d-flex align-items-center">
                 ${!compactPlayerCards ? `<img src="${steamAvatarUrl}" class="me-2 img-thumbnail" width="48" height="48" onError="this.src='/img/no_steam_pfp.jpg'">` : ''}
                 <div>
                     <span class="text-light fw-bold">
                         ${isCommanderSlot ? `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-command me-1 mb-1" viewBox="0 0 16 16">
                             <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3M6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5zm4 1v4H6V6zm1-1V3.5A1.5 1.5 0 1 1 12.5 5zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11z"/>
-                        </svg>` : ''}${playerName}
+                        </svg>` : ''}${steamNickname || playerName}
                     </span>
-                    ${steamNickname && steamNickname !== playerName ? `<br><small class="text-secondary">${steamNickname}</small>` : ''}
+                    ${steamNickname && steamNickname !== playerName ? `<div class="text-secondary small" style="margin-top:-3px;">${playerName}</div>` : ''}
                 </div>
             </div>
             ${!compactPlayerCards && playerScore !== "" ? `<span class="badge bg-secondary">${playerScore}</span>` : ''}
