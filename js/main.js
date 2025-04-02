@@ -153,7 +153,7 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
     if (player.Name === "Empty" || player.Name === "Open") {
         const warningClass = isCommanderSlot ? "text-warning text-decoration-underline" : "text-secondary";
         return `
-        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom border-dotted ${warningClass} no-hover player-card">
+        <li class="list-group-item d-flex justify-content-between align-items-center ${warningClass} no-hover player-card">
             <div class="d-flex align-items-center">
                 ${!compactPlayerCards ? `<div class="me-2" style="width: 1px; height: 48px;"></div>` : ''}
                 <div>
@@ -189,7 +189,7 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
     }
 
     let cardContent = `
-        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom border-dotted${player.Name === "Computer" ? ' no-hover' : ''} player-card">
+        <li class="list-group-item d-flex justify-content-between align-items-center${player.Name === "Computer" ? ' no-hover computer-team' : ''} player-card">
             <div class="d-flex align-items-center">
                 ${!compactPlayerCards ? `<img src="${steamAvatarUrl}" class="me-2 img-thumbnail" width="48" height="48" onError="this.src='/img/no_steam_pfp.jpg'">` : ''}
                 <div>
@@ -553,30 +553,20 @@ async function getLobbyData()
 
                 // Calculate how many Open slots to show based on remaining capacity
                 let remainingSlots = playerCountMax - playerCount;
-                let openSlotsPerTeam = Math.floor(remainingSlots / 2);
+                let team1OpenSlots = Math.ceil(remainingSlots / 2);  // First team gets the extra slot if odd
+                let team2OpenSlots = Math.floor(remainingSlots / 2);
                 
-                // Keep only filled slots and add Open slots evenly
-                Team1 = Team1.filter(player => player.Name !== "Open").slice(0, 5);
-                Team2 = Team2.filter(player => player.Name !== "Open").slice(0, 5);
-
                 // Add Open slots to each team
-                for(let i = 0; i < openSlotsPerTeam && Team1.length < 5; i++) {
+                for(let i = 0; i < team1OpenSlots && Team1.length < 5; i++) {
                     let obj = {...vacantObj};
                     obj.slot = Team1.length + 1;
                     Team1.push(obj);
                 }
 
-                for(let i = 0; i < openSlotsPerTeam && Team2.length < 5; i++) {
+                for(let i = 0; i < team2OpenSlots && Team2.length < 5; i++) {
                     let obj = {...vacantObj};
                     obj.slot = Team2.length + 6;
                     Team2.push(obj);
-                }
-
-                // If we have an odd number of remaining slots, add the extra one to Team 1
-                if (remainingSlots % 2 !== 0 && Team1.length < 5) {
-                    let obj = {...vacantObj};
-                    obj.slot = Team1.length + 1;
-                    Team1.push(obj);
                 }
             }
             else if (gameMode === "MPI") {
