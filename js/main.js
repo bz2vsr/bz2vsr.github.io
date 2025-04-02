@@ -163,7 +163,8 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
         </li>`;
     }
 
-    let playerName = clean(player.Name);
+    let playerName = escapeHtml(player.Name);
+    let originalName = player.OriginalName ? `<div class="text-secondary small">${escapeHtml(player.OriginalName)}</div>` : '';
     let steamProfileUrl = "#";
     let steamNickname = "";
     let steamAvatarUrl = player.Name === "Computer" ? "/img/computer.png" : "/img/no_steam_pfp.jpg";
@@ -198,7 +199,7 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
                             <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3M6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5zm4 1v4H6V6zm1-1V3.5A1.5 1.5 0 1 1 12.5 5zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11z"/>
                         </svg>` : ''}${steamNickname || playerName}
                     </span>
-                    ${steamNickname && steamNickname !== playerName ? `<div class="text-secondary small" style="margin-top:-3px;">${playerName}</div>` : ''}
+                    ${steamNickname && steamNickname !== playerName ? originalName : ''}
                 </div>
             </div>
             ${!compactPlayerCards && playerScore !== "" ? `<span class="badge bg-secondary">${playerScore}</span>` : ''}
@@ -230,10 +231,10 @@ async function getLobbyData()
     try {
 
         // fetch primary game data
-        // let fetchResponse = await fetch(sourceURL);
+        let fetchResponse = await fetch(sourceURL);
 
         // alternative static source data for testing
-        let fetchResponse = await fetch('/data/test/full-lobby-hidden.sample.json');
+        // let fetchResponse = await fetch('/data/test/full-lobby-hidden.sample.json');
         // let fetchResponse = await fetch('/data/test/lobby-7-hidden.sample.json');
         // let fetchResponse = await fetch('/data/test/lobby-7.sample.json');
         // let fetchResponse = await fetch('/data/test/strat-test.sample.json');
@@ -837,6 +838,79 @@ async function getLobbyData()
                                                 <div class="card-body p-0">
                                                     <ul class="list-group list-group-flush">
                                                     ${Team2.map(player => renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards)).join('')}
+                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                        </div>`;
+                                    } else if (gameMode === "FFA") {
+                                        // For FFA mode, list all players in a single column with their team IDs
+                                        return `
+                                        <div class="col-12 p-2">
+                                            <div class="card h-100 border-secondary-subtle">
+                                                <div class="card-header text-center">
+                                                    Players
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <ul class="list-group list-group-flush">
+                                                    ${PlayerList.map(player => {
+                                                        // Create a copy of the player object
+                                                        let playerWithTeamID = {...player};
+                                                        
+                                                        // Get the team ID if available
+                                                        let teamID = "";
+                                                        if (player.Team && player.Team.SubTeam) {
+                                                            teamID = `[${player.Team.SubTeam.ID}]`;
+                                                        }
+                                                        
+                                                        // Get Steam or GOG username
+                                                        let displayName = player.Name; // fallback
+                                                        let originalName = player.Name;
+                                                        
+                                                        if (player.IDs && player.IDs.Steam && player.IDs.Steam.ID) {
+                                                            let steamID = player.IDs.Steam.ID.toString();
+                                                            if (SteamPlayerList[steamID] && SteamPlayerList[steamID].Nickname) {
+                                                                displayName = `${teamID} ${SteamPlayerList[steamID].Nickname}`;
+                                                                // Only keep Player.Name if it's different from Steam nickname
+                                                                if (player.Name === SteamPlayerList[steamID].Nickname) {
+                                                                    originalName = "";
+                                                                }
+                                                            }
+                                                        } else if (player.IDs && player.IDs.Gog && player.IDs.Gog.ID) {
+                                                            let gogID = player.IDs.Gog.ID.toString();
+                                                            if (GogPlayerList[gogID] && GogPlayerList[gogID].Username) {
+                                                                displayName = `${teamID} ${GogPlayerList[gogID].Username}`;
+                                                                // Only keep Player.Name if it's different from GOG username
+                                                                if (player.Name === GogPlayerList[gogID].Username) {
+                                                                    originalName = "";
+                                                                }
+                                                            }
+                                                        } else {
+                                                            displayName = `${teamID} ${player.Name}`;
+                                                            originalName = "";
+                                                        }
+                                                        
+                                                        // Set the display name and original name
+                                                        playerWithTeamID.Name = displayName;
+                                                        playerWithTeamID.OriginalName = originalName;
+                                                        
+                                                        return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards);
+                                                    }).join('')}
+                                                    ${(() => {
+                                                        // Add a single open slot showing the number of remaining slots
+                                                        const remainingSlots = playerCountMax - PlayerList.length;
+                                                        if (remainingSlots > 0) {
+                                                            return `
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center text-secondary no-hover player-card">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="me-2" style="width: 1px; height: 48px;"></div>
+                                                                    <div>
+                                                                        <span>${remainingSlots} ${remainingSlots === 1 ? 'Slot' : 'Slots'} Open</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>`;
+                                                        }
+                                                        return '';
+                                                    })()}
                                                     </ul>
                                                 </div>
                                             </div>
