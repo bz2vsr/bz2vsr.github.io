@@ -898,11 +898,24 @@ table.table.dataTable>tbody>tr.selected>* {
     align-items: center !important;
     justify-content: center !important;
     height: 100% !important;
+    min-height: 80px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    padding-bottom: 10px !important;
 }
 
 /* Shift Computer player card slightly upward for better visual balance */
 .player-card.computer-team {
     margin-top: -10px !important;
+    margin-bottom: -10px !important;
+    max-width: 100% !important;
+    position: relative !important;
+}
+
+/* Ensure team cards maintain proper structure */
+.card-body:has(.player-card.computer-team) {
+    overflow: hidden !important;
+    position: relative !important;
 }
 
 .player-card.list-group-item:hover:not(.no-hover),

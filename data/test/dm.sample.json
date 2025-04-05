@@ -1,0 +1,320 @@
+{
+    "Metadata": {
+        "ListServer": {
+            "Rebellion": {
+                "Status": "none",
+                "Success": true,
+                "Timestamp": "2025-04-05T00:45:02.9822316Z"
+            }
+        }
+    },
+    "SessionsDefault": {
+        "Type": "Listen"
+    },
+    "DataCache": {
+        "Level": {
+            "GameType": {
+                "DM": {
+                    "Name": "Deathmatch"
+                },
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            },
+            "GameMode": {
+                "DM": {
+                    "Name": "Deathmatch"
+                },
+                "MPI": {
+                    "Name": "MPI"
+                }
+            }
+        },
+        "Players": {
+            "IDs": {
+                "Steam": {
+                    "76561198026325621": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/5114be0aaaecc3142d29c7acadbdee92d0f1118a_full.jpg",
+                        "Nickname": "F9bomber",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198026325621/"
+                    },
+                    "76561199066952713": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/2fa0805cb01516f99ad52351bf5bee0835240e2d_full.jpg",
+                        "Nickname": "NOMAD",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199066952713/"
+                    },
+                    "76561198066192389": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/913384e4f10a185f2ca0d7c6fb06a3e925b2f8ec_full.jpg",
+                        "Nickname": "Revenge",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198066192389/"
+                    }
+                }
+            }
+        }
+    },
+    "Mods": {
+        "1325933293": {
+            "Name": "Vet Strat Recycler Variant",
+            "ID": "1325933293",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1325933293/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+        },
+        "1329659846": {
+            "Name": "Aegeis VSR Map Pack",
+            "ID": "1329659846",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329659846/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+        },
+        "2785557433": {
+            "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+            "ID": "2785557433",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785557433/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+        },
+        "2785542655": {
+            "Name": "FE:Remastered: Hadean Asset Pack",
+            "ID": "2785542655",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785542655/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+        },
+        "2814914461": {
+            "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+            "ID": "2814914461",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2814914461/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+        },
+        "2049956570": {
+            "Name": "FE:Remastered: ISDF Model Pack",
+            "ID": "2049956570",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+        },
+        "2049959749": {
+            "Name": "FE:Remastered: Scion Model Pack",
+            "ID": "2049959749",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+        },
+        "2467249743": {
+            "Name": "Gravey's VSR Map Pack",
+            "ID": "2467249743",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2467249743/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+        },
+        "0": {
+            "Name": "Stock",
+            "ID": "0",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+        },
+        "2967047003": {
+            "Name": "Genesis Battlefield - All in One 3",
+            "ID": "2967047003",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2967047003/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2967047003"
+        }
+    },
+    "Sessions": [
+        {
+            "ID": "Rebellion:CsfUYW@@@o",
+            "Name": "Friday!",
+            "Message": "https://www.youtube.com/@F9bomber",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 10
+                }
+            ],
+            "PlayerCount": {
+                "Player": 2
+            },
+            "Level": {
+                "MapFile": "dmbane.bzn",
+                "ID": "1325933293:dmbane",
+                "Attributes": {
+                    "Respawn": "Any"
+                },
+                "GameType": {
+                    "ID": "DM"
+                },
+                "GameMode": {
+                    "ID": "DM"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/71cf7774bddda3ccf83ff4c108f6f01f51a7b421d2608d62914e75fe8bfcb4c6.png",
+                "Name": "DM: Bane",
+                "Description": "﻿Deathmatch:\r\nFight it out on the ice of Bane."
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "F9bomber",
+                    "Type": "Player",
+                    "Stats": {
+                        "Kills": 3,
+                        "Deaths": 1,
+                        "Score": 14
+                    },
+                    "Team": {
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198026325621"
+                        },
+                        "Steam": {
+                            "Raw": "76561198026325621",
+                            "ID": "76561198026325621"
+                        }
+                    }
+                },
+                {
+                    "Name": "NOMAD",
+                    "Type": "Player",
+                    "Stats": {
+                        "Kills": 3,
+                        "Deaths": 3,
+                        "Score": 12
+                    },
+                    "Team": {
+                        "SubTeam": {
+                            "ID": "2"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 2
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199066952713"
+                        },
+                        "Steam": {
+                            "Raw": "76561199066952713",
+                            "ID": "76561199066952713"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "MaxPingSeen": 66,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "CsfUYW@@@o",
+                "NAT_TYPE": "FULL CONE"
+            },
+            "Game": {
+                "Mod": "1325933293",
+                "Version": "2.0.196.0",
+                "ModHash": "Dx7b73"
+            },
+            "Time": {
+                "Seconds": 300,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            }
+        },
+        {
+            "ID": "Rebellion:45TJDPT@Wx",
+            "Name": "Host Revenge",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 4
+                }
+            ],
+            "PlayerCount": {
+                "Player": 1
+            },
+            "Level": {
+                "MapFile": "mpiashran.bzn",
+                "ID": "2967047003:mpiashran",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "MPI"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/4f6eca3fe1d7c05b0b876ee624225bf6c2042727637941ec5cd5330dc341106a.png",
+                "Name": "BCC-MPI: Instant Ashran",
+                "Description": "﻿# Ashran #\r\n\r\nMap by Splinter\r\nModified to MPI BCC\r\nby Splinter (c) 2022"
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": true,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "Revenge",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198066192389"
+                        },
+                        "Steam": {
+                            "Raw": "76561198066192389",
+                            "ID": "76561198066192389"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "45TJDPT@Wx",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Mod": "2967047003",
+                "Version": "2.0.185",
+                "ModHash": "nrI7n"
+            },
+            "Time": {
+                "Seconds": 540,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Team Humans"
+                },
+                "2": {
+                    "Name": "Team Computer",
+                    "Human": false,
+                    "Computer": true
+                }
+            }
+        }
+    ]
+}

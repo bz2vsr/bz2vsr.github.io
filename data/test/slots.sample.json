@@ -1,0 +1,323 @@
+{
+    "Metadata": {
+        "ListServer": {
+            "Rebellion": {
+                "Status": "cached",
+                "Success": true,
+                "Timestamp": "2025-04-04T01:35:07.047908Z"
+            }
+        }
+    },
+    "SessionsDefault": {
+        "Type": "Listen"
+    },
+    "DataCache": {
+        "Level": {
+            "GameType": {
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            },
+            "GameMode": {
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            }
+        },
+        "Players": {
+            "IDs": {
+                "Steam": {
+                    "76561198026325621": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/5114be0aaaecc3142d29c7acadbdee92d0f1118a_full.jpg",
+                        "Nickname": "F9bomber",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198026325621/"
+                    },
+                    "76561198045619216": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/cf23b79009899e1aa191ea823a4993e9c6ff64b3_full.jpg",
+                        "Nickname": "Zack",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198045619216/"
+                    },
+                    "76561198023051456": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/199d4e73b41bf54a6a5004dce662264c266efb86_full.jpg",
+                        "Nickname": "aaaaaaaaaaaaaaaaaAAAAAA",
+                        "ProfileUrl": "https://steamcommunity.com/id/ArchitectFroggo/"
+                    },
+                    "76561198834945971": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/52bb9343370e501712a05c5c8e643a20f961e353_full.jpg",
+                        "Nickname": "The_Bylarge",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198834945971/"
+                    },
+                    "76561198058222745": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/5f2473740e8083b726ed8bee2fc68535332bd524_full.jpg",
+                        "Nickname": "Totokomo",
+                        "ProfileUrl": "https://steamcommunity.com/id/thatavaligamerfrombattlezone2/"
+                    },
+                    "76561199653748651": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/d11a4032178ddcad6c2951556bd6a8952fc2aaba_full.jpg",
+                        "Nickname": "Sev",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199653748651/"
+                    }
+                }
+            }
+        }
+    },
+    "Mods": {
+        "1325933293": {
+            "Name": "Vet Strat Recycler Variant",
+            "ID": "1325933293",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1325933293/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+        },
+        "1329659846": {
+            "Name": "Aegeis VSR Map Pack",
+            "ID": "1329659846",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329659846/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+        },
+        "2785557433": {
+            "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+            "ID": "2785557433",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785557433/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+        },
+        "2785542655": {
+            "Name": "FE:Remastered: Hadean Asset Pack",
+            "ID": "2785542655",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785542655/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+        },
+        "2814914461": {
+            "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+            "ID": "2814914461",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2814914461/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+        },
+        "2049956570": {
+            "Name": "FE:Remastered: ISDF Model Pack",
+            "ID": "2049956570",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+        },
+        "2049959749": {
+            "Name": "FE:Remastered: Scion Model Pack",
+            "ID": "2049959749",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+        },
+        "2467249743": {
+            "Name": "Gravey's VSR Map Pack",
+            "ID": "2467249743",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2467249743/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+        },
+        "0": {
+            "Name": "Stock",
+            "ID": "0",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+        }
+    },
+    "Sessions": [
+        {
+            "ID": "Rebellion:n1kgnB@@Gq",
+            "Name": "Host F9bomber",
+            "Message": "https://www.youtube.com/@F9bomber",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 10
+                }
+            ],
+            "PlayerCount": {
+                "Player": 6
+            },
+            "Level": {
+                "MapFile": "STRedSlopevsr.bzn",
+                "ID": "1325933293:stredslopevsr",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "STRAT"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/85666d81ccf03347b58d376458d6a935a55e588a04b5b2947637109ae8bd81d3.png",
+                "Name": "VSR: Red Slope",
+                "Description": "﻿Red Slope.\r\n\r\n7 Pools, 2 Commanders.\r\n\r\nby {bac}appel."
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "PreGame"
+            },
+            "Players": [
+                {
+                    "Name": "F9bomber",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "3"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 3
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198026325621"
+                        },
+                        "Steam": {
+                            "Raw": "76561198026325621",
+                            "ID": "76561198026325621"
+                        }
+                    }
+                },
+                {
+                    "Name": "Zack",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "2",
+                        "SubTeam": {
+                            "ID": "9"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 9
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198045619216"
+                        },
+                        "Steam": {
+                            "Raw": "76561198045619216",
+                            "ID": "76561198045619216"
+                        }
+                    }
+                },
+                {
+                    "Name": "rollypolly",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "2",
+                        "SubTeam": {
+                            "ID": "8"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 8
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198023051456"
+                        },
+                        "Steam": {
+                            "Raw": "76561198023051456",
+                            "ID": "76561198023051456"
+                        }
+                    }
+                },
+                {
+                    "Name": "The_Bylarge",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "4"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 4
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198834945971"
+                        },
+                        "Steam": {
+                            "Raw": "76561198834945971",
+                            "ID": "76561198834945971"
+                        }
+                    }
+                },
+                {
+                    "Name": "Totokomo",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "2",
+                        "SubTeam": {
+                            "ID": "7"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 7
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198058222745"
+                        },
+                        "Steam": {
+                            "Raw": "76561198058222745",
+                            "ID": "76561198058222745"
+                        }
+                    }
+                },
+                {
+                    "Name": "Sev",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199653748651"
+                        },
+                        "Steam": {
+                            "Raw": "76561199653748651",
+                            "ID": "76561199653748651"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "MaxPingSeen": 193,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "n1kgnB@@Gq",
+                "NAT_TYPE": "FULL CONE"
+            },
+            "Game": {
+                "Mod": "1325933293",
+                "Version": "2.0.196.0",
+                "ModHash": "Dx7b73"
+            },
+            "Time": {
+                "Seconds": 60,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "PreGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Team 1"
+                },
+                "2": {
+                    "Name": "Team 2",
+                    "Human": true,
+                    "Computer": false
+                }
+            }
+        }
+    ]
+}
