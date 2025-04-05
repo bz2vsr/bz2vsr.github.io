@@ -340,7 +340,6 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
     }
 
     let playerName = escapeHtml(player.Name);
-    let originalName = player.OriginalName ? `<div class="text-secondary small">${escapeHtml(player.OriginalName)}</div>` : '';
     let steamProfileUrl = "#";
     let steamNickname = "";
     let steamAvatarUrl = player.Name === "Computer" ? "/img/computer.png" : "/img/no_steam_pfp.jpg";
@@ -382,6 +381,13 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
         } : null
     });
 
+    // Determine if we should show the in-game name below the Steam/GOG name
+    const showInGameName = (steamNickname && steamNickname !== playerName) || 
+                          (player.OriginalName && player.OriginalName !== steamNickname);
+    
+    // Use the in-game name as the secondary display if it differs from the Steam/GOG name
+    const inGameName = player.OriginalName || playerName;
+
     let cardContent = `
         <li class="list-group-item d-flex justify-content-between align-items-center${player.Name === "Computer" ? ' no-hover computer-team' : ''} player-card" data-player='${playerData}'>
             <div class="d-flex align-items-center">
@@ -392,7 +398,7 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
                             <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3M6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5zm4 1v4H6V6zm1-1V3.5A1.5 1.5 0 1 1 12.5 5zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11z"/>
                         </svg>` : ''}${steamNickname || playerName}
                     </span>
-                    ${steamNickname && steamNickname !== playerName ? originalName : ''}
+                    ${showInGameName ? `<div class="text-secondary small">${escapeHtml(inGameName)}</div>` : ''}
                 </div>
             </div>
             ${!compactPlayerCards && playerScore !== "" ? `<span class="badge bg-secondary">${playerScore}</span>` : ''}
@@ -1091,35 +1097,27 @@ async function getLobbyData()
                                                             teamID = `[${player.Team.SubTeam.ID}]`;
                                                         }
                                                         
+                                                        // Store the original in-game name
+                                                        let inGameName = player.Name;
                                                         let displayName = player.Name; // fallback
-                                                        let originalName = player.Name;
                                                         
                                                         if (player.IDs && player.IDs.Steam && player.IDs.Steam.ID) {
                                                             let steamID = player.IDs.Steam.ID.toString();
                                                             if (SteamPlayerList[steamID] && SteamPlayerList[steamID].Nickname) {
                                                                 displayName = `${teamID} ${SteamPlayerList[steamID].Nickname}`;
-                                                                // Only keep Player.Name if it's different from Steam nickname
-                                                                if (player.Name === SteamPlayerList[steamID].Nickname) {
-                                                                    originalName = "";
-                                                                }
                                                             }
                                                         } else if (player.IDs && player.IDs.Gog && player.IDs.Gog.ID) {
                                                             let gogID = player.IDs.Gog.ID.toString();
                                                             if (GogPlayerList[gogID] && GogPlayerList[gogID].Username) {
                                                                 displayName = `${teamID} ${GogPlayerList[gogID].Username}`;
-                                                                // Only keep Player.Name if it's different from GOG username
-                                                                if (player.Name === GogPlayerList[gogID].Username) {
-                                                                    originalName = "";
-                                                                }
                                                             }
                                                         } else {
                                                             displayName = `${teamID} ${player.Name}`;
-                                                            originalName = "";
                                                         }
                                                         
                                                         // Set the display name and original name
                                                         playerWithTeamID.Name = displayName;
-                                                        playerWithTeamID.OriginalName = originalName;
+                                                        playerWithTeamID.OriginalName = inGameName;
                                                         
                                                         return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards);
                                                     }).join('')}
@@ -1163,35 +1161,27 @@ async function getLobbyData()
                                                             teamID = `[${player.Team.SubTeam.ID}]`;
                                                         }
                                                         
+                                                        // Store the original in-game name
+                                                        let inGameName = player.Name;
                                                         let displayName = player.Name; // fallback
-                                                        let originalName = player.Name;
                                                         
                                                         if (player.IDs && player.IDs.Steam && player.IDs.Steam.ID) {
                                                             let steamID = player.IDs.Steam.ID.toString();
                                                             if (SteamPlayerList[steamID] && SteamPlayerList[steamID].Nickname) {
                                                                 displayName = `${teamID} ${SteamPlayerList[steamID].Nickname}`;
-                                                                // Only keep Player.Name if it's different from Steam nickname
-                                                                if (player.Name === SteamPlayerList[steamID].Nickname) {
-                                                                    originalName = "";
-                                                                }
                                                             }
                                                         } else if (player.IDs && player.IDs.Gog && player.IDs.Gog.ID) {
                                                             let gogID = player.IDs.Gog.ID.toString();
                                                             if (GogPlayerList[gogID] && GogPlayerList[gogID].Username) {
                                                                 displayName = `${teamID} ${GogPlayerList[gogID].Username}`;
-                                                                // Only keep Player.Name if it's different from GOG username
-                                                                if (player.Name === GogPlayerList[gogID].Username) {
-                                                                    originalName = "";
-                                                                }
                                                             }
                                                         } else {
                                                             displayName = `${teamID} ${player.Name}`;
-                                                            originalName = "";
                                                         }
                                                         
                                                         // Set the display name and original name
                                                         playerWithTeamID.Name = displayName;
-                                                        playerWithTeamID.OriginalName = originalName;
+                                                        playerWithTeamID.OriginalName = inGameName;
                                                         
                                                         return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards);
                                                     }).join('')}
