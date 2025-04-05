@@ -493,7 +493,7 @@ function createFactionsChart(factionsData) {
             plugins: {
                 title: {
                     display: true,
-                    text: `Faction Distribution Totals (${totalGames} total games)`
+                    text: `Faction Choice Distribution (${totalGames} total)`
                 },
                 legend: legendConfig,
                 datalabels: datalabelsConfig
