@@ -145,6 +145,179 @@ function getRandomMaps() {
 
 }
 
+// Add this function to handle context menu for player cards
+function setupPlayerCardContextMenu() {
+    // Create context menu element if it doesn't exist
+    if (!document.getElementById('playerContextMenu')) {
+        const contextMenu = document.createElement('div');
+        contextMenu.id = 'playerContextMenu';
+        contextMenu.className = 'dropdown-menu shadow';
+        contextMenu.setAttribute('role', 'menu');
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.zIndex = '1000';
+        contextMenu.style.display = 'none';
+        
+        // Add menu items
+        contextMenu.innerHTML = `
+            <a class="dropdown-item" href="#" data-action="copy-nick">Copy In-Game Nick</a>
+            <a class="dropdown-item" href="#" data-action="copy-account">Copy Account Name</a>
+            <a class="dropdown-item" href="#" data-action="copy-both">Copy Both</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-action="copy-profile">Copy Profile URL</a>
+            <a class="dropdown-item" href="#" data-action="copy-avatar">Copy Avatar URL</a>
+        `;
+        
+        document.body.appendChild(contextMenu);
+        
+        // Add event listeners for menu items
+        contextMenu.addEventListener('click', function(e) {
+            e.preventDefault();
+            const action = e.target.getAttribute('data-action');
+            if (action) {
+                handleContextMenuAction(action);
+            }
+        });
+        
+        // Hide menu when clicking outside
+        document.addEventListener('click', function() {
+            contextMenu.style.display = 'none';
+        });
+    }
+    
+    // Add right-click event listeners to player cards
+    document.addEventListener('contextmenu', function(e) {
+        const playerCard = e.target.closest('.player-card');
+        if (playerCard && !playerCard.classList.contains('no-hover')) {
+            e.preventDefault();
+            
+            // Get player data from the card
+            const playerData = playerCard.getAttribute('data-player');
+            if (playerData) {
+                const player = JSON.parse(playerData);
+                
+                // Store player data for context menu actions
+                window.currentContextPlayer = player;
+                
+                // Show context menu at cursor position
+                const contextMenu = document.getElementById('playerContextMenu');
+                contextMenu.style.display = 'block';
+                contextMenu.style.left = e.pageX + 'px';
+                contextMenu.style.top = e.pageY + 'px';
+            }
+        }
+    });
+}
+
+// Handle context menu actions
+function handleContextMenuAction(action) {
+    const player = window.currentContextPlayer;
+    if (!player) return;
+    
+    let valueToCopy = '';
+    let toastMessage = '';
+    
+    switch (action) {
+        case 'copy-nick':
+            valueToCopy = player.Name;
+            toastMessage = `Copied In-Game Nick: ${valueToCopy}`;
+            break;
+        case 'copy-account':
+            // Get account name from Steam or GOG
+            let accountName = '';
+            if (player.Steam && player.Steam.Nickname) {
+                accountName = player.Steam.Nickname;
+            } else if (player.Gog && player.Gog.username) {
+                accountName = player.Gog.username;
+            }
+            valueToCopy = accountName;
+            toastMessage = `Copied Account Name: ${valueToCopy}`;
+            break;
+        case 'copy-both':
+            // Get account name from Steam or GOG
+            let accountName2 = '';
+            if (player.Steam && player.Steam.Nickname) {
+                accountName2 = player.Steam.Nickname;
+            } else if (player.Gog && player.Gog.username) {
+                accountName2 = player.Gog.username;
+            }
+            valueToCopy = `${accountName2} (${player.Name})`;
+            toastMessage = `Copied: ${valueToCopy}`;
+            break;
+        case 'copy-profile':
+            // Get profile URL from Steam or GOG
+            if (player.Steam && player.Steam.ProfileUrl) {
+                valueToCopy = player.Steam.ProfileUrl;
+            } else if (player.Gog && player.Gog.ProfileUrl) {
+                valueToCopy = player.Gog.ProfileUrl;
+            }
+            toastMessage = `Copied Profile URL`;
+            break;
+        case 'copy-avatar':
+            // Get avatar URL from Steam or GOG
+            if (player.Steam && player.Steam.AvatarUrl) {
+                valueToCopy = player.Steam.AvatarUrl;
+            } else if (player.Gog && player.Gog.AvatarUrl) {
+                valueToCopy = player.Gog.AvatarUrl;
+            }
+            toastMessage = `Copied Avatar URL`;
+            break;
+    }
+    
+    // Copy to clipboard
+    if (valueToCopy) {
+        navigator.clipboard.writeText(valueToCopy).then(() => {
+            showToast(toastMessage);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    }
+    
+    // Hide context menu
+    document.getElementById('playerContextMenu').style.display = 'none';
+}
+
+// Show toast notification
+function showToast(message) {
+    // Create toast container if it doesn't exist
+    if (!document.getElementById('toastContainer')) {
+        const toastContainer = document.createElement('div');
+        toastContainer.id = 'toastContainer';
+        toastContainer.className = 'toast-container position-fixed top-0 start-50 translate-middle-x p-3';
+        document.body.appendChild(toastContainer);
+    }
+    
+    // Create toast element
+    const toastId = 'toast-' + Date.now();
+    const toast = document.createElement('div');
+    toast.className = 'toast text-bg-success';
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    toast.id = toastId;
+    
+    toast.innerHTML = `
+        <div class="toast-header">
+            <strong class="me-auto">Copied to Clipboard</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            ${message}
+        </div>
+    `;
+    
+    // Add toast to container
+    document.getElementById('toastContainer').appendChild(toast);
+    
+    // Initialize and show toast
+    const bsToast = new bootstrap.Toast(toast, { delay: 3000 });
+    bsToast.show();
+    
+    // Remove toast after it's hidden
+    toast.addEventListener('hidden.bs.toast', function() {
+        toast.remove();
+    });
+}
+
 // this renders the individual player cards within each game card
 function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards) {
     // Check if this is a commander slot by looking for the Team.Leader property
@@ -192,8 +365,25 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
         }
     }
 
+    // Create a data attribute with player information for context menu
+    const playerData = JSON.stringify({
+        Name: player.Name,
+        OriginalName: player.OriginalName,
+        Score: player.Score,
+        Steam: player.IDs && player.IDs.Steam ? {
+            Nickname: steamNickname,
+            ProfileUrl: steamProfileUrl,
+            AvatarUrl: steamAvatarUrl
+        } : null,
+        Gog: player.IDs && player.IDs.Gog ? {
+            username: steamNickname,
+            ProfileUrl: steamProfileUrl,
+            AvatarUrl: steamAvatarUrl
+        } : null
+    });
+
     let cardContent = `
-        <li class="list-group-item d-flex justify-content-between align-items-center${player.Name === "Computer" ? ' no-hover computer-team' : ''} player-card">
+        <li class="list-group-item d-flex justify-content-between align-items-center${player.Name === "Computer" ? ' no-hover computer-team' : ''} player-card" data-player='${playerData}'>
             <div class="d-flex align-items-center">
                 ${!compactPlayerCards ? `<img src="${steamAvatarUrl}" class="me-2 img-thumbnail" width="48" height="48" onError="this.src='/img/no_steam_pfp.jpg'">` : ''}
                 <div>
@@ -207,7 +397,7 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
             </div>
             ${!compactPlayerCards && playerScore !== "" ? `<span class="badge bg-secondary">${playerScore}</span>` : ''}
         </li>`;
-
+    
     // make entire card clickable if we have a valid profile URL
     if (steamProfileUrl !== "#") {
         return `<a href="${steamProfileUrl}" target="_blank" class="text-decoration-none">${cardContent}</a>`;
@@ -817,8 +1007,7 @@ async function getLobbyData()
                                                 </div>
                                             </div>
                                         </li>
-                                    </ul>
-                                </div>
+                                    </div>
                             </div>
                             <div class="row player-list">
                                 ${(() => {
@@ -1269,4 +1458,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     {
         getRandomMaps();
     });
+
+    // Call setupPlayerCardContextMenu when the page loads
+    setupPlayerCardContextMenu();
 });
