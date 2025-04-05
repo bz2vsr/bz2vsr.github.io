@@ -240,6 +240,9 @@ async function getLobbyData()
         // let fetchResponse = await fetch('/data/test/strat-test.sample.json');
         // let fetchResponse = await fetch('/data/test/pirate.sample.json');
         // let fetchResponse = await fetch('/data/test/gog.sample.json');
+        // let fetchResponse = await fetch('/data/test/dm.sample.json');
+        // let fetchResponse = await fetch('/data/test/ffa.sample.json');
+        // let fetchResponse = await fetch('/data/test/slots.sample.json');
 
         // also fetch map data from local JSON file
         let fetchMapDataResponse = await fetch('/data/maps/vsrmaplist.json');
@@ -827,7 +830,24 @@ async function getLobbyData()
                                                             <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                                                         </svg>
                                                         <div class="ms-2">
-                                                            <strong>Hidden:</strong> ${Hidden.map(player => clean(player.Name)).join(', ')}
+                                                            <strong>Hidden:</strong> ${Hidden.map(player => {
+                                                                let displayName = clean(player.Name);
+                                                                // Check if player has Steam ID
+                                                                if (player.IDs && player.IDs.Steam && player.IDs.Steam.ID) {
+                                                                    let steamId = player.IDs.Steam.ID.toString();
+                                                                    if (SteamPlayerList && SteamPlayerList[steamId] && SteamPlayerList[steamId].Nickname) {
+                                                                        displayName = `${SteamPlayerList[steamId].Nickname} (${clean(player.Name)})`;
+                                                                    }
+                                                                }
+                                                                // Check if player has GOG ID
+                                                                else if (player.IDs && player.IDs.Gog && player.IDs.Gog.ID) {
+                                                                    let gogId = player.IDs.Gog.ID.toString();
+                                                                    if (GogPlayerList && GogPlayerList[gogId] && GogPlayerList[gogId].Username) {
+                                                                        displayName = `${GogPlayerList[gogId].Username} (${clean(player.Name)})`;
+                                                                    }
+                                                                }
+                                                                return displayName;
+                                                            }).join(', ')}
                                                         </div>
                                                     </div>
                                                 </div>
