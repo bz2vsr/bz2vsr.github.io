@@ -1,0 +1,172 @@
+{
+    "Metadata": {
+        "ListServer": {
+            "Rebellion": {
+                "Status": "cached",
+                "Success": true,
+                "Timestamp": "2025-04-05T01:45:37.4556534Z"
+            }
+        }
+    },
+    "SessionsDefault": {
+        "Type": "Listen"
+    },
+    "DataCache": {
+        "Level": {
+            "GameType": {
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            },
+            "GameMode": {
+                "FFA": {
+                    "Name": "Free for All"
+                }
+            }
+        },
+        "Players": {
+            "IDs": {
+                "Steam": {
+                    "76561199653748651": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/d11a4032178ddcad6c2951556bd6a8952fc2aaba_full.jpg",
+                        "Nickname": "Sev",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199653748651/"
+                    }
+                }
+            }
+        }
+    },
+    "Mods": {
+        "1325933293": {
+            "Name": "Vet Strat Recycler Variant",
+            "ID": "1325933293",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1325933293/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+        },
+        "1329659846": {
+            "Name": "Aegeis VSR Map Pack",
+            "ID": "1329659846",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329659846/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+        },
+        "2785557433": {
+            "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+            "ID": "2785557433",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785557433/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+        },
+        "2785542655": {
+            "Name": "FE:Remastered: Hadean Asset Pack",
+            "ID": "2785542655",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785542655/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+        },
+        "2814914461": {
+            "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+            "ID": "2814914461",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2814914461/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+        },
+        "2049956570": {
+            "Name": "FE:Remastered: ISDF Model Pack",
+            "ID": "2049956570",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+        },
+        "2049959749": {
+            "Name": "FE:Remastered: Scion Model Pack",
+            "ID": "2049959749",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+        },
+        "2467249743": {
+            "Name": "Gravey's VSR Map Pack",
+            "ID": "2467249743",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2467249743/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+        },
+        "0": {
+            "Name": "Stock",
+            "ID": "0",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+        }
+    },
+    "Sessions": [
+        {
+            "ID": "Rebellion:KTrMPW6@Wn",
+            "Name": "test",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 14
+                }
+            ],
+            "PlayerCount": {
+                "Player": 1
+            },
+            "Level": {
+                "MapFile": "vsricep14w.bzn",
+                "ID": "1325933293:vsricep14w",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "FFA"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/b92996590b402192311f3f5e9d9d3cf9242401d7c0837e6cf76f56f63538c375.png",
+                "Name": "VSR FFA: Ice Path",
+                "Description": "FTD: Ice path\r\nTake the pools of\r\n your defeated\r\n opponents and gain\r\n control of the map.\r\n\r\n14 Commanders\r\n 28 Bio-Metal Pools\r\n Lots of loose\r\n\r\n-By .:.FTD.:.squirrel-Gen\r\n\r\nWarning: If your server\r\ncannot support 14 players\r\nlimit to less."
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "Sev",
+                    "Type": "Player",
+                    "Team": {
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199653748651"
+                        },
+                        "Steam": {
+                            "Raw": "76561199653748651",
+                            "ID": "76561199653748651"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "KTrMPW6@Wn",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Mod": "1325933293",
+                "Version": "2.0.196.0",
+                "ModHash": "Dx7b73"
+            },
+            "Time": {
+                "Seconds": 120,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            }
+        }
+    ]
+}

@@ -481,7 +481,10 @@ async function getLobbyData()
                 fetch('https://api.short.io/links/public', options)
                     .then(response => response.json())
                     .then(response => { 
-                        document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`).innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @BZ2Player`;
+                        const textareaElement = document.querySelector(`button[data-join-string="${encodedArgs}"] textarea`);
+                        if (textareaElement) {
+                            textareaElement.innerText = `${options.playerCount}/${options.playerCountMax} ${response.shortURL} @BZ2Player`;
+                        }
                     })
                     .catch(err => console.error(err));
             }
@@ -584,6 +587,20 @@ async function getLobbyData()
 
                 // For MPI games, Team 2 only shows Computer once, no empty slots
                 Team2 = [{Name: "Computer", slot: 6}];
+            }
+            else if (gameMode === "DM") {
+                // For DM games, all players go to Team1
+                Team1 = PlayerList.slice(0, Math.min(10, PlayerList.length));
+                
+                // Team2 is empty for DM games
+                Team2 = [];
+            }
+            else if (gameMode === "FFA") {
+                // For FFA games, all players go to Team1
+                Team1 = PlayerList.slice(0, Math.min(10, PlayerList.length));
+                
+                // Team2 is empty for FFA games
+                Team2 = [];
             }
             else {
                 // For other game modes, create a single team list
@@ -842,8 +859,8 @@ async function getLobbyData()
                                                                 </div>
                                                             </div>
                                         </div>`;
-                                    } else if (gameMode === "FFA") {
-                                        // For FFA mode, list all players in a single column with their team IDs
+                                    } else if (gameMode === "DM") {
+                                        // For DM (Deathmatch) mode, list all players in a single column
                                         return `
                                         <div class="col-12 p-2">
                                             <div class="card h-100 border-secondary-subtle">
@@ -852,7 +869,7 @@ async function getLobbyData()
                                                 </div>
                                                 <div class="card-body p-0">
                                                     <ul class="list-group list-group-flush">
-                                                    ${PlayerList.map(player => {
+                                                    ${Team1.map(player => {
                                                         // Create a copy of the player object
                                                         let playerWithTeamID = {...player};
                                                         
@@ -862,7 +879,78 @@ async function getLobbyData()
                                                             teamID = `[${player.Team.SubTeam.ID}]`;
                                                         }
                                                         
-                                                        // Get Steam or GOG username
+                                                        let displayName = player.Name; // fallback
+                                                        let originalName = player.Name;
+                                                        
+                                                        if (player.IDs && player.IDs.Steam && player.IDs.Steam.ID) {
+                                                            let steamID = player.IDs.Steam.ID.toString();
+                                                            if (SteamPlayerList[steamID] && SteamPlayerList[steamID].Nickname) {
+                                                                displayName = `${teamID} ${SteamPlayerList[steamID].Nickname}`;
+                                                                // Only keep Player.Name if it's different from Steam nickname
+                                                                if (player.Name === SteamPlayerList[steamID].Nickname) {
+                                                                    originalName = "";
+                                                                }
+                                                            }
+                                                        } else if (player.IDs && player.IDs.Gog && player.IDs.Gog.ID) {
+                                                            let gogID = player.IDs.Gog.ID.toString();
+                                                            if (GogPlayerList[gogID] && GogPlayerList[gogID].Username) {
+                                                                displayName = `${teamID} ${GogPlayerList[gogID].Username}`;
+                                                                // Only keep Player.Name if it's different from GOG username
+                                                                if (player.Name === GogPlayerList[gogID].Username) {
+                                                                    originalName = "";
+                                                                }
+                                                            }
+                                                        } else {
+                                                            displayName = `${teamID} ${player.Name}`;
+                                                            originalName = "";
+                                                        }
+                                                        
+                                                        // Set the display name and original name
+                                                        playerWithTeamID.Name = displayName;
+                                                        playerWithTeamID.OriginalName = originalName;
+                                                        
+                                                        return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards);
+                                                    }).join('')}
+                                                    ${(() => {
+                                                        // Add a single open slot showing the number of remaining slots
+                                                        const remainingSlots = playerCountMax - PlayerList.length;
+                                                        if (remainingSlots > 0) {
+                                                            return `
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center text-secondary no-hover player-card">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="me-2" style="width: 1px; height: 48px;"></div>
+                                                                    <div>
+                                                                        <span>${remainingSlots} ${remainingSlots === 1 ? 'Slot' : 'Slots'} Open</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>`;
+                                                        }
+                                                        return '';
+                                                    })()}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                    } else if (gameMode === "FFA") {
+                                        // For FFA mode, list all players in a single column
+                                        return `
+                                        <div class="col-12 p-2">
+                                            <div class="card h-100 border-secondary-subtle">
+                                                <div class="card-header text-center">
+                                                    Players
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <ul class="list-group list-group-flush">
+                                                    ${Team1.map(player => {
+                                                        // Create a copy of the player object
+                                                        let playerWithTeamID = {...player};
+                                                        
+                                                        // Get the team ID if available
+                                                        let teamID = "";
+                                                        if (player.Team && player.Team.SubTeam) {
+                                                            teamID = `[${player.Team.SubTeam.ID}]`;
+                                                        }
+                                                        
                                                         let displayName = player.Name; // fallback
                                                         let originalName = player.Name;
                                                         
