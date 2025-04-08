@@ -2056,19 +2056,28 @@ class ODFBrowser {
                                 <div class="row h-100">
                                     <div class="col-md-4 h-100">
                                         <div class="d-flex flex-column h-100">
-                                            <h4 class="mb-3">ISDF</h4>
-                                            <div class="flex-grow-1 overflow-auto" id="isdfBuildTree"></div>
+                                            <div class="d-flex align-items-center" style="padding-bottom: 10px;">
+                                                <h4 class="mb-0">ISDF</h4>
+                                                    <img src="/img/ISDF-Logo.png" alt="Image" style="width: 50px; height: 50px; margin-left: 10px;">
+                                            </div>
+                                        <div class="flex-grow-1 overflow-auto" id="isdfBuildTree"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4 h-100">
                                         <div class="d-flex flex-column h-100">
-                                            <h4 class="mb-3">Hadean</h4>
+                                            <div class="d-flex align-items-center" style="padding-bottom: 10px;">
+                                                <h4 class="mb-0">Hadean</h4>
+                                                    <img src="/img/Hadean-Logo.png" alt="Image" style="width: 50px; height: 50px; margin-left: 10px;">
+                                            </div>
                                             <div class="flex-grow-1 overflow-auto" id="hadeanBuildTree"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4 h-100">
                                         <div class="d-flex flex-column h-100">
-                                            <h4 class="mb-3">Scion</h4>
+                                            <div class="d-flex align-items-center" style="padding-bottom: 10px;">
+                                                <h4 class="mb-0">Scion</h4>
+                                                    <img src="/img/Scion-Logo2.png" alt="Image" style="width: 50px; height: 50px; margin-left: 10px;">
+                                            </div>
                                             <div class="flex-grow-1 overflow-auto" id="scionBuildTree"></div>
                                         </div>
                                     </div>
@@ -2153,7 +2162,6 @@ class ODFBrowser {
                      style="cursor: pointer; margin-bottom: 0.5rem;">
                     <div class="d-flex align-items-center gap-2">
                         ${properties.unitName ? `<span class="fw-bold">${properties.unitName}</span>` : ''}
-                        <small class="opacity-75">${filename.replace('.odf', '')}</small>
                     </div>
                     <div class="collapse" id="${collapseId}"
                          data-bs-parent="#${childrenCollapseId}">
