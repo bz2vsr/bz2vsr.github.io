@@ -20,19 +20,19 @@ Website to pull multiplayer game data for [Battlezone II: Combat Commander](http
 <table>
   <tr>
     <td><strong>Live Game Feed</strong><br>Automatically populates with live game data as soon as games are created, providing users with real-time updates and game information without needing to be in-game.</td>
-    <td><img src="img\opengraph.png" alt="Image 1" width="150"/></td>
+    <td><img src="img\opengraph.png" alt="Image 1" width="300"/></td>
   </tr>
   <tr>
     <td><strong>Map Browser</strong><br>Explore a catalog of maps with their attributes, letting users filter and view map details to make informed decisions about gameplay or strategy.</td>
-    <td><img src="img\opengraph-map.png" alt="Image 2" width="150"/></td>
+    <td><img src="img\opengraph-map.png" alt="Image 2" width="300"/></td>
   </tr>
   <tr>
     <td><strong>ODF Lookup</strong><br>Allows users to access Object Definition Files (ODFs) for all game objects, providing detailed attributes and data for in-depth game analysis and strategy development.</td>
-    <td><img src="img\opengraph-odf.png" alt="Image 3" height="150" width="150"/></td>
+    <td><img src="img\opengraph-odf.png" alt="Image 3" height="150" width="300"/></td>
   </tr>
   <tr>
     <td><strong>Real Time Stats</strong><br>Tracks and displays live statistics from recorded strategy games, including map counts and commander win rates, giving users current state of strategy game.</td>
-    <td><img src="img\opengraph-stats.png" alt="Image 4" height="150" width="150"/></td>
+    <td><img src="img\opengraph-stats.png" alt="Image 4" height="150" width="300"/></td>
   </tr>
 </table>
 
