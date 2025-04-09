@@ -319,11 +319,11 @@ function showToast(message) {
 }
 
 // this renders the individual player cards within each game card
-function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards) {
+function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards, gameMode) {
     // Check if this is a commander slot by looking for the Team.Leader property
     // For STRAT games, slot 1 is Team 1 commander and slot 6 is Team 2 commander
-    const isCommanderSlot = (player.Team && player.Team.Leader === true) || 
-                           (player.slot === 1 || player.slot === 6);
+    const isCommanderSlot = (gameMode === "MPI" && player.Team && player.Team.Leader === true) ||
+                    (gameMode === "STRAT" && (player.slot === 1 || player.slot === 6));
 
     if (player.Name === "Empty" || player.Name === "Open") {
         const warningClass = isCommanderSlot ? "text-warning" : "text-secondary";
@@ -333,7 +333,7 @@ function renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerC
             <div class="d-flex align-items-center">
                 ${!compactPlayerCards ? `<div class="me-2" style="width: 1px; height: 48px;"></div>` : ''}
                 <div>
-                    <span style="${isCommanderSlot ? 'opacity: 0.85;' : ''}">${isCommanderSlot ? "⌘ No Commander" : player.Name}</span>
+                    <span style="${isCommanderSlot ? 'opacity: 0.85;' : ''}">${isCommanderSlot && player.Name === "Empty" ? "⌘ No Commander" : player.Name}</span>
                 </div>
             </div>
         </li>`;
@@ -1060,7 +1060,7 @@ async function getLobbyData()
                                                 </div>
                                                 <div class="card-body p-0">
                                                     <ul class="list-group list-group-flush">
-                                                    ${Team1.map(player => renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards)).join('')}
+                                                    ${Team1.map(player => renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards, gameMode)).join('')}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -1072,7 +1072,7 @@ async function getLobbyData()
                                                 </div>
                                                 <div class="card-body p-0">
                                                     <ul class="list-group list-group-flush">
-                                                    ${Team2.map(player => renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards)).join('')}
+                                                    ${Team2.map(player => renderPlayerCard(player, SteamPlayerList, GogPlayerList, compactPlayerCards, gameMode)).join('')}
                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -1119,7 +1119,7 @@ async function getLobbyData()
                                                         playerWithTeamID.Name = displayName;
                                                         playerWithTeamID.OriginalName = inGameName;
                                                         
-                                                        return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards);
+                                                        return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards, gameMode);
                                                     }).join('')}
                                                     ${(() => {
                                                         // Add a single open slot showing the number of remaining slots
@@ -1183,7 +1183,7 @@ async function getLobbyData()
                                                         playerWithTeamID.Name = displayName;
                                                         playerWithTeamID.OriginalName = inGameName;
                                                         
-                                                        return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards);
+                                                        return renderPlayerCard(playerWithTeamID, SteamPlayerList, GogPlayerList, compactPlayerCards, gameMode);
                                                     }).join('')}
                                                     ${(() => {
                                                         // Add a single open slot showing the number of remaining slots
