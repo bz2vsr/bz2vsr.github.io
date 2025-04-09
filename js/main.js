@@ -1281,7 +1281,7 @@ async function getLobbyData()
                         </svg>
                     `;
 
-                    window.location.replace('discord:///channels/1137584338310017098/1137619558639874129');
+                    // window.location.replace('discord:///channels/1137584338310017098/1137619558639874129');
 
                     // return copy button to original state after a few seconds
                     setTimeout(function(){
