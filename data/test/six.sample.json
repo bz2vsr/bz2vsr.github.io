@@ -1,0 +1,419 @@
+{
+    "Metadata": {
+        "ListServer": {
+            "Rebellion": {
+                "Status": "cached",
+                "Success": true,
+                "Timestamp": "2025-04-09T19:01:00.3580001Z"
+            }
+        }
+    },
+    "SessionsDefault": {
+        "Type": "Listen"
+    },
+    "DataCache": {
+        "Level": {
+            "GameType": {
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            },
+            "GameMode": {
+                "MPI": {
+                    "Name": "MPI"
+                },
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            }
+        },
+        "Players": {
+            "IDs": {
+                "Steam": {
+                    "76561199821344610": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+                        "Nickname": "rustbucket96",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199821344610/"
+                    },
+                    "76561199177332398": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/cd6c054a8fb9219397f66d45653ce811291af449_full.jpg",
+                        "Nickname": "oldman",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199177332398/"
+                    },
+                    "76561198828038702": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+                        "Nickname": "jimorgan135",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198828038702/"
+                    },
+                    "76561199653748651": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/c4987724dc72d044485b0c3149f14e04f404032d_full.jpg",
+                        "Nickname": "Sev",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199653748651/"
+                    }
+                }
+            }
+        }
+    },
+    "Mods": {
+        "3366939105": {
+            "Name": "Genesis - All in One 4",
+            "ID": "3366939105",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/3366939105/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=3366939105"
+        },
+        "0": {
+            "Name": "Stock",
+            "ID": "0",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+        },
+        "2967047003": {
+            "Name": "Genesis Battlefield - All in One 3",
+            "ID": "2967047003",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2967047003/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2967047003"
+        },
+        "1325933293": {
+            "Name": "Vet Strat Recycler Variant",
+            "ID": "1325933293",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1325933293/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+        },
+        "1329659846": {
+            "Name": "Aegeis VSR Map Pack",
+            "ID": "1329659846",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329659846/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+        },
+        "2785557433": {
+            "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+            "ID": "2785557433",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785557433/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+        },
+        "2785542655": {
+            "Name": "FE:Remastered: Hadean Asset Pack",
+            "ID": "2785542655",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785542655/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+        },
+        "2814914461": {
+            "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+            "ID": "2814914461",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2814914461/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+        },
+        "2049956570": {
+            "Name": "FE:Remastered: ISDF Model Pack",
+            "ID": "2049956570",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+        },
+        "2049959749": {
+            "Name": "FE:Remastered: Scion Model Pack",
+            "ID": "2049959749",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+        },
+        "2467249743": {
+            "Name": "Gravey's VSR Map Pack",
+            "ID": "2467249743",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2467249743/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+        }
+    },
+    "Sessions": [
+        {
+            "ID": "Rebellion:Hw9lmB@@G",
+            "Name": "go default ai",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 4
+                }
+            ],
+            "PlayerCount": {
+                "Player": 2
+            },
+            "Level": {
+                "MapFile": "mpisincir.bzn",
+                "ID": "3366939105:mpisincir",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "MPI"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/bc752eb61f8c9310779372c64cadebc869e873f8256c2a03f43d808f9a8f26fc.png",
+                "Name": "BCC-MPI: Instant Sinister Circle",
+                "Description": "-=== G66: Sinister Circle ===-\r\nSurrounded by Supreme enemy, \r\nyour chance to take over this \r\nrock is slim. Using resources \r\nat hand, dig in, and prepare\r\nfor the biggest onslaught\r\nof your career.\r\n\r\nIdea by Den\r\nMap by Major Tom\r\nModified by FRYIN_PAN"
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "rustbucket96",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199821344610"
+                        },
+                        "Steam": {
+                            "Raw": "76561199821344610",
+                            "ID": "76561199821344610"
+                        }
+                    }
+                },
+                {
+                    "Name": "oldman",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "2"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 2
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199177332398"
+                        },
+                        "Steam": {
+                            "Raw": "76561199177332398",
+                            "ID": "76561199177332398"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "MaxPingSeen": 60,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "Hw9lmB@@G",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Mod": "3366939105",
+                "Version": "2.0.185",
+                "ModHash": "nrI7n"
+            },
+            "Time": {
+                "Seconds": 780,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Team Humans"
+                },
+                "2": {
+                    "Name": "Team Computer",
+                    "Human": false,
+                    "Computer": true
+                }
+            }
+        },
+        {
+            "ID": "Rebellion:F8_-jPA@mZ",
+            "Name": "peacekeeper",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 4
+                }
+            ],
+            "PlayerCount": {
+                "Player": 1
+            },
+            "Level": {
+                "MapFile": "mpibosieda.bzn",
+                "ID": "2967047003:mpibosieda",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "MPI"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/c3fb3cd6959b36caf20140c320b6d0b6a557f06efd2dc679eb87a689d9294eda.png",
+                "Name": "BCC-MPI: Instant Bosieda",
+                "Description": "﻿# Bosieda #\r\n\r\nMap by Aesop\r\nModified to MPI BCC\r\nby Splinter (c) 2022"
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": true,
+                "State": "PreGame"
+            },
+            "Players": [
+                {
+                    "Name": "jimorgan135",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198828038702"
+                        },
+                        "Steam": {
+                            "Raw": "76561198828038702",
+                            "ID": "76561198828038702"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "F8_-jPA@mZ",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Mod": "2967047003",
+                "Version": "2.0.185",
+                "ModHash": "nrI7n"
+            },
+            "Time": {
+                "Seconds": 15300,
+                "Resolution": 60,
+                "Max": true,
+                "Context": "PreGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Team Humans"
+                },
+                "2": {
+                    "Name": "Team Computer",
+                    "Human": false,
+                    "Computer": true
+                }
+            }
+        },
+        {
+            "ID": "Rebellion:p-D9Gf3@@X",
+            "Name": "bz2vsr",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 6
+                }
+            ],
+            "PlayerCount": {
+                "Player": 1
+            },
+            "Level": {
+                "MapFile": "vsreuronig.bzn",
+                "ID": "1325933293:vsreuronig",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "STRAT"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/16579097e22673f51ac1e0782a08fabd83b5c82196dda4110b2b6ae7547ab492.png",
+                "Name": "VSR: Europa Night",
+                "Description": "﻿Jupiter's Icey moon!\r\nExE's Night Version\r\n\r\n7 Pools, Medium map\r\n\r\nby {bac}MalevolencE"
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "Sev",
+                    "Type": "Player",
+                    "Team": {
+                        "ID": "1",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199653748651"
+                        },
+                        "Steam": {
+                            "Raw": "76561199653748651",
+                            "ID": "76561199653748651"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "p-D9Gf3@@X",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Mod": "1325933293",
+                "Version": "2.0.197.0",
+                "ModHash": "Dx7b73"
+            },
+            "Time": {
+                "Seconds": 60,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Team 1"
+                },
+                "2": {
+                    "Name": "Team 2",
+                    "Human": true,
+                    "Computer": false
+                }
+            }
+        }
+    ]
+}

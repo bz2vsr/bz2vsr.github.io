@@ -1,0 +1,417 @@
+{
+    "Metadata": {
+        "ListServer": {
+            "Rebellion": {
+                "Status": "cached",
+                "Success": true,
+                "Timestamp": "2025-04-22T19:30:53.5204941Z"
+            }
+        }
+    },
+    "SessionsDefault": {
+        "Type": "Listen"
+    },
+    "DataCache": {
+        "Level": {
+            "GameType": {
+                "DM": {
+                    "Name": "Deathmatch"
+                },
+                "STRAT": {
+                    "Name": "Strategy"
+                }
+            },
+            "GameMode": {
+                "RACE": {
+                    "Name": "Race"
+                },
+                "MPI": {
+                    "Name": "MPI"
+                }
+            }
+        },
+        "Players": {
+            "IDs": {
+                "Steam": {
+                    "76561199595146348": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg",
+                        "Nickname": "andy.antonescu",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199595146348/"
+                    },
+                    "76561198108675249": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/5f9d52bf6bdc297a82f1fa7971929199cd0d0ab1_full.jpg",
+                        "Nickname": "Beast",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561198108675249/"
+                    },
+                    "76561199293262826": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/115a09c0f8bb349042194180e1e5b1edfcd2a439_full.jpg",
+                        "Nickname": "Zywiec Zdruj",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199293262826/"
+                    },
+                    "76561199269176677": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/b7ba6803ea4e81f030da63dc5102f1691c2e0389_full.jpg",
+                        "Nickname": "Gen. Braddock",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561199269176677/"
+                    },
+                    "76561197987928866": {
+                        "AvatarUrl": "https://avatars.steamstatic.com/2b32f3cab1e9fae722af0afceae756577e8b2012_full.jpg",
+                        "Nickname": "_Samuel_",
+                        "ProfileUrl": "https://steamcommunity.com/profiles/76561197987928866/"
+                    }
+                },
+                "Gog": {
+                    "58299767644965591": {
+                        "AvatarUrl": "https://images.gog.com/e2c951de580d9fa526ef7d9d444dd50b5cab5a8b594ddf486bf88f8e7f6badd6_sdk_img184.jpg",
+                        "Username": "mueller43",
+                        "ProfileUrl": "https://www.gog.com/u/mueller43"
+                    }
+                }
+            }
+        }
+    },
+    "Mods": {
+        "0": {
+            "Name": "Stock",
+            "ID": "0",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=0"
+        },
+        "1325933293": {
+            "Name": "Vet Strat Recycler Variant",
+            "ID": "1325933293",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1325933293/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1325933293"
+        },
+        "1329659846": {
+            "Name": "Aegeis VSR Map Pack",
+            "ID": "1329659846",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/1329659846/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=1329659846"
+        },
+        "2785557433": {
+            "Name": "Forgotten Enemies: Remastered: Shared Asset Pack",
+            "ID": "2785557433",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785557433/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785557433"
+        },
+        "2785542655": {
+            "Name": "FE:Remastered: Hadean Asset Pack",
+            "ID": "2785542655",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2785542655/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2785542655"
+        },
+        "2814914461": {
+            "Name": "Forgotten Enemies: Remastered: Cerberi Asset Pack",
+            "ID": "2814914461",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2814914461/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2814914461"
+        },
+        "2049956570": {
+            "Name": "FE:Remastered: ISDF Model Pack",
+            "ID": "2049956570",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049956570/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049956570"
+        },
+        "2049959749": {
+            "Name": "FE:Remastered: Scion Model Pack",
+            "ID": "2049959749",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2049959749/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2049959749"
+        },
+        "2467249743": {
+            "Name": "Gravey's VSR Map Pack",
+            "ID": "2467249743",
+            "Image": "https://gamelistassets.iondriver.com/bzcc/mods/2467249743/mod.png",
+            "Url": "http://steamcommunity.com/sharedfiles/filedetails/?id=2467249743"
+        }
+    },
+    "Sessions": [
+        {
+            "ID": "Rebellion:NjLlW-3@G6",
+            "Name": "Host andy.antonescu",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 10
+                }
+            ],
+            "PlayerCount": {
+                "Player": 1
+            },
+            "Level": {
+                "MapFile": "racepluto.bzn",
+                "ID": "0:racepluto",
+                "Attributes": {
+                    "TimeLimit": 15,
+                    "Respawn": "One"
+                },
+                "GameType": {
+                    "ID": "DM"
+                },
+                "GameMode": {
+                    "ID": "RACE"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/7c9eedfd1337e355067c1706683bde453ef38bece12fdf57a7860ae56be2a211.png",
+                "Name": "RACE: Pluto",
+                "Description": "Race:\r\nGet from checkpoint to checkpoint, blowing up anyone who's competing. \r\n\r\nOn this map, a lap is 4 checkpoints. \r\n\r\nPowerups are in the longer routes."
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "andy.antonescu",
+                    "Type": "Player",
+                    "Team": {
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199595146348"
+                        },
+                        "Steam": {
+                            "Raw": "76561199595146348",
+                            "ID": "76561199595146348"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "NjLlW-3@G6",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Version": "2.0.185",
+                "ModHash": "nrI7n"
+            },
+            "Time": {
+                "Seconds": 540,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            }
+        },
+        {
+            "ID": "Rebellion:XfykyX2@W7",
+            "Name": "Mozambiku",
+            "PlayerTypes": [
+                {
+                    "Types": [
+                        "Player"
+                    ],
+                    "Max": 5
+                }
+            ],
+            "PlayerCount": {
+                "Player": 5
+            },
+            "Level": {
+                "MapFile": "quarry.bzn",
+                "ID": "1325933293:quarry",
+                "GameType": {
+                    "ID": "STRAT"
+                },
+                "GameMode": {
+                    "ID": "MPI"
+                },
+                "Image": "https://gamelistassets.iondriver.com/bzcc/assets/fbe787a5d76ec3850db51fc04747c40e9b6b6c9921d542be3317afa731cd5ce4.png",
+                "Name": "ST: Desert Quarry",
+                "Description": "﻿Strategy:\r\n2 bases in a desert setting.\r\n\r\n2 - Commanders\r\n4 - Pilots\r\n7 - Scrap Pools"
+            },
+            "Status": {
+                "IsLocked": false,
+                "HasPassword": false,
+                "State": "InGame"
+            },
+            "Players": [
+                {
+                    "Name": "Beast",
+                    "Type": "Player",
+                    "Stats": {
+                        "Kills": 7,
+                        "Score": 22
+                    },
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "3"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 3
+                        },
+                        "BZRNet": {
+                            "ID": "S76561198108675249"
+                        },
+                        "Steam": {
+                            "Raw": "76561198108675249",
+                            "ID": "76561198108675249"
+                        }
+                    }
+                },
+                {
+                    "Name": "Zywiec Zdruj",
+                    "Type": "Player",
+                    "Stats": {
+                        "Kills": 6,
+                        "Score": 19
+                    },
+                    "Team": {
+                        "ID": "1",
+                        "Leader": true,
+                        "SubTeam": {
+                            "ID": "1"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 1
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199293262826"
+                        },
+                        "Steam": {
+                            "Raw": "76561199293262826",
+                            "ID": "76561199293262826"
+                        }
+                    }
+                },
+                {
+                    "Name": "Gen. Braddock",
+                    "Type": "Player",
+                    "Stats": {
+                        "Kills": 3,
+                        "Deaths": 2,
+                        "Score": 7
+                    },
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "5"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 5
+                        },
+                        "BZRNet": {
+                            "ID": "S76561199269176677"
+                        },
+                        "Steam": {
+                            "Raw": "76561199269176677",
+                            "ID": "76561199269176677"
+                        }
+                    }
+                },
+                {
+                    "Name": "_Samuel_",
+                    "Type": "Player",
+                    "Stats": {
+                        "Kills": 3,
+                        "Score": 7
+                    },
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "4"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 4
+                        },
+                        "BZRNet": {
+                            "ID": "S76561197987928866"
+                        },
+                        "Steam": {
+                            "Raw": "76561197987928866",
+                            "ID": "76561197987928866"
+                        }
+                    }
+                },
+                {
+                    "Name": "mueller43",
+                    "Type": "Player",
+                    "Stats": {
+                        "Kills": 1,
+                        "Score": 2
+                    },
+                    "Team": {
+                        "ID": "1",
+                        "SubTeam": {
+                            "ID": "2"
+                        }
+                    },
+                    "IDs": {
+                        "Slot": {
+                            "ID": 2
+                        },
+                        "BZRNet": {
+                            "ID": "G202414955720821463"
+                        },
+                        "Gog": {
+                            "Raw": "202414955720821463",
+                            "ID": "58299767644965591"
+                        }
+                    }
+                }
+            ],
+            "Attributes": {
+                "TPS": 20,
+                "MaxPing": 750,
+                "MaxPingSeen": 54,
+                "ListServer": "Rebellion"
+            },
+            "Address": {
+                "NAT": "XfykyX2@W7",
+                "NAT_TYPE": "SYMMETRIC"
+            },
+            "Game": {
+                "Mod": "1325933293",
+                "Mods": [
+                    "1329659846",
+                    "2785557433",
+                    "2785542655",
+                    "2814914461",
+                    "2049956570",
+                    "2049959749",
+                    "2467249743"
+                ],
+                "Version": "2.0.185",
+                "ModHash": "Dx7b73"
+            },
+            "Time": {
+                "Seconds": 360,
+                "Resolution": 60,
+                "Max": false,
+                "Context": "InGame"
+            },
+            "Teams": {
+                "1": {
+                    "Human": true,
+                    "Computer": false,
+                    "Name": "Team 1"
+                },
+                "2": {
+                    "Name": "Team 2",
+                    "Human": false,
+                    "Computer": true
+                }
+            }
+        }
+    ]
+}
